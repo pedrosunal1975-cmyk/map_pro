@@ -25,11 +25,44 @@ import logging
 from typing import Optional
 from pathlib import Path
 
-# Configure logging first
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+# =============================================================================
+# CORE INITIALIZATION - Must happen before any other imports
+# =============================================================================
+
+# Step 1: Load configuration and ensure core paths exist
+from core.config_loader import get_core_config
+from core.data_paths import ensure_core_paths, ensure_postgresql_ready
+
+# Step 2: Configure logging using core logger
+from core.logger import (
+    configure_logging,
+    get_app_logger,
+    get_startup_logger,
+    log_startup_complete,
+    log_shutdown,
 )
+
+# Initialize logging
+configure_logging(log_level='INFO', console=True)
+
+# Step 3: Ensure essential directories exist (PostgreSQL data dir)
+startup_logger = get_startup_logger()
+startup_logger.info("Initializing core paths...")
+
+path_results = ensure_core_paths()
+if path_results['all_success']:
+    startup_logger.info(
+        f"Core paths ready: {path_results['summary']['created']} created, "
+        f"{path_results['summary']['existing']} existing"
+    )
+else:
+    startup_logger.warning(
+        f"Some paths failed: {path_results['summary']['failed']} failures"
+    )
+
+# =============================================================================
+# APPLICATION IMPORTS
+# =============================================================================
 
 # Core workflow
 from core.workflow_orchestrator import WorkflowOrchestrator
@@ -350,6 +383,10 @@ class MapProCLI:
 
 async def main():
     """Main entry point."""
+    # Log startup complete
+    log_startup_complete()
+
+    # Run CLI
     cli = MapProCLI()
     await cli.run()
 
@@ -359,4 +396,7 @@ if __name__ == '__main__':
         asyncio.run(main())
     except KeyboardInterrupt:
         print("\n\nExiting Map Pro...")
+    finally:
+        # Log shutdown
+        log_shutdown()
         sys.exit(0)
