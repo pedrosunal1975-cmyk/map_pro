@@ -249,10 +249,11 @@ class PostgreSQLService:
                 # Check if TCP/IP auth for localhost is configured
                 if 'host    all             all             127.0.0.1/32' not in content:
                     # Add TCP/IP auth lines for IPv4 and IPv6 localhost
+                    # Use md5 for better compatibility with psycopg2
                     auth_lines = (
                         "# TCP/IP connections from localhost (added by map_pro)\\n"
-                        "host    all             all             127.0.0.1/32            scram-sha-256\\n"
-                        "host    all             all             ::1/128                 scram-sha-256"
+                        "host    all             all             127.0.0.1/32            md5\\n"
+                        "host    all             all             ::1/128                 md5"
                     )
                     subprocess.run(
                         ['sudo', '-u', 'postgres', 'sh', '-c',
