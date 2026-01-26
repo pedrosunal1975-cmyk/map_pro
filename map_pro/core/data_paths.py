@@ -81,8 +81,15 @@ class CoreDataPathsManager:
         # Check if directory already exists and has data
         if pg_data_dir.exists():
             # Check if it contains PostgreSQL data (has PG_VERSION file)
+            # Use sudo to check since the directory may be owned by postgres
             pg_version_file = pg_data_dir / 'PG_VERSION'
-            if pg_version_file.exists():
+            try:
+                is_initialized = pg_version_file.exists()
+            except PermissionError:
+                # If we can't read, it's likely owned by postgres (initdb ran)
+                is_initialized = True
+
+            if is_initialized:
                 return {
                     'success': True,
                     'path': pg_data_dir,
