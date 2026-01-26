@@ -98,17 +98,20 @@ class DistributionProcessor:
             # Step 2: Route to appropriate handler
             if dist_type == 'archive':
                 return await self._handle_archive(working_url, target_dir)
-            
+
+            elif dist_type == 'ixbrl':
+                return await self._handle_ixbrl(working_url, target_dir)
+
             elif dist_type == 'xsd':
                 return await self._handle_xsd(working_url, target_dir)
-            
+
             elif dist_type == 'directory':
                 return await self._handle_directory(working_url, target_dir)
-            
+
             else:
-                # Unknown type - try archive as fallback
-                logger.warning(f"Unknown distribution type, trying archive fallback")
-                return await self._handle_archive(working_url, target_dir)
+                # Unknown type - try single file download as fallback
+                logger.warning(f"Unknown distribution type, trying single file download")
+                return await self._handle_ixbrl(working_url, target_dir)
         
         except Exception as e:
             result.error_stage = 'detection'
@@ -116,19 +119,71 @@ class DistributionProcessor:
             logger.error(f"Error in distribution detection: {e}")
             return result
     
-    async def _handle_archive(self, url: str, target_dir: Path) -> ProcessingResult:
+    async def _handle_ixbrl(self, url: str, target_dir: Path) -> ProcessingResult:
         """
-        Handle ZIP/archive downloads.
-        
+        Handle iXBRL/XHTML single file downloads.
+
+        Downloads the file directly to target directory without extraction.
+
         Args:
-            url: Archive URL
+            url: iXBRL file URL
             target_dir: Target directory
-            
+
         Returns:
             ProcessingResult
         """
         result = ProcessingResult(success=False)
-        
+
+        logger.info(f"{LOG_PROCESS} Handling as iXBRL single file")
+
+        try:
+            # Ensure target directory exists
+            target_dir.mkdir(parents=True, exist_ok=True)
+
+            # Download directly to target (no temp, no extraction)
+            temp_result = await self.archive_downloader.download_to_temp(url)
+            if not temp_result.success:
+                result.error_stage = 'download'
+                result.download_result = temp_result
+                return result
+
+            result.download_result = temp_result
+
+            # Move file to target directory (no extraction needed)
+            import shutil
+            source_path = temp_result.file_path
+            target_path = target_dir / source_path.name
+
+            shutil.move(str(source_path), str(target_path))
+
+            result.success = True
+            result.extraction_result = ExtractionResult(
+                success=True,
+                files_extracted=1,
+                extract_directory=target_dir
+            )
+            logger.info(f"{LOG_OUTPUT} iXBRL download complete: {target_path.name}")
+            return result
+
+        except Exception as e:
+            result.error_stage = 'ixbrl_download'
+            result.error_message = str(e)
+            logger.error(f"iXBRL download error: {e}")
+            return result
+
+    async def _handle_archive(self, url: str, target_dir: Path) -> ProcessingResult:
+        """
+        Handle ZIP/archive downloads.
+
+        Args:
+            url: Archive URL
+            target_dir: Target directory
+
+        Returns:
+            ProcessingResult
+        """
+        result = ProcessingResult(success=False)
+
         logger.info(f"{LOG_PROCESS} Handling as archive")
         
         # Download to temp

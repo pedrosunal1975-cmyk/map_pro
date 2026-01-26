@@ -30,6 +30,14 @@ XSD_CONTENT_TYPES = {
     'application/xsd',
 }
 
+# iXBRL/XHTML content types (Single file downloads - no extraction needed)
+IXBRL_CONTENT_TYPES = {
+    'application/xhtml+xml',
+}
+
+# iXBRL file extensions (for URL-based detection when content-type is ambiguous)
+IXBRL_EXTENSIONS = {'.xhtml', '.html', '.htm'}
+
 # Directory listing content types (HTML directory indexes)
 DIRECTORY_CONTENT_TYPES = {
     'text/html',
@@ -41,6 +49,7 @@ DIRECTORY_CONTENT_TYPES = {
 DIST_TYPE_ARCHIVE = 'archive'
 DIST_TYPE_XSD = 'xsd'
 DIST_TYPE_DIRECTORY = 'directory'
+DIST_TYPE_IXBRL = 'ixbrl'  # Single file iXBRL/XHTML - just copy, no extraction
 DIST_TYPE_UNKNOWN = 'unknown'
 
 # ============================================================================
@@ -131,10 +140,13 @@ __all__ = [
     # Distribution types
     'ARCHIVE_CONTENT_TYPES',
     'XSD_CONTENT_TYPES',
+    'IXBRL_CONTENT_TYPES',
+    'IXBRL_EXTENSIONS',
     'DIRECTORY_CONTENT_TYPES',
     'DIST_TYPE_ARCHIVE',
     'DIST_TYPE_XSD',
     'DIST_TYPE_DIRECTORY',
+    'DIST_TYPE_IXBRL',
     'DIST_TYPE_UNKNOWN',
     
     # Detection defaults

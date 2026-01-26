@@ -22,10 +22,13 @@ from downloader.constants import LOG_INPUT, LOG_PROCESS, LOG_OUTPUT
 from downloader.engine.constants import (
     ARCHIVE_CONTENT_TYPES,
     XSD_CONTENT_TYPES,
+    IXBRL_CONTENT_TYPES,
+    IXBRL_EXTENSIONS,
     DIRECTORY_CONTENT_TYPES,
     DIST_TYPE_ARCHIVE,
     DIST_TYPE_XSD,
     DIST_TYPE_DIRECTORY,
+    DIST_TYPE_IXBRL,
     DIST_TYPE_UNKNOWN,
     DETECTION_TIMEOUT,
     ARCHIVE_EXTENSIONS,
@@ -247,36 +250,45 @@ class DistributionDetector:
     def _classify_content_type(self, content_type: str, url: str) -> str:
         """
         Classify distribution type from Content-Type and URL.
-        
+
         Args:
             content_type: HTTP Content-Type header
             url: URL being checked
-            
+
         Returns:
             Distribution type
         """
+        url_lower = url.lower()
+
         # Check Content-Type first
         if any(ct in content_type for ct in ARCHIVE_CONTENT_TYPES):
             return DIST_TYPE_ARCHIVE
-        
+
+        # Check for iXBRL content type (application/xhtml+xml)
+        if any(ct in content_type for ct in IXBRL_CONTENT_TYPES):
+            return DIST_TYPE_IXBRL
+
+        # Check URL extension for iXBRL files (.xhtml, .html)
+        # This handles cases where content-type might be ambiguous
+        if any(url_lower.endswith(ext) for ext in IXBRL_EXTENSIONS):
+            return DIST_TYPE_IXBRL
+
         if any(ct in content_type for ct in XSD_CONTENT_TYPES):
             return DIST_TYPE_XSD
-        
+
         if any(ct in content_type for ct in DIRECTORY_CONTENT_TYPES):
             return DIST_TYPE_DIRECTORY
-        
+
         # Fallback: Check URL extension
-        url_lower = url.lower()
-        
         if any(url_lower.endswith(ext) for ext in ARCHIVE_EXTENSIONS):
             return DIST_TYPE_ARCHIVE
-        
+
         if any(url_lower.endswith(ext) for ext in SCHEMA_EXTENSIONS):
             return DIST_TYPE_XSD
-        
+
         if url_lower.endswith('/'):
             return DIST_TYPE_DIRECTORY
-        
+
         return DIST_TYPE_UNKNOWN
     
     def _generate_alternatives(self, url: str) -> list:
