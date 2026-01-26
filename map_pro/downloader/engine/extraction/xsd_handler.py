@@ -142,22 +142,36 @@ class XSDHandler:
             # Build headers with authentication if needed
             headers = self._build_headers(url)
 
-            # Download file
-            async with self._session.get(url, headers=headers, allow_redirects=True) as response:
-                if response.status != 200:
-                    logger.warning(f"HTTP {response.status} for {url}")
+            # For Companies House, try multiple formats with fallback
+            if self._is_companies_house_url(url):
+                content, actual_format = await self._download_companies_house_with_fallback(url, headers)
+                if content is None:
                     return set()
-                
-                content = await response.read()
-                
-                # Determine local filename from URL
-                parsed = urlparse(url)
-                filename = Path(parsed.path).name
-                
-                if not filename or filename == '/':
+            else:
+                # Standard download
+                async with self._session.get(url, headers=headers, allow_redirects=True) as response:
+                    if response.status != 200:
+                        logger.warning(f"HTTP {response.status} for {url}")
+                        return set()
+                    content = await response.read()
+                    actual_format = response.headers.get('Content-Type', '')
+
+            # Determine local filename from URL and content type
+            parsed = urlparse(url)
+            filename = Path(parsed.path).name
+
+            if not filename or filename == '/' or filename == 'content':
+                # For Companies House documents, use appropriate extension
+                if 'xhtml' in actual_format or 'xml' in actual_format:
+                    filename = 'accounts.xhtml'
+                elif 'html' in actual_format:
+                    filename = 'accounts.html'
+                elif 'pdf' in actual_format:
+                    filename = 'accounts.pdf'
+                else:
                     filename = XSD_DEFAULT_FILENAME
-                
-                local_path = target_dir / filename
+
+            local_path = target_dir / filename
                 
                 # Save file
                 local_path.write_bytes(content)
@@ -246,6 +260,60 @@ class XSDHandler:
         """
         return 'document-api.company-information.service.gov.uk' in url or \
                'api.companieshouse.gov.uk' in url
+
+    async def _download_companies_house_with_fallback(
+        self,
+        url: str,
+        base_headers: dict
+    ) -> tuple[Optional[bytes], str]:
+        """
+        Download from Companies House with format fallback.
+
+        Tries formats in order of preference:
+        1. application/xhtml+xml (iXBRL - preferred for parsing)
+        2. text/html (alternative iXBRL format)
+        3. application/pdf (fallback - not parseable but better than nothing)
+
+        Args:
+            url: Document URL
+            base_headers: Base headers including auth
+
+        Returns:
+            Tuple of (content bytes or None, content-type string)
+        """
+        # Format preference order: iXBRL first, PDF last
+        formats_to_try = [
+            'application/xhtml+xml',  # iXBRL (preferred)
+            'text/html',              # Alternative iXBRL
+            'application/pdf',        # Fallback (not parseable)
+        ]
+
+        for accept_format in formats_to_try:
+            headers = base_headers.copy()
+            headers['Accept'] = accept_format
+
+            logger.info(f"{LOG_PROCESS} Trying format: {accept_format}")
+
+            try:
+                async with self._session.get(url, headers=headers, allow_redirects=True) as response:
+                    if response.status == 200:
+                        content = await response.read()
+                        actual_type = response.headers.get('Content-Type', accept_format)
+                        logger.info(f"{LOG_OUTPUT} Successfully downloaded as {actual_type}")
+                        return content, actual_type
+                    elif response.status == 406:
+                        # Format not available, try next
+                        logger.info(f"{LOG_PROCESS} Format {accept_format} not available (406)")
+                        continue
+                    else:
+                        logger.warning(f"HTTP {response.status} for {url} with Accept: {accept_format}")
+                        continue
+            except Exception as e:
+                logger.warning(f"Error trying format {accept_format}: {e}")
+                continue
+
+        logger.error(f"All format attempts failed for {url}")
+        return None, ''
 
     def _build_headers(self, url: str) -> dict[str, str]:
         """
