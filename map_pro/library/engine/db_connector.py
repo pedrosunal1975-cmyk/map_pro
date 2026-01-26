@@ -218,16 +218,30 @@ class DatabaseConnector:
                 ).first()
                 
                 if library:
-                    # Update existing
+                    # Check if library is already completed/active - don't reset status
+                    if library.download_status == 'completed' or library.status == LIBRARY_STATUS_ACTIVE:
+                        logger.info(
+                            f"{LOG_OUTPUT} Library already available: {library.library_id} "
+                            f"(status={library.download_status})"
+                        )
+                        return {
+                            'success': True,
+                            'library_id': str(library.library_id),
+                            'created': False,
+                            'error': None,
+                            'already_available': True,
+                        }
+
+                    # Update existing (only if not already completed)
                     library.source_url = download_url
                     library.download_status = LIBRARY_STATUS_PENDING
-                    
+
                     session.commit()
-                    
+
                     logger.info(
                         f"{LOG_OUTPUT} Updated existing library: {library.library_id}"
                     )
-                    
+
                     return {
                         'success': True,
                         'library_id': str(library.library_id),
