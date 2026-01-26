@@ -3,6 +3,11 @@
 ESEF Market Package
 
 ESEF/IFRS-specific verification checks and thresholds.
+
+Components:
+- ESEFStatementIdentifier: Identifies main IFRS statements from ESEF filings
 """
 
-__all__ = []
+from verification.engine.markets.esef.statement_identifier import ESEFStatementIdentifier
+
+__all__ = ['ESEFStatementIdentifier']
