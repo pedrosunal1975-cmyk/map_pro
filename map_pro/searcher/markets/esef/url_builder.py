@@ -46,7 +46,6 @@ class ESEFURLBuilder:
         self,
         country: Optional[str] = None,
         entity_identifier: Optional[str] = None,
-        report_type: Optional[str] = None,
         period_end_from: Optional[str] = None,
         period_end_to: Optional[str] = None,
         page_number: int = 1,
@@ -57,10 +56,12 @@ class ESEFURLBuilder:
         """
         Build URL for filings endpoint with filters.
 
+        Note: filings.xbrl.org API does NOT support filtering by report_type.
+        Filter by report type client-side after fetching results.
+
         Args:
             country: Country code filter (e.g., 'GB', 'DE')
             entity_identifier: Entity identifier (LEI) to filter by
-            report_type: Report type filter (e.g., 'AFR')
             period_end_from: Period end date start (YYYY-MM-DD)
             period_end_to: Period end date end (YYYY-MM-DD)
             page_number: Page number (1-indexed)
@@ -83,8 +84,8 @@ class ESEFURLBuilder:
         if entity_identifier:
             params['filter[entity.identifier]'] = entity_identifier.upper()
 
-        if report_type:
-            params['filter[report_type]'] = report_type.upper()
+        # Note: report_type filter is NOT supported by filings.xbrl.org API
+        # Filtering by report type must be done client-side after fetching results
 
         if period_end_from:
             params['filter[period_end][gte]'] = period_end_from

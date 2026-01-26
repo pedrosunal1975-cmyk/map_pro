@@ -98,13 +98,16 @@ class ESEFSearcher(BaseSearcher):
             return []
 
         # Build API URL for filings (filter by entity.identifier = LEI)
+        # Note: API does not support report_type filter, we filter client-side
+        # Request more results to account for filtering
+        fetch_size = max_results * 3 if report_type else max_results
+
         url = self.url_builder.get_filings_url(
             country=country,
             entity_identifier=lei,
-            report_type=report_type,
             period_end_from=start_date,
             period_end_to=end_date,
-            page_size=max_results,
+            page_size=fetch_size,
             include_entity=True
         )
 
@@ -122,6 +125,11 @@ class ESEFSearcher(BaseSearcher):
         if not filings:
             logger.warning(f"{LOG_OUTPUT} {MSG_NO_FILINGS_FOUND}")
             return []
+
+        # Filter by report_type client-side if specified
+        if report_type:
+            filings = [f for f in filings if f.get('report_type', '').upper() == report_type.upper()]
+            logger.info(f"{LOG_PROCESS} Filtered to {len(filings)} filings of type {report_type}")
 
         # Build result dictionaries
         results = []
