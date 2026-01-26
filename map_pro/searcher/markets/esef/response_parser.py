@@ -198,16 +198,17 @@ class ESEFResponseParser:
         if not item:
             return None
 
-        # Get entity ID
-        entity_id = item.get('id')
+        # Get entity API ID (from JSON:API 'id' field)
+        entity_api_id = item.get('id')
 
         # Get attributes
         attrs = item.get(ATTR_ATTRIBUTES, {})
 
         return {
-            'id': entity_id,
+            'api_id': entity_api_id,  # JSON:API ID for filtering filings
+            'id': entity_api_id,  # Keep for backwards compatibility
             'name': attrs.get('name'),
-            'lei': attrs.get('lei') or entity_id,  # ID is typically the LEI
+            'lei': attrs.get('lei') or entity_api_id,  # ID is typically the LEI
             'country': attrs.get('country'),
             'identifier': attrs.get('identifier'),
         }

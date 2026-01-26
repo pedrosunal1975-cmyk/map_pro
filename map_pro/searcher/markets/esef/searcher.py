@@ -75,28 +75,36 @@ class ESEFSearcher(BaseSearcher):
         # Normalize form type
         report_type = self._normalize_form_type(form_type)
 
-        # Determine if identifier is LEI or name
+        # Determine if identifier is LEI or name, then get entity_api_id
         lei = None
+        entity_api_id = None
 
         if self._is_lei(identifier):
             lei = identifier.upper()
             logger.info(f"{LOG_PROCESS} Searching by LEI: {lei}")
+            # Get entity API ID from LEI
+            entity_api_id = await self._get_entity_api_id_by_lei(lei)
         else:
-            # Search entities first to get LEI
+            # Search entities first to get LEI and entity_api_id
             logger.info(f"{LOG_PROCESS} Searching entities by name: {identifier}")
-            lei = await self._get_lei_by_name(identifier, country)
+            entity_info = await self._get_entity_by_name(identifier, country)
 
-            if not lei:
+            if not entity_info:
                 logger.warning(f"{LOG_OUTPUT} No entity found for name: {identifier}")
                 return []
 
-            logger.info(f"{LOG_PROCESS} Found LEI: {lei}")
+            lei = entity_info.get('lei')
+            entity_api_id = entity_info.get('api_id')
+            logger.info(f"{LOG_PROCESS} Found entity: LEI={lei}, api_id={entity_api_id}")
 
-        # Build API URL for filings (always by LEI)
+        if not entity_api_id:
+            logger.warning(f"{LOG_OUTPUT} Could not get entity API ID for: {identifier}")
+            return []
+
+        # Build API URL for filings (filter by entity_api_id)
         url = self.url_builder.get_filings_url(
             country=country,
-            lei=lei,
-            entity_name=None,  # Never filter by entity_name on filings endpoint
+            entity_api_id=entity_api_id,
             report_type=report_type,
             period_end_from=start_date,
             period_end_to=end_date,
@@ -129,20 +137,47 @@ class ESEFSearcher(BaseSearcher):
         logger.info(f"{LOG_OUTPUT} ESEF search complete: {len(results)} results")
         return results
 
-    async def _get_lei_by_name(
+    async def _get_entity_api_id_by_lei(self, lei: str) -> Optional[str]:
+        """
+        Get entity API ID by fetching entity directly via LEI.
+
+        Args:
+            lei: Legal Entity Identifier
+
+        Returns:
+            Entity API ID string if found, None otherwise
+        """
+        # Fetch entity directly by LEI
+        url = self.url_builder.get_entity_by_lei_url(lei)
+        logger.info(f"{LOG_PROCESS} Fetching entity by LEI: {url}")
+
+        response = await self.api_client.get_json(url)
+
+        if not response:
+            return None
+
+        # Extract entity API ID from JSON:API response
+        # Response format: {"data": {"type": "entity", "id": "...", "attributes": {...}}}
+        data = response.get('data', {})
+        if isinstance(data, dict):
+            return data.get('id')
+
+        return None
+
+    async def _get_entity_by_name(
         self,
         name: str,
         country: Optional[str] = None
-    ) -> Optional[str]:
+    ) -> Optional[dict]:
         """
-        Search entities endpoint to get LEI by company name.
+        Search entities endpoint to get entity info by company name.
 
         Args:
             name: Company name to search
             country: Optional country filter
 
         Returns:
-            LEI string if found, None otherwise
+            dict with 'lei' and 'api_id' if found, None otherwise
         """
         # Build entities search URL
         url = self.url_builder.get_entities_url(
@@ -163,9 +198,12 @@ class ESEFSearcher(BaseSearcher):
         if not entities:
             return None
 
-        # Return first matching entity's LEI
+        # Return first matching entity's info
         first_entity = entities[0]
-        return first_entity.get('lei')
+        return {
+            'lei': first_entity.get('lei'),
+            'api_id': first_entity.get('api_id')
+        }
 
     async def search_by_company_name(
         self,
