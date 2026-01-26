@@ -5,17 +5,15 @@ Taxonomy Manager for Verification Module
 Integrates with the library module to ensure standard taxonomies
 are available before running library checks.
 
-RESPONSIBILITY: Bridge between verification and library modules.
-1. Takes company details from verification
-2. Passes them to library module (via FilingEntry)
-3. Library module reads parsed.json, detects required taxonomies
-4. If taxonomies are missing, triggers download
-5. Returns taxonomy availability status
+SIMPLE RESPONSIBILITY:
+1. Takes company specs from verification (market, company, form, date)
+2. Passes them to library module (just the filing_id string)
+3. Library module does EVERYTHING (finds parsed.json, detects taxonomies, etc.)
+4. Returns taxonomy availability status
 
-This follows the IPO principle:
-- INPUT: Company details from verification
-- PROCESS: Library module detects and downloads taxonomies
-- OUTPUT: Taxonomy availability status for verification to use
+The library module is sophisticated - it only needs:
+- The filing_id (market/company/form/date)
+- Someone to tell it to 'go'
 """
 
 import logging
@@ -25,7 +23,6 @@ from pathlib import Path
 from typing import Optional
 
 from ..core.config_loader import ConfigLoader
-from ..loaders.parsed_data import ParsedDataLoader, ParsedFilingEntry
 from ..constants import LOG_INPUT, LOG_PROCESS, LOG_OUTPUT
 
 
@@ -33,11 +30,10 @@ class TaxonomyManager:
     """
     Manages taxonomy availability for verification.
 
-    Integrates with the library module to:
-    1. Pass company details to library module
-    2. Library reads parsed.json and detects required taxonomies
-    3. Trigger taxonomy downloads if needed
-    4. Provide taxonomy status before library checks run
+    Simple integration with the library module:
+    1. Pass company specs (filing_id) to library module
+    2. Library does everything (finds parsed.json, detects taxonomies, downloads)
+    3. Return status to verification
 
     Example:
         manager = TaxonomyManager()
@@ -67,9 +63,6 @@ class TaxonomyManager:
         """
         self.config = config if config else ConfigLoader()
         self.logger = logging.getLogger('process.taxonomy_manager')
-
-        # Initialize parsed data loader to find parsed.json files
-        self.parsed_loader = ParsedDataLoader(self.config)
 
         # Library module components (lazy loaded)
         self._library_coordinator = None
@@ -145,37 +138,6 @@ class TaxonomyManager:
             self._library_available = False
             return None
 
-    def _create_library_filing_entry(
-        self,
-        parsed_filing: ParsedFilingEntry
-    ):
-        """
-        Create a library.FilingEntry from verification.ParsedFilingEntry.
-
-        Args:
-            parsed_filing: ParsedFilingEntry from verification module
-
-        Returns:
-            library.FilingEntry object
-        """
-        from library.models.filing_entry import FilingEntry
-
-        # Get parsed.json path
-        parsed_json_path = parsed_filing.available_files.get('json')
-        if not parsed_json_path:
-            # Try to find parsed.json in the folder
-            parsed_json_path = parsed_filing.filing_folder / 'parsed.json'
-
-        return FilingEntry(
-            market=parsed_filing.market,
-            company=parsed_filing.company,
-            form=parsed_filing.form,
-            accession=parsed_filing.date,  # verification uses 'date', library uses 'accession'
-            filing_folder=parsed_filing.filing_folder,
-            parsed_json_path=parsed_json_path,
-            available_files=parsed_filing.available_files,
-        )
-
     def ensure_taxonomies_available(
         self,
         market: str,
@@ -186,15 +148,7 @@ class TaxonomyManager:
         """
         Ensure taxonomies are available for a filing.
 
-        This method:
-        1. Finds the parsed.json for the filing
-        2. Creates a FilingEntry for library module
-        3. Calls LibraryCoordinator.process_filing() which:
-           - Reads parsed.json
-           - Detects required taxonomies from namespaces
-           - Checks availability (database + physical files)
-           - Saves missing taxonomies to database for download
-        4. Returns availability status
+        SIMPLE: Just pass filing_id to library module and let it do everything.
 
         Args:
             market: Market identifier (e.g., 'sec', 'esef')
@@ -213,24 +167,11 @@ class TaxonomyManager:
                 'namespaces_detected': [...],
             }
         """
+        # Construct filing_id - this is all library module needs
         filing_id = f"{market}/{company}/{form}/{date}"
-        self.logger.info(f"{LOG_INPUT} Checking taxonomy availability for {filing_id}")
+        self.logger.info(f"{LOG_INPUT} Activating library module for {filing_id}")
 
-        # Step 1: Find the parsed filing
-        parsed_filing = self.parsed_loader.find_parsed_filing(market, company, form, date)
-
-        if not parsed_filing:
-            self.logger.warning(f"Parsed filing not found: {filing_id}")
-            return {
-                'ready': False,
-                'libraries_required': [],
-                'libraries_available': 0,
-                'libraries_missing': 0,
-                'message': f'Parsed filing not found: {filing_id}',
-                'namespaces_detected': [],
-            }
-
-        # Step 2: Get library coordinator
+        # Get library coordinator
         coordinator = self._get_library_coordinator()
 
         if not coordinator:
@@ -244,15 +185,26 @@ class TaxonomyManager:
             }
 
         try:
-            # Step 3: Create FilingEntry for library module
-            library_filing = self._create_library_filing_entry(parsed_filing)
+            self.logger.info(f"{LOG_PROCESS} Library module processing filing: {filing_id}")
 
-            self.logger.info(f"{LOG_PROCESS} Calling library module to process filing")
+            # SIMPLE: Just call library with filing_id
+            # Library module does EVERYTHING:
+            # - Finds the parsed.json file
+            # - Reads it and extracts namespaces
+            # - Resolves namespaces to taxonomy libraries
+            # - Checks availability (database + physical files)
+            # - Saves missing libraries for download
+            result = coordinator.process_filing_by_id(filing_id)
 
-            # Step 4: Process filing through library coordinator
-            # This reads parsed.json, detects namespaces, resolves to libraries,
-            # checks availability, and saves missing libraries to database
-            result = coordinator.process_filing(library_filing)
+            if result is None:
+                return {
+                    'ready': False,
+                    'libraries_required': [],
+                    'libraries_available': 0,
+                    'libraries_missing': 0,
+                    'message': f'Filing not found by library module: {filing_id}',
+                    'namespaces_detected': [],
+                }
 
             if not result.get('success', False):
                 return {
@@ -264,7 +216,7 @@ class TaxonomyManager:
                     'namespaces_detected': [],
                 }
 
-            # Step 5: Build status from library result
+            # Build status from library result
             status = {
                 'ready': result.get('libraries_ready', False),
                 'libraries_required': result.get('libraries_required', []),
@@ -276,7 +228,7 @@ class TaxonomyManager:
             }
 
             self.logger.info(
-                f"{LOG_OUTPUT} Taxonomy status for {filing_id}: "
+                f"{LOG_OUTPUT} Library module result for {filing_id}: "
                 f"{status['libraries_available']} available, "
                 f"{status['libraries_missing']} missing"
             )
@@ -284,7 +236,7 @@ class TaxonomyManager:
             return status
 
         except Exception as e:
-            self.logger.error(f"Error checking taxonomy availability: {e}")
+            self.logger.error(f"Error from library module: {e}")
             return {
                 'ready': False,
                 'libraries_required': [],
