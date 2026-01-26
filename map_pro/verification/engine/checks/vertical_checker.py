@@ -96,6 +96,9 @@ class VerticalChecker:
         Focuses on main statements (balance sheet, income, cash flow, equity)
         to verify fundamental accounting relationships.
 
+        When FormulaRegistry is available with formulas loaded, uses
+        XBRL-sourced verification instead of legacy pattern-based checks.
+
         Args:
             statements: MappedStatements from mapped_reader
 
@@ -113,22 +116,34 @@ class VerticalChecker:
 
         results = []
 
-        # Check balance sheet equation
-        bs_result = self.check_balance_sheet_equation(statements)
-        if bs_result:
-            results.append(bs_result)
+        # Use XBRL-sourced verification if available (preferred method)
+        if self.formula_registry and self.formula_registry.has_company_formulas():
+            self.logger.info("Using XBRL-sourced verification (formulas loaded)")
+            xbrl_results = self.check_xbrl_calculations_dual(statements)
+            results.extend(xbrl_results)
+        else:
+            # Fall back to legacy pattern-based checks
+            self.logger.info(
+                "Using legacy pattern-based checks (no XBRL formulas available)"
+            )
 
-        # Check income statement linkage
-        income_result = self.check_income_statement_linkage(statements)
-        if income_result:
-            results.append(income_result)
+            # Check balance sheet equation
+            bs_result = self.check_balance_sheet_equation(statements)
+            if bs_result:
+                results.append(bs_result)
 
-        # Check cash flow linkage
-        cf_result = self.check_cash_flow_linkage(statements)
-        if cf_result:
-            results.append(cf_result)
+            # Check income statement linkage
+            income_result = self.check_income_statement_linkage(statements)
+            if income_result:
+                results.append(income_result)
+
+            # Check cash flow linkage
+            cf_result = self.check_cash_flow_linkage(statements)
+            if cf_result:
+                results.append(cf_result)
 
         # Check common values consistency (main statements only)
+        # This check is always useful regardless of XBRL availability
         common_results = self.check_common_values_consistency(statements)
         results.extend(common_results)
 

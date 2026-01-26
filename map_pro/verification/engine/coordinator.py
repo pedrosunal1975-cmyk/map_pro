@@ -266,10 +266,16 @@ class VerificationCoordinator:
             self.logger.info(f"{LOG_OUTPUT} Loaded {len(calc_networks)} calculation networks")
 
             # Step 2b: Load formulas into registry (for XBRL-sourced verification)
+            # This MUST happen BEFORE vertical checks so formulas are available
             if self.enable_xbrl_verification:
                 self.logger.info(f"{LOG_PROCESS} Loading formulas into registry")
                 self._load_formula_registry(filing, statements)
                 result.formula_registry_summary = self.formula_registry.get_summary()
+                self.logger.info(
+                    f"{LOG_OUTPUT} Formula registry: "
+                    f"{result.formula_registry_summary.get('company_trees', 0)} company trees, "
+                    f"{result.formula_registry_summary.get('taxonomy_trees', 0)} taxonomy trees"
+                )
 
             # Step 3: Run horizontal checks
             self.logger.info(f"{LOG_PROCESS} Running horizontal checks")
@@ -277,16 +283,19 @@ class VerificationCoordinator:
                 statements, calc_networks
             )
 
-            # Step 4: Run vertical checks (legacy pattern-based)
+            # Step 4: Run vertical checks
+            # VerticalChecker now automatically uses XBRL-sourced verification
+            # when formula_registry has formulas loaded (preferred method)
+            # Otherwise falls back to legacy pattern-based checks
             self.logger.info(f"{LOG_PROCESS} Running vertical checks")
             result.vertical_results = self.vertical_checker.check_all(statements)
 
-            # Step 4b: Run XBRL-sourced calculation verification
-            if self.enable_xbrl_verification and self.formula_registry.has_company_formulas():
-                self.logger.info(f"{LOG_PROCESS} Running XBRL-sourced calculation verification")
-                result.xbrl_calculation_results = self.vertical_checker.check_xbrl_calculations_dual(
-                    statements
-                )
+            # Also store XBRL results separately for detailed analysis
+            if self.formula_registry.has_company_formulas():
+                result.xbrl_calculation_results = [
+                    r for r in result.vertical_results
+                    if r.check_name in ('xbrl_calculation', 'xbrl_calculation_comparison')
+                ]
 
             # Step 5: Ensure taxonomies are available (if library checks enabled)
             if self.enable_library_checks:
@@ -452,12 +461,25 @@ class VerificationCoordinator:
                 filing.date
             )
 
+            self.logger.info(f"{LOG_INPUT} XBRL path for formula loading: {xbrl_path}")
+
             if xbrl_path:
                 company_count = self.formula_registry.load_company_formulas(xbrl_path)
                 self.logger.info(f"{LOG_OUTPUT} Loaded {company_count} company calculation trees")
 
+                if company_count == 0:
+                    self.logger.warning(
+                        f"{LOG_OUTPUT} No company calculation trees loaded - "
+                        f"will fall back to legacy pattern-based checks"
+                    )
+            else:
+                self.logger.warning(
+                    f"{LOG_OUTPUT} No XBRL path found for {filing.company} - "
+                    f"will fall back to legacy pattern-based checks"
+                )
+
         except Exception as e:
-            self.logger.warning(f"Could not load company formulas: {e}")
+            self.logger.error(f"Could not load company formulas: {e}", exc_info=True)
 
         # Load taxonomy formulas
         try:
