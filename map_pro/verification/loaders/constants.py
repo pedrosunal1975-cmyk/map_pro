@@ -47,10 +47,35 @@ PARSED_JSON_FILE = 'parsed.json'
 # ==============================================================================
 
 # Linkbase file patterns
-CALCULATION_LINKBASE_PATTERNS = ['_cal.xml', '_calculation.xml', '-cal.xml', 'cal.xml']
-PRESENTATION_LINKBASE_PATTERNS = ['_pre.xml', '_presentation.xml', '-pre.xml', 'pre.xml']
-DEFINITION_LINKBASE_PATTERNS = ['_def.xml', '_definition.xml', '-def.xml', 'def.xml']
-LABEL_LINKBASE_PATTERNS = ['_lab.xml', '_label.xml', '-lab.xml', 'lab.xml']
+# Note: US-GAAP taxonomy uses patterns like 'us-gaap-dis-xxx-cal-2024.xml'
+CALCULATION_LINKBASE_PATTERNS = [
+    '_cal.xml',         # Company XBRL: aci-20250222_cal.xml
+    '_calculation.xml', # Alternative naming
+    '-cal.xml',         # Some taxonomies
+    '-cal-',            # US-GAAP taxonomy: us-gaap-dis-xxx-cal-2024.xml
+    'cal.xml',          # Bare name
+]
+PRESENTATION_LINKBASE_PATTERNS = [
+    '_pre.xml',
+    '_presentation.xml',
+    '-pre.xml',
+    '-pre-',            # US-GAAP taxonomy pattern
+    'pre.xml',
+]
+DEFINITION_LINKBASE_PATTERNS = [
+    '_def.xml',
+    '_definition.xml',
+    '-def.xml',
+    '-def-',            # US-GAAP taxonomy pattern
+    'def.xml',
+]
+LABEL_LINKBASE_PATTERNS = [
+    '_lab.xml',
+    '_label.xml',
+    '-lab.xml',
+    '-lab-',            # US-GAAP taxonomy pattern
+    'lab.xml',
+]
 
 # Schema file patterns
 SCHEMA_FILE_PATTERNS = ['.xsd']
