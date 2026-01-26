@@ -31,6 +31,7 @@ from .constants import (
     DEFAULT_CALCULATION_TOLERANCE,
     DEFAULT_ROUNDING_TOLERANCE,
     LARGE_VALUE_THRESHOLD,
+    ConceptNormalizer,
 )
 from ...constants import SEVERITY_CRITICAL, SEVERITY_WARNING, SEVERITY_INFO
 from .horizontal_checker import CheckResult
@@ -123,30 +124,42 @@ class CalculationVerifier:
         self,
         tree: CalculationTree,
         facts: dict[str, float],
+        normalizer: ConceptNormalizer = None,
         tolerance: float = None
     ) -> CalculationVerificationResult:
         """
         Verify a single calculation tree against actual facts.
 
+        Uses NORMALIZED concept names for lookup to handle different
+        separator formats (colon vs underscore vs dash).
+
         Args:
             tree: CalculationTree defining the calculation
-            facts: Dictionary mapping concept names to values
+            facts: Dictionary mapping NORMALIZED concept names to values
+            normalizer: ConceptNormalizer for name translation (optional)
             tolerance: Optional custom tolerance
 
         Returns:
-            CalculationVerificationResult with details
+            CalculationVerificationResult with details (uses ORIGINAL names)
         """
         tol = tolerance if tolerance is not None else self.calculation_tolerance
 
+        # Create normalizer if not provided
+        if normalizer is None:
+            normalizer = ConceptNormalizer()
+
         result = CalculationVerificationResult(
-            parent_concept=tree.parent,
+            parent_concept=tree.parent,  # Keep ORIGINAL name in result
             source=tree.source,
             role=tree.role,
             tolerance_used=tol
         )
 
-        # Get actual parent value
-        actual = facts.get(tree.parent)
+        # Normalize parent concept for lookup
+        parent_normalized = normalizer.normalize(tree.parent)
+
+        # Get actual parent value using normalized name
+        actual = facts.get(parent_normalized)
         result.actual_value = actual
 
         if actual is None:
@@ -159,10 +172,12 @@ class CalculationVerifier:
         missing_count = 0
 
         for child_concept, weight in tree.children:
-            child_value = facts.get(child_concept)
+            # Normalize child concept for lookup
+            child_normalized = normalizer.normalize(child_concept)
+            child_value = facts.get(child_normalized)
 
             contribution = ChildContribution(
-                concept=child_concept,
+                concept=child_concept,  # Keep ORIGINAL name
                 value=child_value,
                 weight=weight,
                 contribution=None,
@@ -175,7 +190,7 @@ class CalculationVerifier:
                 expected += contrib
             else:
                 missing_count += 1
-                result.missing_children.append(child_concept)
+                result.missing_children.append(child_concept)  # ORIGINAL name
 
             result.children.append(contribution)
 
@@ -213,20 +228,23 @@ class CalculationVerifier:
         """
         Verify all calculations for statements against a source.
 
+        Uses NORMALIZED concept names for matching, allowing different
+        separator formats (colon vs underscore) to match correctly.
+
         Args:
             statements: MappedStatements with fact values
             source: 'company' or 'taxonomy'
             role: Optional role filter
 
         Returns:
-            List of CalculationVerificationResult objects
+            List of CalculationVerificationResult objects (with ORIGINAL names)
         """
         self.logger.info(f"Verifying calculations against {source} formulas")
 
-        # Build facts dictionary from all statements
-        facts = self._extract_facts(statements)
+        # Build NORMALIZED facts dictionary from all statements
+        facts, normalizer = self._extract_facts(statements)
 
-        self.logger.debug(f"Extracted {len(facts)} fact values")
+        self.logger.info(f"Extracted {len(facts)} normalized fact values")
 
         # Get calculation trees from registry
         trees = self.registry.get_all_calculations(source, role)
@@ -237,10 +255,10 @@ class CalculationVerifier:
 
         self.logger.info(f"Verifying {len(trees)} calculation trees")
 
-        # Verify each tree
+        # Verify each tree using normalized lookup
         results = []
         for tree in trees:
-            result = self.verify_calculation(tree, facts)
+            result = self.verify_calculation(tree, facts, normalizer)
             results.append(result)
 
         passed = sum(1 for r in results if r.passed)
@@ -257,6 +275,7 @@ class CalculationVerifier:
         Verify calculations against both company and taxonomy sources.
 
         Compares results to identify discrepancies.
+        Uses NORMALIZED concept names for matching.
 
         Args:
             statements: MappedStatements with fact values
@@ -267,8 +286,8 @@ class CalculationVerifier:
         """
         self.logger.info("Running dual verification (company + taxonomy)")
 
-        # Extract facts once
-        facts = self._extract_facts(statements)
+        # Extract NORMALIZED facts once
+        facts, normalizer = self._extract_facts(statements)
 
         # Get all parent concepts from both sources
         company_trees = {
@@ -294,16 +313,16 @@ class CalculationVerifier:
                 sources_agree=True
             )
 
-            # Verify against company if available
+            # Verify against company if available (with normalized lookup)
             if parent in company_trees:
                 dual_result.company_result = self.verify_calculation(
-                    company_trees[parent], facts
+                    company_trees[parent], facts, normalizer
                 )
 
-            # Verify against taxonomy if available
+            # Verify against taxonomy if available (with normalized lookup)
             if parent in taxonomy_trees:
                 dual_result.taxonomy_result = self.verify_calculation(
-                    taxonomy_trees[parent], facts
+                    taxonomy_trees[parent], facts, normalizer
                 )
 
             # Check for discrepancies
@@ -353,6 +372,8 @@ class CalculationVerifier:
         """
         Verify a specific calculation.
 
+        Uses NORMALIZED concept names for matching.
+
         Args:
             parent_concept: Concept to verify
             statements: MappedStatements with fact values
@@ -365,8 +386,8 @@ class CalculationVerifier:
         if not tree:
             return None
 
-        facts = self._extract_facts(statements)
-        return self.verify_calculation(tree, facts)
+        facts, normalizer = self._extract_facts(statements)
+        return self.verify_calculation(tree, facts, normalizer)
 
     def get_failed_calculations(
         self,
@@ -432,19 +453,32 @@ class CalculationVerifier:
 
         return check_results
 
-    def _extract_facts(self, statements: MappedStatements) -> dict[str, float]:
+    def _extract_facts(
+        self,
+        statements: MappedStatements
+    ) -> tuple[dict[str, float], ConceptNormalizer]:
         """
         Extract all fact values from statements into a flat dictionary.
 
-        Uses the most recent period's value for each concept.
+        Uses NORMALIZED concept names for matching across different sources.
+        Returns both the facts dictionary (with normalized keys) and the
+        normalizer (for looking up original names).
+
+        NORMALIZATION:
+        Different sources use different separators (: vs _ vs -).
+        This method normalizes all concept names so they can be matched
+        regardless of the separator used.
 
         Args:
             statements: MappedStatements object
 
         Returns:
-            Dictionary mapping concept names to values
+            Tuple of:
+            - Dictionary mapping NORMALIZED concept names to values
+            - ConceptNormalizer with original name mappings
         """
         facts: dict[str, float] = {}
+        normalizer = ConceptNormalizer()
 
         for statement in statements.statements:
             for fact in statement.facts:
@@ -456,12 +490,19 @@ class CalculationVerifier:
                 except (ValueError, TypeError):
                     continue
 
-                # Use concept name as key
-                # If same concept exists, prefer main statements
-                if fact.concept not in facts or statement.is_main_statement:
-                    facts[fact.concept] = value
+                # Normalize the concept name for lookup
+                normalized = normalizer.register(fact.concept, source='statement')
 
-        return facts
+                # Use normalized name as key
+                # If same concept exists, prefer main statements
+                if normalized not in facts or statement.is_main_statement:
+                    facts[normalized] = value
+
+        self.logger.debug(
+            f"Extracted {len(facts)} normalized fact values from statements"
+        )
+
+        return facts, normalizer
 
     def _within_tolerance(
         self,
