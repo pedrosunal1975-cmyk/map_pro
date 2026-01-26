@@ -84,19 +84,17 @@ class ReportGenerator:
         combined_path = self.generate_report(result, output_dir / REPORT_FILE)
         paths['combined'] = combined_path
 
-        # Generate XBRL-sourced report (if there are XBRL results)
-        if result.xbrl_calculation_results:
-            xbrl_path = self.generate_xbrl_report(result, output_dir / REPORT_XBRL_FILE)
-            paths['xbrl'] = xbrl_path
-        else:
-            self.logger.info(f"{LOG_OUTPUT} No XBRL calculation results - skipping report_xbrl.json")
+        # ALWAYS generate XBRL-sourced report (shows what happened even if empty)
+        xbrl_path = self.generate_xbrl_report(result, output_dir / REPORT_XBRL_FILE)
+        paths['xbrl'] = xbrl_path
+        if not result.xbrl_calculation_results:
+            self.logger.info(f"{LOG_OUTPUT} XBRL report generated (no calculation results found)")
 
-        # Generate taxonomy-sourced report (if there are taxonomy results)
-        if result.taxonomy_calculation_results:
-            taxonomy_path = self.generate_taxonomy_report(result, output_dir / REPORT_TAXONOMY_FILE)
-            paths['taxonomy'] = taxonomy_path
-        else:
-            self.logger.info(f"{LOG_OUTPUT} No taxonomy calculation results - skipping report_taxonomy.json")
+        # ALWAYS generate taxonomy-sourced report (shows what happened even if empty)
+        taxonomy_path = self.generate_taxonomy_report(result, output_dir / REPORT_TAXONOMY_FILE)
+        paths['taxonomy'] = taxonomy_path
+        if not result.taxonomy_calculation_results:
+            self.logger.info(f"{LOG_OUTPUT} Taxonomy report generated (no calculation results found)")
 
         return paths
 
@@ -286,6 +284,11 @@ class ReportGenerator:
 
     def _build_xbrl_report(self, result: VerificationResult) -> dict:
         """Build XBRL-sourced report dictionary."""
+        xbrl_results = result.xbrl_calculation_results
+        company_trees = 0
+        if result.formula_registry_summary:
+            company_trees = result.formula_registry_summary.get('company_trees', 0)
+
         report = {
             'report_type': 'xbrl',
             'verification_source': 'company_xbrl',
@@ -303,23 +306,48 @@ class ReportGenerator:
         # Add formula registry info for XBRL
         if result.formula_registry_summary:
             report['formula_source'] = {
-                'company_trees': result.formula_registry_summary.get('company_trees', 0),
+                'company_trees': company_trees,
                 'company_roles': result.formula_registry_summary.get('company_roles', []),
             }
 
         # Calculate XBRL-specific stats
-        xbrl_results = result.xbrl_calculation_results
         if xbrl_results:
             passed = sum(1 for r in xbrl_results if r.passed)
             failed = sum(1 for r in xbrl_results if not r.passed)
             total = len(xbrl_results)
 
+            report['status'] = 'active'
             report['summary'] = {
                 'total_checks': total,
                 'passed': passed,
                 'failed': failed,
                 'pass_rate': round(passed / total * 100, 2) if total > 0 else 0.0,
             }
+        else:
+            # No results - add diagnostic info
+            report['status'] = 'no_results'
+            report['summary'] = {
+                'total_checks': 0,
+                'passed': 0,
+                'failed': 0,
+                'pass_rate': 0.0,
+            }
+            # Explain why no results
+            if company_trees == 0:
+                report['diagnostic'] = {
+                    'reason': 'no_company_formulas',
+                    'message': 'No calculation trees were loaded from company XBRL calculation linkbase. '
+                               'This could mean: (1) The filing has no calculation linkbase file, '
+                               '(2) The calculation linkbase is empty, or '
+                               '(3) The XBRL path could not be found for this company.',
+                }
+            else:
+                report['diagnostic'] = {
+                    'reason': 'no_matching_results',
+                    'message': f'{company_trees} company calculation trees were loaded, '
+                               'but no verification results were produced. This could mean the '
+                               'concepts in the calculation linkbase do not match the facts in the statements.',
+                }
 
         # Add detailed XBRL check results
         report['calculation_results'] = self._serialize_check_results(xbrl_results)
@@ -328,6 +356,13 @@ class ReportGenerator:
 
     def _build_taxonomy_report(self, result: VerificationResult) -> dict:
         """Build taxonomy-sourced report dictionary."""
+        taxonomy_results = result.taxonomy_calculation_results
+        taxonomy_trees = 0
+        taxonomy_id = None
+        if result.formula_registry_summary:
+            taxonomy_trees = result.formula_registry_summary.get('taxonomy_trees', 0)
+            taxonomy_id = result.formula_registry_summary.get('taxonomy_id')
+
         report = {
             'report_type': 'taxonomy',
             'verification_source': 'standard_taxonomy',
@@ -345,24 +380,56 @@ class ReportGenerator:
         # Add formula registry info for taxonomy
         if result.formula_registry_summary:
             report['formula_source'] = {
-                'taxonomy_trees': result.formula_registry_summary.get('taxonomy_trees', 0),
+                'taxonomy_trees': taxonomy_trees,
                 'taxonomy_roles': result.formula_registry_summary.get('taxonomy_roles', []),
-                'taxonomy_id': result.formula_registry_summary.get('taxonomy_id'),
+                'taxonomy_id': taxonomy_id,
             }
 
         # Calculate taxonomy-specific stats
-        taxonomy_results = result.taxonomy_calculation_results
         if taxonomy_results:
             passed = sum(1 for r in taxonomy_results if r.passed)
             failed = sum(1 for r in taxonomy_results if not r.passed)
             total = len(taxonomy_results)
 
+            report['status'] = 'active'
             report['summary'] = {
                 'total_checks': total,
                 'passed': passed,
                 'failed': failed,
                 'pass_rate': round(passed / total * 100, 2) if total > 0 else 0.0,
             }
+        else:
+            # No results - add diagnostic info
+            report['status'] = 'no_results'
+            report['summary'] = {
+                'total_checks': 0,
+                'passed': 0,
+                'failed': 0,
+                'pass_rate': 0.0,
+            }
+            # Explain why no results
+            if taxonomy_id is None:
+                report['diagnostic'] = {
+                    'reason': 'no_taxonomy_detected',
+                    'message': 'No standard taxonomy was detected for this filing. '
+                               'Cannot load taxonomy calculation linkbase without knowing '
+                               'which taxonomy (us-gaap, ifrs-full, etc.) is used.',
+                }
+            elif taxonomy_trees == 0:
+                report['diagnostic'] = {
+                    'reason': 'no_taxonomy_formulas',
+                    'message': f'Taxonomy "{taxonomy_id}" was detected but no calculation trees were loaded. '
+                               'This could mean: (1) The taxonomy library is not downloaded, '
+                               '(2) The taxonomy has no calculation linkbase, or '
+                               '(3) Error reading the taxonomy calculation linkbase.',
+                }
+            else:
+                report['diagnostic'] = {
+                    'reason': 'no_matching_results',
+                    'message': f'{taxonomy_trees} taxonomy calculation trees were loaded from "{taxonomy_id}", '
+                               'but no verification results were produced. This could mean the '
+                               'concepts in the taxonomy do not match the concepts used in this filing.',
+                }
 
         # Add detailed taxonomy check results
         report['calculation_results'] = self._serialize_check_results(taxonomy_results)
