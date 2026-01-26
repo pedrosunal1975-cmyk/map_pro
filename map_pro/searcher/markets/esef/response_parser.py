@@ -239,9 +239,9 @@ class ESEFResponseParser:
         """
         Get the best download URL for a filing.
 
-        Priority:
-        1. report_url - Direct iXBRL file
-        2. package_url - ZIP package with all files
+        Priority (changed to prefer package for complete filing data):
+        1. package_url - ZIP package with all files (xhtml + xsd + linkbases)
+        2. report_url - Direct iXBRL file only (no extension taxonomy)
 
         Args:
             filing: Parsed filing dict
@@ -249,15 +249,18 @@ class ESEFResponseParser:
         Returns:
             str: Full download URL or None
         """
-        # Prefer direct report URL (iXBRL file)
-        report_url = filing.get('report_url')
-        if report_url:
-            return self._ensure_full_url(report_url)
-
-        # Fallback to package URL (ZIP)
+        # Prefer package URL (ZIP) - contains complete filing with:
+        # - iXBRL document (xhtml)
+        # - Extension taxonomy (xsd)
+        # - Linkbase files (pre, cal, def, lab)
         package_url = filing.get('package_url')
         if package_url:
             return self._ensure_full_url(package_url)
+
+        # Fallback to direct report URL (iXBRL file only)
+        report_url = filing.get('report_url')
+        if report_url:
+            return self._ensure_full_url(report_url)
 
         return None
 
