@@ -211,7 +211,12 @@ class PostgreSQLService:
 
         try:
             # Update postgresql.conf to listen on localhost
-            if postgresql_conf.exists():
+            # Use sudo to check file existence (files owned by postgres)
+            result = subprocess.run(
+                ['sudo', '-u', 'postgres', 'test', '-f', str(postgresql_conf)],
+                capture_output=True, timeout=5
+            )
+            if result.returncode == 0:
                 # Read current config
                 result = subprocess.run(
                     ['sudo', '-u', 'postgres', 'cat', str(postgresql_conf)],
@@ -222,12 +227,19 @@ class PostgreSQLService:
                 # Check if listen_addresses is already configured
                 if "listen_addresses = 'localhost'" not in content:
                     # Append listen_addresses setting
-                    append_cmd = f"echo \"listen_addresses = 'localhost'\" | sudo -u postgres tee -a {postgresql_conf}"
-                    subprocess.run(append_cmd, shell=True, capture_output=True, timeout=10)
+                    subprocess.run(
+                        ['sudo', '-u', 'postgres', 'sh', '-c',
+                         f"echo \"listen_addresses = 'localhost'\" >> {postgresql_conf}"],
+                        capture_output=True, timeout=10
+                    )
                     logger.info("Added listen_addresses = 'localhost' to postgresql.conf")
 
             # Update pg_hba.conf to allow TCP/IP connections from localhost
-            if pg_hba_conf.exists():
+            result = subprocess.run(
+                ['sudo', '-u', 'postgres', 'test', '-f', str(pg_hba_conf)],
+                capture_output=True, timeout=5
+            )
+            if result.returncode == 0:
                 result = subprocess.run(
                     ['sudo', '-u', 'postgres', 'cat', str(pg_hba_conf)],
                     capture_output=True, text=True, timeout=10
@@ -237,13 +249,16 @@ class PostgreSQLService:
                 # Check if TCP/IP auth for localhost is configured
                 if 'host    all             all             127.0.0.1/32' not in content:
                     # Add TCP/IP auth lines for IPv4 and IPv6 localhost
-                    auth_lines = """
-# TCP/IP connections from localhost (added by map_pro)
-host    all             all             127.0.0.1/32            scram-sha-256
-host    all             all             ::1/128                 scram-sha-256
-"""
-                    append_cmd = f"echo '{auth_lines}' | sudo -u postgres tee -a {pg_hba_conf}"
-                    subprocess.run(append_cmd, shell=True, capture_output=True, timeout=10)
+                    auth_lines = (
+                        "# TCP/IP connections from localhost (added by map_pro)\\n"
+                        "host    all             all             127.0.0.1/32            scram-sha-256\\n"
+                        "host    all             all             ::1/128                 scram-sha-256"
+                    )
+                    subprocess.run(
+                        ['sudo', '-u', 'postgres', 'sh', '-c',
+                         f'echo -e "{auth_lines}" >> {pg_hba_conf}'],
+                        capture_output=True, timeout=10
+                    )
                     logger.info("Added TCP/IP auth rules to pg_hba.conf")
 
             return {'success': True, 'message': 'PostgreSQL configured for TCP/IP'}
