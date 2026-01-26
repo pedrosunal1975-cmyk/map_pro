@@ -148,7 +148,9 @@ class TaxonomyManager:
         """
         Ensure taxonomies are available for a filing.
 
-        SIMPLE: Just pass filing_id to library module and let it do everything.
+        INSTRUCTS library.py to:
+        1. --scan: Detect required taxonomies for the filing
+        2. --download: Download any missing taxonomies
 
         Args:
             market: Market identifier (e.g., 'sec', 'esef')
@@ -157,93 +159,48 @@ class TaxonomyManager:
             date: Filing date or accession number
 
         Returns:
-            Dictionary with status:
-            {
-                'ready': bool,
-                'libraries_required': [...],
-                'libraries_available': int,
-                'libraries_missing': int,
-                'message': str,
-                'namespaces_detected': [...],
-            }
+            Dictionary with status from library module
         """
-        # Construct filing_id - this is all library module needs
         filing_id = f"{market}/{company}/{form}/{date}"
-        self.logger.info(f"{LOG_INPUT} Activating library module for {filing_id}")
-
-        # Get library coordinator
-        coordinator = self._get_library_coordinator()
-
-        if not coordinator:
-            return {
-                'ready': False,
-                'libraries_required': [],
-                'libraries_available': 0,
-                'libraries_missing': 0,
-                'message': 'Library module not available',
-                'namespaces_detected': [],
-            }
+        self.logger.info(f"{LOG_INPUT} Instructing library module for {filing_id}")
 
         try:
-            self.logger.info(f"{LOG_PROCESS} Library module processing filing: {filing_id}")
+            # Import library.py functions
+            map_pro_dir = Path(__file__).parent.parent.parent
+            if str(map_pro_dir) not in sys.path:
+                sys.path.insert(0, str(map_pro_dir))
 
-            # SIMPLE: Just call library with filing_id
-            # Library module does EVERYTHING:
-            # - Finds the parsed.json file
-            # - Reads it and extracts namespaces
-            # - Resolves namespaces to taxonomy libraries
-            # - Checks availability (database + physical files)
-            # - Saves missing libraries for download
-            result = coordinator.process_filing_by_id(filing_id)
-
-            if result is None:
+            # Initialize database first (required by library)
+            if not self._initialize_database():
                 return {
                     'ready': False,
-                    'libraries_required': [],
-                    'libraries_available': 0,
-                    'libraries_missing': 0,
-                    'message': f'Filing not found by library module: {filing_id}',
-                    'namespaces_detected': [],
+                    'message': 'Database not available',
                 }
 
-            if not result.get('success', False):
-                return {
-                    'ready': False,
-                    'libraries_required': [],
-                    'libraries_available': 0,
-                    'libraries_missing': 0,
-                    'message': result.get('error', 'Unknown error from library module'),
-                    'namespaces_detected': [],
-                }
+            # Import library's cmd functions
+            from library.library import cmd_scan, cmd_download
 
-            # Build status from library result
-            status = {
-                'ready': result.get('libraries_ready', False),
-                'libraries_required': result.get('libraries_required', []),
-                'libraries_available': result.get('libraries_available', 0),
-                'libraries_missing': result.get('libraries_missing', 0),
-                'namespaces_detected': result.get('namespaces_detected', []),
-                'message': 'All libraries available' if result.get('libraries_ready')
-                          else f"{result.get('libraries_missing', 0)} libraries need to be downloaded",
+            # STEP 1: Instruct library to SCAN (like --scan)
+            self.logger.info(f"{LOG_PROCESS} Instructing library: --scan")
+            cmd_scan()
+
+            # STEP 2: Instruct library to DOWNLOAD (like --download)
+            self.logger.info(f"{LOG_PROCESS} Instructing library: --download")
+            cmd_download()
+
+            self.logger.info(f"{LOG_OUTPUT} Library module completed for {filing_id}")
+
+            return {
+                'ready': True,
+                'message': 'Library scan and download completed',
+                'filing_id': filing_id,
             }
 
-            self.logger.info(
-                f"{LOG_OUTPUT} Library module result for {filing_id}: "
-                f"{status['libraries_available']} available, "
-                f"{status['libraries_missing']} missing"
-            )
-
-            return status
-
         except Exception as e:
-            self.logger.error(f"Error from library module: {e}")
+            self.logger.error(f"Error instructing library module: {e}")
             return {
                 'ready': False,
-                'libraries_required': [],
-                'libraries_available': 0,
-                'libraries_missing': 0,
                 'message': str(e),
-                'namespaces_detected': [],
             }
 
     def trigger_taxonomy_downloads(self) -> dict:
