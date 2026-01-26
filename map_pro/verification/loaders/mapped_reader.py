@@ -140,11 +140,10 @@ class MappedReader:
         """
         Read all statements from a mapped filing.
 
-        Strategy:
-        1. First, try to find and read MAIN_FINANCIAL_STATEMENTS.json or statements.json
-        2. If not found or empty, try reading individual statement files
-        3. Track source file names and sizes
-        4. Identify main statements by file size
+        Strategy (PRIORITIZE individual files for proper statement names):
+        1. First, look for individual files in core_statements/ folder
+        2. If found, read those (they have proper names like consolidatedbalancesheets.json)
+        3. Only fall back to combined file if no individual core_statements exist
 
         Args:
             filing: MappedFilingEntry from MappedDataLoader
@@ -165,27 +164,44 @@ class MappedReader:
             self.logger.warning(f"No JSON files found for {filing.filing_folder}")
             return None
 
-        # Strategy 1: Try to find main statements file first (original working approach)
-        main_file = self._find_main_statements_file(filing)
+        # Strategy 1: PRIORITIZE individual files in core_statements/ folder
+        # These have proper statement names from filenames
+        core_statement_files = self._find_core_statement_files(filing)
 
-        if main_file and main_file.exists():
-            self.logger.info(f"Found main statements file: {main_file.name}")
-            self._read_combined_file(main_file, result)
+        if core_statement_files:
+            self.logger.info(
+                f"Found {len(core_statement_files)} individual statement files in core_statements/"
+            )
+            self._read_individual_files(core_statement_files, result)
 
             if result.statements:
-                # Successfully loaded from main file
                 self._identify_main_statements(result)
                 self.logger.info(
-                    f"Loaded {len(result.statements)} statements, "
+                    f"Loaded {len(result.statements)} statements from individual files, "
                     f"{len(result.main_statements)} main statements"
                 )
                 return result
 
-        # Strategy 2: If no main file or it had no statements, try individual files
-        self.logger.info("Trying to read individual statement files")
+        # Strategy 2: Fall back to combined file only if no individual files
+        self.logger.info("No core_statements found, trying combined file")
+        main_file = self._find_main_statements_file(filing)
+
+        if main_file and main_file.exists():
+            self.logger.info(f"Found combined statements file: {main_file.name}")
+            self._read_combined_file(main_file, result)
+
+            if result.statements:
+                self._identify_main_statements(result)
+                self.logger.info(
+                    f"Loaded {len(result.statements)} statements from combined file, "
+                    f"{len(result.main_statements)} main statements"
+                )
+                return result
+
+        # Strategy 3: Try all JSON files as individual statements
+        self.logger.info("Trying to read all JSON files as individual statements")
         self._read_individual_files(json_files, result)
 
-        # Identify main statements
         self._identify_main_statements(result)
 
         self.logger.info(
@@ -194,6 +210,36 @@ class MappedReader:
         )
 
         return result
+
+    def _find_core_statement_files(self, filing: MappedFilingEntry) -> list[Path]:
+        """
+        Find individual statement files in core_statements/ folder.
+
+        These files have proper statement names as filenames.
+
+        Args:
+            filing: MappedFilingEntry
+
+        Returns:
+            List of Path objects for core statement JSON files
+        """
+        core_files = []
+
+        # Check json/core_statements/ folder
+        if filing.json_folder and filing.json_folder.exists():
+            core_dir = filing.json_folder / 'core_statements'
+            if core_dir.exists() and core_dir.is_dir():
+                core_files = list(core_dir.glob('*.json'))
+
+        # Also check csv structure's json equivalent
+        if not core_files and filing.filing_folder:
+            for subdir in ['json', 'JSON']:
+                core_dir = filing.filing_folder / subdir / 'core_statements'
+                if core_dir.exists() and core_dir.is_dir():
+                    core_files = list(core_dir.glob('*.json'))
+                    break
+
+        return core_files
 
     def _is_combined_file_structure(self, json_files: list[Path]) -> bool:
         """
