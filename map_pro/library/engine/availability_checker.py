@@ -184,14 +184,14 @@ class AvailabilityChecker:
     
     def _is_in_database(self, taxonomy_name: str, version: str) -> bool:
         """
-        Check database: active + healthy + files > threshold.
-        
-        Strict readiness check ensures library is fully operational.
-        
+        Check database: completed download + files > threshold.
+
+        Readiness check ensures library has been downloaded and has files.
+
         Args:
             taxonomy_name: Taxonomy name
             version: Taxonomy version
-            
+
         Returns:
             True if ready in database
         """
@@ -201,21 +201,40 @@ class AvailabilityChecker:
                     self.TaxonomyLibrary.taxonomy_name == taxonomy_name,
                     self.TaxonomyLibrary.taxonomy_version == version
                 ).first()
-                
+
                 if library is None:
                     return False
-                
-                # Strict readiness check
-                # NOTE: Using 'status' field (not 'library_status' which doesn't exist)
-                # NOTE: Using STATUS_VALID from engine constants (model uses 'valid')
-                is_ready = (
+
+                # Check if library has completed download and has files
+                # Accept either:
+                # 1. New way: status='active' + validation_status='valid'
+                # 2. Old way: download_status='completed' (for backwards compatibility)
+                has_files = library.total_files and library.total_files > self.min_files_threshold
+
+                new_style_ready = (
                     library.status == LIBRARY_STATUS_ACTIVE and
                     library.validation_status == STATUS_VALID and
-                    library.total_files > self.min_files_threshold
+                    has_files
                 )
-                
+
+                old_style_ready = (
+                    library.download_status == 'completed' and
+                    has_files
+                )
+
+                is_ready = new_style_ready or old_style_ready
+
+                # Auto-correct old records: if download_status='completed' but status not set
+                if old_style_ready and not new_style_ready:
+                    logger.info(
+                        f"{LOG_PROCESS} Auto-correcting status for {taxonomy_name} v{version}"
+                    )
+                    library.status = LIBRARY_STATUS_ACTIVE
+                    library.validation_status = STATUS_VALID
+                    session.commit()
+
                 return is_ready
-                
+
         except Exception as e:
             logger.error(f"Error checking database for {taxonomy_name}: {e}")
             return False

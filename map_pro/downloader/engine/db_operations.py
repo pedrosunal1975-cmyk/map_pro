@@ -499,6 +499,11 @@ class DatabaseRepository:
                 taxonomy.total_files = total_files
                 taxonomy.download_completed_at = datetime.now()
                 taxonomy.last_verified_at = datetime.now()
+
+                # CRITICAL: Also set status and validation_status
+                # AvailabilityChecker expects these to determine if library is ready
+                taxonomy.status = 'active'
+                taxonomy.validation_status = 'valid'
                 
                 session.commit()
                 logger.info(f"{LOG_OUTPUT} Taxonomy completion recorded successfully")
