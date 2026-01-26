@@ -140,9 +140,9 @@ class MappedReader:
         """
         Read all statements from a mapped filing.
 
-        Improved logic:
-        1. Try to read individual statement files first
-        2. Fall back to combined main file if needed
+        Strategy:
+        1. First, try to find and read MAIN_FINANCIAL_STATEMENTS.json or statements.json
+        2. If not found or empty, try reading individual statement files
         3. Track source file names and sizes
         4. Identify main statements by file size
 
@@ -165,13 +165,25 @@ class MappedReader:
             self.logger.warning(f"No JSON files found for {filing.filing_folder}")
             return None
 
-        # Strategy based on market and file structure
-        if self._is_combined_file_structure(json_files):
-            # Single combined file (typical for ESEF or combined exports)
-            self._read_combined_file(json_files[0], result)
-        else:
-            # Multiple individual statement files (typical for SEC)
-            self._read_individual_files(json_files, result)
+        # Strategy 1: Try to find main statements file first (original working approach)
+        main_file = self._find_main_statements_file(filing)
+
+        if main_file and main_file.exists():
+            self.logger.info(f"Found main statements file: {main_file.name}")
+            self._read_combined_file(main_file, result)
+
+            if result.statements:
+                # Successfully loaded from main file
+                self._identify_main_statements(result)
+                self.logger.info(
+                    f"Loaded {len(result.statements)} statements, "
+                    f"{len(result.main_statements)} main statements"
+                )
+                return result
+
+        # Strategy 2: If no main file or it had no statements, try individual files
+        self.logger.info("Trying to read individual statement files")
+        self._read_individual_files(json_files, result)
 
         # Identify main statements
         self._identify_main_statements(result)
