@@ -157,6 +157,61 @@ class ESEFResponseParser:
 
         return lookup
 
+    def parse_entities_response(self, response: dict) -> list[dict]:
+        """
+        Parse entities list response.
+
+        Args:
+            response: JSON-API response dict
+
+        Returns:
+            list[dict]: Parsed entity records
+        """
+        if not response:
+            return []
+
+        # Extract data array
+        data = response.get(KEY_DATA, [])
+        if not data:
+            return []
+
+        # Parse each entity
+        entities = []
+        for item in data:
+            entity = self._parse_entity_item(item)
+            if entity:
+                entities.append(entity)
+
+        logger.debug(f"{LOG_PROCESS} Parsed {len(entities)} entities")
+        return entities
+
+    def _parse_entity_item(self, item: dict) -> Optional[dict]:
+        """
+        Parse single entity item from response.
+
+        Args:
+            item: Entity item from data array
+
+        Returns:
+            dict: Parsed entity or None
+        """
+        if not item:
+            return None
+
+        # Get entity ID
+        entity_id = item.get('id')
+
+        # Get attributes
+        attrs = item.get(ATTR_ATTRIBUTES, {})
+
+        return {
+            'id': entity_id,
+            'name': attrs.get('name'),
+            'lei': attrs.get('lei') or entity_id,  # ID is typically the LEI
+            'country': attrs.get('country'),
+            'identifier': attrs.get('identifier'),
+        }
+
     def parse_pagination(self, response: dict) -> dict:
         """
         Parse pagination metadata from response.

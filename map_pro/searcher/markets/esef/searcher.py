@@ -77,20 +77,26 @@ class ESEFSearcher(BaseSearcher):
 
         # Determine if identifier is LEI or name
         lei = None
-        entity_name = None
 
         if self._is_lei(identifier):
             lei = identifier.upper()
             logger.info(f"{LOG_PROCESS} Searching by LEI: {lei}")
         else:
-            entity_name = identifier
-            logger.info(f"{LOG_PROCESS} Searching by entity name: {entity_name}")
+            # Search entities first to get LEI
+            logger.info(f"{LOG_PROCESS} Searching entities by name: {identifier}")
+            lei = await self._get_lei_by_name(identifier, country)
 
-        # Build API URL
+            if not lei:
+                logger.warning(f"{LOG_OUTPUT} No entity found for name: {identifier}")
+                return []
+
+            logger.info(f"{LOG_PROCESS} Found LEI: {lei}")
+
+        # Build API URL for filings (always by LEI)
         url = self.url_builder.get_filings_url(
             country=country,
             lei=lei,
-            entity_name=entity_name,
+            entity_name=None,  # Never filter by entity_name on filings endpoint
             report_type=report_type,
             period_end_from=start_date,
             period_end_to=end_date,
@@ -122,6 +128,44 @@ class ESEFSearcher(BaseSearcher):
 
         logger.info(f"{LOG_OUTPUT} ESEF search complete: {len(results)} results")
         return results
+
+    async def _get_lei_by_name(
+        self,
+        name: str,
+        country: Optional[str] = None
+    ) -> Optional[str]:
+        """
+        Search entities endpoint to get LEI by company name.
+
+        Args:
+            name: Company name to search
+            country: Optional country filter
+
+        Returns:
+            LEI string if found, None otherwise
+        """
+        # Build entities search URL
+        url = self.url_builder.get_entities_url(
+            country=country,
+            name=name,
+            page_size=5  # Get top 5 matches
+        )
+
+        logger.info(f"{LOG_PROCESS} Searching entities: {url}")
+        response = await self.api_client.get_json(url)
+
+        if not response:
+            return None
+
+        # Parse entities response
+        entities = self.response_parser.parse_entities_response(response)
+
+        if not entities:
+            return None
+
+        # Return first matching entity's LEI
+        first_entity = entities[0]
+        return first_entity.get('lei')
 
     async def search_by_company_name(
         self,
