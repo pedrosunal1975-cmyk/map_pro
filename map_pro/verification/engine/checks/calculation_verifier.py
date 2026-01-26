@@ -412,7 +412,7 @@ class CalculationVerifier:
 
             check_results.append(CheckResult(
                 check_name=check_name,
-                check_type='calculation',
+                check_type='vertical',
                 passed=result.passed,
                 severity=severity,
                 message=result.message,
@@ -422,6 +422,7 @@ class CalculationVerifier:
                 details={
                     'parent_concept': result.parent_concept,
                     'source': result.source,
+                    'verification_source': result.source,  # Add for filtering
                     'role': result.role,
                     'children_count': len(result.children),
                     'missing_children': result.missing_children,
