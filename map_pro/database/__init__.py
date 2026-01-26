@@ -58,6 +58,8 @@ from .models import (
     TaxonomyLibrary,
 )
 
+from .postgre_service import PostgreSQLService
+from .postgre_setup import PostgreSQLSetup
 from .postgre_initialize import (
     PostgreSQLInitializer,
     initialize_postgresql,
@@ -115,6 +117,9 @@ __all__ = [
     'validate_paths',
     'get_logger',
     'configure_logging',
+    # PostgreSQL service and setup
+    'PostgreSQLService',
+    'PostgreSQLSetup',
     # PostgreSQL initialization
     'PostgreSQLInitializer',
     'initialize_postgresql',

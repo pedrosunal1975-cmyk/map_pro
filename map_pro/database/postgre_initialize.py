@@ -1,20 +1,18 @@
 #!/usr/bin/env python3
 # Path: database/postgre_initialize.py
 """
-PostgreSQL Database Initialization
+PostgreSQL Database Initialization Orchestrator
 
-Handles complete PostgreSQL server initialization:
+Coordinates complete PostgreSQL server initialization:
 1. Verifies data directory exists (created by core/data_paths.py)
 2. Runs initdb if data directory is empty
 3. Starts PostgreSQL service
-4. Creates database user and database (from .env: DB_USER, DB_PASSWORD, DB_NAME)
+4. Creates database user and database (from .env)
 5. Seeds markets table
 
-Architecture:
-- Uses configuration from .env via database/core/config_loader.py
-- Depends on core/data_paths.py for directory creation
-- No hardcoded paths - all from configuration
-- Idempotent - safe to run multiple times
+Uses:
+- postgre_service.py for service operations (start, stop, status)
+- postgre_setup.py for user/database/schema setup
 
 Usage:
     # As module
@@ -25,474 +23,46 @@ Usage:
     python -m database.postgre_initialize
 """
 
-import os
 import sys
-import subprocess
-import time
-from pathlib import Path
-from typing import Dict, Optional, Tuple
+from typing import Dict, Optional
 
-# Import configuration from database module
 from database.core.config_loader import ConfigLoader
 from database.core.logger import get_logger
+from database.postgre_service import PostgreSQLService
+from database.postgre_setup import PostgreSQLSetup
 
-# Get logger
 logger = get_logger(__name__, 'core')
 
 
 class PostgreSQLInitializer:
     """
-    Handles PostgreSQL server initialization.
+    Orchestrates PostgreSQL initialization.
 
-    Ensures PostgreSQL is properly initialized and running
-    before the application can use the database.
-
-    Example:
-        initializer = PostgreSQLInitializer()
-        result = initializer.initialize()
-        if result['success']:
-            print("PostgreSQL ready")
+    Coordinates between PostgreSQLService and PostgreSQLSetup
+    to perform complete database initialization.
     """
 
     def __init__(self, config: Optional[ConfigLoader] = None):
-        """
-        Initialize PostgreSQL initializer.
-
-        Args:
-            config: Optional ConfigLoader instance. If None, creates new one.
-        """
         self.config = config if config else ConfigLoader()
-        self._pg_data_dir = self.config.get('db_postgresql_data_dir')
-
-    def get_data_directory(self) -> Path:
-        """
-        Get PostgreSQL data directory from configuration.
-
-        Returns:
-            Path to PostgreSQL data directory
-        """
-        return self._pg_data_dir
-
-    def is_directory_initialized(self) -> bool:
-        """
-        Check if PostgreSQL data directory is initialized.
-
-        Checks for PG_VERSION file which indicates initdb was run.
-
-        Returns:
-            True if directory is initialized, False otherwise
-        """
-        if not self._pg_data_dir:
-            return False
-
-        pg_version_file = self._pg_data_dir / 'PG_VERSION'
-        return pg_version_file.exists()
-
-    def is_directory_exists(self) -> bool:
-        """
-        Check if PostgreSQL data directory exists.
-
-        Returns:
-            True if directory exists, False otherwise
-        """
-        if not self._pg_data_dir:
-            return False
-        return self._pg_data_dir.exists()
-
-    def is_postgresql_running(self) -> bool:
-        """
-        Check if PostgreSQL service is running.
-
-        Returns:
-            True if PostgreSQL is running, False otherwise
-        """
-        try:
-            result = subprocess.run(
-                ['pg_isready', '-h', 'localhost', '-p', '5432'],
-                capture_output=True,
-                timeout=5
-            )
-            return result.returncode == 0
-        except (subprocess.TimeoutExpired, FileNotFoundError):
-            return False
-
-    def run_initdb(self) -> Dict:
-        """
-        Run initdb to initialize PostgreSQL data directory.
-
-        Returns:
-            Dictionary with result:
-                - success: bool
-                - message: str
-                - output: str (command output)
-        """
-        if not self._pg_data_dir:
-            return {
-                'success': False,
-                'message': 'PostgreSQL data directory not configured',
-                'output': ''
-            }
-
-        # First, ensure directory has correct ownership
-        logger.info(f"Initializing PostgreSQL data directory: {self._pg_data_dir}")
-
-        try:
-            # Set ownership to postgres user
-            chown_cmd = ['sudo', 'chown', '-R', 'postgres:postgres', str(self._pg_data_dir)]
-            logger.info(f"Setting ownership: {' '.join(chown_cmd)}")
-
-            chown_result = subprocess.run(
-                chown_cmd,
-                capture_output=True,
-                text=True,
-                timeout=30
-            )
-
-            if chown_result.returncode != 0:
-                logger.warning(f"chown warning: {chown_result.stderr}")
-
-            # Run initdb as postgres user
-            initdb_cmd = [
-                'sudo', '-u', 'postgres',
-                'initdb',
-                '--locale=C.UTF-8',
-                '--encoding=UTF8',
-                '-D', str(self._pg_data_dir)
-            ]
-
-            logger.info(f"Running initdb: {' '.join(initdb_cmd)}")
-
-            result = subprocess.run(
-                initdb_cmd,
-                capture_output=True,
-                text=True,
-                timeout=120
-            )
-
-            if result.returncode == 0:
-                logger.info("initdb completed successfully")
-                return {
-                    'success': True,
-                    'message': 'PostgreSQL data directory initialized successfully',
-                    'output': result.stdout
-                }
-            else:
-                logger.error(f"initdb failed: {result.stderr}")
-                return {
-                    'success': False,
-                    'message': f'initdb failed: {result.stderr}',
-                    'output': result.stdout + result.stderr
-                }
-
-        except subprocess.TimeoutExpired:
-            logger.error("initdb timed out")
-            return {
-                'success': False,
-                'message': 'initdb timed out after 120 seconds',
-                'output': ''
-            }
-        except FileNotFoundError as e:
-            logger.error(f"Command not found: {e}")
-            return {
-                'success': False,
-                'message': f'Required command not found: {e}',
-                'output': ''
-            }
-        except Exception as e:
-            logger.error(f"initdb error: {e}")
-            return {
-                'success': False,
-                'message': f'initdb error: {e}',
-                'output': ''
-            }
-
-    def start_postgresql(self) -> Dict:
-        """
-        Start PostgreSQL service.
-
-        Returns:
-            Dictionary with result:
-                - success: bool
-                - message: str
-        """
-        logger.info("Starting PostgreSQL service...")
-
-        try:
-            # Start PostgreSQL using systemctl
-            result = subprocess.run(
-                ['sudo', 'systemctl', 'start', 'postgresql'],
-                capture_output=True,
-                text=True,
-                timeout=60
-            )
-
-            if result.returncode == 0:
-                # Wait for PostgreSQL to be ready
-                for i in range(10):
-                    if self.is_postgresql_running():
-                        logger.info("PostgreSQL started successfully")
-                        return {
-                            'success': True,
-                            'message': 'PostgreSQL started successfully'
-                        }
-                    time.sleep(1)
-
-                logger.warning("PostgreSQL started but not responding")
-                return {
-                    'success': False,
-                    'message': 'PostgreSQL started but not responding to connections'
-                }
-            else:
-                logger.error(f"Failed to start PostgreSQL: {result.stderr}")
-                return {
-                    'success': False,
-                    'message': f'Failed to start PostgreSQL: {result.stderr}'
-                }
-
-        except subprocess.TimeoutExpired:
-            logger.error("PostgreSQL start timed out")
-            return {
-                'success': False,
-                'message': 'PostgreSQL start timed out'
-            }
-        except Exception as e:
-            logger.error(f"Failed to start PostgreSQL: {e}")
-            return {
-                'success': False,
-                'message': f'Failed to start PostgreSQL: {e}'
-            }
-
-    def create_user_and_database(self) -> Dict:
-        """
-        Create PostgreSQL user and database from .env configuration.
-
-        Creates:
-        - PostgreSQL role (user) with password
-        - Database owned by that user
-
-        Uses DB_USER, DB_PASSWORD, DB_NAME from .env configuration.
-
-        Returns:
-            Dictionary with result:
-                - success: bool
-                - message: str
-                - user_created: bool
-                - database_created: bool
-        """
-        db_user = self.config.get('db_user')
-        db_password = self.config.get('db_password')
-        db_name = self.config.get('db_name')
-
-        if not all([db_user, db_password, db_name]):
-            return {
-                'success': False,
-                'message': 'Missing DB_USER, DB_PASSWORD, or DB_NAME in configuration',
-                'user_created': False,
-                'database_created': False
-            }
-
-        logger.info(f"Creating PostgreSQL user '{db_user}' and database '{db_name}'...")
-
-        user_created = False
-        database_created = False
-
-        try:
-            # Step 1: Check if user exists, create if not
-            check_user_cmd = [
-                'sudo', '-u', 'postgres', 'psql', '-tAc',
-                f"SELECT 1 FROM pg_roles WHERE rolname='{db_user}'"
-            ]
-
-            check_result = subprocess.run(
-                check_user_cmd,
-                capture_output=True,
-                text=True,
-                timeout=30
-            )
-
-            if check_result.stdout.strip() != '1':
-                # User doesn't exist, create it
-                create_user_cmd = [
-                    'sudo', '-u', 'postgres', 'psql', '-c',
-                    f"CREATE USER {db_user} WITH PASSWORD '{db_password}' CREATEDB;"
-                ]
-
-                logger.info(f"Creating user: {db_user}")
-                create_result = subprocess.run(
-                    create_user_cmd,
-                    capture_output=True,
-                    text=True,
-                    timeout=30
-                )
-
-                if create_result.returncode != 0:
-                    logger.error(f"Failed to create user: {create_result.stderr}")
-                    return {
-                        'success': False,
-                        'message': f'Failed to create user: {create_result.stderr}',
-                        'user_created': False,
-                        'database_created': False
-                    }
-
-                user_created = True
-                logger.info(f"User '{db_user}' created successfully")
-            else:
-                logger.info(f"User '{db_user}' already exists")
-
-            # Step 2: Check if database exists, create if not
-            check_db_cmd = [
-                'sudo', '-u', 'postgres', 'psql', '-tAc',
-                f"SELECT 1 FROM pg_database WHERE datname='{db_name}'"
-            ]
-
-            check_db_result = subprocess.run(
-                check_db_cmd,
-                capture_output=True,
-                text=True,
-                timeout=30
-            )
-
-            if check_db_result.stdout.strip() != '1':
-                # Database doesn't exist, create it
-                create_db_cmd = [
-                    'sudo', '-u', 'postgres', 'psql', '-c',
-                    f"CREATE DATABASE {db_name} OWNER {db_user};"
-                ]
-
-                logger.info(f"Creating database: {db_name}")
-                create_db_result = subprocess.run(
-                    create_db_cmd,
-                    capture_output=True,
-                    text=True,
-                    timeout=30
-                )
-
-                if create_db_result.returncode != 0:
-                    logger.error(f"Failed to create database: {create_db_result.stderr}")
-                    return {
-                        'success': False,
-                        'message': f'Failed to create database: {create_db_result.stderr}',
-                        'user_created': user_created,
-                        'database_created': False
-                    }
-
-                database_created = True
-                logger.info(f"Database '{db_name}' created successfully")
-            else:
-                logger.info(f"Database '{db_name}' already exists")
-
-            # Step 3: Grant all privileges
-            grant_cmd = [
-                'sudo', '-u', 'postgres', 'psql', '-c',
-                f"GRANT ALL PRIVILEGES ON DATABASE {db_name} TO {db_user};"
-            ]
-
-            subprocess.run(grant_cmd, capture_output=True, text=True, timeout=30)
-            logger.info(f"Privileges granted to '{db_user}' on '{db_name}'")
-
-            return {
-                'success': True,
-                'message': f"User '{db_user}' and database '{db_name}' ready",
-                'user_created': user_created,
-                'database_created': database_created
-            }
-
-        except subprocess.TimeoutExpired:
-            logger.error("Command timed out")
-            return {
-                'success': False,
-                'message': 'Command timed out',
-                'user_created': user_created,
-                'database_created': database_created
-            }
-        except Exception as e:
-            logger.error(f"Error creating user/database: {e}")
-            return {
-                'success': False,
-                'message': f'Error: {e}',
-                'user_created': user_created,
-                'database_created': database_created
-            }
-
-    def seed_markets(self) -> Dict:
-        """
-        Seed markets table with supported markets.
-
-        Uses market data from searcher.constants.MARKETS_SEED_DATA.
-        Idempotent - safe to run multiple times.
-
-        Returns:
-            Dictionary with result:
-                - success: bool
-                - message: str
-                - markets_added: int
-                - markets_existing: int
-        """
-        logger.info("Seeding markets table...")
-
-        try:
-            # Import here to avoid circular imports and ensure DB is ready
-            from database import initialize_database, session_scope
-            from database.models import Market
-            from searcher.constants import MARKETS_SEED_DATA
-
-            # Initialize database (creates tables if needed)
-            initialize_database()
-
-            markets_added = 0
-            markets_existing = 0
-
-            with session_scope() as session:
-                for market_data in MARKETS_SEED_DATA:
-                    existing = session.query(Market).filter_by(
-                        market_id=market_data['market_id']
-                    ).first()
-
-                    if existing:
-                        logger.info(f"Market '{market_data['market_id']}' already exists")
-                        markets_existing += 1
-                    else:
-                        market = Market(**market_data)
-                        session.add(market)
-                        logger.info(f"Added market '{market_data['market_id']}': {market_data['market_name']}")
-                        markets_added += 1
-
-                session.commit()
-
-            logger.info(f"Markets seeding complete: {markets_added} added, {markets_existing} existing")
-
-            return {
-                'success': True,
-                'message': 'Markets seeded successfully',
-                'markets_added': markets_added,
-                'markets_existing': markets_existing
-            }
-
-        except Exception as e:
-            logger.error(f"Failed to seed markets: {e}")
-            return {
-                'success': False,
-                'message': f'Failed to seed markets: {e}',
-                'markets_added': 0,
-                'markets_existing': 0
-            }
+        self.service = PostgreSQLService(self.config)
+        self.setup = PostgreSQLSetup(self.config)
 
     def initialize(self, seed_markets: bool = True) -> Dict:
         """
         Complete PostgreSQL initialization.
 
-        Performs all steps:
+        Steps:
         1. Verify data directory exists
         2. Run initdb if needed
         3. Start PostgreSQL
-        4. Create user and database (from .env configuration)
+        4. Create user and database
         5. Seed markets (optional)
 
         Args:
-            seed_markets: Whether to seed markets table after initialization
+            seed_markets: Whether to seed markets table
 
         Returns:
-            Dictionary with complete result
+            Dictionary with initialization result
         """
         result = {
             'success': False,
@@ -506,60 +76,75 @@ class PostgreSQLInitializer:
 
         # Step 1: Check data directory exists
         print("\nStep 1: Checking data directory...")
-        if not self.is_directory_exists():
+        if not self.service.is_directory_exists():
+            data_dir = self.service.get_data_directory()
             result['steps']['directory_check'] = {
                 'success': False,
-                'message': f'Data directory does not exist: {self._pg_data_dir}'
+                'message': f'Data directory does not exist: {data_dir}'
             }
             result['message'] = 'Data directory not found. Run core/data_paths.py first.'
-            print(f"  ✗ Directory not found: {self._pg_data_dir}")
-            print("  Run the application to create directories first.")
+            print(f"  X Directory not found: {data_dir}")
             return result
 
+        data_dir = self.service.get_data_directory()
         result['steps']['directory_check'] = {
             'success': True,
-            'message': f'Data directory exists: {self._pg_data_dir}'
+            'message': f'Data directory exists: {data_dir}'
         }
-        print(f"  ✓ Directory exists: {self._pg_data_dir}")
+        print(f"  OK Directory exists: {data_dir}")
 
         # Step 2: Run initdb if needed
         print("\nStep 2: Checking initialization status...")
-        if not self.is_directory_initialized():
+        if not self.service.is_directory_initialized():
             print("  Directory not initialized. Running initdb...")
-            initdb_result = self.run_initdb()
+            initdb_result = self.service.run_initdb()
             result['steps']['initdb'] = initdb_result
 
             if not initdb_result['success']:
                 result['message'] = initdb_result['message']
-                print(f"  ✗ initdb failed: {initdb_result['message']}")
+                print(f"  X initdb failed: {initdb_result['message']}")
                 return result
 
-            print("  ✓ initdb completed successfully")
+            print("  OK initdb completed successfully")
         else:
             result['steps']['initdb'] = {
                 'success': True,
                 'message': 'Already initialized (PG_VERSION exists)'
             }
-            print("  ✓ Already initialized")
+            print("  OK Already initialized")
 
         # Step 3: Start PostgreSQL
         print("\nStep 3: Starting PostgreSQL...")
-        if self.is_postgresql_running():
+
+        # Use can_connect() - more reliable than pg_isready
+        if self.service.can_connect():
             result['steps']['start'] = {
                 'success': True,
-                'message': 'PostgreSQL already running'
+                'message': 'PostgreSQL already running and accepting connections'
             }
-            print("  ✓ PostgreSQL already running")
+            print("  OK PostgreSQL already running")
         else:
-            start_result = self.start_postgresql()
+            # Check if service is running but not accepting connections
+            if self.service.is_service_running():
+                print("  Service running but not accepting connections. Restarting...")
+                self.service.stop()
+
+            start_result = self.service.start()
             result['steps']['start'] = start_result
 
             if not start_result['success']:
                 result['message'] = start_result['message']
-                print(f"  ✗ Failed to start: {start_result['message']}")
+                print(f"  X Failed to start: {start_result['message']}")
                 return result
 
-            print("  ✓ PostgreSQL started successfully")
+            # Verify we can actually connect after starting
+            if not self.service.can_connect():
+                result['steps']['start']['success'] = False
+                result['message'] = 'PostgreSQL started but cannot connect'
+                print("  X PostgreSQL started but cannot connect")
+                return result
+
+            print("  OK PostgreSQL started successfully")
 
         # Step 4: Create user and database
         print("\nStep 4: Creating user and database...")
@@ -567,35 +152,34 @@ class PostgreSQLInitializer:
         db_name = self.config.get('db_name')
         print(f"  User: {db_user}, Database: {db_name}")
 
-        user_db_result = self.create_user_and_database()
+        user_db_result = self.setup.create_user_and_database()
         result['steps']['create_user_database'] = user_db_result
 
         if not user_db_result['success']:
             result['message'] = user_db_result['message']
-            print(f"  ✗ Failed: {user_db_result['message']}")
+            print(f"  X Failed: {user_db_result['message']}")
             return result
 
         if user_db_result['user_created']:
-            print(f"  ✓ Created user: {db_user}")
+            print(f"  OK Created user: {db_user}")
         else:
-            print(f"  ✓ User already exists: {db_user}")
+            print(f"  OK User already exists: {db_user}")
 
         if user_db_result['database_created']:
-            print(f"  ✓ Created database: {db_name}")
+            print(f"  OK Created database: {db_name}")
         else:
-            print(f"  ✓ Database already exists: {db_name}")
+            print(f"  OK Database already exists: {db_name}")
 
         # Step 5: Seed markets (optional)
         if seed_markets:
             print("\nStep 5: Seeding markets...")
-            seed_result = self.seed_markets()
+            seed_result = self.setup.seed_markets()
             result['steps']['seed_markets'] = seed_result
 
             if seed_result['success']:
-                print(f"  ✓ Markets: {seed_result['markets_added']} added, {seed_result['markets_existing']} existing")
+                print(f"  OK Markets: {seed_result['markets_added']} added, {seed_result['markets_existing']} existing")
             else:
-                print(f"  ✗ Failed to seed markets: {seed_result['message']}")
-                # Don't fail initialization if seeding fails - PostgreSQL is still ready
+                print(f"  X Failed to seed markets: {seed_result['message']}")
 
         result['success'] = True
         result['message'] = 'PostgreSQL initialized successfully'
@@ -628,13 +212,15 @@ def check_postgresql_status() -> Dict:
     Returns:
         Dictionary with status information
     """
-    initializer = PostgreSQLInitializer()
+    service = PostgreSQLService()
 
     return {
-        'data_directory': str(initializer.get_data_directory()),
-        'directory_exists': initializer.is_directory_exists(),
-        'directory_initialized': initializer.is_directory_initialized(),
-        'postgresql_running': initializer.is_postgresql_running()
+        'data_directory': str(service.get_data_directory()),
+        'directory_exists': service.is_directory_exists(),
+        'directory_initialized': service.is_directory_initialized(),
+        'service_running': service.is_service_running(),
+        'can_connect': service.can_connect(),
+        'postgresql_running': service.can_connect()  # Use actual connection test
     }
 
 
@@ -672,7 +258,8 @@ Examples:
         print(f"  Data directory: {status['data_directory']}")
         print(f"  Directory exists: {status['directory_exists']}")
         print(f"  Directory initialized: {status['directory_initialized']}")
-        print(f"  PostgreSQL running: {status['postgresql_running']}")
+        print(f"  Service running: {status['service_running']}")
+        print(f"  Can connect: {status['can_connect']}")
         sys.exit(0)
 
     result = initialize_postgresql(seed_markets=not args.no_seed)
