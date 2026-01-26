@@ -281,8 +281,13 @@ class WorkflowOrchestrator:
             parse_results = await self._phase_parse(market_id, form_type)
 
             if parse_results['parsed_count'] == 0:
-                self.state.add_error("parse",
-                                     "No filings parsed successfully")
+                # Check if parsing was skipped due to PDF-only format (expected, not an error)
+                pdf_only_warnings = [w for w in self.state.warnings if 'PDF' in w or 'pdf' in w]
+                if not pdf_only_warnings:
+                    # Actual parsing failure - add error
+                    self.state.add_error("parse",
+                                         "No filings parsed successfully")
+                # Return results (with warnings for PDF-only, or errors for actual failures)
                 return self._build_results()
 
             # Phase 4: Map (75-100%)

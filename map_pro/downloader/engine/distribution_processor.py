@@ -179,7 +179,7 @@ class DistributionProcessor:
                 result.extraction_result = ExtractionResult(
                     success=True,
                     files_extracted=xsd_result['files_downloaded'],
-                    target_dir=target_dir
+                    extract_directory=target_dir
                 )
                 logger.info(f"{LOG_OUTPUT} XSD download complete: {xsd_result['files_downloaded']} files")
             else:
@@ -220,7 +220,7 @@ class DistributionProcessor:
                 result.extraction_result = ExtractionResult(
                     success=True,
                     files_extracted=dir_result['files_downloaded'],
-                    target_dir=target_dir
+                    extract_directory=target_dir
                 )
                 logger.info(f"{LOG_OUTPUT} Directory mirror complete: {dir_result['files_downloaded']} files")
             else:
