@@ -75,13 +75,24 @@ class VerticalChecker:
         """
         Run all vertical checks on statements.
 
+        Focuses on main statements (balance sheet, income, cash flow, equity)
+        to verify fundamental accounting relationships.
+
         Args:
             statements: MappedStatements from mapped_reader
 
         Returns:
             List of CheckResult objects
         """
-        self.logger.info("Running vertical checks")
+        # Count main vs total statements
+        main_count = sum(1 for s in statements.statements if s.is_main_statement)
+        total_count = len(statements.statements)
+
+        self.logger.info(
+            f"Running vertical checks on {main_count} main statements "
+            f"(out of {total_count} total)"
+        )
+
         results = []
 
         # Check balance sheet equation
@@ -99,7 +110,7 @@ class VerticalChecker:
         if cf_result:
             results.append(cf_result)
 
-        # Check common values consistency
+        # Check common values consistency (main statements only)
         common_results = self.check_common_values_consistency(statements)
         results.extend(common_results)
 
@@ -333,7 +344,13 @@ class VerticalChecker:
         statements: MappedStatements
     ) -> list[CheckResult]:
         """
-        Check that common values appear consistently across statements.
+        Check that common values appear consistently across MAIN statements.
+
+        IMPORTANT: A fact appearing in multiple statements with the SAME value
+        is NOT a problem - that's expected cross-referencing.
+        Only flag when the SAME concept has DIFFERENT values in the same period.
+
+        Focuses on main statements only to avoid noise from detail/note files.
 
         Args:
             statements: MappedStatements object
@@ -343,10 +360,18 @@ class VerticalChecker:
         """
         results = []
 
-        # Build map of concept -> values across all statements
-        concept_values: dict[str, list[tuple[str, float]]] = {}
+        # Only check main statements for consistency
+        main_statements = [s for s in statements.statements if s.is_main_statement]
 
-        for statement in statements.statements:
+        if not main_statements:
+            # Fall back to all statements if no main statements identified
+            main_statements = statements.statements
+
+        # Build map of (concept, period_end) -> values across main statements
+        # Using period_end to distinguish different reporting periods
+        concept_period_values: dict[tuple[str, str], list[tuple[str, float]]] = {}
+
+        for statement in main_statements:
             for fact in statement.facts:
                 if fact.is_abstract or fact.value is None:
                     continue
@@ -357,43 +382,54 @@ class VerticalChecker:
                     continue
 
                 concept = fact.concept
-                if concept not in concept_values:
-                    concept_values[concept] = []
-                concept_values[concept].append((statement.name, value))
+                period = fact.period_end or 'unknown'
+                key = (concept, period)
 
-        # Check for inconsistencies
-        for concept, values in concept_values.items():
+                if key not in concept_period_values:
+                    concept_period_values[key] = []
+                concept_period_values[key].append((statement.name, value))
+
+        # Check for TRUE inconsistencies (same concept, same period, different values)
+        inconsistency_count = 0
+        for (concept, period), values in concept_period_values.items():
             if len(values) > 1:
                 unique_values = set(v for _, v in values)
-                if len(unique_values) > 1:
-                    # Check if differences are within tolerance
-                    min_val = min(unique_values)
-                    max_val = max(unique_values)
 
-                    if not self._within_tolerance(min_val, max_val):
-                        results.append(CheckResult(
-                            check_name=CHECK_COMMON_VALUES_CONSISTENCY,
-                            check_type='vertical',
-                            passed=False,
-                            severity=SEVERITY_WARNING,
-                            message=f"Inconsistent values for {concept} across statements",
-                            difference=max_val - min_val,
-                            details={
-                                'concept': concept,
-                                'occurrences': [
-                                    {'statement': stmt, 'value': val}
-                                    for stmt, val in values
-                                ],
-                            }
-                        ))
+                # Same fact appearing in multiple statements with SAME value = OK
+                if len(unique_values) == 1:
+                    continue  # This is cross-referencing, not a problem
 
-        if not results:
+                # Different values for same concept in same period = potential issue
+                min_val = min(unique_values)
+                max_val = max(unique_values)
+
+                if not self._within_tolerance(min_val, max_val):
+                    inconsistency_count += 1
+                    results.append(CheckResult(
+                        check_name=CHECK_COMMON_VALUES_CONSISTENCY,
+                        check_type='vertical',
+                        passed=False,
+                        severity=SEVERITY_WARNING,
+                        message=f"Different values for {concept} in period {period}",
+                        difference=max_val - min_val,
+                        details={
+                            'concept': concept,
+                            'period': period,
+                            'occurrences': [
+                                {'statement': stmt, 'value': val}
+                                for stmt, val in values
+                            ],
+                        }
+                    ))
+
+        # Summary result
+        if inconsistency_count == 0:
             results.append(CheckResult(
                 check_name=CHECK_COMMON_VALUES_CONSISTENCY,
                 check_type='vertical',
                 passed=True,
                 severity=SEVERITY_INFO,
-                message="Common values are consistent across statements"
+                message=f"Common values are consistent across {len(main_statements)} main statements"
             ))
 
         return results
@@ -403,9 +439,34 @@ class VerticalChecker:
         statements: MappedStatements,
         statement_type: str
     ) -> Optional[Statement]:
-        """Find a statement by type keyword."""
+        """
+        Find a statement by type keyword.
+
+        Prefers main statements (is_main_statement=True) over secondary statements.
+        This ensures we're checking the primary financial statements, not
+        parenthetical or detail files.
+
+        Args:
+            statements: MappedStatements object
+            statement_type: Type keyword (balance, income, cash, equity, comprehensive)
+
+        Returns:
+            Statement or None if not found
+        """
         type_lower = statement_type.lower()
 
+        # First pass: look in main statements only
+        for statement in statements.statements:
+            if not statement.is_main_statement:
+                continue
+
+            name_lower = statement.name.lower()
+            role_lower = (statement.role or '').lower()
+
+            if type_lower in name_lower or type_lower in role_lower:
+                return statement
+
+        # Second pass: look in all statements if not found in main
         for statement in statements.statements:
             name_lower = statement.name.lower()
             role_lower = (statement.role or '').lower()

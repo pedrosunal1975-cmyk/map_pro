@@ -28,6 +28,7 @@ from .checks.library_checker import LibraryChecker
 from .scoring.score_calculator import ScoreCalculator, VerificationScores
 from .scoring.quality_classifier import QualityClassifier, QualityClassification
 from .taxonomy_manager import TaxonomyManager
+from .markets import get_statement_identifier, MainStatements
 from ..constants import LOG_INPUT, LOG_PROCESS, LOG_OUTPUT
 
 
@@ -211,12 +212,33 @@ class VerificationCoordinator:
 
             self.logger.info(f"{LOG_OUTPUT} Loaded {len(statements.statements)} statements")
 
+            # Step 1b: Identify main statements using market-specific logic
+            self.logger.info(f"{LOG_PROCESS} Identifying main statements for {filing.market}")
+            main_statements = self._identify_main_statements(filing.market, statements, filing)
+            main_statement_names = main_statements.get_names() if main_statements else set()
+
+            self.logger.info(
+                f"{LOG_OUTPUT} Identified {len(main_statement_names)} main statements: "
+                f"{', '.join(main_statement_names) if main_statement_names else 'none'}"
+            )
+
+            # Update statement flags based on market-specific identification
+            for stmt in statements.statements:
+                stmt.is_main_statement = stmt.name in main_statement_names
+
             # Track statement info
             result.statement_info = {
                 'total_statements': len(statements.statements),
-                'main_statements': statements.main_statements,
+                'main_statements': list(main_statement_names),
+                'main_statement_count': len(main_statement_names),
                 'total_files': statements.total_statement_files,
                 'market': statements.market,
+                'identified_main': {
+                    'balance_sheet': main_statements.balance_sheet.name if main_statements and main_statements.balance_sheet else None,
+                    'income_statement': main_statements.income_statement.name if main_statements and main_statements.income_statement else None,
+                    'cash_flow': main_statements.cash_flow.name if main_statements and main_statements.cash_flow else None,
+                    'equity_statement': main_statements.equity_statement.name if main_statements and main_statements.equity_statement else None,
+                },
                 'statements': [
                     {
                         'name': stmt.name,
@@ -427,6 +449,59 @@ class VerificationCoordinator:
                 return 'ifrs-full' if 'ifrs-full' in available_taxonomies else None
 
         return None
+
+    def _identify_main_statements(
+        self,
+        market: str,
+        statements: MappedStatements,
+        filing: MappedFilingEntry
+    ) -> Optional[MainStatements]:
+        """
+        Identify main financial statements using market-specific logic.
+
+        SEC: Identifies consolidated statements by size (>40KB) and naming
+        ESEF: Matches against 6 standard IFRS statement names
+
+        Args:
+            market: Market identifier ('sec', 'esef')
+            statements: Loaded mapped statements
+            filing: Filing entry with path info
+
+        Returns:
+            MainStatements container with identified main statements
+        """
+        try:
+            # Get market-specific statement identifier
+            identifier = get_statement_identifier(market)
+
+            # Build statement dicts for identifier
+            statement_dicts = [
+                {
+                    'statement_name': stmt.name,
+                    'name': stmt.name,
+                    'facts': stmt.facts,
+                    'file_size': stmt.file_size_bytes,
+                }
+                for stmt in statements.statements
+            ]
+
+            # Get JSON directory for file size checks
+            json_dir = filing.json_folder if filing.json_folder else None
+
+            # Identify main statements
+            main_statements = identifier.identify_main_statements(
+                statement_dicts,
+                json_dir
+            )
+
+            return main_statements
+
+        except ValueError as e:
+            self.logger.warning(f"Could not get statement identifier for {market}: {e}")
+            return None
+        except Exception as e:
+            self.logger.warning(f"Error identifying main statements: {e}")
+            return None
 
     def get_available_filings(self) -> list[MappedFilingEntry]:
         """
