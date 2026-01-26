@@ -251,9 +251,9 @@ class URLResolver:
                 logger.error(f"Cannot import TaxonomyRecognizer: {e}")
                 return self._create_unknown_result(namespace)
         
-        # Use recognizer to match pattern
+        # Use recognizer to match namespace
         try:
-            result = self._recognizer.match_pattern(namespace)
+            result = self._recognizer.match_namespace(namespace)
             
             if result and result.get('recognized'):
                 # Add source flag
