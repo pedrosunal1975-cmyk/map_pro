@@ -266,8 +266,8 @@ class XSDHandler:
                 credentials = f"{api_key}:"
                 encoded = base64.b64encode(credentials.encode('utf-8')).decode('utf-8')
                 headers['Authorization'] = f"Basic {encoded}"
-            # Add Accept header for PDF
-            headers['Accept'] = 'application/pdf'
+            # Request iXBRL format for parseable XBRL data
+            headers['Accept'] = 'application/xhtml+xml'
 
         return headers
 

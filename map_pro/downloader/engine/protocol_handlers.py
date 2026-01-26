@@ -266,10 +266,10 @@ class HTTPHandler:
         Returns:
             Accept header string
         """
-        # Companies House documents: prefer PDF
-        # (iXBRL would be application/xhtml+xml, but PDF is more common)
+        # Companies House documents: prefer iXBRL (application/xhtml+xml)
+        # This returns parseable XBRL data instead of PDF
         if url and self._is_companies_house_url(url):
-            return 'application/pdf'
+            return 'application/xhtml+xml'
 
         # Default
         return DEFAULT_ACCEPT_HEADER

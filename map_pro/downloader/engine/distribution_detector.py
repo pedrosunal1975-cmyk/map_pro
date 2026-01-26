@@ -83,13 +83,13 @@ class DistributionDetector:
 
         # Special handling for Companies House URLs
         # Their Document API doesn't support HEAD requests, only GET
-        # We know these are PDFs, so skip detection and return known type
+        # Request iXBRL format (application/xhtml+xml) for parseable XBRL data
         if self._is_companies_house_url(url):
-            logger.info(f"{LOG_OUTPUT} Companies House document detected (known PDF type)")
+            logger.info(f"{LOG_OUTPUT} Companies House document detected (requesting iXBRL)")
             return {
                 'type': DIST_TYPE_XSD,  # Use XSD type for single file downloads (no extraction)
                 'url': url,
-                'content_type': 'application/pdf',
+                'content_type': 'application/xhtml+xml',  # Request iXBRL format
                 'content_length': 0,  # Unknown until download
                 'exists': True,  # Assume exists (will fail during download if not)
                 'status': 200,
@@ -208,8 +208,8 @@ class DistributionDetector:
             auth_header = self._get_companies_house_auth()
             if auth_header:
                 headers['Authorization'] = auth_header
-            # Add Accept header for PDF
-            headers['Accept'] = 'application/pdf'
+            # Request iXBRL format for parseable XBRL data
+            headers['Accept'] = 'application/xhtml+xml'
 
         return headers
 

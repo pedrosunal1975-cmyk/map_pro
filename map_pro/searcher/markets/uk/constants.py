@@ -96,11 +96,12 @@ HTTP_SERVER_ERROR = 500
 # ==============================================================================
 
 # Supported document formats
-FORMAT_IXBRL = "text/html"       # iXBRL (inline XBRL in HTML)
+# Companies House Document API returns these content types
+FORMAT_IXBRL = "application/xhtml+xml"  # iXBRL (inline XBRL in XHTML)
 FORMAT_PDF = "application/pdf"
 FORMAT_XML = "application/xml"
 
-# Preferred format priority
+# Preferred format priority (iXBRL first for XBRL parsing)
 FORMAT_PRIORITY = [
     FORMAT_IXBRL,                # Prefer iXBRL for parsing
     FORMAT_XML,                  # Fallback to XML
