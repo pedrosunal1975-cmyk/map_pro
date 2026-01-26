@@ -380,7 +380,21 @@ class VerificationCoordinator:
         return []
 
     def _detect_taxonomy(self, statements: MappedStatements) -> Optional[str]:
-        """Detect which standard taxonomy is used."""
+        """
+        Detect which standard taxonomy is used.
+
+        Looks at available taxonomy directories and matches against
+        concept prefixes or namespace URIs in the statements.
+        """
+        # First, get list of actually available taxonomies
+        available_taxonomies = []
+        try:
+            taxonomy_dirs = self.taxonomy_reader.taxonomy_loader.list_taxonomies()
+            available_taxonomies = [t.name for t in taxonomy_dirs]
+            self.logger.info(f"Available taxonomies: {available_taxonomies}")
+        except Exception as e:
+            self.logger.warning(f"Could not list available taxonomies: {e}")
+
         # Look at namespaces in the statements
         namespaces = statements.namespaces
 
@@ -388,19 +402,29 @@ class VerificationCoordinator:
             # Try to detect from concept prefixes
             for statement in statements.statements:
                 for fact in statement.facts:
-                    concept = fact.concept
-                    if 'us-gaap' in concept.lower():
-                        return 'us-gaap-2023'
-                    elif 'ifrs' in concept.lower():
-                        return 'ifrs-full'
+                    concept = fact.concept.lower()
+                    # Check against available taxonomies
+                    for tax_id in available_taxonomies:
+                        if tax_id.lower() in concept:
+                            return tax_id
+                    # Fallback checks
+                    if 'us-gaap' in concept:
+                        return 'us-gaap' if 'us-gaap' in available_taxonomies else None
+                    elif 'ifrs' in concept:
+                        return 'ifrs-full' if 'ifrs-full' in available_taxonomies else None
 
         # Check namespace values
         for ns_prefix, ns_uri in namespaces.items():
-            if 'us-gaap' in ns_uri.lower():
-                # Extract year from URI if possible
-                return 'us-gaap-2023'
-            elif 'ifrs' in ns_uri.lower():
-                return 'ifrs-full'
+            ns_uri_lower = ns_uri.lower()
+            # Check against available taxonomies
+            for tax_id in available_taxonomies:
+                if tax_id.lower() in ns_uri_lower:
+                    return tax_id
+            # Fallback checks
+            if 'us-gaap' in ns_uri_lower:
+                return 'us-gaap' if 'us-gaap' in available_taxonomies else None
+            elif 'ifrs' in ns_uri_lower:
+                return 'ifrs-full' if 'ifrs-full' in available_taxonomies else None
 
         return None
 

@@ -75,13 +75,13 @@ class LibraryChecker:
             taxonomy = self.taxonomy_reader.read_taxonomy(taxonomy_id)
 
         if not taxonomy:
-            self.logger.info("No taxonomy loaded - library checks will be limited")
+            self.logger.warning(f"Failed to load taxonomy: {taxonomy_id}")
             results.append(CheckResult(
                 check_name=CHECK_CONCEPT_VALIDITY,
                 check_type='library',
-                passed=True,
-                severity=SEVERITY_INFO,
-                message="Standard taxonomy not available for validation"
+                passed=False,  # NO FAKE CONFIRMATION - if we can't check, it's a failure
+                severity=SEVERITY_WARNING,
+                message=f"Cannot validate: taxonomy '{taxonomy_id}' not available or failed to load"
             ))
             return results
 
