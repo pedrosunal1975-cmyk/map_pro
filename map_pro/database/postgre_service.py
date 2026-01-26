@@ -197,9 +197,16 @@ class PostgreSQLService:
         """
         Configure PostgreSQL for TCP/IP connections after initdb.
 
-        Updates:
-        - postgresql.conf: listen_addresses = 'localhost'
-        - pg_hba.conf: Allow password auth for TCP/IP from localhost
+        Updates postgresql.conf:
+        - listen_addresses = 'localhost' (enable TCP/IP)
+        - password_encryption = 'md5' (must match pg_hba.conf auth method)
+
+        Updates pg_hba.conf:
+        - Allow md5 password auth for TCP/IP from localhost
+
+        IMPORTANT: password_encryption must match pg_hba.conf auth method,
+        otherwise PostgreSQL crashes when verifying passwords stored with
+        different encoding than the auth method expects.
         """
         if not self._pg_data_dir:
             return {'success': False, 'message': 'Data directory not configured'}
@@ -210,8 +217,7 @@ class PostgreSQLService:
         pg_hba_conf = self._pg_data_dir / 'pg_hba.conf'
 
         try:
-            # Update postgresql.conf to listen on localhost
-            # Use sudo to check file existence (files owned by postgres)
+            # Update postgresql.conf
             result = subprocess.run(
                 ['sudo', '-u', 'postgres', 'test', '-f', str(postgresql_conf)],
                 capture_output=True, timeout=5
@@ -224,15 +230,31 @@ class PostgreSQLService:
                 )
                 content = result.stdout
 
-                # Check if listen_addresses is already configured
+                # Settings to add to postgresql.conf
+                settings_to_add = []
+
+                # 1. Enable TCP/IP listening on localhost
                 if "listen_addresses = 'localhost'" not in content:
-                    # Append listen_addresses setting
+                    settings_to_add.append("listen_addresses = 'localhost'")
+
+                # 2. Set password_encryption to md5 (MUST match pg_hba.conf auth method)
+                # This ensures passwords created via CREATE USER are stored with md5 hash,
+                # which is required for md5 authentication in pg_hba.conf to work
+                if "password_encryption = 'md5'" not in content:
+                    settings_to_add.append("password_encryption = 'md5'")
+
+                # Append all settings
+                if settings_to_add:
+                    settings_block = (
+                        "\\n# Map Pro TCP/IP Configuration\\n" +
+                        "\\n".join(settings_to_add)
+                    )
                     subprocess.run(
                         ['sudo', '-u', 'postgres', 'sh', '-c',
-                         f"echo \"listen_addresses = 'localhost'\" >> {postgresql_conf}"],
+                         f'echo -e "{settings_block}" >> {postgresql_conf}'],
                         capture_output=True, timeout=10
                     )
-                    logger.info("Added listen_addresses = 'localhost' to postgresql.conf")
+                    logger.info(f"Added to postgresql.conf: {settings_to_add}")
 
             # Update pg_hba.conf to allow TCP/IP connections from localhost
             result = subprocess.run(
@@ -249,9 +271,9 @@ class PostgreSQLService:
                 # Check if TCP/IP auth for localhost is configured
                 if 'host    all             all             127.0.0.1/32' not in content:
                     # Add TCP/IP auth lines for IPv4 and IPv6 localhost
-                    # Use md5 for better compatibility with psycopg2
+                    # Use md5 - must match password_encryption setting above
                     auth_lines = (
-                        "# TCP/IP connections from localhost (added by map_pro)\\n"
+                        "\\n# TCP/IP connections from localhost (added by map_pro)\\n"
                         "host    all             all             127.0.0.1/32            md5\\n"
                         "host    all             all             ::1/128                 md5"
                     )
@@ -260,7 +282,7 @@ class PostgreSQLService:
                          f'echo -e "{auth_lines}" >> {pg_hba_conf}'],
                         capture_output=True, timeout=10
                     )
-                    logger.info("Added TCP/IP auth rules to pg_hba.conf")
+                    logger.info("Added TCP/IP auth rules to pg_hba.conf (md5)")
 
             return {'success': True, 'message': 'PostgreSQL configured for TCP/IP'}
 
