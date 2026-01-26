@@ -7,7 +7,8 @@ Handles complete PostgreSQL server initialization:
 1. Verifies data directory exists (created by core/data_paths.py)
 2. Runs initdb if data directory is empty
 3. Starts PostgreSQL service
-4. Seeds markets table
+4. Creates database user and database (from .env: DB_USER, DB_PASSWORD, DB_NAME)
+5. Seeds markets table
 
 Architecture:
 - Uses configuration from .env via database/core/config_loader.py
@@ -261,6 +262,158 @@ class PostgreSQLInitializer:
                 'message': f'Failed to start PostgreSQL: {e}'
             }
 
+    def create_user_and_database(self) -> Dict:
+        """
+        Create PostgreSQL user and database from .env configuration.
+
+        Creates:
+        - PostgreSQL role (user) with password
+        - Database owned by that user
+
+        Uses DB_USER, DB_PASSWORD, DB_NAME from .env configuration.
+
+        Returns:
+            Dictionary with result:
+                - success: bool
+                - message: str
+                - user_created: bool
+                - database_created: bool
+        """
+        db_user = self.config.get('db_user')
+        db_password = self.config.get('db_password')
+        db_name = self.config.get('db_name')
+
+        if not all([db_user, db_password, db_name]):
+            return {
+                'success': False,
+                'message': 'Missing DB_USER, DB_PASSWORD, or DB_NAME in configuration',
+                'user_created': False,
+                'database_created': False
+            }
+
+        logger.info(f"Creating PostgreSQL user '{db_user}' and database '{db_name}'...")
+
+        user_created = False
+        database_created = False
+
+        try:
+            # Step 1: Check if user exists, create if not
+            check_user_cmd = [
+                'sudo', '-u', 'postgres', 'psql', '-tAc',
+                f"SELECT 1 FROM pg_roles WHERE rolname='{db_user}'"
+            ]
+
+            check_result = subprocess.run(
+                check_user_cmd,
+                capture_output=True,
+                text=True,
+                timeout=30
+            )
+
+            if check_result.stdout.strip() != '1':
+                # User doesn't exist, create it
+                create_user_cmd = [
+                    'sudo', '-u', 'postgres', 'psql', '-c',
+                    f"CREATE USER {db_user} WITH PASSWORD '{db_password}' CREATEDB;"
+                ]
+
+                logger.info(f"Creating user: {db_user}")
+                create_result = subprocess.run(
+                    create_user_cmd,
+                    capture_output=True,
+                    text=True,
+                    timeout=30
+                )
+
+                if create_result.returncode != 0:
+                    logger.error(f"Failed to create user: {create_result.stderr}")
+                    return {
+                        'success': False,
+                        'message': f'Failed to create user: {create_result.stderr}',
+                        'user_created': False,
+                        'database_created': False
+                    }
+
+                user_created = True
+                logger.info(f"User '{db_user}' created successfully")
+            else:
+                logger.info(f"User '{db_user}' already exists")
+
+            # Step 2: Check if database exists, create if not
+            check_db_cmd = [
+                'sudo', '-u', 'postgres', 'psql', '-tAc',
+                f"SELECT 1 FROM pg_database WHERE datname='{db_name}'"
+            ]
+
+            check_db_result = subprocess.run(
+                check_db_cmd,
+                capture_output=True,
+                text=True,
+                timeout=30
+            )
+
+            if check_db_result.stdout.strip() != '1':
+                # Database doesn't exist, create it
+                create_db_cmd = [
+                    'sudo', '-u', 'postgres', 'psql', '-c',
+                    f"CREATE DATABASE {db_name} OWNER {db_user};"
+                ]
+
+                logger.info(f"Creating database: {db_name}")
+                create_db_result = subprocess.run(
+                    create_db_cmd,
+                    capture_output=True,
+                    text=True,
+                    timeout=30
+                )
+
+                if create_db_result.returncode != 0:
+                    logger.error(f"Failed to create database: {create_db_result.stderr}")
+                    return {
+                        'success': False,
+                        'message': f'Failed to create database: {create_db_result.stderr}',
+                        'user_created': user_created,
+                        'database_created': False
+                    }
+
+                database_created = True
+                logger.info(f"Database '{db_name}' created successfully")
+            else:
+                logger.info(f"Database '{db_name}' already exists")
+
+            # Step 3: Grant all privileges
+            grant_cmd = [
+                'sudo', '-u', 'postgres', 'psql', '-c',
+                f"GRANT ALL PRIVILEGES ON DATABASE {db_name} TO {db_user};"
+            ]
+
+            subprocess.run(grant_cmd, capture_output=True, text=True, timeout=30)
+            logger.info(f"Privileges granted to '{db_user}' on '{db_name}'")
+
+            return {
+                'success': True,
+                'message': f"User '{db_user}' and database '{db_name}' ready",
+                'user_created': user_created,
+                'database_created': database_created
+            }
+
+        except subprocess.TimeoutExpired:
+            logger.error("Command timed out")
+            return {
+                'success': False,
+                'message': 'Command timed out',
+                'user_created': user_created,
+                'database_created': database_created
+            }
+        except Exception as e:
+            logger.error(f"Error creating user/database: {e}")
+            return {
+                'success': False,
+                'message': f'Error: {e}',
+                'user_created': user_created,
+                'database_created': database_created
+            }
+
     def seed_markets(self) -> Dict:
         """
         Seed markets table with supported markets.
@@ -332,7 +485,8 @@ class PostgreSQLInitializer:
         1. Verify data directory exists
         2. Run initdb if needed
         3. Start PostgreSQL
-        4. Seed markets (optional)
+        4. Create user and database (from .env configuration)
+        5. Seed markets (optional)
 
         Args:
             seed_markets: Whether to seed markets table after initialization
@@ -407,9 +561,33 @@ class PostgreSQLInitializer:
 
             print("  ✓ PostgreSQL started successfully")
 
-        # Step 4: Seed markets (optional)
+        # Step 4: Create user and database
+        print("\nStep 4: Creating user and database...")
+        db_user = self.config.get('db_user')
+        db_name = self.config.get('db_name')
+        print(f"  User: {db_user}, Database: {db_name}")
+
+        user_db_result = self.create_user_and_database()
+        result['steps']['create_user_database'] = user_db_result
+
+        if not user_db_result['success']:
+            result['message'] = user_db_result['message']
+            print(f"  ✗ Failed: {user_db_result['message']}")
+            return result
+
+        if user_db_result['user_created']:
+            print(f"  ✓ Created user: {db_user}")
+        else:
+            print(f"  ✓ User already exists: {db_user}")
+
+        if user_db_result['database_created']:
+            print(f"  ✓ Created database: {db_name}")
+        else:
+            print(f"  ✓ Database already exists: {db_name}")
+
+        # Step 5: Seed markets (optional)
         if seed_markets:
-            print("\nStep 4: Seeding markets...")
+            print("\nStep 5: Seeding markets...")
             seed_result = self.seed_markets()
             result['steps']['seed_markets'] = seed_result
 
