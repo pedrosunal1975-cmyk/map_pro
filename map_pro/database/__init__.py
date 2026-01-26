@@ -14,15 +14,24 @@ Architecture:
 Usage:
     from database import initialize_database, session_scope
     from database.models import Entity, FilingSearch
-    
+
     # Initialize database
     initialize_database()
-    
+
     # Use session
     with session_scope() as session:
         entity = session.query(Entity).first()
         if entity.directory_exists:
             process_entity(entity)
+
+PostgreSQL Initialization:
+    from database import initialize_postgresql, check_postgresql_status
+
+    # Full initialization (initdb + start + seed markets)
+    result = initialize_postgresql()
+
+    # Check status
+    status = check_postgresql_status()
 """
 
 from .core import (
@@ -47,6 +56,12 @@ from .models import (
     FilingSearch,
     DownloadedFiling,
     TaxonomyLibrary,
+)
+
+from .postgre_initialize import (
+    PostgreSQLInitializer,
+    initialize_postgresql,
+    check_postgresql_status,
 )
 
 
@@ -100,6 +115,10 @@ __all__ = [
     'validate_paths',
     'get_logger',
     'configure_logging',
+    # PostgreSQL initialization
+    'PostgreSQLInitializer',
+    'initialize_postgresql',
+    'check_postgresql_status',
     # Database initialization
     'initialize_database',
     # Database utilities

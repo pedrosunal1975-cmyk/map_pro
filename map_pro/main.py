@@ -60,6 +60,24 @@ else:
         f"Some paths failed: {path_results['summary']['failed']} failures"
     )
 
+# Step 4: Initialize PostgreSQL (initdb, start service, seed markets)
+startup_logger.info("Initializing PostgreSQL...")
+from database.postgre_initialize import initialize_postgresql, check_postgresql_status
+
+pg_status = check_postgresql_status()
+if not pg_status['postgresql_running']:
+    startup_logger.info("PostgreSQL not running - starting initialization...")
+    pg_result = initialize_postgresql(seed_markets=True)
+    if pg_result['success']:
+        startup_logger.info("PostgreSQL initialized successfully")
+    else:
+        startup_logger.error(f"PostgreSQL initialization failed: {pg_result['message']}")
+        print(f"\n[ERROR] PostgreSQL initialization failed: {pg_result['message']}")
+        print("Please check the error above and try again.")
+        sys.exit(1)
+else:
+    startup_logger.info("PostgreSQL already running")
+
 # =============================================================================
 # APPLICATION IMPORTS
 # =============================================================================
