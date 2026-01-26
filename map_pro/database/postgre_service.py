@@ -43,7 +43,11 @@ class PostgreSQLService:
         if not self._pg_data_dir:
             return False
         pg_version_file = self._pg_data_dir / 'PG_VERSION'
-        return pg_version_file.exists()
+        try:
+            return pg_version_file.exists()
+        except PermissionError:
+            # Directory owned by postgres means initdb was run
+            return True
 
     def is_service_running(self) -> bool:
         """Check if PostgreSQL service is running using systemctl."""
