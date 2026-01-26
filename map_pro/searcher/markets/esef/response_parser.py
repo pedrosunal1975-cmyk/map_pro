@@ -18,6 +18,7 @@ from searcher.markets.esef.constants import (
     ATTR_RELATIONSHIPS,
     FIELD_ENTITY,
     FIELD_ENTITY_DATA,
+    DEFAULT_BASE_URL,
 )
 
 logger = get_logger(__name__, 'markets')
@@ -246,19 +247,48 @@ class ESEFResponseParser:
             filing: Parsed filing dict
 
         Returns:
-            str: Download URL or None
+            str: Full download URL or None
         """
         # Prefer direct report URL (iXBRL file)
         report_url = filing.get('report_url')
         if report_url:
-            return report_url
+            return self._ensure_full_url(report_url)
 
         # Fallback to package URL (ZIP)
         package_url = filing.get('package_url')
         if package_url:
-            return package_url
+            return self._ensure_full_url(package_url)
 
         return None
+
+    def _ensure_full_url(self, url: str) -> str:
+        """
+        Ensure URL is a full URL with base domain.
+
+        The filings.xbrl.org API returns relative paths like:
+        /2138002P5RNKC5W2JZ46/2025-02-22/ESEF/GB/0/...
+
+        This method prepends the base URL if needed.
+
+        Args:
+            url: URL or relative path
+
+        Returns:
+            str: Full URL with https://filings.xbrl.org prefix
+        """
+        if not url:
+            return url
+
+        # Already a full URL
+        if url.startswith('http://') or url.startswith('https://'):
+            return url
+
+        # Relative path - prepend base URL
+        if url.startswith('/'):
+            return f"{DEFAULT_BASE_URL}{url}"
+
+        # No leading slash - add one
+        return f"{DEFAULT_BASE_URL}/{url}"
 
 
 __all__ = ['ESEFResponseParser']
