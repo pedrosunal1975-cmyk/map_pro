@@ -2,13 +2,15 @@
 """
 Verification Checks Constants
 
-Constants for horizontal, vertical, and library verification checks.
+Check names and tolerance values for verification checks.
+NO hardcoded concept patterns or formulas - all relationships
+come from XBRL sources (company linkbase and standard taxonomy).
 """
 
 # ==============================================================================
 # HORIZONTAL CHECK NAMES
 # ==============================================================================
-# Checks within a single statement
+# Checks within a single statement (using XBRL calculation linkbase)
 
 CHECK_CALCULATION_CONSISTENCY = 'calculation_consistency'
 CHECK_TOTAL_RECONCILIATION = 'total_reconciliation'
@@ -25,19 +27,11 @@ HORIZONTAL_CHECK_NAMES = [
 # ==============================================================================
 # VERTICAL CHECK NAMES
 # ==============================================================================
-# Checks across statements
+# Checks across statements (using XBRL calculation linkbase)
 
-CHECK_BALANCE_SHEET_EQUATION = 'balance_sheet_equation'
-CHECK_INCOME_LINKAGE = 'income_statement_linkage'
-CHECK_CASH_FLOW_LINKAGE = 'cash_flow_linkage'
-CHECK_RETAINED_EARNINGS_ROLL = 'retained_earnings_rollforward'
 CHECK_COMMON_VALUES_CONSISTENCY = 'common_values_consistency'
 
 VERTICAL_CHECK_NAMES = [
-    CHECK_BALANCE_SHEET_EQUATION,
-    CHECK_INCOME_LINKAGE,
-    CHECK_CASH_FLOW_LINKAGE,
-    CHECK_RETAINED_EARNINGS_ROLL,
     CHECK_COMMON_VALUES_CONSISTENCY,
 ]
 
@@ -71,87 +65,6 @@ DEFAULT_ROUNDING_TOLERANCE = 1.0  # $1 or equivalent
 # Large value threshold (values above this use percentage tolerance)
 LARGE_VALUE_THRESHOLD = 1000.0
 
-# ==============================================================================
-# BALANCE SHEET CONCEPTS
-# ==============================================================================
-# Concepts that typically represent totals (market-agnostic patterns)
-
-TOTAL_ASSETS_PATTERNS = [
-    'Assets',
-    'TotalAssets',
-    'AssetsTotal',
-]
-
-TOTAL_LIABILITIES_PATTERNS = [
-    'Liabilities',
-    'TotalLiabilities',
-    'LiabilitiesTotal',
-]
-
-TOTAL_EQUITY_PATTERNS = [
-    'Equity',
-    'StockholdersEquity',
-    'ShareholdersEquity',
-    'TotalEquity',
-    'EquityTotal',
-]
-
-LIABILITIES_AND_EQUITY_PATTERNS = [
-    'LiabilitiesAndEquity',
-    'LiabilitiesAndStockholdersEquity',
-    'TotalLiabilitiesAndEquity',
-]
-
-# ==============================================================================
-# INCOME STATEMENT CONCEPTS
-# ==============================================================================
-
-NET_INCOME_PATTERNS = [
-    'NetIncome',
-    'NetIncomeLoss',
-    'ProfitLoss',
-    'NetProfitLoss',
-    'ProfitLossAttributableToOwnersOfParent',
-]
-
-REVENUE_PATTERNS = [
-    'Revenue',
-    'Revenues',
-    'SalesRevenueNet',
-    'RevenueFromContractWithCustomerExcludingAssessedTax',
-]
-
-# ==============================================================================
-# CASH FLOW CONCEPTS
-# ==============================================================================
-
-CASH_BEGINNING_PATTERNS = [
-    'CashAndCashEquivalentsAtCarryingValue',
-    'CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents',
-    'CashAndCashEquivalentsPeriodBeginning',
-]
-
-CASH_ENDING_PATTERNS = [
-    'CashAndCashEquivalentsAtCarryingValue',
-    'CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents',
-    'CashAndCashEquivalentsPeriodEnd',
-]
-
-CASH_CHANGE_PATTERNS = [
-    'CashAndCashEquivalentsPeriodIncreaseDecrease',
-    'NetCashProvidedByUsedInFinancingActivities',
-]
-
-# ==============================================================================
-# RETAINED EARNINGS CONCEPTS
-# ==============================================================================
-
-RETAINED_EARNINGS_PATTERNS = [
-    'RetainedEarnings',
-    'RetainedEarningsAccumulatedDeficit',
-    'AccumulatedOtherComprehensiveIncomeLossNetOfTax',
-]
-
 
 __all__ = [
     # Horizontal checks
@@ -162,10 +75,6 @@ __all__ = [
     'HORIZONTAL_CHECK_NAMES',
 
     # Vertical checks
-    'CHECK_BALANCE_SHEET_EQUATION',
-    'CHECK_INCOME_LINKAGE',
-    'CHECK_CASH_FLOW_LINKAGE',
-    'CHECK_RETAINED_EARNINGS_ROLL',
     'CHECK_COMMON_VALUES_CONSISTENCY',
     'VERTICAL_CHECK_NAMES',
 
@@ -180,16 +89,4 @@ __all__ = [
     'DEFAULT_CALCULATION_TOLERANCE',
     'DEFAULT_ROUNDING_TOLERANCE',
     'LARGE_VALUE_THRESHOLD',
-
-    # Concept patterns
-    'TOTAL_ASSETS_PATTERNS',
-    'TOTAL_LIABILITIES_PATTERNS',
-    'TOTAL_EQUITY_PATTERNS',
-    'LIABILITIES_AND_EQUITY_PATTERNS',
-    'NET_INCOME_PATTERNS',
-    'REVENUE_PATTERNS',
-    'CASH_BEGINNING_PATTERNS',
-    'CASH_ENDING_PATTERNS',
-    'CASH_CHANGE_PATTERNS',
-    'RETAINED_EARNINGS_PATTERNS',
 ]
