@@ -507,6 +507,26 @@ class WorkflowOrchestrator:
             self.logger.warning(f"Filing directory not found: {filing_path}")
             return 0
 
+        # Check if there are parseable XBRL files (not just PDFs)
+        parseable_extensions = {'.xml', '.xbrl', '.xhtml', '.html', '.htm'}
+        files_in_dir = list(filing_path.iterdir()) if filing_path.is_dir() else []
+        parseable_files = [f for f in files_in_dir if f.suffix.lower() in parseable_extensions]
+        pdf_files = [f for f in files_in_dir if f.suffix.lower() == '.pdf']
+
+        if not parseable_files and pdf_files:
+            # Only PDF files present - skip parsing gracefully
+            self.logger.info(
+                f"Skipping parse for {entity.company_name}: "
+                f"Only PDF format available (not parseable as XBRL). "
+                f"Downloaded: {', '.join(f.name for f in pdf_files)}"
+            )
+            downloaded_filing.parse_status = PARSE_STATUS_FAILED
+            self.state.add_warning(
+                "parse",
+                f"{entity.company_name}: Only PDF available from source (iXBRL not filed)"
+            )
+            return 0
+
         self.logger.info(f"Parsing: {entity.company_name} - {filing_path}")
 
         # Parse filing
