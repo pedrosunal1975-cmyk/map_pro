@@ -180,7 +180,11 @@ class PostgreSQLService:
 
             if result.returncode == 0:
                 logger.info("initdb completed")
-                return {'success': True, 'message': 'initdb completed'}
+                # Configure PostgreSQL for TCP/IP connections
+                config_result = self._configure_postgresql()
+                if not config_result['success']:
+                    return config_result
+                return {'success': True, 'message': 'initdb completed and configured'}
             else:
                 return {'success': False, 'message': result.stderr}
 
@@ -188,3 +192,62 @@ class PostgreSQLService:
             return {'success': False, 'message': 'initdb timed out'}
         except Exception as e:
             return {'success': False, 'message': str(e)}
+
+    def _configure_postgresql(self) -> Dict:
+        """
+        Configure PostgreSQL for TCP/IP connections after initdb.
+
+        Updates:
+        - postgresql.conf: listen_addresses = 'localhost'
+        - pg_hba.conf: Allow password auth for TCP/IP from localhost
+        """
+        if not self._pg_data_dir:
+            return {'success': False, 'message': 'Data directory not configured'}
+
+        logger.info("Configuring PostgreSQL for TCP/IP connections...")
+
+        postgresql_conf = self._pg_data_dir / 'postgresql.conf'
+        pg_hba_conf = self._pg_data_dir / 'pg_hba.conf'
+
+        try:
+            # Update postgresql.conf to listen on localhost
+            if postgresql_conf.exists():
+                # Read current config
+                result = subprocess.run(
+                    ['sudo', '-u', 'postgres', 'cat', str(postgresql_conf)],
+                    capture_output=True, text=True, timeout=10
+                )
+                content = result.stdout
+
+                # Check if listen_addresses is already configured
+                if "listen_addresses = 'localhost'" not in content:
+                    # Append listen_addresses setting
+                    append_cmd = f"echo \"listen_addresses = 'localhost'\" | sudo -u postgres tee -a {postgresql_conf}"
+                    subprocess.run(append_cmd, shell=True, capture_output=True, timeout=10)
+                    logger.info("Added listen_addresses = 'localhost' to postgresql.conf")
+
+            # Update pg_hba.conf to allow TCP/IP connections from localhost
+            if pg_hba_conf.exists():
+                result = subprocess.run(
+                    ['sudo', '-u', 'postgres', 'cat', str(pg_hba_conf)],
+                    capture_output=True, text=True, timeout=10
+                )
+                content = result.stdout
+
+                # Check if TCP/IP auth for localhost is configured
+                if 'host    all             all             127.0.0.1/32' not in content:
+                    # Add TCP/IP auth lines for IPv4 and IPv6 localhost
+                    auth_lines = """
+# TCP/IP connections from localhost (added by map_pro)
+host    all             all             127.0.0.1/32            scram-sha-256
+host    all             all             ::1/128                 scram-sha-256
+"""
+                    append_cmd = f"echo '{auth_lines}' | sudo -u postgres tee -a {pg_hba_conf}"
+                    subprocess.run(append_cmd, shell=True, capture_output=True, timeout=10)
+                    logger.info("Added TCP/IP auth rules to pg_hba.conf")
+
+            return {'success': True, 'message': 'PostgreSQL configured for TCP/IP'}
+
+        except Exception as e:
+            logger.error(f"Failed to configure PostgreSQL: {e}")
+            return {'success': False, 'message': f'Configuration failed: {e}'}
