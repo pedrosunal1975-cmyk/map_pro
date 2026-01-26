@@ -14,6 +14,7 @@ from .coordinator import VerificationCoordinator, VerificationResult
 from .checks import HorizontalChecker, VerticalChecker, LibraryChecker, CheckResult
 from .scoring import ScoreCalculator, VerificationScores, QualityClassifier, QualityClassification
 from .taxonomy_manager import TaxonomyManager
+from .formula_registry import FormulaRegistry, CalculationTree, FormulaComparison
 
 __all__ = [
     'VerificationCoordinator',
@@ -27,4 +28,7 @@ __all__ = [
     'QualityClassifier',
     'QualityClassification',
     'TaxonomyManager',
+    'FormulaRegistry',
+    'CalculationTree',
+    'FormulaComparison',
 ]

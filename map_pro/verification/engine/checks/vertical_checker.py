@@ -13,11 +13,18 @@ Across statements, verify:
 4. Common values appear consistently
 
 These are fundamental accounting relationships.
+
+XBRL-SOURCED VERIFICATION (preferred):
+When FormulaRegistry is provided, uses XBRL calculation linkbase
+instead of hardcoded patterns. This provides:
+- Company-defined calculation relationships
+- Standard taxonomy calculation relationships
+- Comparison between both sources
 """
 
 import logging
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 
 from ...loaders.mapped_reader import Statement, StatementFact, MappedStatements
 from ..checks.constants import (
@@ -39,6 +46,14 @@ from ..checks.constants import (
 from ...constants import SEVERITY_CRITICAL, SEVERITY_WARNING, SEVERITY_INFO
 from .horizontal_checker import CheckResult
 
+if TYPE_CHECKING:
+    from ..formula_registry import FormulaRegistry
+
+
+# Check name for XBRL-sourced calculations
+CHECK_XBRL_CALCULATION = 'xbrl_calculation'
+CHECK_XBRL_CALCULATION_COMPARISON = 'xbrl_calculation_comparison'
+
 
 class VerticalChecker:
     """
@@ -58,7 +73,8 @@ class VerticalChecker:
     def __init__(
         self,
         calculation_tolerance: float = DEFAULT_CALCULATION_TOLERANCE,
-        rounding_tolerance: float = DEFAULT_ROUNDING_TOLERANCE
+        rounding_tolerance: float = DEFAULT_ROUNDING_TOLERANCE,
+        formula_registry: Optional['FormulaRegistry'] = None
     ):
         """
         Initialize vertical checker.
@@ -66,9 +82,11 @@ class VerticalChecker:
         Args:
             calculation_tolerance: Percentage tolerance for calculations
             rounding_tolerance: Absolute tolerance for small differences
+            formula_registry: Optional FormulaRegistry for XBRL-sourced verification
         """
         self.calculation_tolerance = calculation_tolerance
         self.rounding_tolerance = rounding_tolerance
+        self.formula_registry = formula_registry
         self.logger = logging.getLogger('process.vertical_checker')
 
     def check_all(self, statements: MappedStatements) -> list[CheckResult]:
@@ -434,6 +452,190 @@ class VerticalChecker:
 
         return results
 
+    def check_xbrl_calculations(
+        self,
+        statements: MappedStatements,
+        source: str = 'company'
+    ) -> list[CheckResult]:
+        """
+        Verify calculations using XBRL-sourced formulas.
+
+        Uses FormulaRegistry instead of hardcoded patterns.
+        This is the preferred method when registry is available.
+
+        Args:
+            statements: MappedStatements object
+            source: 'company' or 'taxonomy' for which formulas to use
+
+        Returns:
+            List of CheckResult for each calculation verified
+        """
+        if not self.formula_registry:
+            self.logger.warning(
+                "FormulaRegistry not available - cannot run XBRL calculations"
+            )
+            return []
+
+        # Import here to avoid circular imports
+        from .calculation_verifier import CalculationVerifier
+
+        verifier = CalculationVerifier(
+            self.formula_registry,
+            self.calculation_tolerance,
+            self.rounding_tolerance
+        )
+
+        # Run verification
+        results = verifier.verify_all_calculations(statements, source)
+
+        # Convert to CheckResult format
+        check_results = verifier.to_check_results(results, CHECK_XBRL_CALCULATION)
+
+        # Add source info to each result
+        for result in check_results:
+            if result.details:
+                result.details['verification_source'] = source
+
+        self.logger.info(
+            f"XBRL calculation verification ({source}): "
+            f"{sum(1 for r in check_results if r.passed)}/{len(check_results)} passed"
+        )
+
+        return check_results
+
+    def check_xbrl_calculations_dual(
+        self,
+        statements: MappedStatements
+    ) -> list[CheckResult]:
+        """
+        Verify calculations against both company and taxonomy sources.
+
+        Compares results to identify where company and taxonomy disagree.
+
+        Args:
+            statements: MappedStatements object
+
+        Returns:
+            List of CheckResult including comparison results
+        """
+        if not self.formula_registry:
+            self.logger.warning(
+                "FormulaRegistry not available - cannot run dual verification"
+            )
+            return []
+
+        # Import here to avoid circular imports
+        from .calculation_verifier import CalculationVerifier
+
+        verifier = CalculationVerifier(
+            self.formula_registry,
+            self.calculation_tolerance,
+            self.rounding_tolerance
+        )
+
+        # Run dual verification
+        dual_results = verifier.dual_verify(statements)
+
+        check_results = []
+
+        for dual in dual_results:
+            # Add company result if available
+            if dual.company_result and dual.company_result.actual_value is not None:
+                check_results.append(CheckResult(
+                    check_name=CHECK_XBRL_CALCULATION,
+                    check_type='vertical',
+                    passed=dual.company_result.passed,
+                    severity=SEVERITY_WARNING if not dual.company_result.passed else SEVERITY_INFO,
+                    message=f"[Company] {dual.company_result.message}",
+                    expected_value=dual.company_result.expected_value,
+                    actual_value=dual.company_result.actual_value,
+                    difference=dual.company_result.difference,
+                    details={
+                        'concept': dual.concept,
+                        'source': 'company',
+                        'children_count': len(dual.company_result.children),
+                    }
+                ))
+
+            # Add taxonomy result if available
+            if dual.taxonomy_result and dual.taxonomy_result.actual_value is not None:
+                check_results.append(CheckResult(
+                    check_name=CHECK_XBRL_CALCULATION,
+                    check_type='vertical',
+                    passed=dual.taxonomy_result.passed,
+                    severity=SEVERITY_WARNING if not dual.taxonomy_result.passed else SEVERITY_INFO,
+                    message=f"[Taxonomy] {dual.taxonomy_result.message}",
+                    expected_value=dual.taxonomy_result.expected_value,
+                    actual_value=dual.taxonomy_result.actual_value,
+                    difference=dual.taxonomy_result.difference,
+                    details={
+                        'concept': dual.concept,
+                        'source': 'taxonomy',
+                        'children_count': len(dual.taxonomy_result.children),
+                    }
+                ))
+
+            # Add comparison result if sources disagree
+            if not dual.sources_agree:
+                check_results.append(CheckResult(
+                    check_name=CHECK_XBRL_CALCULATION_COMPARISON,
+                    check_type='vertical',
+                    passed=False,
+                    severity=SEVERITY_WARNING,
+                    message=f"Company vs Taxonomy disagree for {dual.concept}",
+                    details={
+                        'concept': dual.concept,
+                        'discrepancies': dual.discrepancies,
+                    }
+                ))
+
+        agreed = sum(1 for d in dual_results if d.sources_agree)
+        self.logger.info(
+            f"Dual verification complete: {agreed}/{len(dual_results)} concepts agree"
+        )
+
+        return check_results
+
+    def check_all_with_xbrl(
+        self,
+        statements: MappedStatements,
+        include_legacy: bool = True
+    ) -> list[CheckResult]:
+        """
+        Run all checks including XBRL-sourced calculations.
+
+        When FormulaRegistry is available, runs both:
+        - XBRL calculation verification (preferred)
+        - Legacy pattern-based checks (optional, for comparison)
+
+        Args:
+            statements: MappedStatements object
+            include_legacy: Whether to include legacy pattern-based checks
+
+        Returns:
+            List of all CheckResult objects
+        """
+        results = []
+
+        # XBRL-sourced calculations (if registry available)
+        if self.formula_registry:
+            xbrl_results = self.check_xbrl_calculations_dual(statements)
+            results.extend(xbrl_results)
+            self.logger.info(f"Added {len(xbrl_results)} XBRL-sourced check results")
+
+        # Legacy checks (optional, for comparison or fallback)
+        if include_legacy or not self.formula_registry:
+            legacy_results = self.check_all(statements)
+            # Mark legacy results
+            for result in legacy_results:
+                if result.details is None:
+                    result.details = {}
+                result.details['verification_method'] = 'legacy_patterns'
+            results.extend(legacy_results)
+            self.logger.info(f"Added {len(legacy_results)} legacy check results")
+
+        return results
+
     def _find_statement_by_type(
         self,
         statements: MappedStatements,
@@ -517,4 +719,4 @@ class VerticalChecker:
         return diff <= self.rounding_tolerance
 
 
-__all__ = ['VerticalChecker']
+__all__ = ['VerticalChecker', 'CHECK_XBRL_CALCULATION', 'CHECK_XBRL_CALCULATION_COMPARISON']

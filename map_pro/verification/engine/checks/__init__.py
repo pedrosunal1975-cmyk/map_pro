@@ -11,10 +11,20 @@ Verification check implementations:
 from .horizontal_checker import HorizontalChecker, CheckResult
 from .vertical_checker import VerticalChecker
 from .library_checker import LibraryChecker
+from .calculation_verifier import (
+    CalculationVerifier,
+    CalculationVerificationResult,
+    DualVerificationResult,
+    ChildContribution,
+)
 
 __all__ = [
     'HorizontalChecker',
     'VerticalChecker',
     'LibraryChecker',
     'CheckResult',
+    'CalculationVerifier',
+    'CalculationVerificationResult',
+    'DualVerificationResult',
+    'ChildContribution',
 ]

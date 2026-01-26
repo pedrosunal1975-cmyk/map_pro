@@ -28,6 +28,7 @@ from .checks.library_checker import LibraryChecker
 from .scoring.score_calculator import ScoreCalculator, VerificationScores
 from .scoring.quality_classifier import QualityClassifier, QualityClassification
 from .taxonomy_manager import TaxonomyManager
+from .formula_registry import FormulaRegistry
 from .markets import get_statement_identifier, MainStatements
 from ..constants import LOG_INPUT, LOG_PROCESS, LOG_OUTPUT
 
@@ -65,12 +66,14 @@ class VerificationResult:
     horizontal_results: list[CheckResult] = field(default_factory=list)
     vertical_results: list[CheckResult] = field(default_factory=list)
     library_results: list[CheckResult] = field(default_factory=list)
+    xbrl_calculation_results: list[CheckResult] = field(default_factory=list)
     issues_summary: dict = field(default_factory=dict)
     recommendation: str = ''
     verified_at: datetime = None
     processing_time_seconds: float = 0.0
     statement_info: dict = field(default_factory=dict)
     taxonomy_status: dict = field(default_factory=dict)
+    formula_registry_summary: dict = field(default_factory=dict)
 
     def __post_init__(self):
         if self.verified_at is None:
@@ -128,13 +131,19 @@ class VerificationCoordinator:
         # Initialize taxonomy manager for library integration
         self.taxonomy_manager = TaxonomyManager(self.config)
 
+        # Initialize formula registry for XBRL-sourced verification
+        self.formula_registry = FormulaRegistry(self.config)
+
         # Initialize checkers
         tolerance = self.config.get('calculation_tolerance', 0.01)
         rounding = self.config.get('rounding_tolerance', 1.0)
 
         self.horizontal_checker = HorizontalChecker(tolerance, rounding)
-        self.vertical_checker = VerticalChecker(tolerance, rounding)
+        self.vertical_checker = VerticalChecker(tolerance, rounding, self.formula_registry)
         self.library_checker = LibraryChecker()
+
+        # Configuration for XBRL-sourced verification
+        self.enable_xbrl_verification = self.config.get('enable_xbrl_verification', True)
 
         # Initialize scoring
         h_weight = self.config.get('horizontal_weight', 0.4)
@@ -256,15 +265,28 @@ class VerificationCoordinator:
             calc_networks = self._load_calculation_linkbase(filing)
             self.logger.info(f"{LOG_OUTPUT} Loaded {len(calc_networks)} calculation networks")
 
+            # Step 2b: Load formulas into registry (for XBRL-sourced verification)
+            if self.enable_xbrl_verification:
+                self.logger.info(f"{LOG_PROCESS} Loading formulas into registry")
+                self._load_formula_registry(filing, statements)
+                result.formula_registry_summary = self.formula_registry.get_summary()
+
             # Step 3: Run horizontal checks
             self.logger.info(f"{LOG_PROCESS} Running horizontal checks")
             result.horizontal_results = self.horizontal_checker.check_all(
                 statements, calc_networks
             )
 
-            # Step 4: Run vertical checks
+            # Step 4: Run vertical checks (legacy pattern-based)
             self.logger.info(f"{LOG_PROCESS} Running vertical checks")
             result.vertical_results = self.vertical_checker.check_all(statements)
+
+            # Step 4b: Run XBRL-sourced calculation verification
+            if self.enable_xbrl_verification and self.formula_registry.has_company_formulas():
+                self.logger.info(f"{LOG_PROCESS} Running XBRL-sourced calculation verification")
+                result.xbrl_calculation_results = self.vertical_checker.check_xbrl_calculations_dual(
+                    statements
+                )
 
             # Step 5: Ensure taxonomies are available (if library checks enabled)
             if self.enable_library_checks:
@@ -293,7 +315,8 @@ class VerificationCoordinator:
             all_results = (
                 result.horizontal_results +
                 result.vertical_results +
-                result.library_results
+                result.library_results +
+                result.xbrl_calculation_results
             )
             result.scores = self.score_calculator.calculate_scores(all_results)
 
@@ -400,6 +423,53 @@ class VerificationCoordinator:
             self.logger.warning(f"Could not load calculation linkbase: {e}")
 
         return []
+
+    def _load_formula_registry(
+        self,
+        filing: MappedFilingEntry,
+        statements: MappedStatements
+    ) -> None:
+        """
+        Load formulas into the formula registry from both sources.
+
+        Loads:
+        1. Company XBRL calculation linkbase
+        2. Standard taxonomy calculation linkbase (if available)
+
+        Args:
+            filing: Filing entry
+            statements: Loaded statements (for taxonomy detection)
+        """
+        # Clear previous data
+        self.formula_registry.clear()
+
+        # Load company formulas from XBRL
+        try:
+            xbrl_path = self.xbrl_loader.find_filing_for_company(
+                filing.market,
+                filing.company,
+                filing.form,
+                filing.date
+            )
+
+            if xbrl_path:
+                company_count = self.formula_registry.load_company_formulas(xbrl_path)
+                self.logger.info(f"{LOG_OUTPUT} Loaded {company_count} company calculation trees")
+
+        except Exception as e:
+            self.logger.warning(f"Could not load company formulas: {e}")
+
+        # Load taxonomy formulas
+        try:
+            taxonomy_id = self._detect_taxonomy(statements)
+            if taxonomy_id:
+                taxonomy_count = self.formula_registry.load_taxonomy_formulas(taxonomy_id)
+                self.logger.info(f"{LOG_OUTPUT} Loaded {taxonomy_count} taxonomy calculation trees")
+            else:
+                self.logger.info(f"{LOG_OUTPUT} No taxonomy detected for taxonomy formula loading")
+
+        except Exception as e:
+            self.logger.warning(f"Could not load taxonomy formulas: {e}")
 
     def _detect_taxonomy(self, statements: MappedStatements) -> Optional[str]:
         """

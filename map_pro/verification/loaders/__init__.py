@@ -33,6 +33,11 @@ from .xbrl_reader import (
     PresentationArc,
 )
 from .taxonomy_reader import TaxonomyReader, TaxonomyDefinition, ConceptDefinition
+from .taxonomy_calc_reader import (
+    TaxonomyCalcReader,
+    TaxonomyCalculations,
+    CalculationRelationship,
+)
 
 
 __all__ = [
@@ -57,4 +62,7 @@ __all__ = [
     'TaxonomyReader',
     'TaxonomyDefinition',
     'ConceptDefinition',
+    'TaxonomyCalcReader',
+    'TaxonomyCalculations',
+    'CalculationRelationship',
 ]
