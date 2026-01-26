@@ -18,15 +18,16 @@ from typing import Optional
 from ..core.config_loader import ConfigLoader
 from ..loaders.mapped_reader import MappedStatements, Statement, StatementFact
 from ..loaders.mapped_data import MappedFilingEntry
-from ..engine.checks.constants import (
-    TOTAL_ASSETS_PATTERNS,
-    TOTAL_LIABILITIES_PATTERNS,
-    TOTAL_EQUITY_PATTERNS,
-    NET_INCOME_PATTERNS,
-    REVENUE_PATTERNS,
-    CASH_ENDING_PATTERNS,
-)
 from ..constants import LOG_OUTPUT
+
+# Local patterns for key metric extraction (output layer only, not verification)
+# These are used for display/export purposes, not for verification logic
+TOTAL_ASSETS_PATTERNS = ['Assets', 'TotalAssets']
+TOTAL_LIABILITIES_PATTERNS = ['Liabilities', 'TotalLiabilities']
+TOTAL_EQUITY_PATTERNS = ['Equity', 'StockholdersEquity', 'ShareholdersEquity']
+NET_INCOME_PATTERNS = ['NetIncome', 'ProfitLoss', 'NetIncomeLoss']
+REVENUE_PATTERNS = ['Revenue', 'Revenues', 'SalesRevenue', 'NetSales']
+CASH_ENDING_PATTERNS = ['CashAndCashEquivalents', 'Cash']
 
 
 @dataclass
