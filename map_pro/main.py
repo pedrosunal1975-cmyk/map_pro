@@ -85,17 +85,15 @@ else:
 # Core workflow
 from core.workflow_orchestrator import WorkflowOrchestrator
 
-# Constants
-MARKET_SEC = 'sec'
-MARKET_UK_FRC = 'uk_frc'  # UK Companies House
-
-MARKET_NAMES = {
-    MARKET_SEC: 'SEC (United States)',
-    MARKET_UK_FRC: 'Companies House (United Kingdom)'
-}
-
-MIN_RESULTS = 1
-MAX_RESULTS = 10
+# Import constants from searcher module (single source of truth)
+from searcher.constants import (
+    MARKET_SEC,
+    MARKET_UK_FRC,
+    MARKET_ESEF,
+    MARKET_NAMES,
+    MIN_RESULTS,
+    MAX_RESULTS,
+)
 
 
 class MapProCLI:
@@ -191,6 +189,7 @@ class MapProCLI:
         print("=" * 80)
         print("  1. SEC (United States)")
         print("  2. Companies House (United Kingdom)")
+        print("  3. ESEF (European Single Electronic Format)")
         print("  0. Exit\n")
 
         while True:
@@ -202,8 +201,10 @@ class MapProCLI:
                 return MARKET_SEC
             elif choice == '2':
                 return MARKET_UK_FRC
+            elif choice == '3':
+                return MARKET_ESEF
             else:
-                print("Invalid choice. Please enter 1, 2, or 0.\n")
+                print("Invalid choice. Please enter 1, 2, 3, or 0.\n")
 
     def _get_company_identifier(self) -> Optional[str]:
         """Get company identifier (market-specific)."""
@@ -228,6 +229,18 @@ class MapProCLI:
             print("    00102498  (BP plc)")
             print("    SC123456  (Scottish company - starts with SC)")
             print("    NI012345  (Northern Ireland - starts with NI)\n")
+
+        elif self.market_id == MARKET_ESEF:
+            print("\nESEF Company Identifier:")
+            print("  Enter LEI (20 characters) or Company Name")
+            print("  Examples:")
+            print("    LEI:  2138001WXZQOPMPA3D50  (Tesco PLC)")
+            print("    LEI:  213800LKQA1Y3L11EY02  (BP plc)")
+            print("    Name: Tesco")
+            print("    Name: BP\n")
+            print("  Optional: Add country code prefix for better results")
+            print("    GB:Tesco  (UK companies)")
+            print("    DE:BMW    (German companies)\n")
 
         identifier = input("Enter company identifier: ").strip()
 
@@ -258,6 +271,16 @@ class MapProCLI:
             print("  AD    = Dormant company accounts")
             print("  AG    = Group accounts")
             print("  ALL   = All accounts types\n")
+
+        elif self.market_id == MARKET_ESEF:
+            print("\nESEF Report Types:")
+            print("  AFR   = Annual Financial Report")
+            print("  SFR   = Semi-annual Financial Report")
+            print("  IFR   = Interim Financial Report")
+            print("  QFR   = Quarterly Financial Report")
+            print("\n  Aliases also accepted:")
+            print("    annual, 10-K  -> AFR")
+            print("    quarterly, 10-Q -> QFR\n")
 
         form_type = input("Enter filing type: ").strip().upper()
 
