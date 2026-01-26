@@ -58,10 +58,28 @@ class PostgreSQLService:
         except Exception:
             return False
 
+    def can_connect_as_postgres(self) -> bool:
+        """
+        Check if PostgreSQL is accepting connections using postgres superuser.
+
+        Use this right after starting the service, before user/database are created.
+        """
+        try:
+            result = subprocess.run(
+                ['sudo', '-u', 'postgres', 'psql', '-c', 'SELECT 1;'],
+                capture_output=True,
+                text=True,
+                timeout=5
+            )
+            return result.returncode == 0
+        except Exception:
+            return False
+
     def can_connect(self) -> bool:
         """
-        Actually try to connect to PostgreSQL to verify it's working.
-        This is more reliable than pg_isready.
+        Try to connect to PostgreSQL with configured user/database.
+
+        Use this to verify the application user can connect.
         """
         db_user = self.config.get('db_user')
         db_name = self.config.get('db_name')
@@ -69,7 +87,6 @@ class PostgreSQLService:
         db_port = self.config.get('db_port', 5432)
 
         try:
-            # Try connecting with psql
             result = subprocess.run(
                 ['psql', '-h', str(db_host), '-p', str(db_port),
                  '-U', db_user, '-d', db_name, '-c', 'SELECT 1;'],

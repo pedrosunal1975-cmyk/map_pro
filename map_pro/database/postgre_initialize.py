@@ -116,15 +116,22 @@ class PostgreSQLInitializer:
         # Step 3: Start PostgreSQL
         print("\nStep 3: Starting PostgreSQL...")
 
-        # Use can_connect() - more reliable than pg_isready
+        # Check if fully ready (user and database exist)
         if self.service.can_connect():
             result['steps']['start'] = {
                 'success': True,
-                'message': 'PostgreSQL already running and accepting connections'
+                'message': 'PostgreSQL running with user/database ready'
             }
-            print("  OK PostgreSQL already running")
+            print("  OK PostgreSQL already running with user/database")
+        # Check if service running but user/db not yet created
+        elif self.service.can_connect_as_postgres():
+            result['steps']['start'] = {
+                'success': True,
+                'message': 'PostgreSQL running (user/database will be created)'
+            }
+            print("  OK PostgreSQL running (will create user/database)")
         else:
-            # Check if service is running but not accepting connections
+            # Need to start the service
             if self.service.is_service_running():
                 print("  Service running but not accepting connections. Restarting...")
                 self.service.stop()
@@ -137,10 +144,10 @@ class PostgreSQLInitializer:
                 print(f"  X Failed to start: {start_result['message']}")
                 return result
 
-            # Verify we can actually connect after starting
-            if not self.service.can_connect():
+            # Verify we can connect as postgres (user/db created in next step)
+            if not self.service.can_connect_as_postgres():
                 result['steps']['start']['success'] = False
-                result['message'] = 'PostgreSQL started but cannot connect'
+                result['message'] = 'PostgreSQL started but cannot connect as postgres'
                 print("  X PostgreSQL started but cannot connect")
                 return result
 

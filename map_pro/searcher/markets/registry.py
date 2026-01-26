@@ -64,6 +64,7 @@ def get_available_markets() -> list[str]:
 try:
     from searcher.markets.sec.searcher import SECSearcher
     register_searcher(MARKET_SEC, SECSearcher)
+    print(f"INFO: SEC searcher registered (market: {MARKET_SEC})")
 except ImportError as e:
     print(f"WARNING: Could not register SEC searcher: {e}")
     import traceback
