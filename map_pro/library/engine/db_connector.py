@@ -27,6 +27,7 @@ Usage:
 """
 
 from typing import List, Dict, Any, Optional
+from pathlib import Path
 import uuid
 
 from library.core.config_loader import LibraryConfig
@@ -97,7 +98,48 @@ class DatabaseConnector:
                 "Ensure database module is in Python path."
             )
             raise
-    
+
+        # Get taxonomies destination directory from config
+        self.taxonomies_dir = Path(self.config.get('library_taxonomies_libraries'))
+
+    def _check_physical_existence(self, taxonomy_name: str, version: str) -> bool:
+        """
+        Check if taxonomy library physically exists in destination folder.
+
+        PHYSICAL EXISTENCE IS THE SOURCE OF TRUTH.
+
+        Checks for directory with files (not empty directory).
+
+        Args:
+            taxonomy_name: Taxonomy name (e.g., 'us-gaap')
+            version: Taxonomy version (e.g., '2024')
+
+        Returns:
+            True if directory exists AND contains files
+        """
+        # Try multiple naming patterns
+        patterns = [
+            f"{taxonomy_name}-{version}",  # us-gaap-2024
+            taxonomy_name,                  # us-gaap
+            f"{taxonomy_name}_{version}",  # us-gaap_2024
+        ]
+
+        for pattern in patterns:
+            lib_dir = self.taxonomies_dir / pattern
+            if lib_dir.exists() and lib_dir.is_dir():
+                # Check if directory has files (not empty)
+                file_count = sum(1 for _ in lib_dir.rglob('*') if _.is_file())
+                if file_count > 0:
+                    logger.debug(
+                        f"{LOG_OUTPUT} Physical check: {pattern} exists with {file_count} files"
+                    )
+                    return True
+
+        logger.debug(
+            f"{LOG_OUTPUT} Physical check: {taxonomy_name} v{version} NOT found"
+        )
+        return False
+
     def check_taxonomy_exists(self, namespace: str) -> bool:
         """
         Check if taxonomy exists in database by namespace.
@@ -218,14 +260,24 @@ class DatabaseConnector:
                 ).first()
                 
                 if library:
-                    # Check if library already completed with files - don't reset status
-                    # Only skip if BOTH completed AND has files (total_files > 0)
-                    has_files = library.total_files and library.total_files > 0
-                    if library.download_status == 'completed' and has_files:
-                        logger.info(
-                            f"{LOG_OUTPUT} Library already downloaded: {library.library_id} "
-                            f"(status={library.download_status}, files={library.total_files})"
-                        )
+                    # PHYSICAL EXISTENCE IS THE SOURCE OF TRUTH
+                    # Check if files actually exist in destination folder
+                    physically_exists = self._check_physical_existence(taxonomy_name, version)
+
+                    if physically_exists:
+                        # Files exist - ensure database reflects this
+                        if library.download_status != 'completed':
+                            library.download_status = 'completed'
+                            session.commit()
+                            logger.info(
+                                f"{LOG_OUTPUT} Library physically exists, updated status to completed: "
+                                f"{taxonomy_name} v{version}"
+                            )
+                        else:
+                            logger.info(
+                                f"{LOG_OUTPUT} Library already exists (physical + DB): "
+                                f"{taxonomy_name} v{version}"
+                            )
                         return {
                             'success': True,
                             'library_id': str(library.library_id),
@@ -234,14 +286,15 @@ class DatabaseConnector:
                             'already_available': True,
                         }
 
-                    # Update existing - needs (re)download
+                    # Files DON'T exist - set to pending for download
                     library.source_url = download_url
                     library.download_status = LIBRARY_STATUS_PENDING
 
                     session.commit()
 
                     logger.info(
-                        f"{LOG_OUTPUT} Updated existing library for download: {library.library_id}"
+                        f"{LOG_OUTPUT} Library needs download (no physical files): "
+                        f"{taxonomy_name} v{version}"
                     )
 
                     return {
