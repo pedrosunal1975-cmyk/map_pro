@@ -60,12 +60,14 @@ MAX_RESULTS: int = 10
 # Market Identifiers
 MARKET_SEC: str = 'sec'
 MARKET_UK_FRC: str = 'uk_frc'  # UK Companies House
-SUPPORTED_MARKETS: list = [MARKET_SEC, MARKET_UK_FRC]
+MARKET_ESEF: str = 'esef'  # ESEF/UKSEF via filings.xbrl.org
+SUPPORTED_MARKETS: list = [MARKET_SEC, MARKET_UK_FRC, MARKET_ESEF]
 
 # Market Display Names
 MARKET_NAMES: dict = {
     MARKET_SEC: 'SEC (United States)',
-    MARKET_UK_FRC: 'Companies House (United Kingdom)'
+    MARKET_UK_FRC: 'Companies House (United Kingdom)',
+    MARKET_ESEF: 'ESEF (European Single Electronic Format)'
 }
 
 # Market Seed Data for Database
@@ -86,6 +88,15 @@ MARKETS_SEED_DATA: list[dict] = [
         'api_base_url': 'https://api.companieshouse.gov.uk',
         'is_active': True,
         'rate_limit_per_minute': 120,
+        'user_agent_required': False
+    },
+    {
+        'market_id': MARKET_ESEF,
+        'market_name': 'ESEF - European Single Electronic Format',
+        'market_country': 'EUR',
+        'api_base_url': 'https://filings.xbrl.org',
+        'is_active': True,
+        'rate_limit_per_minute': 60,
         'user_agent_required': False
     }
 ]
@@ -124,6 +135,7 @@ __all__ = [
     'MAX_RESULTS',
     'MARKET_SEC',
     'MARKET_UK_FRC',
+    'MARKET_ESEF',
     'SUPPORTED_MARKETS',
     'MARKET_NAMES',
     'MARKETS_SEED_DATA',

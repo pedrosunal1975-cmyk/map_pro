@@ -198,6 +198,16 @@ class ConfigLoader:
             'esma_rate_limit': self._get_int('SEARCHER_ESMA_RATE_LIMIT', DEFAULT_ESMA_RATE_LIMIT),
             'esma_timeout': self._get_int('SEARCHER_ESMA_TIMEOUT', DEFAULT_API_TIMEOUT),
             'esma_retry_attempts': self._get_int('SEARCHER_ESMA_RETRY_ATTEMPTS', DEFAULT_API_RETRY_COUNT),
+
+            # ================================================================
+            # ESEF SPECIFIC CONFIGURATION (filings.xbrl.org)
+            # ================================================================
+            'esef_base_url': self._get_env('SEARCHER_ESEF_BASE_URL', 'https://filings.xbrl.org'),
+            'esef_user_agent': self._get_env('SEARCHER_ESEF_USER_AGENT', required=False),
+            'esef_timeout': self._get_int('SEARCHER_ESEF_TIMEOUT', DEFAULT_API_TIMEOUT),
+            'esef_max_retries': self._get_int('SEARCHER_ESEF_MAX_RETRIES', DEFAULT_API_RETRY_COUNT),
+            'esef_retry_delay': self._get_int('SEARCHER_ESEF_RETRY_DELAY', 2),
+            'esef_backoff_factor': self._get_int('SEARCHER_ESEF_BACKOFF_FACTOR', 2),
         }
         
         return config

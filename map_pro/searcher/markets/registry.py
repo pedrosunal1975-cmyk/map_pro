@@ -8,7 +8,7 @@ Maps market IDs to searcher implementations.
 
 from typing import Type
 
-from searcher.constants import MARKET_SEC, MARKET_UK_FRC
+from searcher.constants import MARKET_SEC, MARKET_UK_FRC, MARKET_ESEF
 from searcher.engine.base_searcher import BaseSearcher
 
 
@@ -77,6 +77,16 @@ try:
     print(f"INFO: UK Companies House searcher registered (market: {MARKET_UK_FRC})")
 except ImportError as e:
     print(f"WARNING: Could not register UK searcher: {e}")
+    import traceback
+    traceback.print_exc()
+
+# Auto-register ESEF searcher (filings.xbrl.org)
+try:
+    from searcher.markets.esef.searcher import ESEFSearcher
+    register_searcher(MARKET_ESEF, ESEFSearcher)
+    print(f"INFO: ESEF searcher registered (market: {MARKET_ESEF})")
+except ImportError as e:
+    print(f"WARNING: Could not register ESEF searcher: {e}")
     import traceback
     traceback.print_exc()
 
