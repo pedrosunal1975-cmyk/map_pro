@@ -273,14 +273,11 @@ class MapProCLI:
             print("  ALL   = All accounts types\n")
 
         elif self.market_id == MARKET_ESEF:
-            print("\nESEF Report Types:")
-            print("  AFR   = Annual Financial Report")
-            print("  SFR   = Semi-annual Financial Report")
-            print("  IFR   = Interim Financial Report")
-            print("  QFR   = Quarterly Financial Report")
-            print("\n  Aliases also accepted:")
-            print("    annual, 10-K  -> AFR")
-            print("    quarterly, 10-Q -> QFR\n")
+            print("\nNote: filings.xbrl.org API returns ALL filings for an entity.")
+            print("Report type filtering is not supported by the API.")
+            print("Press Enter to fetch all available filings.\n")
+            input("Press Enter to continue...")
+            return "ALL"  # ESEF doesn't support report type filtering
 
         form_type = input("Enter filing type: ").strip().upper()
 
