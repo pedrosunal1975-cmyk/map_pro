@@ -23,6 +23,7 @@ from .constants import (
     HORIZONTAL_WEIGHTS,
     VERTICAL_WEIGHTS,
     LIBRARY_WEIGHTS,
+    AGGREGATE_CHECKS,
 )
 from ...constants import (
     SEVERITY_CRITICAL,
@@ -162,7 +163,13 @@ class ScoreCalculator:
         """
         Calculate score for a single category.
 
-        Starts at 100, deducts points based on failures and severity.
+        For AGGREGATE checks (xbrl_calculation_company, xbrl_calculation_taxonomy):
+        - Uses pass-rate based scoring: score = pass_rate * weight * 100
+        - Many results are expected, so we use percentage instead of penalties
+
+        For STANDARD checks:
+        - Starts at 100, deducts points based on failures and severity
+        - Each failure deducts penalty * weight
 
         Args:
             results: List of CheckResult for this category
@@ -174,9 +181,6 @@ class ScoreCalculator:
         if not results:
             return SCORE_MAX  # No checks = perfect score (nothing to fail)
 
-        score = SCORE_MAX
-        total_weight = 0.0
-
         # Group results by check name
         results_by_check: dict[str, list[CheckResult]] = {}
         for result in results:
@@ -184,26 +188,47 @@ class ScoreCalculator:
                 results_by_check[result.check_name] = []
             results_by_check[result.check_name].append(result)
 
+        # Calculate weighted score contributions
+        total_weight = 0.0
+        weighted_score = 0.0
+
         for check_name, check_results in results_by_check.items():
             # Get weight for this check type
             weight = check_weights.get(check_name, 1.0 / len(results_by_check))
             total_weight += weight
 
-            # Calculate penalty for this check
-            check_penalty = 0.0
-            for result in check_results:
-                if not result.passed:
-                    check_penalty += self._get_severity_penalty(result.severity)
+            # Use pass-rate scoring for aggregate checks
+            if check_name in AGGREGATE_CHECKS:
+                # Calculate pass rate
+                total = len(check_results)
+                passed = sum(1 for r in check_results if r.passed)
 
-            # Apply weighted penalty
-            score -= check_penalty * weight
+                if total > 0:
+                    pass_rate = passed / total
+                    # Contribute weighted score based on pass rate
+                    # 100% pass rate = full weight contribution
+                    weighted_score += pass_rate * weight * SCORE_MAX
+                else:
+                    # No results = full score for this check
+                    weighted_score += weight * SCORE_MAX
+            else:
+                # Standard penalty-based scoring for non-aggregate checks
+                check_penalty = 0.0
+                for result in check_results:
+                    if not result.passed:
+                        check_penalty += self._get_severity_penalty(result.severity)
 
-        # Normalize if weights don't sum to 1
-        if total_weight > 0 and total_weight != 1.0:
-            # Adjust score proportionally
-            pass  # Keep as-is for simplicity
+                # Calculate score contribution (max = weight * 100)
+                check_score = max(0, SCORE_MAX - check_penalty)
+                weighted_score += check_score * weight
 
-        return max(SCORE_MIN, min(SCORE_MAX, score))
+        # Normalize to 0-100 scale
+        if total_weight > 0:
+            final_score = weighted_score / total_weight
+        else:
+            final_score = SCORE_MAX
+
+        return max(SCORE_MIN, min(SCORE_MAX, final_score))
 
     def _calculate_overall_score(
         self,

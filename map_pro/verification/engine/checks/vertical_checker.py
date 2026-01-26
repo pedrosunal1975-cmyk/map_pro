@@ -29,9 +29,15 @@ if TYPE_CHECKING:
     from ..formula_registry import FormulaRegistry
 
 
-# Check name for XBRL-sourced calculations
-CHECK_XBRL_CALCULATION = 'xbrl_calculation'
+# Check names for XBRL-sourced calculations
+# IMPORTANT: Company and taxonomy must have DIFFERENT check names
+# so they're scored separately (each can have many results)
+CHECK_XBRL_CALCULATION_COMPANY = 'xbrl_calculation_company'
+CHECK_XBRL_CALCULATION_TAXONOMY = 'xbrl_calculation_taxonomy'
 CHECK_XBRL_CALCULATION_COMPARISON = 'xbrl_calculation_comparison'
+
+# Legacy alias for backwards compatibility
+CHECK_XBRL_CALCULATION = CHECK_XBRL_CALCULATION_COMPANY
 
 
 class VerticalChecker:
@@ -93,16 +99,20 @@ class VerticalChecker:
         results = []
 
         # XBRL-sourced verification (company formulas)
+        # Uses CHECK_XBRL_CALCULATION_COMPANY for scoring separation
         if self.formula_registry and self.formula_registry.has_company_formulas():
             self.logger.info("Running XBRL-sourced verification (company formulas)")
-            xbrl_results = self.check_xbrl_calculations(statements, source='company')
+            xbrl_results = self.check_xbrl_calculations(
+                statements, source='company',
+                check_name=CHECK_XBRL_CALCULATION_COMPANY
+            )
             results.extend(xbrl_results)
         else:
             self.logger.warning(
                 "No company XBRL formulas available - vertical calculation checks skipped"
             )
             results.append(CheckResult(
-                check_name='xbrl_calculation',
+                check_name=CHECK_XBRL_CALCULATION_COMPANY,
                 check_type='vertical',
                 passed=True,
                 severity=SEVERITY_INFO,
@@ -110,13 +120,13 @@ class VerticalChecker:
             ))
 
         # Taxonomy-sourced verification (secondary)
+        # Uses CHECK_XBRL_CALCULATION_TAXONOMY for scoring separation
         if self.formula_registry and self.formula_registry.has_taxonomy_formulas():
             self.logger.info("Running taxonomy-sourced verification")
-            taxonomy_results = self.check_xbrl_calculations(statements, source='taxonomy')
-            # Mark taxonomy results distinctly
-            for r in taxonomy_results:
-                if r.details:
-                    r.details['verification_source'] = 'taxonomy'
+            taxonomy_results = self.check_xbrl_calculations(
+                statements, source='taxonomy',
+                check_name=CHECK_XBRL_CALCULATION_TAXONOMY
+            )
             results.extend(taxonomy_results)
         else:
             self.logger.info("No taxonomy formulas available - taxonomy checks skipped")
@@ -229,7 +239,8 @@ class VerticalChecker:
     def check_xbrl_calculations(
         self,
         statements: MappedStatements,
-        source: str = 'company'
+        source: str = 'company',
+        check_name: str = None
     ) -> list[CheckResult]:
         """
         Verify calculations using XBRL-sourced formulas.
@@ -240,6 +251,7 @@ class VerticalChecker:
         Args:
             statements: MappedStatements object
             source: 'company' or 'taxonomy' for which formulas to use
+            check_name: Check name for results (determines scoring category)
 
         Returns:
             List of CheckResult for each calculation verified
@@ -249,6 +261,11 @@ class VerticalChecker:
                 "FormulaRegistry not available - cannot run XBRL calculations"
             )
             return []
+
+        # Default check name based on source
+        if check_name is None:
+            check_name = (CHECK_XBRL_CALCULATION_COMPANY if source == 'company'
+                         else CHECK_XBRL_CALCULATION_TAXONOMY)
 
         # Import here to avoid circular imports
         from .calculation_verifier import CalculationVerifier
@@ -262,8 +279,8 @@ class VerticalChecker:
         # Run verification
         results = verifier.verify_all_calculations(statements, source)
 
-        # Convert to CheckResult format
-        check_results = verifier.to_check_results(results, CHECK_XBRL_CALCULATION)
+        # Convert to CheckResult format with specific check_name
+        check_results = verifier.to_check_results(results, check_name)
 
         # Add source info to each result
         for result in check_results:
@@ -389,4 +406,10 @@ class VerticalChecker:
         return diff <= self.rounding_tolerance
 
 
-__all__ = ['VerticalChecker', 'CHECK_XBRL_CALCULATION', 'CHECK_XBRL_CALCULATION_COMPARISON']
+__all__ = [
+    'VerticalChecker',
+    'CHECK_XBRL_CALCULATION',
+    'CHECK_XBRL_CALCULATION_COMPANY',
+    'CHECK_XBRL_CALCULATION_TAXONOMY',
+    'CHECK_XBRL_CALCULATION_COMPARISON',
+]

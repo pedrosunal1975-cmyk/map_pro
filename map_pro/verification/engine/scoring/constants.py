@@ -48,12 +48,25 @@ HORIZONTAL_WEIGHTS = {
 }
 
 # Within vertical checks, how much each contributes
+# NOTE: xbrl_calculation checks are AGGREGATE checks (many results)
+# and use pass-rate scoring instead of accumulated penalties
 VERTICAL_WEIGHTS = {
-    'balance_sheet_equation': 0.35,   # A = L + E
-    'income_statement_linkage': 0.25, # Net income flows through
-    'cash_flow_linkage': 0.25,        # Cash ties to balance sheet
-    'retained_earnings_rollforward': 0.10,
+    # New XBRL-sourced calculation checks (aggregate scoring)
+    'xbrl_calculation_company': 0.40,   # Company XBRL calculation linkbase
+    'xbrl_calculation_taxonomy': 0.30,  # Standard taxonomy calculations
+    # Legacy pattern-based checks (for backwards compatibility)
+    'balance_sheet_equation': 0.10,     # A = L + E
+    'income_statement_linkage': 0.08,   # Net income flows through
+    'cash_flow_linkage': 0.05,          # Cash ties to balance sheet
+    'retained_earnings_rollforward': 0.02,
     'common_values_consistency': 0.05,
+}
+
+# Checks that use aggregate scoring (pass-rate based instead of penalty accumulation)
+# These checks can produce many results and should be scored by overall pass rate
+AGGREGATE_CHECKS = {
+    'xbrl_calculation_company',
+    'xbrl_calculation_taxonomy',
 }
 
 # Within library checks, how much each contributes
@@ -120,6 +133,7 @@ __all__ = [
     'HORIZONTAL_WEIGHTS',
     'VERTICAL_WEIGHTS',
     'LIBRARY_WEIGHTS',
+    'AGGREGATE_CHECKS',
 
     # Bounds
     'SCORE_MIN',

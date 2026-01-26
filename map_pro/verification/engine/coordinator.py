@@ -292,16 +292,14 @@ class VerificationCoordinator:
             result.vertical_results = self.vertical_checker.check_all(statements)
 
             # Store XBRL and taxonomy results separately for detailed analysis
-            # Filter by verification_source in details
+            # Now uses distinct check_names for proper scoring separation
             result.xbrl_calculation_results = [
                 r for r in result.vertical_results
-                if (r.check_name in ('xbrl_calculation', 'xbrl_calculation_comparison')
-                    and r.details and r.details.get('verification_source') == 'company')
+                if r.check_name in ('xbrl_calculation_company', 'xbrl_calculation_comparison')
             ]
             result.taxonomy_calculation_results = [
                 r for r in result.vertical_results
-                if (r.check_name in ('xbrl_calculation', 'xbrl_calculation_comparison')
-                    and r.details and r.details.get('verification_source') == 'taxonomy')
+                if r.check_name == 'xbrl_calculation_taxonomy'
             ]
 
             # Step 5: Ensure taxonomies are available (if library checks enabled)
