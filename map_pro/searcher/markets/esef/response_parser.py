@@ -91,9 +91,12 @@ class ESEFResponseParser:
         attrs = item.get(ATTR_ATTRIBUTES, {})
 
         # Extract core fields
+        # Note: filings.xbrl.org API does NOT have: report_type, lei, entity_name
+        # Those fields don't exist in the actual API response
         filing = {
             'filing_id': filing_id,
             'filing_type': filing_type,
+            'fxo_id': attrs.get('fxo_id'),  # Filing index
             'country': attrs.get('country'),
             'date_added': attrs.get('date_added'),
             'period_end': attrs.get('period_end'),
@@ -101,11 +104,10 @@ class ESEFResponseParser:
             'viewer_url': attrs.get('viewer_url'),
             'json_url': attrs.get('json_url'),
             'package_url': attrs.get('package_url'),
-            'report_type': attrs.get('report_type'),
-            'oam_id': attrs.get('oam_id'),
-            'lei': attrs.get('lei'),
-            'entity_name': attrs.get('entity_name'),
+            'sha256': attrs.get('sha256'),
             'processed': attrs.get('processed'),
+            'error_count': attrs.get('error_count'),
+            'warning_count': attrs.get('warning_count'),
         }
 
         # Resolve entity relationship if available

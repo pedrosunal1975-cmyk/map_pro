@@ -98,16 +98,15 @@ class ESEFSearcher(BaseSearcher):
             return []
 
         # Build API URL for filings (filter by entity.identifier = LEI)
-        # Note: API does not support report_type filter, we filter client-side
-        # Request more results to account for filtering
-        fetch_size = max_results * 3 if report_type else max_results
+        # Note: filings.xbrl.org API does NOT have report_type field
+        # All filings are returned regardless of form_type requested
 
         url = self.url_builder.get_filings_url(
             country=country,
             entity_identifier=lei,
             period_end_from=start_date,
             period_end_to=end_date,
-            page_size=fetch_size,
+            page_size=max_results,
             include_entity=True
         )
 
@@ -121,15 +120,11 @@ class ESEFSearcher(BaseSearcher):
 
         # Parse response
         filings = self.response_parser.parse_filings_response(response)
+        logger.info(f"{LOG_PROCESS} API returned {len(filings)} filings")
 
         if not filings:
             logger.warning(f"{LOG_OUTPUT} {MSG_NO_FILINGS_FOUND}")
             return []
-
-        # Filter by report_type client-side if specified
-        if report_type:
-            filings = [f for f in filings if (f.get('report_type') or '').upper() == report_type.upper()]
-            logger.info(f"{LOG_PROCESS} Filtered to {len(filings)} filings of type {report_type}")
 
         # Build result dictionaries
         results = []
@@ -314,7 +309,7 @@ class ESEFSearcher(BaseSearcher):
 
         Args:
             filing: Parsed filing from response
-            form_type: Requested form type
+            form_type: Requested form type (used as fallback since API has no report_type)
 
         Returns:
             dict: Standardized result or None
@@ -325,19 +320,21 @@ class ESEFSearcher(BaseSearcher):
             logger.warning(f"No download URL for filing {filing.get('filing_id')}")
             return None
 
-        # Extract entity info
+        # Extract entity info from included entity data
+        # The API returns entity data via relationship/included, not as direct fields
         entity = filing.get('entity', {})
-        entity_name = filing.get('entity_name') or entity.get('name', '')
-        lei = filing.get('lei') or entity.get('lei', '')
+        entity_name = entity.get('name', '')
+        lei = entity.get('lei', '') or entity.get('identifier', '')
 
         # Build result using BaseSearcher helper
+        # Note: API has no report_type field, use the requested form_type
         return self._build_result_dict(
             filing_url=download_url,
-            form_type=filing.get('report_type', form_type),
+            form_type=form_type,
             filing_date=filing.get('period_end', ''),
             company_name=entity_name,
             entity_id=lei,
-            accession_number=filing.get('filing_id', ''),
+            accession_number=filing.get('fxo_id') or filing.get('filing_id', ''),
             market_id=MARKET_ID
         )
 
