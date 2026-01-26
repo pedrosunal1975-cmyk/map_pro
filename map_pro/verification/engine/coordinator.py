@@ -27,6 +27,7 @@ from .checks.vertical_checker import VerticalChecker
 from .checks.library_checker import LibraryChecker
 from .scoring.score_calculator import ScoreCalculator, VerificationScores
 from .scoring.quality_classifier import QualityClassifier, QualityClassification
+from .taxonomy_manager import TaxonomyManager
 from ..constants import LOG_INPUT, LOG_PROCESS, LOG_OUTPUT
 
 
@@ -50,6 +51,8 @@ class VerificationResult:
         recommendation: Recommended action
         verified_at: Verification timestamp
         processing_time_seconds: Time taken to verify
+        statement_info: Information about statements verified
+        taxonomy_status: Status of taxonomy availability
     """
     filing_id: str
     market: str
@@ -65,6 +68,8 @@ class VerificationResult:
     recommendation: str = ''
     verified_at: datetime = None
     processing_time_seconds: float = 0.0
+    statement_info: dict = field(default_factory=dict)
+    taxonomy_status: dict = field(default_factory=dict)
 
     def __post_init__(self):
         if self.verified_at is None:
@@ -118,6 +123,9 @@ class VerificationCoordinator:
         self.xbrl_loader = XBRLFilingsLoader(self.config)
         self.xbrl_reader = XBRLReader(self.config)
         self.taxonomy_reader = TaxonomyReader(self.config)
+
+        # Initialize taxonomy manager for library integration
+        self.taxonomy_manager = TaxonomyManager(self.config)
 
         # Initialize checkers
         tolerance = self.config.get('calculation_tolerance', 0.01)
@@ -203,6 +211,24 @@ class VerificationCoordinator:
 
             self.logger.info(f"{LOG_OUTPUT} Loaded {len(statements.statements)} statements")
 
+            # Track statement info
+            result.statement_info = {
+                'total_statements': len(statements.statements),
+                'main_statements': statements.main_statements,
+                'total_files': statements.total_statement_files,
+                'market': statements.market,
+                'statements': [
+                    {
+                        'name': stmt.name,
+                        'source_file': stmt.source_file,
+                        'file_size_bytes': stmt.file_size_bytes,
+                        'is_main': stmt.is_main_statement,
+                        'fact_count': len(stmt.facts),
+                    }
+                    for stmt in statements.statements
+                ]
+            }
+
             # Step 2: Load company XBRL linkbases
             self.logger.info(f"{LOG_INPUT} Loading XBRL linkbases")
             calc_networks = self._load_calculation_linkbase(filing)
@@ -218,7 +244,21 @@ class VerificationCoordinator:
             self.logger.info(f"{LOG_PROCESS} Running vertical checks")
             result.vertical_results = self.vertical_checker.check_all(statements)
 
-            # Step 5: Run library checks (optional)
+            # Step 5: Ensure taxonomies are available (if library checks enabled)
+            if self.enable_library_checks:
+                self.logger.info(f"{LOG_PROCESS} Checking taxonomy availability")
+                result.taxonomy_status = self.taxonomy_manager.ensure_taxonomies_available(
+                    filing.market, filing.company, filing.form, filing.date
+                )
+
+                if result.taxonomy_status.get('ready', False):
+                    self.logger.info(f"{LOG_OUTPUT} Taxonomies ready for library checks")
+                else:
+                    self.logger.info(
+                        f"{LOG_OUTPUT} Taxonomies not ready: {result.taxonomy_status.get('message', '')}"
+                    )
+
+            # Step 6: Run library checks (optional)
             if self.enable_library_checks:
                 self.logger.info(f"{LOG_PROCESS} Running library checks")
                 taxonomy_id = self._detect_taxonomy(statements)
@@ -226,7 +266,7 @@ class VerificationCoordinator:
                     statements, taxonomy_id
                 )
 
-            # Step 6: Calculate scores
+            # Step 7: Calculate scores
             self.logger.info(f"{LOG_PROCESS} Calculating scores")
             all_results = (
                 result.horizontal_results +
@@ -235,7 +275,7 @@ class VerificationCoordinator:
             )
             result.scores = self.score_calculator.calculate_scores(all_results)
 
-            # Step 7: Classify quality
+            # Step 8: Classify quality
             self.logger.info(f"{LOG_PROCESS} Classifying quality")
             result.quality = self.quality_classifier.classify(result.scores)
             result.recommendation = result.quality.recommendation

@@ -174,10 +174,15 @@ class HorizontalChecker:
 
     def check_duplicate_facts(self, statements: MappedStatements) -> list[CheckResult]:
         """
-        Check for duplicate facts within statements.
+        Check for duplicate facts with smart classification.
 
-        Duplicate facts with same concept, context, and different values
-        indicate data quality issues.
+        Distinguishes between:
+        1. CRITICAL: Same fact, same statement, different values (genuine issue)
+        2. WARNING: Same fact, different statements, different values (possible issue)
+        3. INFO: Same fact, same value across statements (healthy/expected)
+
+        Cross-statement duplicates with identical values are expected and healthy
+        (e.g., Net Income appears in both Income Statement and Cash Flow Statement).
 
         Args:
             statements: MappedStatements object
@@ -187,8 +192,16 @@ class HorizontalChecker:
         """
         results = []
 
+        # Track duplicates within same statement (CRITICAL)
+        intra_statement_issues = []
+
+        # Track duplicates across statements
+        cross_statement_facts: dict[str, list[tuple[str, any, StatementFact]]] = {}
+
         for statement in statements.statements:
-            # Group facts by concept and period
+            statement_name = statement.name or 'Unknown'
+
+            # Group facts by concept and period WITHIN this statement
             fact_groups: dict[str, list[StatementFact]] = {}
 
             for fact in statement.facts:
@@ -196,29 +209,108 @@ class HorizontalChecker:
                     continue
 
                 key = f"{fact.concept}|{fact.period_end}|{fact.context_id or ''}"
+
+                # Track for intra-statement check
                 if key not in fact_groups:
                     fact_groups[key] = []
                 fact_groups[key].append(fact)
 
-            # Check for duplicates with different values
+                # Track for cross-statement check
+                cross_key = f"{fact.concept}|{fact.period_end}"
+                if cross_key not in cross_statement_facts:
+                    cross_statement_facts[cross_key] = []
+                cross_statement_facts[cross_key].append((statement_name, fact.value, fact))
+
+            # Check for duplicates with different values WITHIN same statement
             for key, facts in fact_groups.items():
                 if len(facts) > 1:
                     values = [f.value for f in facts if f.value is not None]
                     unique_values = set(str(v) for v in values)
 
                     if len(unique_values) > 1:
-                        results.append(CheckResult(
-                            check_name=CHECK_DUPLICATE_FACTS,
-                            check_type='horizontal',
-                            passed=False,
-                            severity=SEVERITY_WARNING,
-                            message=f"Duplicate facts with different values: {facts[0].concept}",
-                            details={
-                                'concept': facts[0].concept,
-                                'values': list(unique_values),
-                                'statement': statement.name,
-                            }
-                        ))
+                        # CRITICAL: Same statement, different values
+                        intra_statement_issues.append({
+                            'concept': facts[0].concept,
+                            'statement': statement_name,
+                            'values': list(unique_values),
+                            'count': len(facts),
+                        })
+
+        # Report intra-statement issues (CRITICAL)
+        if intra_statement_issues:
+            results.append(CheckResult(
+                check_name=CHECK_DUPLICATE_FACTS,
+                check_type='horizontal',
+                passed=False,
+                severity=SEVERITY_CRITICAL,
+                message=f"{len(intra_statement_issues)} duplicate facts with conflicting values within same statement",
+                details={
+                    'duplicates': intra_statement_issues[:20],
+                    'total_issues': len(intra_statement_issues),
+                    'issue_type': 'intra_statement_conflict',
+                }
+            ))
+
+        # Analyze cross-statement duplicates
+        cross_statement_conflicts = []
+        cross_statement_healthy = []
+
+        for key, occurrences in cross_statement_facts.items():
+            if len(occurrences) > 1:
+                # Get unique statements where this fact appears
+                statements_seen = set(s for s, v, f in occurrences)
+
+                if len(statements_seen) > 1:
+                    # Fact appears in multiple statements
+                    values = [v for s, v, f in occurrences if v is not None]
+                    unique_values = set(str(v) for v in values)
+
+                    concept = occurrences[0][2].concept
+
+                    if len(unique_values) > 1:
+                        # Different values across statements - WARNING
+                        cross_statement_conflicts.append({
+                            'concept': concept,
+                            'statements': list(statements_seen),
+                            'values': list(unique_values),
+                        })
+                    else:
+                        # Same value across statements - HEALTHY
+                        cross_statement_healthy.append({
+                            'concept': concept,
+                            'statements': list(statements_seen),
+                            'value': values[0] if values else None,
+                        })
+
+        # Report cross-statement conflicts (WARNING)
+        if cross_statement_conflicts:
+            results.append(CheckResult(
+                check_name=CHECK_DUPLICATE_FACTS,
+                check_type='horizontal',
+                passed=False,
+                severity=SEVERITY_WARNING,
+                message=f"{len(cross_statement_conflicts)} facts with different values across statements",
+                details={
+                    'conflicts': cross_statement_conflicts[:20],
+                    'total_conflicts': len(cross_statement_conflicts),
+                    'issue_type': 'cross_statement_conflict',
+                }
+            ))
+
+        # Report healthy cross-statement duplicates (INFO - passing)
+        if cross_statement_healthy:
+            results.append(CheckResult(
+                check_name=CHECK_DUPLICATE_FACTS,
+                check_type='horizontal',
+                passed=True,
+                severity=SEVERITY_INFO,
+                message=f"{len(cross_statement_healthy)} facts appear consistently across multiple statements (expected)",
+                details={
+                    'healthy_duplicates': cross_statement_healthy[:10],
+                    'total_healthy': len(cross_statement_healthy),
+                    'issue_type': 'cross_statement_consistent',
+                }
+            ))
 
         if not results:
             results.append(CheckResult(
@@ -226,7 +318,7 @@ class HorizontalChecker:
                 check_type='horizontal',
                 passed=True,
                 severity=SEVERITY_INFO,
-                message="No duplicate facts with conflicting values found"
+                message="No duplicate fact issues found"
             ))
 
         return results

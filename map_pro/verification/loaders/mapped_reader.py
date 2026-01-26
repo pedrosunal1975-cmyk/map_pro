@@ -7,6 +7,12 @@ Works with paths provided by MappedDataLoader.
 
 RESPONSIBILITY: Load and parse mapped statement JSON files
 into structured data for verification checks.
+
+IMPROVEMENTS:
+- Properly identifies statement names from file names
+- Tracks source files for each statement
+- Identifies main statements by file size (>50KB typically)
+- Handles SEC vs ESEF structure differences
 """
 
 import json
@@ -16,6 +22,9 @@ from pathlib import Path
 from typing import Optional
 
 from .mapped_data import MappedFilingEntry
+
+# Size threshold for identifying main statements (50KB)
+MAIN_STATEMENT_SIZE_THRESHOLD = 50 * 1024
 
 
 @dataclass
@@ -60,11 +69,17 @@ class Statement:
         role: Statement role URI
         facts: List of facts in this statement
         metadata: Additional statement metadata
+        source_file: Path to the source file this statement was loaded from
+        file_size_bytes: Size of source file in bytes
+        is_main_statement: Whether this is a main statement (by size/content)
     """
     name: str
     role: Optional[str] = None
     facts: list[StatementFact] = field(default_factory=list)
     metadata: dict = field(default_factory=dict)
+    source_file: Optional[str] = None
+    file_size_bytes: int = 0
+    is_main_statement: bool = False
 
 
 @dataclass
@@ -77,11 +92,17 @@ class MappedStatements:
         filing_info: Filing metadata
         namespaces: Namespace declarations
         periods: Available reporting periods
+        market: Market identifier (sec, esef)
+        main_statements: List of main statement names (by file size)
+        total_statement_files: Total number of statement files found
     """
     statements: list[Statement] = field(default_factory=list)
     filing_info: dict = field(default_factory=dict)
     namespaces: dict = field(default_factory=dict)
     periods: list[dict] = field(default_factory=list)
+    market: str = ''
+    main_statements: list[str] = field(default_factory=list)
+    total_statement_files: int = 0
 
 
 class MappedReader:
@@ -91,6 +112,13 @@ class MappedReader:
     Uses paths from MappedDataLoader to load actual content.
     Converts JSON structure into typed dataclasses for verification.
 
+    Improvements:
+    - Reads ALL individual statement files (not just main file)
+    - Properly identifies statement names from file names
+    - Tracks source file and size for each statement
+    - Identifies main statements (typically 3-4 large files)
+    - Handles market-specific differences (SEC vs ESEF)
+
     Example:
         loader = MappedDataLoader()
         reader = MappedReader()
@@ -98,8 +126,10 @@ class MappedReader:
         filings = loader.discover_all_mapped_filings()
         for filing in filings:
             statements = reader.read_statements(filing)
+            print(f"Market: {statements.market}")
+            print(f"Main statements: {statements.main_statements}")
             for stmt in statements.statements:
-                print(f"{stmt.name}: {len(stmt.facts)} facts")
+                print(f"{stmt.name}: {len(stmt.facts)} facts, main={stmt.is_main_statement}")
     """
 
     def __init__(self):
@@ -110,6 +140,12 @@ class MappedReader:
         """
         Read all statements from a mapped filing.
 
+        Improved logic:
+        1. Try to read individual statement files first
+        2. Fall back to combined main file if needed
+        3. Track source file names and sizes
+        4. Identify main statements by file size
+
         Args:
             filing: MappedFilingEntry from MappedDataLoader
 
@@ -118,24 +154,220 @@ class MappedReader:
         """
         self.logger.info(f"Reading statements for {filing.company}/{filing.form}/{filing.date}")
 
-        # Find the main statements file
-        main_file = self._find_main_statements_file(filing)
-        if not main_file:
-            self.logger.warning(f"No main statements file found for {filing.filing_folder}")
+        result = MappedStatements(
+            market=filing.market,
+        )
+
+        json_files = filing.available_files.get('json', [])
+        result.total_statement_files = len(json_files)
+
+        if not json_files:
+            self.logger.warning(f"No JSON files found for {filing.filing_folder}")
             return None
 
+        # Strategy based on market and file structure
+        if self._is_combined_file_structure(json_files):
+            # Single combined file (typical for ESEF or combined exports)
+            self._read_combined_file(json_files[0], result)
+        else:
+            # Multiple individual statement files (typical for SEC)
+            self._read_individual_files(json_files, result)
+
+        # Identify main statements
+        self._identify_main_statements(result)
+
+        self.logger.info(
+            f"Loaded {len(result.statements)} statements, "
+            f"{len(result.main_statements)} main statements"
+        )
+
+        return result
+
+    def _is_combined_file_structure(self, json_files: list[Path]) -> bool:
+        """
+        Detect if this is a combined file structure.
+
+        Combined structure indicators:
+        - Single JSON file
+        - File name suggests it's a combined file
+        """
+        if len(json_files) == 1:
+            name = json_files[0].name.lower()
+            combined_markers = [
+                'main_financial_statements',
+                'statements',
+                'all_statements',
+                'combined',
+            ]
+            return any(marker in name for marker in combined_markers)
+
+        # If file count is low (< 5) and file names don't look like statements
+        if len(json_files) < 5:
+            statement_like = sum(
+                1 for f in json_files
+                if any(kw in f.name.lower() for kw in ['balance', 'income', 'cash', 'equity'])
+            )
+            return statement_like == 0
+
+        return False
+
+    def _read_combined_file(self, file_path: Path, result: MappedStatements) -> None:
+        """Read statements from a combined file."""
         try:
-            with open(main_file, 'r', encoding='utf-8') as f:
+            file_size = file_path.stat().st_size
+
+            with open(file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
 
-            return self._parse_statements_data(data)
+            # Extract filing info
+            result.filing_info = data.get('filing_info', data.get('metadata', {}))
+            result.namespaces = data.get('namespaces', {})
+            result.periods = data.get('periods', [])
+
+            # Parse statements
+            statements_data = data.get('statements', [])
+            if isinstance(statements_data, dict):
+                # Handle dict format {name: statement_data}
+                for name, stmt_data in statements_data.items():
+                    stmt = self._parse_single_statement(
+                        stmt_data,
+                        name,
+                        source_file=str(file_path),
+                        file_size=file_size // max(len(statements_data), 1)
+                    )
+                    if stmt:
+                        result.statements.append(stmt)
+            elif isinstance(statements_data, list):
+                # Handle list format [{name, facts, ...}, ...]
+                for stmt_data in statements_data:
+                    name = stmt_data.get('name', stmt_data.get('statement_name', file_path.stem))
+                    stmt = self._parse_single_statement(
+                        stmt_data,
+                        name,
+                        source_file=str(file_path),
+                        file_size=file_size // max(len(statements_data), 1)
+                    )
+                    if stmt:
+                        result.statements.append(stmt)
 
         except json.JSONDecodeError as e:
-            self.logger.error(f"JSON decode error in {main_file}: {e}")
-            return None
+            self.logger.error(f"JSON decode error in {file_path}: {e}")
         except Exception as e:
-            self.logger.error(f"Error reading {main_file}: {e}")
-            return None
+            self.logger.error(f"Error reading {file_path}: {e}")
+
+    def _read_individual_files(self, json_files: list[Path], result: MappedStatements) -> None:
+        """Read statements from individual files."""
+        # Sort files by size (descending) for logging main statements
+        sorted_files = sorted(json_files, key=lambda f: f.stat().st_size, reverse=True)
+
+        for file_path in sorted_files:
+            try:
+                file_size = file_path.stat().st_size
+
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+
+                # Extract name from file name (remove extension)
+                name = self._extract_statement_name(file_path)
+
+                # Try to extract namespaces from first file that has them
+                if not result.namespaces and 'namespaces' in data:
+                    result.namespaces = data['namespaces']
+
+                # Try to extract filing info from first file that has it
+                if not result.filing_info:
+                    if 'filing_info' in data:
+                        result.filing_info = data['filing_info']
+                    elif 'metadata' in data:
+                        result.filing_info = data['metadata']
+
+                # Parse statement
+                stmt = self._parse_single_statement(
+                    data,
+                    name,
+                    source_file=str(file_path),
+                    file_size=file_size
+                )
+                if stmt:
+                    result.statements.append(stmt)
+
+            except json.JSONDecodeError as e:
+                self.logger.debug(f"JSON decode error in {file_path}: {e}")
+            except Exception as e:
+                self.logger.debug(f"Error reading {file_path}: {e}")
+
+    def _extract_statement_name(self, file_path: Path) -> str:
+        """
+        Extract a clean statement name from file path.
+
+        Converts file names to readable statement names:
+        - 'ConsolidatedBalanceSheet.json' -> 'ConsolidatedBalanceSheet'
+        - 'balance_sheet.json' -> 'BalanceSheet'
+        - 'R1.json' -> 'R1'
+        """
+        name = file_path.stem
+
+        # Clean up common prefixes/suffixes
+        name = name.replace('_', ' ').replace('-', ' ')
+
+        # Title case if all lowercase or all uppercase
+        if name.islower() or name.isupper():
+            name = name.title().replace(' ', '')
+
+        # Remove common non-statement markers
+        for marker in ['Json', 'Data', 'Export']:
+            name = name.replace(marker, '')
+
+        return name.strip() or file_path.stem
+
+    def _identify_main_statements(self, result: MappedStatements) -> None:
+        """
+        Identify main statements based on file size and content.
+
+        Main statements are typically:
+        - Balance Sheet
+        - Income Statement
+        - Cash Flow Statement
+        - Statement of Changes in Equity
+
+        These are usually the largest files (>50KB) and contain the most facts.
+        """
+        main_statement_indicators = [
+            'balance',
+            'income',
+            'operations',
+            'cashflow',
+            'cash_flow',
+            'cash flow',
+            'equity',
+            'stockholders',
+            'comprehensive',
+            'financial position',
+        ]
+
+        for stmt in result.statements:
+            name_lower = stmt.name.lower()
+
+            # Check by name patterns
+            is_main_by_name = any(
+                indicator in name_lower
+                for indicator in main_statement_indicators
+            )
+
+            # Check by file size
+            is_main_by_size = stmt.file_size_bytes >= MAIN_STATEMENT_SIZE_THRESHOLD
+
+            # Check by fact count
+            is_main_by_facts = len(stmt.facts) >= 20
+
+            # Mark as main if multiple indicators agree
+            stmt.is_main_statement = (
+                is_main_by_size or
+                (is_main_by_name and is_main_by_facts)
+            )
+
+            if stmt.is_main_statement:
+                result.main_statements.append(stmt.name)
 
     def read_statement_file(self, file_path: Path) -> Optional[Statement]:
         """
@@ -148,10 +380,17 @@ class MappedReader:
             Statement object or None if reading fails
         """
         try:
+            file_size = file_path.stat().st_size
+
             with open(file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
 
-            return self._parse_single_statement(data, file_path.stem)
+            return self._parse_single_statement(
+                data,
+                file_path.stem,
+                source_file=str(file_path),
+                file_size=file_size
+            )
 
         except Exception as e:
             self.logger.error(f"Error reading {file_path}: {e}")
@@ -197,8 +436,20 @@ class MappedReader:
 
         return matching
 
+    def get_main_statements(self, statements: MappedStatements) -> list[Statement]:
+        """
+        Get only the main statements.
+
+        Args:
+            statements: MappedStatements object
+
+        Returns:
+            List of main Statement objects
+        """
+        return [stmt for stmt in statements.statements if stmt.is_main_statement]
+
     def _find_main_statements_file(self, filing: MappedFilingEntry) -> Optional[Path]:
-        """Find the main statements JSON file."""
+        """Find the main statements JSON file (legacy method)."""
         # Check json folder first
         if filing.json_folder and filing.json_folder.exists():
             for file_path in filing.json_folder.iterdir():
@@ -218,7 +469,7 @@ class MappedReader:
         return json_files[0] if json_files else None
 
     def _parse_statements_data(self, data: dict) -> MappedStatements:
-        """Parse the main statements JSON data."""
+        """Parse the main statements JSON data (legacy method)."""
         result = MappedStatements()
 
         # Extract filing info
@@ -248,7 +499,13 @@ class MappedReader:
 
         return result
 
-    def _parse_single_statement(self, data: dict, name: str) -> Optional[Statement]:
+    def _parse_single_statement(
+        self,
+        data: dict,
+        name: str,
+        source_file: Optional[str] = None,
+        file_size: int = 0
+    ) -> Optional[Statement]:
         """Parse a single statement from JSON data."""
         try:
             stmt = Statement(
@@ -257,7 +514,9 @@ class MappedReader:
                 metadata={
                     k: v for k, v in data.items()
                     if k not in ['facts', 'items', 'role', 'roleUri', 'name']
-                }
+                },
+                source_file=source_file,
+                file_size_bytes=file_size,
             )
 
             # Parse facts

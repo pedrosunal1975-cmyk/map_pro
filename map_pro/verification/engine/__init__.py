@@ -13,6 +13,7 @@ Subpackages:
 from .coordinator import VerificationCoordinator, VerificationResult
 from .checks import HorizontalChecker, VerticalChecker, LibraryChecker, CheckResult
 from .scoring import ScoreCalculator, VerificationScores, QualityClassifier, QualityClassification
+from .taxonomy_manager import TaxonomyManager
 
 __all__ = [
     'VerificationCoordinator',
@@ -25,4 +26,5 @@ __all__ = [
     'VerificationScores',
     'QualityClassifier',
     'QualityClassification',
+    'TaxonomyManager',
 ]

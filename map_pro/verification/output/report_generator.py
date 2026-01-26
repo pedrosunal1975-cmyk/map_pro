@@ -138,6 +138,14 @@ class ReportGenerator:
         # Add recommendation
         report['recommendation'] = result.recommendation
 
+        # Add statement information
+        if result.statement_info:
+            report['statement_info'] = result.statement_info
+
+        # Add taxonomy status
+        if result.taxonomy_status:
+            report['taxonomy_status'] = result.taxonomy_status
+
         # Add detailed check results
         report['check_results'] = {
             'horizontal': self._serialize_check_results(result.horizontal_results),
