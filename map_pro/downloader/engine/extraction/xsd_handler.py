@@ -172,33 +172,33 @@ class XSDHandler:
                     filename = XSD_DEFAULT_FILENAME
 
             local_path = target_dir / filename
-                
-                # Save file
-                local_path.write_bytes(content)
-                self._downloaded.add(url)
-                
-                logger.info(f"{LOG_OUTPUT} [{depth}] Saved: {filename}")
-                
-                # Parse for dependencies
-                dependencies = self._extract_dependencies(content, url)
-                
-                if dependencies:
-                    logger.debug(f"{LOG_PROCESS} Found {len(dependencies)} dependencies")
-                
-                # Download dependencies recursively
-                downloaded_files = {str(local_path)}
-                
-                for dep_url in dependencies:
-                    dep_files = await self._download_recursive(
-                        dep_url,
-                        target_dir,
-                        depth + 1,
-                        max_depth
-                    )
-                    downloaded_files.update(dep_files)
-                
-                return downloaded_files
-        
+
+            # Save file
+            local_path.write_bytes(content)
+            self._downloaded.add(url)
+
+            logger.info(f"{LOG_OUTPUT} [{depth}] Saved: {filename}")
+
+            # Parse for dependencies
+            dependencies = self._extract_dependencies(content, url)
+
+            if dependencies:
+                logger.debug(f"{LOG_PROCESS} Found {len(dependencies)} dependencies")
+
+            # Download dependencies recursively
+            downloaded_files = {str(local_path)}
+
+            for dep_url in dependencies:
+                dep_files = await self._download_recursive(
+                    dep_url,
+                    target_dir,
+                    depth + 1,
+                    max_depth
+                )
+                downloaded_files.update(dep_files)
+
+            return downloaded_files
+
         except Exception as e:
             logger.error(f"Error downloading {url}: {e}")
             return set()
