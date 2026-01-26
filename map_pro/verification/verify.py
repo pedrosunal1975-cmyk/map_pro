@@ -275,10 +275,12 @@ class VerificationCLI:
             result: Verification result
             quiet: If True, don't print output paths
         """
-        # Generate report
-        report_path = self.report_generator.generate_report(result)
+        # Generate all reports (combined, xbrl, taxonomy)
+        report_paths = self.report_generator.generate_all_reports(result)
         if not quiet:
-            print(f'\n[OUTPUT] Report saved: {report_path}')
+            print(f'\n[OUTPUT] Reports generated:')
+            for report_type, path in report_paths.items():
+                print(f'         - {report_type}: {path}')
 
         # Generate summary
         summary_path = self.summary_exporter.export_summary(result)

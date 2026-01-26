@@ -67,6 +67,7 @@ class VerificationResult:
     vertical_results: list[CheckResult] = field(default_factory=list)
     library_results: list[CheckResult] = field(default_factory=list)
     xbrl_calculation_results: list[CheckResult] = field(default_factory=list)
+    taxonomy_calculation_results: list[CheckResult] = field(default_factory=list)
     issues_summary: dict = field(default_factory=dict)
     recommendation: str = ''
     verified_at: datetime = None
@@ -290,12 +291,18 @@ class VerificationCoordinator:
             self.logger.info(f"{LOG_PROCESS} Running vertical checks")
             result.vertical_results = self.vertical_checker.check_all(statements)
 
-            # Also store XBRL results separately for detailed analysis
-            if self.formula_registry.has_company_formulas():
-                result.xbrl_calculation_results = [
-                    r for r in result.vertical_results
-                    if r.check_name in ('xbrl_calculation', 'xbrl_calculation_comparison')
-                ]
+            # Store XBRL and taxonomy results separately for detailed analysis
+            # Filter by verification_source in details
+            result.xbrl_calculation_results = [
+                r for r in result.vertical_results
+                if (r.check_name in ('xbrl_calculation', 'xbrl_calculation_comparison')
+                    and r.details and r.details.get('verification_source') == 'company')
+            ]
+            result.taxonomy_calculation_results = [
+                r for r in result.vertical_results
+                if (r.check_name in ('xbrl_calculation', 'xbrl_calculation_comparison')
+                    and r.details and r.details.get('verification_source') == 'taxonomy')
+            ]
 
             # Step 5: Ensure taxonomies are available (if library checks enabled)
             if self.enable_library_checks:
@@ -320,12 +327,13 @@ class VerificationCoordinator:
                 )
 
             # Step 7: Calculate scores
+            # Note: vertical_results already includes xbrl/taxonomy calculation results
+            # so we don't add them again to avoid double-counting
             self.logger.info(f"{LOG_PROCESS} Calculating scores")
             all_results = (
                 result.horizontal_results +
                 result.vertical_results +
-                result.library_results +
-                result.xbrl_calculation_results
+                result.library_results
             )
             result.scores = self.score_calculator.calculate_scores(all_results)
 

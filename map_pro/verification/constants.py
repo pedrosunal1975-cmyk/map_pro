@@ -65,6 +65,8 @@ STATEMENTS_JSON_FILE = 'statements.json'
 
 # Output file names
 REPORT_FILE = 'report.json'
+REPORT_XBRL_FILE = 'report_xbrl.json'
+REPORT_TAXONOMY_FILE = 'report_taxonomy.json'
 SUMMARY_FILE = 'summary.txt'
 
 # ==============================================================================
@@ -138,6 +140,8 @@ __all__ = [
     'MAIN_STATEMENTS_FILE',
     'STATEMENTS_JSON_FILE',
     'REPORT_FILE',
+    'REPORT_XBRL_FILE',
+    'REPORT_TAXONOMY_FILE',
     'SUMMARY_FILE',
 
     # Markets

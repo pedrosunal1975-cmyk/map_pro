@@ -2,7 +2,10 @@
 """
 Report Generator for Verification Module
 
-Creates comprehensive verification report.json files.
+Creates comprehensive verification report files:
+- report.json: Combined verification report (all sources)
+- report_xbrl.json: XBRL-sourced verification results (company formulas)
+- report_taxonomy.json: Taxonomy-sourced verification results (standard formulas)
 """
 
 import json
@@ -15,7 +18,12 @@ from typing import Optional
 from ..core.config_loader import ConfigLoader
 from ..engine.coordinator import VerificationResult
 from ..engine.checks.horizontal_checker import CheckResult
-from ..constants import LOG_OUTPUT, REPORT_FILE
+from ..constants import (
+    LOG_OUTPUT,
+    REPORT_FILE,
+    REPORT_XBRL_FILE,
+    REPORT_TAXONOMY_FILE,
+)
 
 
 class ReportGenerator:
@@ -30,10 +38,14 @@ class ReportGenerator:
     - Issues summary
     - Recommendations
 
+    Also generates separate reports for XBRL-sourced and taxonomy-sourced
+    verification results.
+
     Example:
         generator = ReportGenerator()
-        path = generator.generate_report(verification_result)
-        print(f"Report saved to: {path}")
+        paths = generator.generate_all_reports(verification_result)
+        for path in paths:
+            print(f"Report saved to: {path}")
     """
 
     def __init__(self, config: Optional[ConfigLoader] = None):
@@ -47,13 +59,54 @@ class ReportGenerator:
         self.output_dir = self.config.get('output_dir')
         self.logger = logging.getLogger('output.report_generator')
 
+    def generate_all_reports(
+        self,
+        result: VerificationResult,
+        output_dir: Optional[Path] = None
+    ) -> dict[str, Path]:
+        """
+        Generate all verification reports (combined, XBRL, taxonomy).
+
+        Args:
+            result: VerificationResult from coordinator
+            output_dir: Optional custom output directory
+
+        Returns:
+            Dictionary mapping report type to file path
+        """
+        paths = {}
+
+        # Determine output directory
+        if output_dir is None:
+            output_dir = self._get_default_output_dir(result)
+
+        # Generate combined report
+        combined_path = self.generate_report(result, output_dir / REPORT_FILE)
+        paths['combined'] = combined_path
+
+        # Generate XBRL-sourced report (if there are XBRL results)
+        if result.xbrl_calculation_results:
+            xbrl_path = self.generate_xbrl_report(result, output_dir / REPORT_XBRL_FILE)
+            paths['xbrl'] = xbrl_path
+        else:
+            self.logger.info(f"{LOG_OUTPUT} No XBRL calculation results - skipping report_xbrl.json")
+
+        # Generate taxonomy-sourced report (if there are taxonomy results)
+        if result.taxonomy_calculation_results:
+            taxonomy_path = self.generate_taxonomy_report(result, output_dir / REPORT_TAXONOMY_FILE)
+            paths['taxonomy'] = taxonomy_path
+        else:
+            self.logger.info(f"{LOG_OUTPUT} No taxonomy calculation results - skipping report_taxonomy.json")
+
+        return paths
+
     def generate_report(
         self,
         result: VerificationResult,
         output_path: Optional[Path] = None
     ) -> Path:
         """
-        Generate verification report JSON.
+        Generate combined verification report JSON.
 
         Args:
             result: VerificationResult from coordinator
@@ -62,11 +115,11 @@ class ReportGenerator:
         Returns:
             Path to generated report file
         """
-        self.logger.info(f"{LOG_OUTPUT} Generating report for {result.filing_id}")
+        self.logger.info(f"{LOG_OUTPUT} Generating combined report for {result.filing_id}")
 
         # Determine output path
         if output_path is None:
-            output_path = self._get_default_output_path(result)
+            output_path = self._get_default_output_path(result, REPORT_FILE)
 
         # Build report structure
         report = self._build_report(result)
@@ -74,12 +127,78 @@ class ReportGenerator:
         # Write report
         self._write_report(report, output_path)
 
-        self.logger.info(f"{LOG_OUTPUT} Report saved to: {output_path}")
+        self.logger.info(f"{LOG_OUTPUT} Combined report saved to: {output_path}")
 
         return output_path
 
-    def _get_default_output_path(self, result: VerificationResult) -> Path:
-        """Get default output path for report."""
+    def generate_xbrl_report(
+        self,
+        result: VerificationResult,
+        output_path: Optional[Path] = None
+    ) -> Path:
+        """
+        Generate XBRL-sourced verification report.
+
+        Contains only results from company XBRL calculation linkbase.
+
+        Args:
+            result: VerificationResult from coordinator
+            output_path: Optional custom output path
+
+        Returns:
+            Path to generated report file
+        """
+        self.logger.info(f"{LOG_OUTPUT} Generating XBRL report for {result.filing_id}")
+
+        # Determine output path
+        if output_path is None:
+            output_path = self._get_default_output_path(result, REPORT_XBRL_FILE)
+
+        # Build XBRL-specific report
+        report = self._build_xbrl_report(result)
+
+        # Write report
+        self._write_report(report, output_path)
+
+        self.logger.info(f"{LOG_OUTPUT} XBRL report saved to: {output_path}")
+
+        return output_path
+
+    def generate_taxonomy_report(
+        self,
+        result: VerificationResult,
+        output_path: Optional[Path] = None
+    ) -> Path:
+        """
+        Generate taxonomy-sourced verification report.
+
+        Contains only results from standard taxonomy calculation linkbase.
+
+        Args:
+            result: VerificationResult from coordinator
+            output_path: Optional custom output path
+
+        Returns:
+            Path to generated report file
+        """
+        self.logger.info(f"{LOG_OUTPUT} Generating taxonomy report for {result.filing_id}")
+
+        # Determine output path
+        if output_path is None:
+            output_path = self._get_default_output_path(result, REPORT_TAXONOMY_FILE)
+
+        # Build taxonomy-specific report
+        report = self._build_taxonomy_report(result)
+
+        # Write report
+        self._write_report(report, output_path)
+
+        self.logger.info(f"{LOG_OUTPUT} Taxonomy report saved to: {output_path}")
+
+        return output_path
+
+    def _get_default_output_dir(self, result: VerificationResult) -> Path:
+        """Get default output directory for reports."""
         if not self.output_dir:
             raise ValueError("Output directory not configured")
 
@@ -93,11 +212,17 @@ class ReportGenerator:
         )
         report_dir.mkdir(parents=True, exist_ok=True)
 
-        return report_dir / REPORT_FILE
+        return report_dir
+
+    def _get_default_output_path(self, result: VerificationResult, filename: str) -> Path:
+        """Get default output path for a specific report file."""
+        report_dir = self._get_default_output_dir(result)
+        return report_dir / filename
 
     def _build_report(self, result: VerificationResult) -> dict:
-        """Build report dictionary from verification result."""
+        """Build combined report dictionary from verification result."""
         report = {
+            'report_type': 'combined',
             'filing_info': {
                 'filing_id': result.filing_id,
                 'market': result.market,
@@ -146,12 +271,101 @@ class ReportGenerator:
         if result.taxonomy_status:
             report['taxonomy_status'] = result.taxonomy_status
 
+        # Add formula registry summary
+        if result.formula_registry_summary:
+            report['formula_registry_summary'] = result.formula_registry_summary
+
         # Add detailed check results
         report['check_results'] = {
             'horizontal': self._serialize_check_results(result.horizontal_results),
             'vertical': self._serialize_check_results(result.vertical_results),
             'library': self._serialize_check_results(result.library_results),
         }
+
+        return report
+
+    def _build_xbrl_report(self, result: VerificationResult) -> dict:
+        """Build XBRL-sourced report dictionary."""
+        report = {
+            'report_type': 'xbrl',
+            'verification_source': 'company_xbrl',
+            'description': 'Verification results using company XBRL calculation linkbase',
+            'filing_info': {
+                'filing_id': result.filing_id,
+                'market': result.market,
+                'company': result.company,
+                'form': result.form,
+                'date': result.date,
+            },
+            'verification_timestamp': result.verified_at.isoformat() if result.verified_at else None,
+        }
+
+        # Add formula registry info for XBRL
+        if result.formula_registry_summary:
+            report['formula_source'] = {
+                'company_trees': result.formula_registry_summary.get('company_trees', 0),
+                'company_roles': result.formula_registry_summary.get('company_roles', []),
+            }
+
+        # Calculate XBRL-specific stats
+        xbrl_results = result.xbrl_calculation_results
+        if xbrl_results:
+            passed = sum(1 for r in xbrl_results if r.passed)
+            failed = sum(1 for r in xbrl_results if not r.passed)
+            total = len(xbrl_results)
+
+            report['summary'] = {
+                'total_checks': total,
+                'passed': passed,
+                'failed': failed,
+                'pass_rate': round(passed / total * 100, 2) if total > 0 else 0.0,
+            }
+
+        # Add detailed XBRL check results
+        report['calculation_results'] = self._serialize_check_results(xbrl_results)
+
+        return report
+
+    def _build_taxonomy_report(self, result: VerificationResult) -> dict:
+        """Build taxonomy-sourced report dictionary."""
+        report = {
+            'report_type': 'taxonomy',
+            'verification_source': 'standard_taxonomy',
+            'description': 'Verification results using standard taxonomy calculation linkbase',
+            'filing_info': {
+                'filing_id': result.filing_id,
+                'market': result.market,
+                'company': result.company,
+                'form': result.form,
+                'date': result.date,
+            },
+            'verification_timestamp': result.verified_at.isoformat() if result.verified_at else None,
+        }
+
+        # Add formula registry info for taxonomy
+        if result.formula_registry_summary:
+            report['formula_source'] = {
+                'taxonomy_trees': result.formula_registry_summary.get('taxonomy_trees', 0),
+                'taxonomy_roles': result.formula_registry_summary.get('taxonomy_roles', []),
+                'taxonomy_id': result.formula_registry_summary.get('taxonomy_id'),
+            }
+
+        # Calculate taxonomy-specific stats
+        taxonomy_results = result.taxonomy_calculation_results
+        if taxonomy_results:
+            passed = sum(1 for r in taxonomy_results if r.passed)
+            failed = sum(1 for r in taxonomy_results if not r.passed)
+            total = len(taxonomy_results)
+
+            report['summary'] = {
+                'total_checks': total,
+                'passed': passed,
+                'failed': failed,
+                'pass_rate': round(passed / total * 100, 2) if total > 0 else 0.0,
+            }
+
+        # Add detailed taxonomy check results
+        report['calculation_results'] = self._serialize_check_results(taxonomy_results)
 
         return report
 
