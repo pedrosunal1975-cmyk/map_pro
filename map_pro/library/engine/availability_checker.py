@@ -206,32 +206,10 @@ class AvailabilityChecker:
                     return False
 
                 # Check if library has completed download and has files
-                # Accept either:
-                # 1. New way: status='active' + validation_status='valid'
-                # 2. Old way: download_status='completed' (for backwards compatibility)
                 has_files = library.total_files and library.total_files > self.min_files_threshold
 
-                new_style_ready = (
-                    library.status == LIBRARY_STATUS_ACTIVE and
-                    library.validation_status == STATUS_VALID and
-                    has_files
-                )
-
-                old_style_ready = (
-                    library.download_status == 'completed' and
-                    has_files
-                )
-
-                is_ready = new_style_ready or old_style_ready
-
-                # Auto-correct old records: if download_status='completed' but status not set
-                if old_style_ready and not new_style_ready:
-                    logger.info(
-                        f"{LOG_PROCESS} Auto-correcting status for {taxonomy_name} v{version}"
-                    )
-                    library.status = LIBRARY_STATUS_ACTIVE
-                    library.validation_status = STATUS_VALID
-                    session.commit()
+                # Accept download_status='completed' as ready
+                is_ready = library.download_status == 'completed' and has_files
 
                 return is_ready
 
