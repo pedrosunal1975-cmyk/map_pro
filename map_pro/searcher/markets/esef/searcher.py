@@ -75,17 +75,14 @@ class ESEFSearcher(BaseSearcher):
         # Normalize form type
         report_type = self._normalize_form_type(form_type)
 
-        # Determine if identifier is LEI or name, then get entity_api_id
+        # Determine if identifier is LEI or name
         lei = None
-        entity_api_id = None
 
         if self._is_lei(identifier):
             lei = identifier.upper()
-            logger.info(f"{LOG_PROCESS} Searching by LEI: {lei}")
-            # Get entity API ID from LEI
-            entity_api_id = await self._get_entity_api_id_by_lei(lei)
+            logger.info(f"{LOG_PROCESS} Using LEI directly: {lei}")
         else:
-            # Search entities first to get LEI and entity_api_id
+            # Search entities first to get LEI from name
             logger.info(f"{LOG_PROCESS} Searching entities by name: {identifier}")
             entity_info = await self._get_entity_by_name(identifier, country)
 
@@ -94,17 +91,16 @@ class ESEFSearcher(BaseSearcher):
                 return []
 
             lei = entity_info.get('lei')
-            entity_api_id = entity_info.get('api_id')
-            logger.info(f"{LOG_PROCESS} Found entity: LEI={lei}, api_id={entity_api_id}")
+            logger.info(f"{LOG_PROCESS} Found entity LEI: {lei}")
 
-        if not entity_api_id:
-            logger.warning(f"{LOG_OUTPUT} Could not get entity API ID for: {identifier}")
+        if not lei:
+            logger.warning(f"{LOG_OUTPUT} Could not determine LEI for: {identifier}")
             return []
 
-        # Build API URL for filings (filter by entity_api_id)
+        # Build API URL for filings (filter by entity.identifier = LEI)
         url = self.url_builder.get_filings_url(
             country=country,
-            entity_api_id=entity_api_id,
+            entity_identifier=lei,
             report_type=report_type,
             period_end_from=start_date,
             period_end_to=end_date,

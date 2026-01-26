@@ -45,7 +45,7 @@ class ESEFURLBuilder:
     def get_filings_url(
         self,
         country: Optional[str] = None,
-        entity_api_id: Optional[str] = None,
+        entity_identifier: Optional[str] = None,
         report_type: Optional[str] = None,
         period_end_from: Optional[str] = None,
         period_end_to: Optional[str] = None,
@@ -59,7 +59,7 @@ class ESEFURLBuilder:
 
         Args:
             country: Country code filter (e.g., 'GB', 'DE')
-            entity_api_id: Entity API ID filter (from /api/entities response)
+            entity_identifier: Entity identifier (LEI) to filter by
             report_type: Report type filter (e.g., 'AFR')
             period_end_from: Period end date start (YYYY-MM-DD)
             period_end_to: Period end date end (YYYY-MM-DD)
@@ -80,8 +80,8 @@ class ESEFURLBuilder:
         if country:
             params['filter[country]'] = country.upper()
 
-        if entity_api_id:
-            params['filter[entity_api_id]'] = entity_api_id
+        if entity_identifier:
+            params['filter[entity.identifier]'] = entity_identifier.upper()
 
         if report_type:
             params['filter[report_type]'] = report_type.upper()
