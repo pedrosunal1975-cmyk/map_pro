@@ -181,6 +181,10 @@ class JSONExporter:
                     'order': f.order,
                     'parent_concept': f.parent_concept,
                     'metadata': f.metadata,
+                    # Period information (CRITICAL for calculation verification)
+                    'period_type': f.period_type,
+                    'period_start': f.period_start,
+                    'period_end': f.period_end,
                     # Calculated values for verification
                     'display_value': f.display_value,
                     'formatted_value': f.formatted_value,
@@ -264,6 +268,10 @@ class JSONExporter:
                         'level': f.level,
                         'order': f.order,
                         'parent_concept': f.parent_concept,
+                        # Period information (CRITICAL for calculation verification)
+                        'period_type': f.period_type,
+                        'period_start': f.period_start,
+                        'period_end': f.period_end,
                         # Calculated values for verification
                         'display_value': f.display_value,
                         'formatted_value': f.formatted_value,

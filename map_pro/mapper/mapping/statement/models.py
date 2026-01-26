@@ -13,13 +13,18 @@ from typing import Optional
 class StatementFact:
     """
     A fact as it appears in a statement.
-    
+
     Contains both raw XBRL values and calculated values for verification:
     - value: Raw XBRL value (e.g., "26755.7")
     - decimals: XBRL decimals attribute (e.g., "-5")
     - display_value: Scaled value for verification (e.g., "2675570000")
     - formatted_value: Human-readable (e.g., "$2,675,570,000")
     - scaling_factor: 10^(-decimals) for reference (e.g., 100000)
+
+    Period information (critical for calculation verification):
+    - period_type: 'instant' or 'duration'
+    - period_start: Start date for duration periods (None for instant)
+    - period_end: End date (for both instant and duration)
     """
     concept: str
     value: any
@@ -32,7 +37,12 @@ class StatementFact:
     level: int = 0
     parent_concept: Optional[str] = None
     metadata: dict[str, any] = field(default_factory=dict)
-    
+
+    # Period information (from XBRL context)
+    period_type: Optional[str] = None       # 'instant' or 'duration'
+    period_start: Optional[str] = None      # Start date (duration only)
+    period_end: Optional[str] = None        # End date (instant or duration end)
+
     # Calculated values (added by FactEnricher)
     display_value: Optional[str] = None      # Scaled value: value × 10^(-decimals)
     formatted_value: Optional[str] = None    # Human-readable: "$2,675,570,000"

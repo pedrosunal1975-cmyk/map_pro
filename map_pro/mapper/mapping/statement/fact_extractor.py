@@ -19,24 +19,26 @@ from ...mapping.statement.fact_enricher import FactEnricher
 class FactExtractor:
     """
     Extracts facts following presentation hierarchy order.
-    
+
     Responsibilities:
     - Build concept-to-facts mapping with normalized QNames
     - Traverse hierarchy depth-first
     - Extract facts in presentation order
     - Handle parent-child relationships
+    - Extract period information from contexts for calculation verification
     """
-    
+
     def __init__(self, get_attr_func):
         """
         Initialize fact extractor.
-        
+
         Args:
             get_attr_func: Function to safely get attributes from data objects
         """
         self.logger = logging.getLogger('mapping.fact_extractor')
         self._get_attr = get_attr_func
         self.fact_enricher = FactEnricher()  # Initialize enricher
+        self._context_cache: dict[str, dict] = {}  # Cache context_id -> period info
     
     def extract_facts_in_order(
         self,
@@ -72,6 +74,10 @@ class FactExtractor:
                 concept_name = self._get_attr(fact, 'name')
                 self.logger.warning(f"  {i}. '{concept_name}' (type: {type(concept_name)})")
         
+        # Build context cache for period lookup (CRITICAL for calculation verification)
+        self._build_context_cache(parsed_filing)
+        self.logger.info(f"Built context cache with {len(self._context_cache)} contexts")
+
         # Build concept-to-facts map with normalized local names
         concept_facts_map = self._build_concept_facts_map(parsed_filing)
         
@@ -150,7 +156,74 @@ class FactExtractor:
                     )
         
         return concept_facts_map
-    
+
+    def _build_context_cache(self, parsed_filing: ParsedFiling) -> None:
+        """
+        Build cache mapping context_id to period information.
+
+        This is CRITICAL for calculation verification - facts must be grouped
+        by period to ensure calculations compare values from the same time.
+
+        Args:
+            parsed_filing: Parsed filing with contexts
+        """
+        self._context_cache.clear()
+
+        try:
+            contexts = parsed_filing.contexts
+            for context in contexts:
+                context_id = context.id
+                if not context_id:
+                    continue
+
+                # Extract period info based on type
+                period_type = context.period_type
+                period_start = None
+                period_end = None
+
+                if period_type == 'instant':
+                    # Instant: only end date (the instant date)
+                    if context.instant:
+                        period_end = str(context.instant)
+                elif period_type == 'duration':
+                    # Duration: start and end dates
+                    if context.start_date:
+                        period_start = str(context.start_date)
+                    if context.end_date:
+                        period_end = str(context.end_date)
+
+                self._context_cache[context_id] = {
+                    'period_type': period_type,
+                    'period_start': period_start,
+                    'period_end': period_end,
+                }
+
+            self.logger.debug(
+                f"Built context cache: {len(self._context_cache)} contexts"
+            )
+
+        except Exception as e:
+            self.logger.warning(f"Failed to build context cache: {e}")
+
+    def _get_period_info(self, context_ref: str) -> dict:
+        """
+        Get period information for a context reference.
+
+        Args:
+            context_ref: Context ID to look up
+
+        Returns:
+            Dictionary with period_type, period_start, period_end
+        """
+        if not context_ref:
+            return {'period_type': None, 'period_start': None, 'period_end': None}
+
+        return self._context_cache.get(context_ref, {
+            'period_type': None,
+            'period_start': None,
+            'period_end': None,
+        })
+
     def _traverse_and_extract(
         self,
         concept: str,
@@ -199,17 +272,25 @@ class FactExtractor:
         
         # Add facts to statement
         for fact in facts:
+            # Get context reference and look up period info
+            context_ref = self._get_attr(fact, 'context_ref')
+            period_info = self._get_period_info(context_ref)
+
             statement_fact = StatementFact(
                 concept=concept,  # Keep original concept from hierarchy
                 value=self._get_attr(fact, 'value'),
-                context_ref=self._get_attr(fact, 'context_ref'),
+                context_ref=context_ref,
                 unit_ref=self._get_attr(fact, 'unit_ref'),
                 decimals=self._get_attr(fact, 'decimals'),
                 precision=self._get_attr(fact, 'precision'),
                 order=order,
                 level=level,
                 parent_concept=parent,
-                metadata={}
+                metadata={},
+                # Period information from context (CRITICAL for calculation verification)
+                period_type=period_info.get('period_type'),
+                period_start=period_info.get('period_start'),
+                period_end=period_info.get('period_end'),
             )
             statement_facts.append(statement_fact)
         
