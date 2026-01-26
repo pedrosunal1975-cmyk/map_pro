@@ -54,11 +54,11 @@ class CalculationVerificationResult:
     Detailed breakdown of how a calculated total was verified.
     """
     parent_concept: str
-    expected_value: Optional[float]
-    actual_value: Optional[float]
-    passed: bool
     source: str  # 'company' or 'taxonomy'
     role: str
+    expected_value: Optional[float] = None
+    actual_value: Optional[float] = None
+    passed: bool = False
     children: list[ChildContribution] = field(default_factory=list)
     difference: Optional[float] = None
     tolerance_used: float = 0.0
