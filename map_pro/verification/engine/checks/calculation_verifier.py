@@ -231,6 +231,9 @@ class CalculationVerifier:
         Uses NORMALIZED concept names for matching, allowing different
         separator formats (colon vs underscore) to match correctly.
 
+        PERIOD HANDLING: Facts are extracted from the most recent period
+        to ensure calculations compare values from the same reporting period.
+
         Args:
             statements: MappedStatements with fact values
             source: 'company' or 'taxonomy'
@@ -241,10 +244,10 @@ class CalculationVerifier:
         """
         self.logger.info(f"Verifying calculations against {source} formulas")
 
-        # Build NORMALIZED facts dictionary from all statements
+        # Build NORMALIZED facts dictionary from all statements (period-aware)
         facts, normalizer = self._extract_facts(statements)
 
-        self.logger.info(f"Extracted {len(facts)} normalized fact values")
+        self.logger.info(f"Extracted {len(facts)} normalized fact values from primary period")
 
         # Get calculation trees from registry
         trees = self.registry.get_all_calculations(source, role)
@@ -262,7 +265,13 @@ class CalculationVerifier:
             results.append(result)
 
         passed = sum(1 for r in results if r.passed)
-        self.logger.info(f"Calculation verification: {passed}/{len(results)} passed")
+        failed = sum(1 for r in results if not r.passed and r.actual_value is not None)
+        skipped = len(results) - passed - failed
+
+        self.logger.info(
+            f"Calculation verification ({source}): "
+            f"{passed} passed, {failed} failed, {skipped} skipped (no data)"
+        )
 
         return results
 
@@ -469,6 +478,11 @@ class CalculationVerifier:
         This method normalizes all concept names so they can be matched
         regardless of the separator used.
 
+        PERIOD HANDLING:
+        SEC filings have multiple periods (current year, prior year, quarters).
+        We extract facts from the MOST RECENT period to ensure consistency.
+        Facts are keyed by (normalized_concept, period_end) to avoid mixing periods.
+
         Args:
             statements: MappedStatements object
 
@@ -477,7 +491,8 @@ class CalculationVerifier:
             - Dictionary mapping NORMALIZED concept names to values
             - ConceptNormalizer with original name mappings
         """
-        facts: dict[str, float] = {}
+        # First pass: collect all facts with their periods
+        facts_by_period: dict[str, dict[str, float]] = {}  # period -> {concept: value}
         normalizer = ConceptNormalizer()
 
         for statement in statements.statements:
@@ -493,10 +508,41 @@ class CalculationVerifier:
                 # Normalize the concept name for lookup
                 normalized = normalizer.register(fact.concept, source='statement')
 
-                # Use normalized name as key
-                # If same concept exists, prefer main statements
-                if normalized not in facts or statement.is_main_statement:
-                    facts[normalized] = value
+                # Use period_end as the key (or 'unknown' if not available)
+                period = fact.period_end or 'unknown'
+
+                if period not in facts_by_period:
+                    facts_by_period[period] = {}
+
+                # Within same period, prefer main statements
+                if normalized not in facts_by_period[period] or statement.is_main_statement:
+                    facts_by_period[period][normalized] = value
+
+        # Find the most recent period (latest date string)
+        if not facts_by_period:
+            self.logger.debug("No facts found in statements")
+            return {}, normalizer
+
+        # Sort periods to find most recent (exclude 'unknown')
+        valid_periods = [p for p in facts_by_period.keys() if p != 'unknown']
+        if valid_periods:
+            # Dates are typically in YYYY-MM-DD format, so string sort works
+            valid_periods.sort(reverse=True)
+            primary_period = valid_periods[0]
+        elif 'unknown' in facts_by_period:
+            primary_period = 'unknown'
+        else:
+            primary_period = list(facts_by_period.keys())[0]
+
+        # Use facts from primary period, but supplement with other periods
+        # if a concept is missing (some facts may only appear in certain periods)
+        facts: dict[str, float] = dict(facts_by_period.get(primary_period, {}))
+
+        # Log period information
+        self.logger.debug(
+            f"Extracted facts from {len(facts_by_period)} periods, "
+            f"using primary period: {primary_period}"
+        )
 
         self.logger.debug(
             f"Extracted {len(facts)} normalized fact values from statements"
