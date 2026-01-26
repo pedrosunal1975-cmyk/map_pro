@@ -288,6 +288,13 @@ class UKFilingFinder:
                     item['document_download_url'] = f"{document_metadata_url}/content"
 
                     if metadata:
+                        # Log available formats for debugging
+                        resources = metadata.get('resources', {})
+                        logger.info(
+                            f"Document {document_id} available formats: {list(resources.keys())}",
+                            extra={LOG_PROCESS: 'format_check', 'formats': list(resources.keys())}
+                        )
+
                         # Get preferred format
                         format_info = self._get_preferred_format(metadata)
 
