@@ -128,7 +128,7 @@ class ESEFSearcher(BaseSearcher):
 
         # Filter by report_type client-side if specified
         if report_type:
-            filings = [f for f in filings if f.get('report_type', '').upper() == report_type.upper()]
+            filings = [f for f in filings if (f.get('report_type') or '').upper() == report_type.upper()]
             logger.info(f"{LOG_PROCESS} Filtered to {len(filings)} filings of type {report_type}")
 
         # Build result dictionaries
