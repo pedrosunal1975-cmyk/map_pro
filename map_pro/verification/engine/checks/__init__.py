@@ -8,4 +8,13 @@ Verification check implementations:
 - library_checker: Standard taxonomy conformance
 """
 
-__all__ = []
+from .horizontal_checker import HorizontalChecker, CheckResult
+from .vertical_checker import VerticalChecker
+from .library_checker import LibraryChecker
+
+__all__ = [
+    'HorizontalChecker',
+    'VerticalChecker',
+    'LibraryChecker',
+    'CheckResult',
+]

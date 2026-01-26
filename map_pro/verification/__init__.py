@@ -27,8 +27,15 @@ Usage:
 __version__ = '0.1.0'
 __author__ = 'MAP PRO'
 
+# Core exports for convenient access
+from .engine.coordinator import VerificationCoordinator, VerificationResult
+from .engine.scoring import VerificationScores, QualityClassification
 
 __all__ = [
     '__version__',
     '__author__',
+    'VerificationCoordinator',
+    'VerificationResult',
+    'VerificationScores',
+    'QualityClassification',
 ]

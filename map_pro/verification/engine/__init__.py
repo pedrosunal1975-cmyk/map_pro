@@ -10,4 +10,19 @@ Subpackages:
 - markets/: Market-specific verification logic (SEC, ESEF)
 """
 
-__all__ = []
+from .coordinator import VerificationCoordinator, VerificationResult
+from .checks import HorizontalChecker, VerticalChecker, LibraryChecker, CheckResult
+from .scoring import ScoreCalculator, VerificationScores, QualityClassifier, QualityClassification
+
+__all__ = [
+    'VerificationCoordinator',
+    'VerificationResult',
+    'HorizontalChecker',
+    'VerticalChecker',
+    'LibraryChecker',
+    'CheckResult',
+    'ScoreCalculator',
+    'VerificationScores',
+    'QualityClassifier',
+    'QualityClassification',
+]

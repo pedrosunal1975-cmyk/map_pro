@@ -7,4 +7,12 @@ Score calculation and quality classification:
 - quality_classifier: Classify overall quality level
 """
 
-__all__ = []
+from .score_calculator import ScoreCalculator, VerificationScores
+from .quality_classifier import QualityClassifier, QualityClassification
+
+__all__ = [
+    'ScoreCalculator',
+    'VerificationScores',
+    'QualityClassifier',
+    'QualityClassification',
+]

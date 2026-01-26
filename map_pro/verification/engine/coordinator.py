@@ -1,0 +1,405 @@
+# Path: verification/engine/coordinator.py
+"""
+Verification Coordinator
+
+Main orchestration for verification module.
+Coordinates all checks, scoring, and output generation.
+
+100% AGNOSTIC - coordinates other components without hardcoded logic.
+"""
+
+import logging
+from dataclasses import dataclass, field
+from datetime import datetime
+from pathlib import Path
+from typing import Optional
+
+from ..core.config_loader import ConfigLoader
+from ..core.data_paths import DataPathsManager
+from ..core.logger.ipo_logging import setup_ipo_logging
+from ..loaders.mapped_data import MappedDataLoader, MappedFilingEntry
+from ..loaders.mapped_reader import MappedReader, MappedStatements
+from ..loaders.xbrl_filings import XBRLFilingsLoader
+from ..loaders.xbrl_reader import XBRLReader, CalculationNetwork
+from ..loaders.taxonomy_reader import TaxonomyReader
+from .checks.horizontal_checker import HorizontalChecker, CheckResult
+from .checks.vertical_checker import VerticalChecker
+from .checks.library_checker import LibraryChecker
+from .scoring.score_calculator import ScoreCalculator, VerificationScores
+from .scoring.quality_classifier import QualityClassifier, QualityClassification
+from ..constants import LOG_INPUT, LOG_PROCESS, LOG_OUTPUT
+
+
+@dataclass
+class VerificationResult:
+    """
+    Complete verification result for a filing.
+
+    Attributes:
+        filing_id: Unique filing identifier
+        market: Market identifier
+        company: Company name
+        form: Form type
+        date: Filing date
+        scores: Verification scores
+        quality: Quality classification
+        horizontal_results: Results from horizontal checks
+        vertical_results: Results from vertical checks
+        library_results: Results from library checks
+        issues_summary: Count of issues by severity
+        recommendation: Recommended action
+        verified_at: Verification timestamp
+        processing_time_seconds: Time taken to verify
+    """
+    filing_id: str
+    market: str
+    company: str
+    form: str
+    date: str
+    scores: VerificationScores = None
+    quality: QualityClassification = None
+    horizontal_results: list[CheckResult] = field(default_factory=list)
+    vertical_results: list[CheckResult] = field(default_factory=list)
+    library_results: list[CheckResult] = field(default_factory=list)
+    issues_summary: dict = field(default_factory=dict)
+    recommendation: str = ''
+    verified_at: datetime = None
+    processing_time_seconds: float = 0.0
+
+    def __post_init__(self):
+        if self.verified_at is None:
+            self.verified_at = datetime.now()
+
+
+class VerificationCoordinator:
+    """
+    Main verification workflow orchestrator.
+
+    Coordinates:
+    1. Loading mapped statements
+    2. Loading company XBRL linkbases
+    3. Running horizontal checks
+    4. Running vertical checks
+    5. Running library checks (optional)
+    6. Calculating scores
+    7. Classifying quality
+
+    Example:
+        coordinator = VerificationCoordinator()
+
+        # Verify all available filings
+        results = coordinator.verify_all_filings()
+
+        # Verify specific filing
+        result = coordinator.verify_filing(filing_entry)
+    """
+
+    def __init__(self, config: Optional[ConfigLoader] = None):
+        """
+        Initialize verification coordinator.
+
+        Args:
+            config: Optional ConfigLoader instance
+        """
+        self.config = config if config else ConfigLoader()
+        self.logger = logging.getLogger('process.coordinator')
+
+        self.logger.info(f"{LOG_PROCESS} Initializing verification coordinator")
+
+        # Setup logging
+        self._setup_logging()
+
+        # Ensure data directories exist
+        self._ensure_directories()
+
+        # Initialize loaders
+        self.mapped_loader = MappedDataLoader(self.config)
+        self.mapped_reader = MappedReader()
+        self.xbrl_loader = XBRLFilingsLoader(self.config)
+        self.xbrl_reader = XBRLReader(self.config)
+        self.taxonomy_reader = TaxonomyReader(self.config)
+
+        # Initialize checkers
+        tolerance = self.config.get('calculation_tolerance', 0.01)
+        rounding = self.config.get('rounding_tolerance', 1.0)
+
+        self.horizontal_checker = HorizontalChecker(tolerance, rounding)
+        self.vertical_checker = VerticalChecker(tolerance, rounding)
+        self.library_checker = LibraryChecker()
+
+        # Initialize scoring
+        h_weight = self.config.get('horizontal_weight', 0.4)
+        v_weight = self.config.get('vertical_weight', 0.4)
+        l_weight = self.config.get('library_weight', 0.2)
+
+        self.score_calculator = ScoreCalculator(h_weight, v_weight, l_weight)
+        self.quality_classifier = QualityClassifier(
+            excellent_threshold=self.config.get('excellent_threshold', 90),
+            good_threshold=self.config.get('good_threshold', 75),
+            fair_threshold=self.config.get('fair_threshold', 50),
+            poor_threshold=self.config.get('poor_threshold', 25),
+        )
+
+        # Configuration
+        self.enable_library_checks = self.config.get('enable_library_checks', True)
+        self.continue_on_error = self.config.get('continue_on_error', True)
+
+        self.logger.info(f"{LOG_OUTPUT} Verification coordinator initialized")
+
+    def _setup_logging(self) -> None:
+        """Setup IPO-aware logging."""
+        log_dir = self.config.get('log_dir')
+        if log_dir:
+            log_dir = Path(log_dir)
+            log_dir.mkdir(parents=True, exist_ok=True)
+
+            setup_ipo_logging(
+                log_dir=log_dir,
+                log_level=self.config.get('log_level', 'INFO'),
+                console_output=True
+            )
+
+    def _ensure_directories(self) -> None:
+        """Ensure all required directories exist."""
+        try:
+            manager = DataPathsManager()
+            result = manager.ensure_all_directories()
+            self.logger.info(f"{LOG_OUTPUT} Directories ready: {len(result['created'])} created")
+        except Exception as e:
+            self.logger.warning(f"Could not create all directories: {e}")
+
+    def verify_filing(self, filing: MappedFilingEntry) -> VerificationResult:
+        """
+        Verify a single mapped filing.
+
+        Args:
+            filing: MappedFilingEntry from MappedDataLoader
+
+        Returns:
+            VerificationResult with all check results and scores
+        """
+        start_time = datetime.now()
+        filing_id = f"{filing.market}/{filing.company}/{filing.form}/{filing.date}"
+
+        self.logger.info(f"{LOG_INPUT} Verifying filing: {filing_id}")
+
+        result = VerificationResult(
+            filing_id=filing_id,
+            market=filing.market,
+            company=filing.company,
+            form=filing.form,
+            date=filing.date,
+        )
+
+        try:
+            # Step 1: Load mapped statements
+            self.logger.info(f"{LOG_INPUT} Loading mapped statements")
+            statements = self.mapped_reader.read_statements(filing)
+
+            if not statements or not statements.statements:
+                self.logger.warning(f"{LOG_OUTPUT} No statements found for {filing_id}")
+                result.recommendation = "No statements found - cannot verify"
+                return result
+
+            self.logger.info(f"{LOG_OUTPUT} Loaded {len(statements.statements)} statements")
+
+            # Step 2: Load company XBRL linkbases
+            self.logger.info(f"{LOG_INPUT} Loading XBRL linkbases")
+            calc_networks = self._load_calculation_linkbase(filing)
+            self.logger.info(f"{LOG_OUTPUT} Loaded {len(calc_networks)} calculation networks")
+
+            # Step 3: Run horizontal checks
+            self.logger.info(f"{LOG_PROCESS} Running horizontal checks")
+            result.horizontal_results = self.horizontal_checker.check_all(
+                statements, calc_networks
+            )
+
+            # Step 4: Run vertical checks
+            self.logger.info(f"{LOG_PROCESS} Running vertical checks")
+            result.vertical_results = self.vertical_checker.check_all(statements)
+
+            # Step 5: Run library checks (optional)
+            if self.enable_library_checks:
+                self.logger.info(f"{LOG_PROCESS} Running library checks")
+                taxonomy_id = self._detect_taxonomy(statements)
+                result.library_results = self.library_checker.check_all(
+                    statements, taxonomy_id
+                )
+
+            # Step 6: Calculate scores
+            self.logger.info(f"{LOG_PROCESS} Calculating scores")
+            all_results = (
+                result.horizontal_results +
+                result.vertical_results +
+                result.library_results
+            )
+            result.scores = self.score_calculator.calculate_scores(all_results)
+
+            # Step 7: Classify quality
+            self.logger.info(f"{LOG_PROCESS} Classifying quality")
+            result.quality = self.quality_classifier.classify(result.scores)
+            result.recommendation = result.quality.recommendation
+
+            # Build issues summary
+            result.issues_summary = {
+                'critical': result.scores.critical_issues,
+                'warnings': result.scores.warning_issues,
+                'info': result.scores.info_issues,
+            }
+
+            # Calculate processing time
+            elapsed = (datetime.now() - start_time).total_seconds()
+            result.processing_time_seconds = elapsed
+
+            self.logger.info(
+                f"{LOG_OUTPUT} Verification complete: {result.quality.level} "
+                f"(score: {result.scores.overall_score:.1f}) in {elapsed:.2f}s"
+            )
+
+        except Exception as e:
+            self.logger.error(f"Error verifying {filing_id}: {e}")
+            result.recommendation = f"Verification failed: {str(e)}"
+
+            if not self.continue_on_error:
+                raise
+
+        return result
+
+    def verify_all_filings(self) -> list[VerificationResult]:
+        """
+        Verify all available mapped filings.
+
+        Returns:
+            List of VerificationResult for each filing
+        """
+        self.logger.info(f"{LOG_INPUT} Discovering mapped filings")
+
+        filings = self.mapped_loader.discover_all_mapped_filings()
+        self.logger.info(f"{LOG_OUTPUT} Found {len(filings)} mapped filings")
+
+        results = []
+        for filing in filings:
+            try:
+                result = self.verify_filing(filing)
+                results.append(result)
+            except Exception as e:
+                self.logger.error(f"Failed to verify {filing.company}: {e}")
+                if not self.continue_on_error:
+                    raise
+
+        self.logger.info(f"{LOG_OUTPUT} Verified {len(results)} filings")
+
+        return results
+
+    def verify_by_id(
+        self,
+        market: str,
+        company: str,
+        form: str,
+        date: str
+    ) -> Optional[VerificationResult]:
+        """
+        Verify a specific filing by its identifiers.
+
+        Args:
+            market: Market identifier
+            company: Company name
+            form: Form type
+            date: Filing date
+
+        Returns:
+            VerificationResult or None if not found
+        """
+        filing = self.mapped_loader.find_mapped_filing(market, company, form, date)
+
+        if not filing:
+            self.logger.warning(f"Filing not found: {market}/{company}/{form}/{date}")
+            return None
+
+        return self.verify_filing(filing)
+
+    def _load_calculation_linkbase(
+        self,
+        filing: MappedFilingEntry
+    ) -> list[CalculationNetwork]:
+        """Load calculation linkbase for the filing."""
+        try:
+            xbrl_path = self.xbrl_loader.find_filing_for_company(
+                filing.market,
+                filing.company,
+                filing.form,
+                filing.date
+            )
+
+            if xbrl_path:
+                return self.xbrl_reader.read_calculation_linkbase(xbrl_path)
+
+        except Exception as e:
+            self.logger.warning(f"Could not load calculation linkbase: {e}")
+
+        return []
+
+    def _detect_taxonomy(self, statements: MappedStatements) -> Optional[str]:
+        """Detect which standard taxonomy is used."""
+        # Look at namespaces in the statements
+        namespaces = statements.namespaces
+
+        if not namespaces:
+            # Try to detect from concept prefixes
+            for statement in statements.statements:
+                for fact in statement.facts:
+                    concept = fact.concept
+                    if 'us-gaap' in concept.lower():
+                        return 'us-gaap-2023'
+                    elif 'ifrs' in concept.lower():
+                        return 'ifrs-full'
+
+        # Check namespace values
+        for ns_prefix, ns_uri in namespaces.items():
+            if 'us-gaap' in ns_uri.lower():
+                # Extract year from URI if possible
+                return 'us-gaap-2023'
+            elif 'ifrs' in ns_uri.lower():
+                return 'ifrs-full'
+
+        return None
+
+    def get_available_filings(self) -> list[MappedFilingEntry]:
+        """
+        Get list of available filings for verification.
+
+        Returns:
+            List of MappedFilingEntry objects
+        """
+        return self.mapped_loader.discover_all_mapped_filings()
+
+    def get_statistics(self) -> dict:
+        """
+        Get verification statistics.
+
+        Returns:
+            Dictionary with statistics
+        """
+        filings = self.mapped_loader.discover_all_mapped_filings()
+
+        return {
+            'total_filings': len(filings),
+            'by_market': self._count_by_field(filings, 'market'),
+            'by_form': self._count_by_field(filings, 'form'),
+            'companies': list(set(f.company for f in filings)),
+        }
+
+    def _count_by_field(
+        self,
+        filings: list[MappedFilingEntry],
+        field: str
+    ) -> dict[str, int]:
+        """Count filings by a field."""
+        counts = {}
+        for filing in filings:
+            value = getattr(filing, field, 'unknown')
+            counts[value] = counts.get(value, 0) + 1
+        return counts
+
+
+__all__ = ['VerificationCoordinator', 'VerificationResult']
