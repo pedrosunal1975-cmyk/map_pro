@@ -162,7 +162,16 @@ class UKFilingFinder:
         """
         try:
             url = self.url_builder.get_document_metadata_url(document_id)
+            logger.info(
+                f"Fetching document metadata from: {url}",
+                extra={LOG_PROCESS: 'metadata_fetch', 'document_id': document_id}
+            )
             metadata = await self.api_client.get_json(url)
+            logger.info(
+                f"Document metadata response: {type(metadata).__name__}, "
+                f"content: {str(metadata)[:200] if metadata else 'None'}",
+                extra={LOG_OUTPUT: 'metadata_response'}
+            )
             return metadata
         except Exception as e:
             logger.error(
@@ -287,7 +296,19 @@ class UKFilingFinder:
                     item['document_id'] = document_id
                     item['document_download_url'] = f"{document_metadata_url}/content"
 
+                    # Log metadata status for debugging
+                    logger.info(
+                        f"Document {document_id} metadata: {metadata is not None}",
+                        extra={LOG_PROCESS: 'metadata_check'}
+                    )
+
                     if metadata:
+                        # Log full metadata structure for debugging
+                        logger.info(
+                            f"Document {document_id} metadata keys: {list(metadata.keys())}",
+                            extra={LOG_PROCESS: 'metadata_keys'}
+                        )
+
                         # Log available formats for debugging
                         resources = metadata.get('resources', {})
                         logger.info(
