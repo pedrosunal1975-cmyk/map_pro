@@ -164,10 +164,14 @@ def test_parsed_loader(config: ConfigLoader) -> list[Path]:
             return []
 
         # Collect all files from filings
+        # Note: ParsedFilingEntry.available_files is dict[str, Path] (single paths)
         all_files = []
         for filing in filings:
-            for format_type, file_list in filing.available_files.items():
-                all_files.extend(file_list)
+            for format_type, file_path in filing.available_files.items():
+                if isinstance(file_path, Path):
+                    all_files.append(file_path)
+                elif isinstance(file_path, list):
+                    all_files.extend(file_path)
 
         print(f"Total files in filings: {len(all_files)}")
 
