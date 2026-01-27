@@ -1,0 +1,2375 @@
+{
+  "report_type": "taxonomy",
+  "verification_source": "standard_taxonomy",
+  "description": "Verification results using standard taxonomy calculation linkbase",
+  "filing_info": {
+    "filing_id": "sec/Albertsons_Companies_Inc/10_K/2025-10-13",
+    "market": "sec",
+    "company": "Albertsons_Companies_Inc",
+    "form": "10_K",
+    "date": "2025-10-13"
+  },
+  "verification_timestamp": "2026-01-27T04:07:57.463209",
+  "formula_source": {
+    "taxonomy_trees": 1839,
+    "taxonomy_roles": [],
+    "taxonomy_id": "us-gaap"
+  },
+  "status": "active",
+  "summary": {
+    "total_checks": 80,
+    "passed": 62,
+    "failed": 18,
+    "pass_rate": 77.5
+  },
+  "calculation_results": [
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 2 periods: 2/2 passed",
+      "expected_value": 0.0,
+      "actual_value": 1487.9,
+      "details": {
+        "parent_concept": "us-gaap:RetainedEarningsAccumulatedDeficit",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/disclosure/FinancialServicesInvestmentCompany",
+        "children_count": 10,
+        "missing_children": [
+          "us-gaap:InvestmentCompanyDistributableEarningsLossAccumulatedOrdinaryIncomeLoss",
+          "us-gaap:InvestmentCompanyDistributableEarningsLossAccumulatedOrdinaryIncomeLoss",
+          "us-gaap:InvestmentCompanyDistributableEarningsLossAccumulatedLongTermCapitalGainLoss",
+          "us-gaap:InvestmentCompanyDistributableEarningsLossAccumulatedLongTermCapitalGainLoss",
+          "us-gaap:InvestmentCompanyDistributableEarningsLossAccumulatedAppreciationDepreciation",
+          "us-gaap:InvestmentCompanyDistributableEarningsLossAccumulatedAppreciationDepreciation",
+          "us-gaap:InvestmentCompanyDistributableEarningsLossAccumulatedCapitalLossCarryforward",
+          "us-gaap:InvestmentCompanyDistributableEarningsLossAccumulatedCapitalLossCarryforward",
+          "us-gaap:InvestmentCompanyDistributableEarningsLossAccumulatedTemporaryDifferenceOther",
+          "us-gaap:InvestmentCompanyDistributableEarningsLossAccumulatedTemporaryDifferenceOther"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 2 periods: 2/2 passed",
+      "expected_value": 0.0,
+      "actual_value": 1487.9,
+      "details": {
+        "parent_concept": "us-gaap:RetainedEarningsAccumulatedDeficit",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:RetainedEarningsAppropriated",
+          "us-gaap:RetainedEarningsAppropriated",
+          "us-gaap:RetainedEarningsUnappropriated",
+          "us-gaap:RetainedEarningsUnappropriated"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:IncomeTaxExpenseBenefit",
+      "expected_value": 0.0,
+      "actual_value": 422.0,
+      "details": {
+        "parent_concept": "us-gaap:IncomeTaxExpenseBenefit",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/disclosure/IncomeTaxes",
+        "children_count": 44,
+        "missing_children": [
+          "us-gaap:IncomeTaxReconciliationIncomeTaxExpenseBenefitAtFederalStatutoryIncomeTaxRate",
+          "us-gaap:IncomeTaxReconciliationIncomeTaxExpenseBenefitAtFederalStatutoryIncomeTaxRate",
+          "us-gaap:IncomeTaxReconciliationStateAndLocalIncomeTaxes",
+          "us-gaap:IncomeTaxReconciliationStateAndLocalIncomeTaxes",
+          "us-gaap:IncomeTaxReconciliationForeignIncomeTaxRateDifferential",
+          "us-gaap:IncomeTaxReconciliationForeignIncomeTaxRateDifferential",
+          "us-gaap:IncomeTaxReconciliationTaxCredits",
+          "us-gaap:IncomeTaxReconciliationTaxCredits",
+          "us-gaap:IncomeTaxReconciliationNondeductibleExpense",
+          "us-gaap:IncomeTaxReconciliationNondeductibleExpense",
+          "us-gaap:IncomeTaxReconciliationDeductions",
+          "us-gaap:IncomeTaxReconciliationDeductions",
+          "us-gaap:IncomeTaxReconciliationTaxSettlements",
+          "us-gaap:IncomeTaxReconciliationTaxSettlements",
+          "us-gaap:IncomeTaxReconciliationTaxContingencies",
+          "us-gaap:IncomeTaxReconciliationTaxContingencies",
+          "us-gaap:IncomeTaxReconciliationOtherReconcilingItems",
+          "us-gaap:IncomeTaxReconciliationOtherReconcilingItems",
+          "us-gaap:IncomeTaxReconciliationTaxExemptIncome",
+          "us-gaap:IncomeTaxReconciliationTaxExemptIncome",
+          "us-gaap:IncomeTaxReconciliationEquityInEarningsLossesOfUnconsolidatedSubsidiary",
+          "us-gaap:IncomeTaxReconciliationEquityInEarningsLossesOfUnconsolidatedSubsidiary",
+          "us-gaap:IncomeTaxReconciliationMinorityInterestIncomeExpense",
+          "us-gaap:IncomeTaxReconciliationMinorityInterestIncomeExpense",
+          "us-gaap:IncomeTaxReconciliationTaxHolidays",
+          "us-gaap:IncomeTaxReconciliationTaxHolidays",
+          "us-gaap:IncomeTaxReconciliationDispositionOfBusiness",
+          "us-gaap:IncomeTaxReconciliationDispositionOfBusiness",
+          "us-gaap:IncomeTaxReconciliationDispositionOfAssets",
+          "us-gaap:IncomeTaxReconciliationDispositionOfAssets",
+          "us-gaap:IncomeTaxReconciliationRepatriationOfForeignEarnings",
+          "us-gaap:IncomeTaxReconciliationRepatriationOfForeignEarnings",
+          "us-gaap:IncomeTaxReconciliationChangeInEnactedTaxRate",
+          "us-gaap:IncomeTaxReconciliationChangeInEnactedTaxRate",
+          "us-gaap:IncomeTaxReconciliationPriorYearIncomeTaxes",
+          "us-gaap:IncomeTaxReconciliationPriorYearIncomeTaxes",
+          "us-gaap:IncomeTaxReconciliationChangeInDeferredTaxAssetsValuationAllowance",
+          "us-gaap:IncomeTaxReconciliationChangeInDeferredTaxAssetsValuationAllowance",
+          "us-gaap:EffectiveIncomeTaxRateReconciliationShareBasedCompensationExcessTaxBenefitAmount",
+          "us-gaap:EffectiveIncomeTaxRateReconciliationShareBasedCompensationExcessTaxBenefitAmount",
+          "us-gaap:IncomeTaxReconciliationOtherAdjustments",
+          "us-gaap:IncomeTaxReconciliationOtherAdjustments",
+          "us-gaap:EffectiveIncomeTaxRateReconciliationCrossBorderTaxEffectAmount",
+          "us-gaap:EffectiveIncomeTaxRateReconciliationCrossBorderTaxEffectAmount"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:IncomeTaxExpenseBenefit",
+      "expected_value": 0.0,
+      "actual_value": 422.0,
+      "details": {
+        "parent_concept": "us-gaap:IncomeTaxExpenseBenefit",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfIncomeDiscontinuedOperationsAlternate",
+        "children_count": 6,
+        "missing_children": [
+          "us-gaap:FederalStateAndLocalIncomeTaxExpenseBenefitContinuingOperations",
+          "us-gaap:FederalStateAndLocalIncomeTaxExpenseBenefitContinuingOperations",
+          "us-gaap:ForeignIncomeTaxExpenseBenefitContinuingOperations",
+          "us-gaap:ForeignIncomeTaxExpenseBenefitContinuingOperations",
+          "us-gaap:OtherIncomeTaxExpenseBenefitContinuingOperations",
+          "us-gaap:OtherIncomeTaxExpenseBenefitContinuingOperations"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "us-gaap:IncomeTaxExpenseBenefit: calculated=26 != actual=422 (diff=396)",
+      "expected_value": 25.8,
+      "actual_value": 422.0,
+      "difference": 396.2,
+      "details": {
+        "parent_concept": "us-gaap:IncomeTaxExpenseBenefit",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfIncome",
+        "children_count": 16,
+        "missing_children": [
+          "us-gaap:CurrentIncomeTaxExpenseBenefit",
+          "us-gaap:CurrentIncomeTaxExpenseBenefit",
+          "us-gaap:OtherTaxExpenseBenefit",
+          "us-gaap:OtherTaxExpenseBenefit",
+          "us-gaap:EmployeeServiceShareBasedCompensationTaxBenefitFromCompensationExpense",
+          "us-gaap:EmployeeServiceShareBasedCompensationTaxBenefitFromCompensationExpense",
+          "us-gaap:IncomeTaxExpenseBenefitContinuingOperationsAdjustmentOfDeferredTaxAssetLiability",
+          "us-gaap:IncomeTaxExpenseBenefitContinuingOperationsAdjustmentOfDeferredTaxAssetLiability",
+          "us-gaap:IncomeTaxExpenseBenefitContinuingOperationsGovernmentGrants",
+          "us-gaap:IncomeTaxExpenseBenefitContinuingOperationsGovernmentGrants",
+          "us-gaap:TaxAdjustmentsSettlementsAndUnusualProvisions",
+          "us-gaap:TaxAdjustmentsSettlementsAndUnusualProvisions",
+          "us-gaap:UnrecognizedTaxBenefitsIncomeTaxPenaltiesAndInterestExpense",
+          "us-gaap:UnrecognizedTaxBenefitsIncomeTaxPenaltiesAndInterestExpense"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 2 periods: 2/2 passed",
+      "expected_value": 0.0,
+      "actual_value": 9811.0,
+      "details": {
+        "parent_concept": "us-gaap:PropertyPlantAndEquipmentAndFinanceLeaseRightOfUseAssetAfterAccumulatedDepreciationAndAmortization",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/disclosure/Leases842",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:PropertyPlantAndEquipmentAndFinanceLeaseRightOfUseAssetBeforeAccumulatedDepreciationAndAmortization",
+          "us-gaap:PropertyPlantAndEquipmentAndFinanceLeaseRightOfUseAssetBeforeAccumulatedDepreciationAndAmortization",
+          "us-gaap:PropertyPlantAndEquipmentAndFinanceLeaseRightOfUseAssetAccumulatedDepreciationAndAmortization",
+          "us-gaap:PropertyPlantAndEquipmentAndFinanceLeaseRightOfUseAssetAccumulatedDepreciationAndAmortization"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 2 periods: 2/2 passed",
+      "expected_value": 0.0,
+      "actual_value": 9811.0,
+      "details": {
+        "parent_concept": "us-gaap:PropertyPlantAndEquipmentAndFinanceLeaseRightOfUseAssetAfterAccumulatedDepreciationAndAmortization",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionUnclassified-DepositBasedOperationsFirstAlternate",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:FinanceLeaseRightOfUseAsset",
+          "us-gaap:FinanceLeaseRightOfUseAsset",
+          "us-gaap:PropertyPlantAndEquipmentNet",
+          "us-gaap:PropertyPlantAndEquipmentNet"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 2 periods: 2/2 passed",
+      "expected_value": 0.0,
+      "actual_value": 4989.0,
+      "details": {
+        "parent_concept": "us-gaap:InventoryNet",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/disclosure/Inventory",
+        "children_count": 8,
+        "missing_children": [
+          "us-gaap:InventoryFinishedGoodsNetOfReserves",
+          "us-gaap:InventoryFinishedGoodsNetOfReserves",
+          "us-gaap:InventoryWorkInProcessAndRawMaterialsNetOfReserves",
+          "us-gaap:InventoryWorkInProcessAndRawMaterialsNetOfReserves",
+          "us-gaap:InventorySuppliesNetOfReserves",
+          "us-gaap:InventorySuppliesNetOfReserves",
+          "us-gaap:OtherInventoryNetOfReserves",
+          "us-gaap:OtherInventoryNetOfReserves"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 2 periods: 2/2 passed",
+      "expected_value": 0.0,
+      "actual_value": 4989.0,
+      "details": {
+        "parent_concept": "us-gaap:InventoryNet",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassifiedSecondAlternative",
+        "children_count": 8,
+        "missing_children": [
+          "us-gaap:InventoryFinishedGoodsAndWorkInProcessNetOfReserves",
+          "us-gaap:InventoryFinishedGoodsAndWorkInProcessNetOfReserves",
+          "us-gaap:InventoryRawMaterialsAndSuppliesNetOfReserves",
+          "us-gaap:InventoryRawMaterialsAndSuppliesNetOfReserves",
+          "us-gaap:OtherInventoryNetOfReserves",
+          "us-gaap:OtherInventoryNetOfReserves",
+          "us-gaap:InventoryPartsAndComponentsNetOfReserves",
+          "us-gaap:InventoryPartsAndComponentsNetOfReserves"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 2 periods: 2/2 passed",
+      "expected_value": 0.0,
+      "actual_value": 4989.0,
+      "details": {
+        "parent_concept": "us-gaap:InventoryNet",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:InventoryGross",
+          "us-gaap:InventoryGross",
+          "us-gaap:InventoryAdjustments",
+          "us-gaap:InventoryAdjustments"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 2 periods: 2/2 passed",
+      "expected_value": 0.0,
+      "actual_value": 4989.0,
+      "details": {
+        "parent_concept": "us-gaap:InventoryNet",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassifiedFirstAlternative",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:FIFOInventoryAmount",
+          "us-gaap:FIFOInventoryAmount",
+          "us-gaap:InventoryLIFOReserve",
+          "us-gaap:InventoryLIFOReserve"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "Verified across 2 periods: 0/2 passed",
+      "expected_value": 30821.6,
+      "actual_value": 26755.7,
+      "difference": 4065.899999999998,
+      "details": {
+        "parent_concept": "us-gaap:Assets",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionUnclassified-DepositBasedOperations",
+        "children_count": 129,
+        "missing_children": [
+          "us-gaap:OtherRestrictedAssets",
+          "us-gaap:OtherRestrictedAssets",
+          "us-gaap:LeveragedLeasesNetInvestmentInLeveragedLeasesDisclosureInvestmentInLeveragedLeasesNet",
+          "us-gaap:LeveragedLeasesNetInvestmentInLeveragedLeasesDisclosureInvestmentInLeveragedLeasesNet",
+          "us-gaap:FederalHomeLoanBankStockAndFederalReserveBankStock",
+          "us-gaap:FederalHomeLoanBankStockAndFederalReserveBankStock",
+          "us-gaap:CollateralizedAgreements",
+          "us-gaap:CollateralizedAgreements",
+          "us-gaap:FederalHomeLoanBankAdvances",
+          "us-gaap:FederalHomeLoanBankAdvances",
+          "us-gaap:GuarantyAssets",
+          "us-gaap:GuarantyAssets",
+          "us-gaap:CashSurrenderValueOfLifeInsurance",
+          "us-gaap:CashSurrenderValueOfLifeInsurance",
+          "us-gaap:DueFromCustomerAcceptances",
+          "us-gaap:DueFromCustomerAcceptances",
+          "us-gaap:FinancingReceivableExcludingAccruedInterestAfterAllowanceForCreditLoss",
+          "us-gaap:FinancingReceivableExcludingAccruedInterestAfterAllowanceForCreditLoss",
+          "us-gaap:DebtSecuritiesHeldToMaturityExcludingAccruedInterestAfterAllowanceForCreditLoss",
+          "us-gaap:DebtSecuritiesHeldToMaturityExcludingAccruedInterestAfterAllowanceForCreditLoss",
+          "us-gaap:NetInvestmentInLeaseExcludingAccruedInterestAfterAllowanceForCreditLoss",
+          "us-gaap:NetInvestmentInLeaseExcludingAccruedInterestAfterAllowanceForCreditLoss",
+          "us-gaap:DebtSecuritiesAvailableForSaleAmortizedCostExcludingAccruedInterestAfterAllowanceForCreditLoss",
+          "us-gaap:DebtSecuritiesAvailableForSaleAmortizedCostExcludingAccruedInterestAfterAllowanceForCreditLoss",
+          "us-gaap:AccountsReceivableNet",
+          "us-gaap:AccountsReceivableNet",
+          "us-gaap:NontradeReceivables",
+          "us-gaap:NontradeReceivables",
+          "us-gaap:OtherReceivables",
+          "us-gaap:OtherReceivables",
+          "us-gaap:CustomersLiabilityForAcceptancesNet",
+          "us-gaap:CustomersLiabilityForAcceptancesNet",
+          "us-gaap:ReinsuranceRecoverables",
+          "us-gaap:ReinsuranceRecoverables",
+          "us-gaap:ContractWithCustomerAssetNet",
+          "us-gaap:ContractWithCustomerAssetNet",
+          "us-gaap:CapitalizedContractCostNet",
+          "us-gaap:CapitalizedContractCostNet",
+          "us-gaap:FundsHeldUnderReinsuranceAgreementsAsset",
+          "us-gaap:FundsHeldUnderReinsuranceAgreementsAsset",
+          "us-gaap:ValueOfBusinessAcquiredVOBA",
+          "us-gaap:ValueOfBusinessAcquiredVOBA",
+          "us-gaap:InventoryRealEstate",
+          "us-gaap:InventoryRealEstate",
+          "us-gaap:OtherRealEstateAndForeclosedAssets",
+          "us-gaap:OtherRealEstateAndForeclosedAssets",
+          "us-gaap:Investments",
+          "us-gaap:Investments",
+          "us-gaap:RealEstateInvestments",
+          "us-gaap:RealEstateInvestments",
+          "us-gaap:DeferredIncomeTaxAssetsNet",
+          "us-gaap:DeferredIncomeTaxAssetsNet",
+          "us-gaap:RealEstateHeldforsale",
+          "us-gaap:RealEstateHeldforsale",
+          "us-gaap:MembershipsInExchangesOwned",
+          "us-gaap:MembershipsInExchangesOwned",
+          "us-gaap:LoansAndLeasesReceivableNetReportedAmountCoveredAndNotCovered",
+          "us-gaap:LoansAndLeasesReceivableNetReportedAmountCoveredAndNotCovered",
+          "us-gaap:InterestsContinuedToBeHeldByTransferorFairValue",
+          "us-gaap:InterestsContinuedToBeHeldByTransferorFairValue",
+          "us-gaap:ServicingAsset",
+          "us-gaap:ServicingAsset",
+          "us-gaap:BankOwnedLifeInsurance",
+          "us-gaap:BankOwnedLifeInsurance",
+          "us-gaap:FinancialAssetAmortizedCostAccruedInterestAfterAllowanceForCreditLoss",
+          "us-gaap:FinancialAssetAmortizedCostAccruedInterestAfterAllowanceForCreditLoss",
+          "us-gaap:NetInvestmentInLeaseAccruedInterestAfterAllowanceForCreditLoss",
+          "us-gaap:NetInvestmentInLeaseAccruedInterestAfterAllowanceForCreditLoss",
+          "us-gaap:DebtSecuritiesAvailableForSaleAccruedInterestAfterAllowanceForCreditLoss",
+          "us-gaap:DebtSecuritiesAvailableForSaleAccruedInterestAfterAllowanceForCreditLoss",
+          "us-gaap:SeparateAccountAssets",
+          "us-gaap:SeparateAccountAssets",
+          "us-gaap:SecuritiesHeldAsCollateralAtFairValue",
+          "us-gaap:SecuritiesHeldAsCollateralAtFairValue",
+          "us-gaap:DerivativeAssets",
+          "us-gaap:DerivativeAssets",
+          "us-gaap:NetInvestmentInLease",
+          "us-gaap:NetInvestmentInLease",
+          "us-gaap:FinanceLeaseRightOfUseAsset",
+          "us-gaap:FinanceLeaseRightOfUseAsset",
+          "us-gaap:PrepaidExpenseCurrentAndNoncurrent",
+          "us-gaap:PrepaidExpenseCurrentAndNoncurrent",
+          "us-gaap:DeferredCostsCurrentAndNoncurrent",
+          "us-gaap:DeferredCostsCurrentAndNoncurrent",
+          "us-gaap:HostingArrangementServiceContractImplementationCostCapitalizedAfterAccumulatedAmortization",
+          "us-gaap:HostingArrangementServiceContractImplementationCostCapitalizedAfterAccumulatedAmortization",
+          "us-gaap:OtherInterestEarningAssets",
+          "us-gaap:OtherInterestEarningAssets",
+          "us-gaap:AssetsHeldInTrust",
+          "us-gaap:AssetsHeldInTrust",
+          "us-gaap:DeferredRentReceivablesNet",
+          "us-gaap:DeferredRentReceivablesNet",
+          "us-gaap:AssetsOfDisposalGroupIncludingDiscontinuedOperation",
+          "us-gaap:AssetsOfDisposalGroupIncludingDiscontinuedOperation",
+          "us-gaap:AssetsHeldForSaleNotPartOfDisposalGroup",
+          "us-gaap:AssetsHeldForSaleNotPartOfDisposalGroup",
+          "us-gaap:DepositsAssets",
+          "us-gaap:DepositsAssets",
+          "us-gaap:AssetsUnderManagementCarryingAmount",
+          "us-gaap:AssetsUnderManagementCarryingAmount",
+          "us-gaap:FDICIndemnificationAsset",
+          "us-gaap:FDICIndemnificationAsset",
+          "us-gaap:RecordedThirdPartyEnvironmentalRecoveriesNet",
+          "us-gaap:RecordedThirdPartyEnvironmentalRecoveriesNet",
+          "us-gaap:BusinessCombinationContingentConsiderationAsset",
+          "us-gaap:BusinessCombinationContingentConsiderationAsset",
+          "us-gaap:AmortizationMethodQualifiedAffordableHousingProjectInvestments",
+          "us-gaap:AmortizationMethodQualifiedAffordableHousingProjectInvestments",
+          "us-gaap:DebtIssuanceCostsLineOfCreditArrangementsNet",
+          "us-gaap:DebtIssuanceCostsLineOfCreditArrangementsNet",
+          "us-gaap:HealthCareOrganizationAccountsReceivableDueFromThirdPartyPayorRetroactiveAdjustment",
+          "us-gaap:HealthCareOrganizationAccountsReceivableDueFromThirdPartyPayorRetroactiveAdjustment",
+          "srt:SafeguardingAssetPlatformOperatorCryptoAsset",
+          "srt:SafeguardingAssetPlatformOperatorCryptoAsset",
+          "us-gaap:OtherAssetsMiscellaneous",
+          "us-gaap:OtherAssetsMiscellaneous",
+          "us-gaap:DebtSecurities",
+          "us-gaap:DebtSecurities",
+          "us-gaap:GovernmentAssistanceAmountCumulative",
+          "us-gaap:LongTermInvestments",
+          "us-gaap:GovernmentAssistanceAmountCumulative"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "Verified across 2 periods: 0/2 passed",
+      "expected_value": 40584.799999999996,
+      "actual_value": 26755.7,
+      "difference": 13829.099999999995,
+      "details": {
+        "parent_concept": "us-gaap:Assets",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified",
+        "children_count": 4,
+        "missing_children": [],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "us-gaap:ComprehensiveIncomeNetOfTax: calculated=27 != actual=1,514 (diff=1,487)",
+      "expected_value": 26.8,
+      "actual_value": 1513.8,
+      "difference": 1487.0,
+      "details": {
+        "parent_concept": "us-gaap:ComprehensiveIncomeNetOfTax",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfOtherComprehensiveIncome",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:ComprehensiveIncomeNetOfTaxAttributableToNoncontrollingInterest",
+          "us-gaap:ComprehensiveIncomeNetOfTaxAttributableToNoncontrollingInterest"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:OtherComprehensiveIncomeLossNetOfTax",
+      "expected_value": 0.0,
+      "actual_value": -9.2,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTax",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfOtherComprehensiveIncome",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:OtherComprehensiveIncomeLossBeforeTax",
+          "us-gaap:OtherComprehensiveIncomeLossBeforeTax",
+          "us-gaap:OtherComprehensiveIncomeLossTax",
+          "us-gaap:OtherComprehensiveIncomeLossTax"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "us-gaap:OtherComprehensiveIncomeLossNetOfTax: calculated=-9 matches actual=-9 (diff=0)",
+      "expected_value": -9.2,
+      "actual_value": -9.2,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTax",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfOtherComprehensiveIncomeAlternative",
+        "children_count": 18,
+        "missing_children": [
+          "us-gaap:OtherComprehensiveIncomeLossAvailableForSaleSecuritiesAdjustmentNetOfTax",
+          "us-gaap:OtherComprehensiveIncomeLossAvailableForSaleSecuritiesAdjustmentNetOfTax",
+          "us-gaap:OtherComprehensiveIncomeLossCashFlowHedgeGainLossAfterReclassificationAndTax",
+          "us-gaap:OtherComprehensiveIncomeLossCashFlowHedgeGainLossAfterReclassificationAndTax",
+          "us-gaap:OtherComprehensiveIncomeLossForeignCurrencyTransactionAndTranslationAdjustmentNetOfTax",
+          "us-gaap:OtherComprehensiveIncomeLossForeignCurrencyTransactionAndTranslationAdjustmentNetOfTax",
+          "us-gaap:OtherComprehensiveIncomeLossFinancialLiabilityFairValueOptionAfterTaxAndReclassificationAdjustment",
+          "us-gaap:OtherComprehensiveIncomeLossFinancialLiabilityFairValueOptionAfterTaxAndReclassificationAdjustment",
+          "us-gaap:OtherComprehensiveIncomeLossDerivativeExcludedComponentIncreaseDecreaseAfterAdjustmentsAndTax",
+          "us-gaap:OtherComprehensiveIncomeLossDerivativeExcludedComponentIncreaseDecreaseAfterAdjustmentsAndTax",
+          "us-gaap:OciEquityMethodInvestmentAfterTax",
+          "us-gaap:OciEquityMethodInvestmentAfterTax",
+          "us-gaap:OciLiabilityForFuturePolicyBenefitGainLossAfterReclassificationAdjustmentAndTax",
+          "us-gaap:OciLiabilityForFuturePolicyBenefitGainLossAfterReclassificationAdjustmentAndTax",
+          "us-gaap:OciMarketRiskBenefitInstrumentSpecificCreditRiskGainLossAfterAdjustmentsAndTax",
+          "us-gaap:OciMarketRiskBenefitInstrumentSpecificCreditRiskGainLossAfterAdjustmentsAndTax"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:OtherComprehensiveIncomeLossNetOfTax",
+      "expected_value": 0.0,
+      "actual_value": -9.2,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTax",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfIncomeFirstAlternative",
+        "children_count": 6,
+        "missing_children": [
+          "us-gaap:OtherComprehensiveIncomeLossBeforeReclassificationsNetOfTax",
+          "us-gaap:OtherComprehensiveIncomeLossBeforeReclassificationsNetOfTax",
+          "us-gaap:ReclassificationFromAccumulatedOtherComprehensiveIncomeCurrentPeriodNetOfTax",
+          "us-gaap:ReclassificationFromAccumulatedOtherComprehensiveIncomeCurrentPeriodNetOfTax",
+          "us-gaap:OciEquityMethodInvestmentAfterTax",
+          "us-gaap:OciEquityMethodInvestmentAfterTax"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:InterestIncomeExpenseNonoperatingNet",
+      "expected_value": 0.0,
+      "actual_value": 404.6,
+      "details": {
+        "parent_concept": "us-gaap:InterestIncomeExpenseNonoperatingNet",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfOtherComprehensiveIncome",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:InvestmentIncomeInterest",
+          "us-gaap:InvestmentIncomeInterest",
+          "us-gaap:InterestExpenseNonoperating",
+          "us-gaap:InterestExpenseNonoperating"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:IncomeTaxesPaidNet",
+      "expected_value": 0.0,
+      "actual_value": 220.9,
+      "details": {
+        "parent_concept": "us-gaap:IncomeTaxesPaidNet",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsIndirectDepositBasedOperations",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:IncomeTaxesPaid",
+          "us-gaap:IncomeTaxesPaid",
+          "us-gaap:ProceedsFromIncomeTaxRefunds",
+          "us-gaap:ProceedsFromIncomeTaxRefunds"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:IncomeTaxesPaidNet",
+      "expected_value": 0.0,
+      "actual_value": 220.9,
+      "details": {
+        "parent_concept": "us-gaap:IncomeTaxesPaidNet",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsIndirect",
+        "children_count": 6,
+        "missing_children": [
+          "us-gaap:IncomeTaxPaidFederalAfterRefundReceived",
+          "us-gaap:IncomeTaxPaidFederalAfterRefundReceived",
+          "us-gaap:IncomeTaxPaidStateAndLocalAfterRefundReceived",
+          "us-gaap:IncomeTaxPaidStateAndLocalAfterRefundReceived",
+          "us-gaap:IncomeTaxPaidForeignAfterRefundReceived",
+          "us-gaap:IncomeTaxPaidForeignAfterRefundReceived"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsPeriodIncreaseDecreaseIncludingExchangeRateEffect",
+      "expected_value": 0.0,
+      "actual_value": 2488.8,
+      "details": {
+        "parent_concept": "us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsPeriodIncreaseDecreaseIncludingExchangeRateEffect",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsIndirectDepositBasedOperations",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsPeriodIncreaseDecreaseIncludingExchangeRateEffectContinuingOperations",
+          "us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsPeriodIncreaseDecreaseIncludingExchangeRateEffectContinuingOperations",
+          "us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsPeriodIncreaseDecreaseIncludingExchangeRateEffectDisposalGroupIncludingDiscontinuedOperations",
+          "us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsPeriodIncreaseDecreaseIncludingExchangeRateEffectDisposalGroupIncludingDiscontinuedOperations"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsPeriodIncreaseDecreaseIncludingExchangeRateEffect: calculated=32,786 != actual=2,489 (diff=30,298)",
+      "expected_value": 32786.4,
+      "actual_value": 2488.8,
+      "difference": 30297.600000000002,
+      "details": {
+        "parent_concept": "us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsPeriodIncreaseDecreaseIncludingExchangeRateEffect",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsIndirect",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:EffectOfExchangeRateOnCashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsIncludingDisposalGroupAndDiscontinuedOperations",
+          "us-gaap:EffectOfExchangeRateOnCashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsIncludingDisposalGroupAndDiscontinuedOperations"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent: calculated=-18 != actual=13 (diff=32)",
+      "expected_value": -18.4,
+      "actual_value": 13.4,
+      "difference": 31.799999999999997,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfOtherComprehensiveIncomeAlternative",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToNoncontrollingInterest",
+          "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToNoncontrollingInterest"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent",
+      "expected_value": 0.0,
+      "actual_value": 13.4,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfOtherComprehensiveIncomeThirdAlternative",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:OtherComprehensiveIncomeLossTaxPortionAttributableToParent1",
+          "us-gaap:OtherComprehensiveIncomeLossTaxPortionAttributableToParent1",
+          "us-gaap:OtherComprehensiveIncomeLossBeforeTaxPortionAttributableToParent",
+          "us-gaap:OtherComprehensiveIncomeLossBeforeTaxPortionAttributableToParent"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent",
+      "expected_value": 0.0,
+      "actual_value": 13.4,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfOtherComprehensiveIncomeFouthAlternative",
+        "children_count": 6,
+        "missing_children": [
+          "us-gaap:OciBeforeReclassificationsNetOfTaxAttributableToParent",
+          "us-gaap:OciBeforeReclassificationsNetOfTaxAttributableToParent",
+          "us-gaap:ReclassificationFromAociCurrentPeriodNetOfTaxAttributableToParent",
+          "us-gaap:ReclassificationFromAociCurrentPeriodNetOfTaxAttributableToParent",
+          "us-gaap:OciEquityMethodInvestmentAfterTaxParent",
+          "us-gaap:OciEquityMethodInvestmentAfterTaxParent"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:OtherComprehensiveIncomeLossPensionAndOtherPostretirementBenefitPlansAdjustmentNetOfTax",
+      "expected_value": 0.0,
+      "actual_value": 4.6,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossPensionAndOtherPostretirementBenefitPlansAdjustmentNetOfTax",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfOtherComprehensiveIncomeAlternative",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:OtherComprehensiveIncomeLossPensionAndOtherPostretirementBenefitPlansAdjustmentBeforeTax",
+          "us-gaap:OtherComprehensiveIncomeLossPensionAndOtherPostretirementBenefitPlansAdjustmentBeforeTax",
+          "us-gaap:OtherComprehensiveIncomeLossPensionAndOtherPostretirementBenefitPlansTax",
+          "us-gaap:OtherComprehensiveIncomeLossPensionAndOtherPostretirementBenefitPlansTax"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:OtherComprehensiveIncomeLossPensionAndOtherPostretirementBenefitPlansAdjustmentNetOfTax",
+      "expected_value": 0.0,
+      "actual_value": 4.6,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossPensionAndOtherPostretirementBenefitPlansAdjustmentNetOfTax",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfOtherComprehensiveIncomeFouthAlternative",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:OtherComprehensiveIncomeLossPensionAndOtherPostretirementBenefitPlansAdjustmentBeforeReclassificationAdjustmentsNetOfTax",
+          "us-gaap:OtherComprehensiveIncomeLossPensionAndOtherPostretirementBenefitPlansAdjustmentBeforeReclassificationAdjustmentsNetOfTax",
+          "us-gaap:OtherComprehensiveIncomeLossReclassificationAdjustmentFromAOCIPensionAndOtherPostretirementBenefitPlansNetOfTax",
+          "us-gaap:OtherComprehensiveIncomeLossReclassificationAdjustmentFromAOCIPensionAndOtherPostretirementBenefitPlansNetOfTax"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:EarningsPerShareBasic",
+      "expected_value": 0.0,
+      "actual_value": 2.29,
+      "details": {
+        "parent_concept": "us-gaap:EarningsPerShareBasic",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfIncomeDiscontinuedOperationsAlternate",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:EarningsPerShareBasicDistributed",
+          "us-gaap:EarningsPerShareBasicDistributed",
+          "us-gaap:EarningsPerShareBasicUndistributed",
+          "us-gaap:EarningsPerShareBasicUndistributed"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:EarningsPerShareBasic",
+      "expected_value": 0.0,
+      "actual_value": 2.29,
+      "details": {
+        "parent_concept": "us-gaap:EarningsPerShareBasic",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfIncome",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:IncomeLossFromContinuingOperationsPerBasicShare",
+          "us-gaap:IncomeLossFromContinuingOperationsPerBasicShare",
+          "us-gaap:IncomeLossFromDiscontinuedOperationsNetOfTaxPerBasicShare",
+          "us-gaap:IncomeLossFromDiscontinuedOperationsNetOfTaxPerBasicShare"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:EarningsPerShareDiluted",
+      "expected_value": 0.0,
+      "actual_value": 2.27,
+      "details": {
+        "parent_concept": "us-gaap:EarningsPerShareDiluted",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfIncomeDiscontinuedOperationsAlternate",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:EarningsPerShareDilutedDistributed",
+          "us-gaap:EarningsPerShareDilutedDistributed",
+          "us-gaap:EarningsPerShareDilutedUndistributed",
+          "us-gaap:EarningsPerShareDilutedUndistributed"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:EarningsPerShareDiluted",
+      "expected_value": 0.0,
+      "actual_value": 2.27,
+      "details": {
+        "parent_concept": "us-gaap:EarningsPerShareDiluted",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfIncome",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:IncomeLossFromContinuingOperationsPerDilutedShare",
+          "us-gaap:IncomeLossFromContinuingOperationsPerDilutedShare",
+          "us-gaap:IncomeLossFromDiscontinuedOperationsNetOfTaxPerDilutedShare",
+          "us-gaap:IncomeLossFromDiscontinuedOperationsNetOfTaxPerDilutedShare"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:NetCashProvidedByUsedInOperatingActivities",
+      "expected_value": 0.0,
+      "actual_value": 2853.9,
+      "details": {
+        "parent_concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsIndirect",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:ProfitLoss",
+          "us-gaap:ProfitLoss",
+          "us-gaap:AdjustmentsToReconcileNetIncomeLossToCashProvidedByUsedInOperatingActivities",
+          "us-gaap:AdjustmentsToReconcileNetIncomeLossToCashProvidedByUsedInOperatingActivities"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:NetCashProvidedByUsedInOperatingActivities",
+      "expected_value": 0.0,
+      "actual_value": 2853.9,
+      "details": {
+        "parent_concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsDirect",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:NetCashProvidedByUsedInOperatingActivitiesContinuingOperations",
+          "us-gaap:NetCashProvidedByUsedInOperatingActivitiesContinuingOperations",
+          "us-gaap:CashProvidedByUsedInOperatingActivitiesDiscontinuedOperations",
+          "us-gaap:CashProvidedByUsedInOperatingActivitiesDiscontinuedOperations"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:ShareBasedCompensation",
+      "expected_value": 0.0,
+      "actual_value": 138.3,
+      "details": {
+        "parent_concept": "us-gaap:ShareBasedCompensation",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsIndirect",
+        "children_count": 6,
+        "missing_children": [
+          "us-gaap:StockOptionPlanExpense",
+          "us-gaap:StockOptionPlanExpense",
+          "us-gaap:RestrictedStockExpense",
+          "us-gaap:RestrictedStockExpense",
+          "us-gaap:EmployeeStockOwnershipPlanESOPCompensationExpense",
+          "us-gaap:EmployeeStockOwnershipPlanESOPCompensationExpense"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:PensionAndOtherPostretirementBenefitsExpenseReversalOfExpenseNoncash",
+      "expected_value": 0.0,
+      "actual_value": 21.7,
+      "details": {
+        "parent_concept": "us-gaap:PensionAndOtherPostretirementBenefitsExpenseReversalOfExpenseNoncash",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsIndirect",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:PensionExpenseReversalOfExpenseNoncash",
+          "us-gaap:PensionExpenseReversalOfExpenseNoncash",
+          "us-gaap:OtherPostretirementBenefitsExpenseReversalOfExpenseNoncash",
+          "us-gaap:OtherPostretirementBenefitsExpenseReversalOfExpenseNoncash"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:DeferredIncomeTaxExpenseBenefit",
+      "expected_value": 0.0,
+      "actual_value": 12.9,
+      "details": {
+        "parent_concept": "us-gaap:DeferredIncomeTaxExpenseBenefit",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsIndirect",
+        "children_count": 2,
+        "missing_children": [
+          "us-gaap:ValuationAllowanceDeferredTaxAssetChangeInAmount",
+          "us-gaap:ValuationAllowanceDeferredTaxAssetChangeInAmount"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:DeferredIncomeTaxExpenseBenefit",
+      "expected_value": 0.0,
+      "actual_value": 12.9,
+      "details": {
+        "parent_concept": "us-gaap:DeferredIncomeTaxExpenseBenefit",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfIncome",
+        "children_count": 6,
+        "missing_children": [
+          "us-gaap:DeferredForeignIncomeTaxExpenseBenefit",
+          "us-gaap:DeferredForeignIncomeTaxExpenseBenefit",
+          "us-gaap:DeferredFederalStateAndLocalTaxExpenseBenefit",
+          "us-gaap:DeferredFederalStateAndLocalTaxExpenseBenefit",
+          "us-gaap:DeferredOtherTaxExpenseBenefit",
+          "us-gaap:DeferredOtherTaxExpenseBenefit"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:OtherNoncashIncomeExpense",
+      "expected_value": 0.0,
+      "actual_value": 6.6,
+      "details": {
+        "parent_concept": "us-gaap:OtherNoncashIncomeExpense",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsIndirect",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:OtherNoncashIncome",
+          "us-gaap:OtherNoncashIncome",
+          "us-gaap:OtherNoncashExpense",
+          "us-gaap:OtherNoncashExpense"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:IncreaseDecreaseInReceivables",
+      "expected_value": 0.0,
+      "actual_value": 127.1,
+      "details": {
+        "parent_concept": "us-gaap:IncreaseDecreaseInReceivables",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsIndirect",
+        "children_count": 26,
+        "missing_children": [
+          "us-gaap:IncreaseDecreaseInAccountsAndNotesReceivable",
+          "us-gaap:IncreaseDecreaseInAccountsAndNotesReceivable",
+          "us-gaap:IncreaseDecreaseInBrokerageReceivables",
+          "us-gaap:IncreaseDecreaseInBrokerageReceivables",
+          "us-gaap:IncreaseDecreaseInLongTermReceivablesCurrent",
+          "us-gaap:IncreaseDecreaseInLongTermReceivablesCurrent",
+          "us-gaap:IncreaseDecreaseInLeasingReceivables",
+          "us-gaap:IncreaseDecreaseInLeasingReceivables",
+          "us-gaap:IncreaseDecreaseInEarnestMoneyDepositsOutstanding",
+          "us-gaap:IncreaseDecreaseInEarnestMoneyDepositsOutstanding",
+          "us-gaap:IncreaseDecreaseInIncomeTaxesReceivable",
+          "us-gaap:IncreaseDecreaseInIncomeTaxesReceivable",
+          "us-gaap:IncreaseDecreaseInInterestsContinuedToBeHeldByTransferorCurrent",
+          "us-gaap:IncreaseDecreaseInInterestsContinuedToBeHeldByTransferorCurrent",
+          "us-gaap:IncreaseDecreaseInInterestAndDividendsReceivable",
+          "us-gaap:IncreaseDecreaseInInterestAndDividendsReceivable",
+          "us-gaap:IncreaseDecreaseInDueFromRelatedParties",
+          "us-gaap:IncreaseDecreaseInDueFromRelatedParties",
+          "us-gaap:IncreaseDecreaseInFinanceReceivables",
+          "us-gaap:IncreaseDecreaseInFinanceReceivables",
+          "us-gaap:IncreaseDecreaseInInsuranceSettlementsReceivable",
+          "us-gaap:IncreaseDecreaseInInsuranceSettlementsReceivable",
+          "us-gaap:IncreaseDecreaseInAccountsReceivableFromSecuritization",
+          "us-gaap:IncreaseDecreaseInAccountsReceivableFromSecuritization",
+          "us-gaap:IncreaseDecreaseInOtherReceivables",
+          "us-gaap:IncreaseDecreaseInOtherReceivables"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:IncreaseDecreaseInInventories",
+      "expected_value": 0.0,
+      "actual_value": 549.1,
+      "details": {
+        "parent_concept": "us-gaap:IncreaseDecreaseInInventories",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsIndirect",
+        "children_count": 10,
+        "missing_children": [
+          "us-gaap:IncreaseDecreaseInFuelInventories",
+          "us-gaap:IncreaseDecreaseInFuelInventories",
+          "us-gaap:IncreaseDecreaseInFinishedGoodsAndWorkInProcessInventories",
+          "us-gaap:IncreaseDecreaseInFinishedGoodsAndWorkInProcessInventories",
+          "us-gaap:IncreaseDecreaseInInventoryForLongTermContractsOrPrograms",
+          "us-gaap:IncreaseDecreaseInInventoryForLongTermContractsOrPrograms",
+          "us-gaap:IncreaseDecreaseInRawMaterialsPackagingMaterialsAndSuppliesInventories",
+          "us-gaap:IncreaseDecreaseInRawMaterialsPackagingMaterialsAndSuppliesInventories",
+          "us-gaap:IncreaseDecreaseInRetailRelatedInventories",
+          "us-gaap:IncreaseDecreaseInRetailRelatedInventories"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:IncreaseDecreaseInAccountsPayableAndAccruedLiabilities",
+      "expected_value": 0.0,
+      "actual_value": 164.2,
+      "details": {
+        "parent_concept": "us-gaap:IncreaseDecreaseInAccountsPayableAndAccruedLiabilities",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsIndirect",
+        "children_count": 6,
+        "missing_children": [
+          "us-gaap:IncreaseDecreaseInAccountsPayable",
+          "us-gaap:IncreaseDecreaseInAccountsPayable",
+          "us-gaap:IncreaseDecreaseInAccruedLiabilities",
+          "us-gaap:IncreaseDecreaseInAccruedLiabilities",
+          "us-gaap:IncreaseDecreaseInOtherAccountsPayableAndAccruedLiabilities",
+          "us-gaap:IncreaseDecreaseInOtherAccountsPayableAndAccruedLiabilities"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:IncreaseDecreaseInOtherOperatingCapitalNet",
+      "expected_value": 0.0,
+      "actual_value": 172.9,
+      "details": {
+        "parent_concept": "us-gaap:IncreaseDecreaseInOtherOperatingCapitalNet",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsIndirect",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:IncreaseDecreaseInOtherCurrentAssetsAndLiabilitiesNet",
+          "us-gaap:IncreaseDecreaseInOtherCurrentAssetsAndLiabilitiesNet",
+          "us-gaap:IncreaseDecreaseInOtherNoncurrentAssetsAndLiabilitiesNet",
+          "us-gaap:IncreaseDecreaseInOtherNoncurrentAssetsAndLiabilitiesNet"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "us-gaap:NetCashProvidedByUsedInInvestingActivities: calculated=-74 != actual=1,977 (diff=2,052)",
+      "expected_value": -74.4,
+      "actual_value": 1977.3,
+      "difference": 2051.7,
+      "details": {
+        "parent_concept": "us-gaap:NetCashProvidedByUsedInInvestingActivities",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsIndirect",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:CashProvidedByUsedInInvestingActivitiesDiscontinuedOperations",
+          "us-gaap:CashProvidedByUsedInInvestingActivitiesDiscontinuedOperations"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:PaymentsToAcquireProductiveAssets",
+      "expected_value": 0.0,
+      "actual_value": 2153.9,
+      "details": {
+        "parent_concept": "us-gaap:PaymentsToAcquireProductiveAssets",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsIndirect",
+        "children_count": 16,
+        "missing_children": [
+          "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+          "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+          "us-gaap:PaymentsForSoftware",
+          "us-gaap:PaymentsForSoftware",
+          "us-gaap:PaymentsToAcquireIntangibleAssets",
+          "us-gaap:PaymentsToAcquireIntangibleAssets",
+          "us-gaap:PaymentForAcquisitionCryptoAsset",
+          "us-gaap:PaymentForAcquisitionCryptoAsset",
+          "us-gaap:PaymentsToAcquireMineralRights",
+          "us-gaap:PaymentsToAcquireMineralRights",
+          "us-gaap:PaymentsToAcquireEquipmentOnLease",
+          "us-gaap:PaymentsToAcquireEquipmentOnLease",
+          "us-gaap:PaymentsForDelayedTaxExemptExchange",
+          "us-gaap:PaymentsForDelayedTaxExemptExchange",
+          "us-gaap:PaymentsToAcquireOtherProductiveAssets",
+          "us-gaap:PaymentsToAcquireOtherProductiveAssets"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:ProceedsFromSaleOfProductiveAssets",
+      "expected_value": 0.0,
+      "actual_value": 195.2,
+      "details": {
+        "parent_concept": "us-gaap:ProceedsFromSaleOfProductiveAssets",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsIndirect",
+        "children_count": 10,
+        "missing_children": [
+          "us-gaap:ProceedsFromSaleOfPropertyPlantAndEquipment",
+          "us-gaap:ProceedsFromSaleOfPropertyPlantAndEquipment",
+          "us-gaap:ProceedsFromDepositsOnRealEstateSales",
+          "us-gaap:ProceedsFromDepositsOnRealEstateSales",
+          "us-gaap:ProceedsFromDelayedTaxExemptExchange",
+          "us-gaap:ProceedsFromDelayedTaxExemptExchange",
+          "us-gaap:ProceedsFromSaleOfIntangibleAssets",
+          "us-gaap:ProceedsFromSaleOfIntangibleAssets",
+          "us-gaap:ProceedsFromSaleOfOtherProductiveAssets",
+          "us-gaap:ProceedsFromSaleOfOtherProductiveAssets"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "us-gaap:NetCashProvidedByUsedInFinancingActivities: calculated=-129 != actual=3,365 (diff=3,495)",
+      "expected_value": -129.2,
+      "actual_value": 3365.4,
+      "difference": 3494.6,
+      "details": {
+        "parent_concept": "us-gaap:NetCashProvidedByUsedInFinancingActivities",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsIndirect",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:CashProvidedByUsedInFinancingActivitiesDiscontinuedOperations",
+          "us-gaap:CashProvidedByUsedInFinancingActivitiesDiscontinuedOperations"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:ProceedsFromIssuanceOfLongTermDebt",
+      "expected_value": 0.0,
+      "actual_value": 2150.0,
+      "details": {
+        "parent_concept": "us-gaap:ProceedsFromIssuanceOfLongTermDebt",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsIndirect",
+        "children_count": 30,
+        "missing_children": [
+          "us-gaap:ProceedsFromLongTermLinesOfCredit",
+          "us-gaap:ProceedsFromLongTermLinesOfCredit",
+          "us-gaap:ProceedsFromIssuanceOfMediumTermNotes",
+          "us-gaap:ProceedsFromIssuanceOfMediumTermNotes",
+          "us-gaap:ProceedsFromIssuanceOfSeniorLongTermDebt",
+          "us-gaap:ProceedsFromIssuanceOfSeniorLongTermDebt",
+          "us-gaap:ProceedsFromIssuanceOfSubordinatedLongTermDebt",
+          "us-gaap:ProceedsFromIssuanceOfSubordinatedLongTermDebt",
+          "us-gaap:ProceedsFromFederalHomeLoanBankBorrowings",
+          "us-gaap:ProceedsFromFederalHomeLoanBankBorrowings",
+          "us-gaap:ProceedsFromConvertibleDebt",
+          "us-gaap:ProceedsFromConvertibleDebt",
+          "us-gaap:ProceedsFromRelatedPartyDebt",
+          "us-gaap:ProceedsFromRelatedPartyDebt",
+          "us-gaap:ProceedsFromIssuanceOfSecuredTaxExemptDebt",
+          "us-gaap:ProceedsFromIssuanceOfSecuredTaxExemptDebt",
+          "us-gaap:ProceedsFromIssuanceOfSecuredDebt",
+          "us-gaap:ProceedsFromIssuanceOfSecuredDebt",
+          "us-gaap:ProceedsFromIssuanceOfUnsecuredTaxExemptDebt",
+          "us-gaap:ProceedsFromIssuanceOfUnsecuredTaxExemptDebt",
+          "us-gaap:ProceedsFromIssuanceOfUnsecuredDebt",
+          "us-gaap:ProceedsFromIssuanceOfUnsecuredDebt",
+          "us-gaap:ProceedsFromIssuanceOfFirstMortgageBond",
+          "us-gaap:ProceedsFromIssuanceOfFirstMortgageBond",
+          "us-gaap:ProceedsFromPollutionControlBond",
+          "us-gaap:ProceedsFromPollutionControlBond",
+          "us-gaap:ProceedsFromIssuanceOfFinancialServicesObligations",
+          "us-gaap:ProceedsFromIssuanceOfFinancialServicesObligations",
+          "us-gaap:ProceedsFromIssuanceOfOtherLongTermDebt",
+          "us-gaap:ProceedsFromIssuanceOfOtherLongTermDebt"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:RepaymentsOfLongTermDebt",
+      "expected_value": 0.0,
+      "actual_value": 1150.8,
+      "details": {
+        "parent_concept": "us-gaap:RepaymentsOfLongTermDebt",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsIndirect",
+        "children_count": 28,
+        "missing_children": [
+          "us-gaap:RepaymentsOfLongTermLinesOfCredit",
+          "us-gaap:RepaymentsOfLongTermLinesOfCredit",
+          "us-gaap:RepaymentsOfMediumTermNotes",
+          "us-gaap:RepaymentsOfMediumTermNotes",
+          "us-gaap:RepaymentsOfSeniorDebt",
+          "us-gaap:RepaymentsOfSeniorDebt",
+          "us-gaap:RepaymentsOfSubordinatedDebt",
+          "us-gaap:RepaymentsOfSubordinatedDebt",
+          "us-gaap:RepaymentsOfFederalHomeLoanBankBorrowings",
+          "us-gaap:RepaymentsOfFederalHomeLoanBankBorrowings",
+          "us-gaap:RepaymentsOfConvertibleDebt",
+          "us-gaap:RepaymentsOfConvertibleDebt",
+          "us-gaap:RepaymentsOfRelatedPartyDebt",
+          "us-gaap:RepaymentsOfRelatedPartyDebt",
+          "us-gaap:RepaymentsOfAssumedDebt",
+          "us-gaap:RepaymentsOfAssumedDebt",
+          "us-gaap:RepaymentsOfUnsecuredTaxExemptDebt",
+          "us-gaap:RepaymentsOfUnsecuredTaxExemptDebt",
+          "us-gaap:RepaymentsOfSecuredDebt",
+          "us-gaap:RepaymentsOfSecuredDebt",
+          "us-gaap:RepaymentsOfUnsecuredDebt",
+          "us-gaap:RepaymentsOfUnsecuredDebt",
+          "us-gaap:RepaymentsOfFirstMortgageBond",
+          "us-gaap:RepaymentsOfFirstMortgageBond",
+          "us-gaap:RepaymentsOfPollutionControlBond",
+          "us-gaap:RepaymentsOfPollutionControlBond",
+          "us-gaap:RepaymentsOfOtherLongTermDebt",
+          "us-gaap:RepaymentsOfOtherLongTermDebt"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:NetIncomeLoss",
+      "expected_value": 0.0,
+      "actual_value": 1513.5,
+      "details": {
+        "parent_concept": "us-gaap:NetIncomeLoss",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfIncome",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:ProfitLoss",
+          "us-gaap:ProfitLoss",
+          "us-gaap:NetIncomeLossAttributableToNoncontrollingInterest",
+          "us-gaap:NetIncomeLossAttributableToNoncontrollingInterest"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest: calculated=9,228 != actual=1,936 (diff=7,293)",
+      "expected_value": 9228.4,
+      "actual_value": 1935.5,
+      "difference": 7292.9,
+      "details": {
+        "parent_concept": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfIncome",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:IncomeLossFromEquityMethodInvestments",
+          "us-gaap:IncomeLossFromEquityMethodInvestments"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "us-gaap:OperatingIncomeLoss: calculated=-301,960 != actual=43,511 (diff=345,472)",
+      "expected_value": -301960.4,
+      "actual_value": 43511.2,
+      "difference": 345471.60000000003,
+      "details": {
+        "parent_concept": "us-gaap:OperatingIncomeLoss",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfIncome",
+        "children_count": 8,
+        "missing_children": [
+          "us-gaap:GovernmentAssistanceOperatingIncome",
+          "us-gaap:GovernmentAssistanceOperatingIncome",
+          "us-gaap:OtherOperatingIncomeExpenseNet",
+          "us-gaap:OtherOperatingIncomeExpenseNet"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "us-gaap:GrossProfit: calculated=198,811 != actual=-111,788 (diff=310,599)",
+      "expected_value": 198810.59999999998,
+      "actual_value": -111788.2,
+      "difference": 310598.8,
+      "details": {
+        "parent_concept": "us-gaap:GrossProfit",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfIncome",
+        "children_count": 4,
+        "missing_children": [],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:CostOfRevenue",
+      "expected_value": 0.0,
+      "actual_value": 55894.1,
+      "details": {
+        "parent_concept": "us-gaap:CostOfRevenue",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfIncome",
+        "children_count": 28,
+        "missing_children": [
+          "us-gaap:CostOfGoodsAndServicesSold",
+          "us-gaap:CostOfGoodsAndServicesSold",
+          "us-gaap:FinancingInterestExpense",
+          "us-gaap:FinancingInterestExpense",
+          "us-gaap:ProvisionForLoanLeaseAndOtherLosses",
+          "us-gaap:ProvisionForLoanLeaseAndOtherLosses",
+          "us-gaap:PolicyholderBenefitsAndClaimsIncurredNet",
+          "us-gaap:PolicyholderBenefitsAndClaimsIncurredNet",
+          "us-gaap:LiabilityForFuturePolicyBenefitsPeriodExpense",
+          "us-gaap:LiabilityForFuturePolicyBenefitsPeriodExpense",
+          "us-gaap:InterestCreditedToPolicyholdersAccountBalances",
+          "us-gaap:InterestCreditedToPolicyholdersAccountBalances",
+          "us-gaap:PolicyholderDividends",
+          "us-gaap:PolicyholderDividends",
+          "us-gaap:DeferredSalesInducementsAmortizationExpense",
+          "us-gaap:DeferredSalesInducementsAmortizationExpense",
+          "us-gaap:PresentValueOfFutureInsuranceProfitsAmortizationExpense1",
+          "us-gaap:PresentValueOfFutureInsuranceProfitsAmortizationExpense1",
+          "us-gaap:AmortizationOfMortgageServicingRightsMSRs",
+          "us-gaap:AmortizationOfMortgageServicingRightsMSRs",
+          "us-gaap:DeferredPolicyAcquisitionCostAmortizationExpense",
+          "us-gaap:DeferredPolicyAcquisitionCostAmortizationExpense",
+          "us-gaap:AmortizationOfValueOfBusinessAcquiredVOBA",
+          "us-gaap:AmortizationOfValueOfBusinessAcquiredVOBA",
+          "us-gaap:OtherCostOfOperatingRevenue",
+          "us-gaap:OtherCostOfOperatingRevenue",
+          "us-gaap:MerchantMarineOperatingDifferentialSubsidy",
+          "us-gaap:MerchantMarineOperatingDifferentialSubsidy"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:DepreciationAndAmortization",
+      "expected_value": 0.0,
+      "actual_value": 1807.1,
+      "details": {
+        "parent_concept": "us-gaap:DepreciationAndAmortization",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfIncome",
+        "children_count": 8,
+        "missing_children": [
+          "us-gaap:DepreciationNonproduction",
+          "us-gaap:DepreciationNonproduction",
+          "us-gaap:DepletionOfOilAndGasProperties",
+          "us-gaap:DepletionOfOilAndGasProperties",
+          "us-gaap:AmortizationOfDeferredCharges",
+          "us-gaap:AmortizationOfDeferredCharges",
+          "us-gaap:OtherDepreciationAndAmortization",
+          "us-gaap:OtherDepreciationAndAmortization"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:SellingGeneralAndAdministrativeExpense",
+      "expected_value": 0.0,
+      "actual_value": 19596.0,
+      "details": {
+        "parent_concept": "us-gaap:SellingGeneralAndAdministrativeExpense",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfIncome",
+        "children_count": 6,
+        "missing_children": [
+          "us-gaap:SellingAndMarketingExpense",
+          "us-gaap:SellingAndMarketingExpense",
+          "us-gaap:GeneralAndAdministrativeExpense",
+          "us-gaap:GeneralAndAdministrativeExpense",
+          "us-gaap:OtherSellingGeneralAndAdministrativeExpense",
+          "us-gaap:OtherSellingGeneralAndAdministrativeExpense"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:OtherNonoperatingIncomeExpense",
+      "expected_value": 0.0,
+      "actual_value": 33.0,
+      "details": {
+        "parent_concept": "us-gaap:OtherNonoperatingIncomeExpense",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfIncome",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:OtherNonoperatingIncome",
+          "us-gaap:OtherNonoperatingIncome",
+          "us-gaap:OtherNonoperatingExpense",
+          "us-gaap:OtherNonoperatingExpense"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding: calculated=1,058 matches actual=1,058 (diff=0)",
+      "expected_value": 1058.0,
+      "actual_value": 1058.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfIncome",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:WeightedAverageNumberDilutedSharesOutstandingAdjustment",
+          "us-gaap:WeightedAverageNumberDilutedSharesOutstandingAdjustment"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:WeightedAverageNumberOfSharesOutstandingBasic",
+      "expected_value": 0.0,
+      "actual_value": 529.0,
+      "details": {
+        "parent_concept": "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfIncome",
+        "children_count": 12,
+        "missing_children": [
+          "us-gaap:WeightedAverageNumberOfSharesIssuedBasic",
+          "us-gaap:WeightedAverageNumberOfSharesIssuedBasic",
+          "us-gaap:WeightedAverageNumberOfSharesContingentlyIssuable",
+          "us-gaap:WeightedAverageNumberOfSharesContingentlyIssuable",
+          "us-gaap:WeightedAverageNumberOfSharesTreasuryStock",
+          "us-gaap:WeightedAverageNumberOfSharesTreasuryStock",
+          "us-gaap:WeightedAverageNumberOfSharesCommonStockSubjectToRepurchaseOrCancellation",
+          "us-gaap:WeightedAverageNumberOfSharesCommonStockSubjectToRepurchaseOrCancellation",
+          "us-gaap:WeightedAverageNumberOfSharesRestrictedStock",
+          "us-gaap:WeightedAverageNumberOfSharesRestrictedStock",
+          "us-gaap:WeightedAverageNumberOfSharesEmployeeStockOwnershipPlanSharesNotCommittedToBeReleased",
+          "us-gaap:WeightedAverageNumberOfSharesEmployeeStockOwnershipPlanSharesNotCommittedToBeReleased"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:AdjustmentsToAdditionalPaidInCapitalSharebasedCompensationRequisiteServicePeriodRecognitionValue",
+      "expected_value": 0.0,
+      "actual_value": 99.5,
+      "details": {
+        "parent_concept": "us-gaap:AdjustmentsToAdditionalPaidInCapitalSharebasedCompensationRequisiteServicePeriodRecognitionValue",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfShareholdersEquityAndOtherComprehensiveIncome",
+        "children_count": 8,
+        "missing_children": [
+          "us-gaap:AdjustmentsToAdditionalPaidInCapitalShareBasedCompensationStockOptionsRequisiteServicePeriodRecognition",
+          "us-gaap:AdjustmentsToAdditionalPaidInCapitalShareBasedCompensationStockOptionsRequisiteServicePeriodRecognition",
+          "us-gaap:AdjustmentsToAdditionalPaidInCapitalShareBasedCompensationEmployeeStockPurchaseProgramRequisiteServicePeriodRecognition",
+          "us-gaap:AdjustmentsToAdditionalPaidInCapitalShareBasedCompensationEmployeeStockPurchaseProgramRequisiteServicePeriodRecognition",
+          "us-gaap:AdjustmentsToAdditionalPaidInCapitalShareBasedCompensationRestrictedStockUnitsRequisiteServicePeriodRecognition",
+          "us-gaap:AdjustmentsToAdditionalPaidInCapitalShareBasedCompensationRestrictedStockUnitsRequisiteServicePeriodRecognition",
+          "us-gaap:AdjustmentsToAdditionalPaidInCapitalSharebasedCompensationOtherLongtermIncentivePlansRequisiteServicePeriodRecognition",
+          "us-gaap:AdjustmentsToAdditionalPaidInCapitalSharebasedCompensationOtherLongtermIncentivePlansRequisiteServicePeriodRecognition"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:DividendsCommonStock",
+      "expected_value": 0.0,
+      "actual_value": 295.1,
+      "details": {
+        "parent_concept": "us-gaap:DividendsCommonStock",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfShareholdersEquityAndOtherComprehensiveIncome",
+        "children_count": 6,
+        "missing_children": [
+          "us-gaap:DividendsCommonStockCash",
+          "us-gaap:DividendsCommonStockCash",
+          "us-gaap:DividendsCommonStockStock",
+          "us-gaap:DividendsCommonStockStock",
+          "us-gaap:DividendsCommonStockPaidinkind",
+          "us-gaap:DividendsCommonStockPaidinkind"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 2 periods: 2/2 passed",
+      "expected_value": 0.0,
+      "actual_value": 2318.0,
+      "details": {
+        "parent_concept": "us-gaap:IntangibleAssetsNetExcludingGoodwill",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassifiedSecondAlternative",
+        "children_count": 6,
+        "missing_children": [
+          "us-gaap:IntangibleAssetsGrossExcludingGoodwill",
+          "us-gaap:IntangibleAssetsGrossExcludingGoodwill",
+          "us-gaap:FiniteLivedIntangibleAssetsAccumulatedAmortization",
+          "us-gaap:FiniteLivedIntangibleAssetsAccumulatedAmortization",
+          "us-gaap:OtherIntangibleAssetsNet",
+          "us-gaap:OtherIntangibleAssetsNet"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 2 periods: 2/2 passed",
+      "expected_value": 0.0,
+      "actual_value": 2318.0,
+      "details": {
+        "parent_concept": "us-gaap:IntangibleAssetsNetExcludingGoodwill",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified",
+        "children_count": 6,
+        "missing_children": [
+          "us-gaap:FiniteLivedIntangibleAssetsNet",
+          "us-gaap:FiniteLivedIntangibleAssetsNet",
+          "us-gaap:IndefiniteLivedIntangibleAssetsExcludingGoodwill",
+          "us-gaap:IndefiniteLivedIntangibleAssetsExcludingGoodwill",
+          "us-gaap:OtherIntangibleAssetsNet",
+          "us-gaap:OtherIntangibleAssetsNet"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "Verified across 2 periods: 0/2 passed",
+      "expected_value": 29004.0,
+      "actual_value": 26755.7,
+      "difference": 2248.2999999999993,
+      "details": {
+        "parent_concept": "us-gaap:LiabilitiesAndStockholdersEquity",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassifiedSecondAlternative",
+        "children_count": 8,
+        "missing_children": [
+          "us-gaap:TemporaryEquityCarryingAmountIncludingPortionAttributableToNoncontrollingInterests",
+          "us-gaap:TemporaryEquityCarryingAmountIncludingPortionAttributableToNoncontrollingInterests",
+          "us-gaap:LimitedLiabilityCompanyLlcMembersEquityIncludingPortionAttributableToNoncontrollingInterest",
+          "us-gaap:LimitedLiabilityCompanyLlcMembersEquityIncludingPortionAttributableToNoncontrollingInterest"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "Verified across 2 periods: 0/2 passed",
+      "expected_value": 29013.199999999997,
+      "actual_value": 26755.7,
+      "difference": 2257.4999999999964,
+      "details": {
+        "parent_concept": "us-gaap:LiabilitiesAndStockholdersEquity",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified",
+        "children_count": 8,
+        "missing_children": [
+          "us-gaap:TemporaryEquityCarryingAmountIncludingPortionAttributableToNoncontrollingInterests",
+          "us-gaap:TemporaryEquityCarryingAmountIncludingPortionAttributableToNoncontrollingInterests"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "Verified across 2 periods: 0/2 passed",
+      "expected_value": 29004.0,
+      "actual_value": 26755.7,
+      "difference": 2248.2999999999993,
+      "details": {
+        "parent_concept": "us-gaap:LiabilitiesAndStockholdersEquity",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassifiedFirstAlternative",
+        "children_count": 8,
+        "missing_children": [
+          "us-gaap:TemporaryEquityCarryingAmountIncludingPortionAttributableToNoncontrollingInterests",
+          "us-gaap:TemporaryEquityCarryingAmountIncludingPortionAttributableToNoncontrollingInterests",
+          "us-gaap:PartnersCapitalIncludingPortionAttributableToNoncontrollingInterest",
+          "us-gaap:PartnersCapitalIncludingPortionAttributableToNoncontrollingInterest"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "Verified across 4 periods: 2/4 passed",
+      "expected_value": 3010.5999999999995,
+      "actual_value": 7533.199999999999,
+      "difference": 4522.599999999999,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassifiedSecondAlternative",
+        "children_count": 36,
+        "missing_children": [
+          "us-gaap:PreferredStockValueOutstanding",
+          "us-gaap:PreferredStockValueOutstanding",
+          "us-gaap:PreferredStockSharesSubscribedButUnissuedSubscriptionsReceivable",
+          "us-gaap:PreferredStockSharesSubscribedButUnissuedSubscriptionsReceivable",
+          "us-gaap:CommonStockValueOutstanding",
+          "us-gaap:CommonStockValueOutstanding",
+          "us-gaap:CommonStockHeldBySubsidiary",
+          "us-gaap:CommonStockHeldBySubsidiary",
+          "us-gaap:CommonStockShareSubscribedButUnissuedSubscriptionsReceivable",
+          "us-gaap:CommonStockShareSubscribedButUnissuedSubscriptionsReceivable",
+          "us-gaap:CommonStockSharesSubscriptions",
+          "us-gaap:CommonStockSharesSubscriptions",
+          "us-gaap:TreasuryStockDeferredEmployeeStockOwnershipPlan",
+          "us-gaap:TreasuryStockDeferredEmployeeStockOwnershipPlan",
+          "us-gaap:DeferredCompensationEquity",
+          "us-gaap:DeferredCompensationEquity",
+          "us-gaap:AccumulatedDistributionsInExcessOfNetIncome",
+          "us-gaap:AccumulatedDistributionsInExcessOfNetIncome",
+          "us-gaap:UnearnedESOPShares",
+          "us-gaap:UnearnedESOPShares",
+          "us-gaap:OtherAdditionalCapital",
+          "us-gaap:OtherAdditionalCapital",
+          "us-gaap:ReceivableFromOfficersAndDirectorsForIssuanceOfCapitalStock",
+          "us-gaap:ReceivableFromOfficersAndDirectorsForIssuanceOfCapitalStock",
+          "us-gaap:ReceivableFromShareholdersOrAffiliatesForIssuanceOfCapitalStock",
+          "us-gaap:ReceivableFromShareholdersOrAffiliatesForIssuanceOfCapitalStock",
+          "us-gaap:WarrantsAndRightsOutstanding",
+          "us-gaap:WarrantsAndRightsOutstanding",
+          "us-gaap:StockholdersEquityNoteSubscriptionsReceivable",
+          "us-gaap:StockholdersEquityNoteSubscriptionsReceivable"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "Verified across 4 periods: 2/4 passed",
+      "expected_value": 5986.4,
+      "actual_value": 7533.199999999999,
+      "difference": 1546.7999999999993,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified",
+        "children_count": 36,
+        "missing_children": [
+          "us-gaap:PreferredStockSharesSubscribedButUnissuedSubscriptionsReceivable",
+          "us-gaap:PreferredStockSharesSubscribedButUnissuedSubscriptionsReceivable",
+          "us-gaap:CommonStockHeldBySubsidiary",
+          "us-gaap:CommonStockHeldBySubsidiary",
+          "us-gaap:CommonStockShareSubscribedButUnissuedSubscriptionsReceivable",
+          "us-gaap:CommonStockShareSubscribedButUnissuedSubscriptionsReceivable",
+          "us-gaap:CommonStockSharesSubscriptions",
+          "us-gaap:CommonStockSharesSubscriptions",
+          "us-gaap:TreasuryStockDeferredEmployeeStockOwnershipPlan",
+          "us-gaap:TreasuryStockDeferredEmployeeStockOwnershipPlan",
+          "us-gaap:DeferredCompensationEquity",
+          "us-gaap:DeferredCompensationEquity",
+          "us-gaap:UnearnedESOPShares",
+          "us-gaap:UnearnedESOPShares",
+          "us-gaap:OtherAdditionalCapital",
+          "us-gaap:OtherAdditionalCapital",
+          "us-gaap:ReceivableFromOfficersAndDirectorsForIssuanceOfCapitalStock",
+          "us-gaap:ReceivableFromOfficersAndDirectorsForIssuanceOfCapitalStock",
+          "us-gaap:ReceivableFromShareholdersOrAffiliatesForIssuanceOfCapitalStock",
+          "us-gaap:ReceivableFromShareholdersOrAffiliatesForIssuanceOfCapitalStock",
+          "us-gaap:WarrantsAndRightsOutstanding",
+          "us-gaap:WarrantsAndRightsOutstanding",
+          "us-gaap:StockholdersEquityNoteSubscriptionsReceivable",
+          "us-gaap:StockholdersEquityNoteSubscriptionsReceivable"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No child values found for us-gaap:PensionAndOtherPostretirementBenefitContributions",
+      "expected_value": 0.0,
+      "actual_value": 27.3,
+      "details": {
+        "parent_concept": "us-gaap:PensionAndOtherPostretirementBenefitContributions",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfCashFlowsDirect",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:PensionContributions",
+          "us-gaap:PensionContributions",
+          "us-gaap:OtherPostretirementBenefitsPayments",
+          "us-gaap:OtherPostretirementBenefitsPayments"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "Verified across 2 periods: 0/2 passed",
+      "expected_value": 22941.799999999996,
+      "actual_value": 6559.0,
+      "difference": 16382.799999999996,
+      "details": {
+        "parent_concept": "us-gaap:AssetsCurrent",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified",
+        "children_count": 48,
+        "missing_children": [
+          "us-gaap:NetInvestmentInLeaseCurrent",
+          "us-gaap:NetInvestmentInLeaseCurrent",
+          "us-gaap:NetInvestmentInLeaseAllowanceForCreditLossCurrent",
+          "us-gaap:NetInvestmentInLeaseAllowanceForCreditLossCurrent",
+          "us-gaap:RestrictedCashAndInvestmentsCurrent",
+          "us-gaap:RestrictedCashAndInvestmentsCurrent",
+          "us-gaap:ContractWithCustomerAssetNetCurrent",
+          "us-gaap:ContractWithCustomerAssetNetCurrent",
+          "us-gaap:CapitalizedContractCostNetCurrent",
+          "us-gaap:CapitalizedContractCostNetCurrent",
+          "us-gaap:DeferredCostsCurrent",
+          "us-gaap:DeferredCostsCurrent",
+          "us-gaap:DerivativeInstrumentsAndHedges",
+          "us-gaap:DerivativeInstrumentsAndHedges",
+          "us-gaap:RegulatoryAssetsCurrent",
+          "us-gaap:RegulatoryAssetsCurrent",
+          "us-gaap:FundsHeldForClients",
+          "us-gaap:FundsHeldForClients",
+          "us-gaap:DeferredRentAssetNetCurrent",
+          "us-gaap:DeferredRentAssetNetCurrent",
+          "us-gaap:AssetsHeldInTrustCurrent",
+          "us-gaap:AssetsHeldInTrustCurrent",
+          "us-gaap:AdvancesOnInventoryPurchases",
+          "us-gaap:AdvancesOnInventoryPurchases",
+          "us-gaap:AdvanceRoyaltiesCurrent",
+          "us-gaap:AdvanceRoyaltiesCurrent",
+          "us-gaap:AssetsOfDisposalGroupIncludingDiscontinuedOperationCurrent",
+          "us-gaap:AssetsOfDisposalGroupIncludingDiscontinuedOperationCurrent",
+          "us-gaap:AssetsHeldForSaleNotPartOfDisposalGroupCurrent",
+          "us-gaap:AssetsHeldForSaleNotPartOfDisposalGroupCurrent",
+          "us-gaap:DepositsAssetsCurrent",
+          "us-gaap:DepositsAssetsCurrent",
+          "us-gaap:IntangibleAssetsCurrent",
+          "us-gaap:IntangibleAssetsCurrent",
+          "us-gaap:BusinessCombinationContingentConsiderationAssetCurrent",
+          "us-gaap:BusinessCombinationContingentConsiderationAssetCurrent",
+          "us-gaap:GovernmentAssistanceAmountCumulativeCurrent",
+          "us-gaap:GovernmentAssistanceAmountCumulativeCurrent"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 2 periods: 2/2 passed",
+      "expected_value": 0.0,
+      "actual_value": 293.6,
+      "details": {
+        "parent_concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified",
+        "children_count": 6,
+        "missing_children": [
+          "us-gaap:CashAndDueFromBanks",
+          "us-gaap:CashAndDueFromBanks",
+          "us-gaap:InterestBearingDepositsInBanks",
+          "us-gaap:InterestBearingDepositsInBanks",
+          "us-gaap:CashEquivalentsAtCarryingValue",
+          "us-gaap:CashEquivalentsAtCarryingValue"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 2 periods: 2/2 passed",
+      "expected_value": 0.0,
+      "actual_value": 464.1,
+      "details": {
+        "parent_concept": "us-gaap:ReceivablesNetCurrent",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified",
+        "children_count": 12,
+        "missing_children": [
+          "us-gaap:AccountsNotesAndLoansReceivableNetCurrent",
+          "us-gaap:AccountsNotesAndLoansReceivableNetCurrent",
+          "us-gaap:NontradeReceivablesCurrent",
+          "us-gaap:NontradeReceivablesCurrent",
+          "us-gaap:UnbilledReceivablesCurrent",
+          "us-gaap:UnbilledReceivablesCurrent",
+          "us-gaap:ReceivablesLongTermContractsOrPrograms",
+          "us-gaap:ReceivablesLongTermContractsOrPrograms",
+          "us-gaap:AccountsReceivableFromSecuritization",
+          "us-gaap:AccountsReceivableFromSecuritization",
+          "us-gaap:OtherReceivablesNetCurrent",
+          "us-gaap:OtherReceivablesNetCurrent"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 2 periods: 2/2 passed",
+      "expected_value": 0.0,
+      "actual_value": 338.8,
+      "details": {
+        "parent_concept": "us-gaap:PrepaidExpenseCurrent",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified",
+        "children_count": 16,
+        "missing_children": [
+          "us-gaap:PrepaidInsurance",
+          "us-gaap:PrepaidInsurance",
+          "us-gaap:PrepaidRent",
+          "us-gaap:PrepaidRent",
+          "us-gaap:PrepaidAdvertising",
+          "us-gaap:PrepaidAdvertising",
+          "us-gaap:PrepaidRoyalties",
+          "us-gaap:PrepaidRoyalties",
+          "us-gaap:Supplies",
+          "us-gaap:Supplies",
+          "us-gaap:PrepaidInterest",
+          "us-gaap:PrepaidInterest",
+          "us-gaap:PrepaidTaxes",
+          "us-gaap:PrepaidTaxes",
+          "us-gaap:OtherPrepaidExpenseCurrent",
+          "us-gaap:OtherPrepaidExpenseCurrent"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 2 periods: 2/2 passed",
+      "expected_value": 0.0,
+      "actual_value": 1201.0,
+      "details": {
+        "parent_concept": "us-gaap:Goodwill",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:GoodwillGross",
+          "us-gaap:GoodwillGross",
+          "us-gaap:GoodwillImpairedAccumulatedImpairmentLoss",
+          "us-gaap:GoodwillImpairedAccumulatedImpairmentLoss"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "Verified across 2 periods: 0/2 passed",
+      "expected_value": 17913.399999999998,
+      "actual_value": 7251.0,
+      "difference": 10662.399999999998,
+      "details": {
+        "parent_concept": "us-gaap:LiabilitiesCurrent",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified",
+        "children_count": 54,
+        "missing_children": [
+          "us-gaap:DeferredRevenueCurrent",
+          "us-gaap:DeferredRevenueCurrent",
+          "us-gaap:DeferredCompensationLiabilityCurrent",
+          "us-gaap:DeferredCompensationLiabilityCurrent",
+          "us-gaap:DeferredRentCreditCurrent",
+          "us-gaap:DeferredRentCreditCurrent",
+          "us-gaap:DerivativeInstrumentsAndHedgesLiabilities",
+          "us-gaap:DerivativeInstrumentsAndHedgesLiabilities",
+          "us-gaap:RestructuringReserveCurrent",
+          "us-gaap:RestructuringReserveCurrent",
+          "us-gaap:LiabilityForUncertainTaxPositionsCurrent",
+          "us-gaap:LiabilityForUncertainTaxPositionsCurrent",
+          "us-gaap:PostemploymentBenefitsLiabilityCurrent",
+          "us-gaap:PostemploymentBenefitsLiabilityCurrent",
+          "us-gaap:SecuritiesLoaned",
+          "us-gaap:SecuritiesLoaned",
+          "us-gaap:RegulatoryLiabilityCurrent",
+          "us-gaap:RegulatoryLiabilityCurrent",
+          "us-gaap:ProvisionForLossOnContracts",
+          "us-gaap:ProvisionForLossOnContracts",
+          "us-gaap:LitigationReserveCurrent",
+          "us-gaap:LitigationReserveCurrent",
+          "us-gaap:AccruedEnvironmentalLossContingenciesCurrent",
+          "us-gaap:AccruedEnvironmentalLossContingenciesCurrent",
+          "us-gaap:AssetRetirementObligationCurrent",
+          "us-gaap:AssetRetirementObligationCurrent",
+          "us-gaap:AccruedCappingClosurePostClosureAndEnvironmentalCosts",
+          "us-gaap:AccruedCappingClosurePostClosureAndEnvironmentalCosts",
+          "us-gaap:AccruedReclamationCostsCurrent",
+          "us-gaap:AccruedReclamationCostsCurrent",
+          "us-gaap:DeferredGasPurchasesCurrent",
+          "us-gaap:DeferredGasPurchasesCurrent",
+          "us-gaap:LiabilitiesOfDisposalGroupIncludingDiscontinuedOperationCurrent",
+          "us-gaap:LiabilitiesOfDisposalGroupIncludingDiscontinuedOperationCurrent",
+          "us-gaap:LiabilitiesOfBusinessTransferredUnderContractualArrangementCurrent",
+          "us-gaap:LiabilitiesOfBusinessTransferredUnderContractualArrangementCurrent",
+          "us-gaap:SharesSubjectToMandatoryRedemptionSettlementTermsAmountCurrent",
+          "us-gaap:SharesSubjectToMandatoryRedemptionSettlementTermsAmountCurrent",
+          "us-gaap:CustomerRefundLiabilityCurrent",
+          "us-gaap:CustomerRefundLiabilityCurrent",
+          "us-gaap:ProgramRightsObligationsCurrent",
+          "us-gaap:ProgramRightsObligationsCurrent",
+          "us-gaap:BusinessCombinationContingentConsiderationLiabilityCurrent",
+          "us-gaap:BusinessCombinationContingentConsiderationLiabilityCurrent",
+          "us-gaap:GovernmentAssistanceLiabilityCurrent",
+          "us-gaap:GovernmentAssistanceLiabilityCurrent"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 2 periods: 2/2 passed",
+      "expected_value": 0.0,
+      "actual_value": 4092.7,
+      "details": {
+        "parent_concept": "us-gaap:AccountsPayableCurrent",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified",
+        "children_count": 18,
+        "missing_children": [
+          "us-gaap:AccountsPayableTradeCurrent",
+          "us-gaap:AccountsPayableTradeCurrent",
+          "us-gaap:AccountsPayableInterestBearingCurrent",
+          "us-gaap:AccountsPayableInterestBearingCurrent",
+          "us-gaap:ConstructionPayableCurrent",
+          "us-gaap:ConstructionPayableCurrent",
+          "us-gaap:OilAndGasSalesPayableCurrent",
+          "us-gaap:OilAndGasSalesPayableCurrent",
+          "us-gaap:GasPurchasePayableCurrent",
+          "us-gaap:GasPurchasePayableCurrent",
+          "us-gaap:EnergyMarketingAccountsPayable",
+          "us-gaap:EnergyMarketingAccountsPayable",
+          "us-gaap:GasImbalancePayableCurrent",
+          "us-gaap:GasImbalancePayableCurrent",
+          "us-gaap:AccountsPayableUnderwritersPromotersAndEmployeesOtherThanSalariesAndWagesCurrent",
+          "us-gaap:AccountsPayableUnderwritersPromotersAndEmployeesOtherThanSalariesAndWagesCurrent",
+          "us-gaap:AccountsPayableOtherCurrent",
+          "us-gaap:AccountsPayableOtherCurrent"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 2 periods: 2/2 passed",
+      "expected_value": 0.0,
+      "actual_value": 57.6,
+      "details": {
+        "parent_concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:LongTermDebtCurrent",
+          "us-gaap:LongTermDebtCurrent",
+          "us-gaap:FinanceLeaseLiabilityCurrent",
+          "us-gaap:FinanceLeaseLiabilityCurrent"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 2 periods: 2/2 passed",
+      "expected_value": 0.0,
+      "actual_value": 7762.5,
+      "details": {
+        "parent_concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:LongTermDebtNoncurrent",
+          "us-gaap:LongTermDebtNoncurrent",
+          "us-gaap:FinanceLeaseLiabilityNoncurrent",
+          "us-gaap:FinanceLeaseLiabilityNoncurrent"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 2 periods: 2/2 passed",
+      "expected_value": 0.0,
+      "actual_value": 2184.0,
+      "details": {
+        "parent_concept": "us-gaap:AdditionalPaidInCapital",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:AdditionalPaidInCapitalCommonStock",
+          "us-gaap:AdditionalPaidInCapitalCommonStock",
+          "us-gaap:AdditionalPaidInCapitalPreferredStock",
+          "us-gaap:AdditionalPaidInCapitalPreferredStock"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 2 periods: 2/2 passed",
+      "expected_value": 0.0,
+      "actual_value": 94.7,
+      "details": {
+        "parent_concept": "us-gaap:AccumulatedOtherComprehensiveIncomeLossNetOfTax",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassified",
+        "children_count": 12,
+        "missing_children": [
+          "us-gaap:AccumulatedOtherComprehensiveIncomeLossForeignCurrencyTranslationAdjustmentNetOfTax",
+          "us-gaap:AccumulatedOtherComprehensiveIncomeLossForeignCurrencyTranslationAdjustmentNetOfTax",
+          "us-gaap:AccumulatedOtherComprehensiveIncomeLossAvailableForSaleSecuritiesAdjustmentNetOfTax",
+          "us-gaap:AccumulatedOtherComprehensiveIncomeLossAvailableForSaleSecuritiesAdjustmentNetOfTax",
+          "us-gaap:AociLossCashFlowHedgeCumulativeGainLossAfterTax",
+          "us-gaap:AociLossCashFlowHedgeCumulativeGainLossAfterTax",
+          "us-gaap:AccumulatedOtherComprehensiveIncomeLossDefinedBenefitPensionAndOtherPostretirementPlansNetOfTax",
+          "us-gaap:AccumulatedOtherComprehensiveIncomeLossDefinedBenefitPensionAndOtherPostretirementPlansNetOfTax",
+          "us-gaap:AccumulatedOtherComprehensiveIncomeLossFinancialLiabilityFairValueOptionAfterTax",
+          "us-gaap:AccumulatedOtherComprehensiveIncomeLossFinancialLiabilityFairValueOptionAfterTax",
+          "us-gaap:AociDerivativeQualifyingAsHedgeExcludedComponentAfterTax",
+          "us-gaap:AociDerivativeQualifyingAsHedgeExcludedComponentAfterTax"
+        ],
+        "tolerance": 0.01
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_taxonomy",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "Verified across 4 periods: 4/4 passed",
+      "expected_value": 587.2,
+      "actual_value": 587.2,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents",
+        "source": "taxonomy",
+        "verification_source": "taxonomy",
+        "role": "http://fasb.org/us-gaap/role/statement/StatementOfFinancialPositionClassifiedFirstAlternative",
+        "children_count": 4,
+        "missing_children": [
+          "us-gaap:RestrictedCashAndCashEquivalents",
+          "us-gaap:RestrictedCashAndCashEquivalents"
+        ],
+        "tolerance": 0.01
+      }
+    }
+  ]
+}
