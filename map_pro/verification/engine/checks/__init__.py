@@ -19,7 +19,6 @@ from .calculation_verifier import (
     DualVerificationResult,
     ChildContribution,
 )
-from .calculation_resolver import CalculationResolver, ResolvedCalculation
 
 __all__ = [
     # C-Equal module
@@ -36,6 +35,4 @@ __all__ = [
     'CalculationVerificationResult',
     'DualVerificationResult',
     'ChildContribution',
-    'CalculationResolver',
-    'ResolvedCalculation',
 ]
