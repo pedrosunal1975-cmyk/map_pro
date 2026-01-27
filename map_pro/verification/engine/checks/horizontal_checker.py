@@ -142,9 +142,9 @@ class HorizontalChecker:
             self.logger.info("No calculation networks provided - skipping calculation check")
             return results
 
-        # Group facts by context_id (strict c-equal compliance)
-        # This ensures calculations are verified within proper XBRL contexts
-        fact_groups = self.c_equal.group_facts(statements, main_only=True, group_by='context_id')
+        # Group facts by period for horizontal checks
+        # Horizontal checks verify calculations within statement presentation
+        fact_groups = self.c_equal.group_facts(statements, main_only=True, group_by='period')
 
         if fact_groups.context_count == 0:
             self.logger.info("No facts found for calculation check")
