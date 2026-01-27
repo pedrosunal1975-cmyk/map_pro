@@ -366,6 +366,25 @@ class VerificationCoordinator:
                     if 'equity' in norm or 'retained' in norm or 'capital' in norm:
                         print(f"  {norm} = {val:,.0f}")
 
+                # Check if there's a StockholdersEquity calculation tree
+                print(f"\n--- StockholdersEquity calc tree (if exists) ---")
+                for tree in trees:
+                    if 'StockholdersEquity' in tree.parent and 'LiabilitiesAnd' not in tree.parent:
+                        print(f"FOUND: {tree.parent}")
+                        calc_sum = 0.0
+                        for child, weight in tree.children:
+                            child_norm = test_normalizer.normalize(child)
+                            child_val = normalized_facts.get(child_norm)
+                            if child_val is not None:
+                                calc_sum += child_val * weight
+                                print(f"  {child_norm} = {child_val:,.0f} (w={weight})")
+                            else:
+                                print(f"  {child_norm} = NOT FOUND")
+                        print(f"  --> Calculated StockholdersEquity should be: {calc_sum:,.0f}")
+                        break
+                else:
+                    print("No StockholdersEquity calc tree found in company linkbase")
+
                 print("\n" + "="*60 + "\n")
 
             # Step 3: Run horizontal checks
