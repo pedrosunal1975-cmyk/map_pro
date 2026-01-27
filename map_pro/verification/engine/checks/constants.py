@@ -124,28 +124,30 @@ class ConceptNormalizer:
     @staticmethod
     def normalize(concept: str) -> str:
         """
-        Normalize a concept name for comparison.
+        Normalize a concept name for comparison using LOCAL NAME only.
 
-        Replaces all separators with canonical separator and lowercases.
+        Extracts the local name (after namespace separator) and lowercases.
+        This matches how the mapper matches concepts - by local name only.
 
         Args:
-            concept: Original concept name (e.g., "us-gaap:Assets")
+            concept: Original concept name (e.g., "us-gaap:Assets" or "Assets")
 
         Returns:
-            Normalized name (e.g., "us-gaap_assets")
+            Normalized LOCAL name (e.g., "assets")
         """
         if not concept:
             return ''
 
-        normalized = concept
-
-        # Replace all separators with canonical separator
+        # Extract local name - find the LAST separator and take everything after
+        # This handles: "us-gaap:Assets" -> "Assets", "Assets" -> "Assets"
+        local_name = concept
         for sep in CONCEPT_SEPARATORS:
-            if sep != CANONICAL_SEPARATOR:
-                normalized = normalized.replace(sep, CANONICAL_SEPARATOR)
+            if sep in local_name:
+                # Take the part after the LAST occurrence of this separator
+                local_name = local_name.rsplit(sep, 1)[-1]
 
         # Lowercase for case-insensitive matching
-        return normalized.lower()
+        return local_name.lower()
 
     def register(self, concept: str, source: str = 'default') -> str:
         """
