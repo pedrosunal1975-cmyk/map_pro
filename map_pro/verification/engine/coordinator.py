@@ -278,19 +278,21 @@ class VerificationCoordinator:
                     f"{result.formula_registry_summary.get('taxonomy_trees', 0)} taxonomy trees"
                 )
 
-                # === DIAGNOSTIC: Test actual concept matching ===
+                # === DIAGNOSTIC: Show actual calculation attempt ===
                 print("\n" + "="*60)
-                print("DIAGNOSTIC: CONCEPT MATCHING TEST")
+                print("DIAGNOSTIC: ACTUAL CALCULATION TEST")
                 print("="*60)
 
                 from .checks.constants import ConceptNormalizer
                 test_normalizer = ConceptNormalizer()
 
-                # Build normalized facts dict (same as _extract_facts does)
+                # Build normalized facts (with dimensional filter)
                 normalized_facts = {}
                 for stmt in statements.statements:
                     for fact in stmt.facts:
                         if fact.value is not None and not fact.is_abstract:
+                            if fact.dimensions and any(fact.dimensions.values()):
+                                continue  # Skip dimensioned
                             try:
                                 val = float(fact.value)
                                 norm = test_normalizer.register(fact.concept)
@@ -298,32 +300,37 @@ class VerificationCoordinator:
                             except:
                                 pass
 
-                print(f"\nTotal normalized facts: {len(normalized_facts)}")
-                print(f"Sample normalized keys: {list(normalized_facts.keys())[:10]}")
+                print(f"\nFacts after filtering: {len(normalized_facts)}")
 
-                # Test matching with calc trees
+                # Test first calc tree in detail
                 trees = self.formula_registry.get_all_calculations('company')
                 if trees:
-                    print(f"\nTotal calc trees: {len(trees)}")
+                    tree = trees[0]
+                    parent_norm = test_normalizer.normalize(tree.parent)
+                    parent_val = normalized_facts.get(parent_norm)
 
-                    # Check first 3 trees
-                    for tree in trees[:3]:
-                        parent_norm = test_normalizer.normalize(tree.parent)
-                        parent_found = parent_norm in normalized_facts
+                    print(f"\n=== {tree.parent} ===")
+                    print(f"Parent '{parent_norm}' = {parent_val}")
 
-                        children_found = 0
-                        children_total = len(tree.children)
-                        for child, weight in tree.children:
-                            child_norm = test_normalizer.normalize(child)
-                            if child_norm in normalized_facts:
-                                children_found += 1
+                    expected = 0.0
+                    print(f"\nChildren:")
+                    for child, weight in tree.children:
+                        child_norm = test_normalizer.normalize(child)
+                        child_val = normalized_facts.get(child_norm)
+                        if child_val is not None:
+                            contrib = child_val * weight
+                            expected += contrib
+                            print(f"  {child_norm}: {child_val} * {weight} = {contrib}")
+                        else:
+                            print(f"  {child_norm}: NOT FOUND")
 
-                        print(f"\n  Tree: {tree.parent}")
-                        print(f"    Normalized: '{parent_norm}'")
-                        print(f"    Parent found: {parent_found}")
-                        print(f"    Children found: {children_found}/{children_total}")
-                else:
-                    print("\nNO CALCULATION TREES LOADED!")
+                    print(f"\nExpected: {expected:,.0f}")
+                    print(f"Actual:   {parent_val:,.0f}" if parent_val else "Actual: NOT FOUND")
+                    if parent_val:
+                        diff = abs(expected - parent_val)
+                        pct = (diff / abs(parent_val) * 100) if parent_val != 0 else 0
+                        print(f"Diff: {diff:,.0f} ({pct:.2f}%)")
+                        print(f"PASS: {pct < 1.0}")
 
                 print("\n" + "="*60 + "\n")
 
