@@ -286,22 +286,37 @@ class VerificationCoordinator:
                 from .checks.constants import ConceptNormalizer
                 test_normalizer = ConceptNormalizer()
 
-                # Collect ALL raw concept names from statements (before normalization)
-                raw_concepts = set()
+                # Collect facts with detailed info about WHY they might be filtered
+                all_facts_info = {}  # normalized -> {value, has_dims, stmt_name}
                 normalized_facts = {}
+
                 for stmt in statements.statements:
                     for fact in stmt.facts:
-                        if fact.value is not None and not fact.is_abstract:
-                            raw_concepts.add(fact.concept)
-                            if fact.dimensions and any(fact.dimensions.values()):
-                                continue
+                        if fact.value is None or fact.is_abstract:
+                            continue
+
+                        norm = test_normalizer.normalize(fact.concept)
+                        has_dims = bool(fact.dimensions and any(fact.dimensions.values()))
+
+                        # Store info about this fact
+                        if norm not in all_facts_info:
+                            all_facts_info[norm] = []
+                        all_facts_info[norm].append({
+                            'value': fact.value,
+                            'has_dims': has_dims,
+                            'stmt': stmt.name,
+                            'is_main': stmt.is_main_statement
+                        })
+
+                        # Only add to calc facts if no dimensions
+                        if not has_dims:
                             try:
-                                normalized_facts[test_normalizer.normalize(fact.concept)] = float(fact.value)
+                                normalized_facts[norm] = float(fact.value)
                             except:
                                 pass
 
-                print(f"\nTotal raw concepts in statements: {len(raw_concepts)}")
-                print(f"Normalized facts (for calc): {len(normalized_facts)}")
+                print(f"\nTotal concepts with values: {len(all_facts_info)}")
+                print(f"Concepts usable for calc (no dims): {len(normalized_facts)}")
 
                 # Find LiabilitiesAndStockholdersEquity tree
                 trees = self.formula_registry.get_all_calculations('company')
@@ -317,18 +332,31 @@ class VerificationCoordinator:
                     parent_val = normalized_facts.get(parent_norm)
                     print(f"Parent value: {parent_val:,.0f}" if parent_val else "Parent: NOT FOUND")
 
-                    print(f"\nChildren from calc linkbase:")
+                    print(f"\nChildren analysis:")
                     found_sum = 0.0
                     for child, weight in target_tree.children:
                         child_norm = test_normalizer.normalize(child)
                         child_val = normalized_facts.get(child_norm)
 
-                        # Search for similar concepts in raw data
-                        similar = [c for c in raw_concepts if child_norm in c.lower().replace('-', '').replace('_', '').replace(':', '')]
-
                         if child_val is not None:
                             found_sum += child_val * weight
-                            print(f"  FOUND: {child} = {child_val:,.0f}")
+                            print(f"  OK: {child_norm} = {child_val:,.0f}")
+                        else:
+                            # WHY is it missing?
+                            if child_norm in all_facts_info:
+                                info = all_facts_info[child_norm]
+                                print(f"  FILTERED: {child_norm}")
+                                for i in info[:2]:  # Show first 2 occurrences
+                                    print(f"    -> value={i['value']}, dims={i['has_dims']}, stmt={i['stmt']}, main={i['is_main']}")
+                            else:
+                                print(f"  NOT IN STATEMENTS: {child_norm}")
+
+                    print(f"\nSum of found: {found_sum:,.0f}")
+                    print(f"Parent: {parent_val:,.0f}" if parent_val else "")
+                    if parent_val:
+                        print(f"GAP: {parent_val - found_sum:,.0f}")
+
+                print("\n" + "="*60 + "\n")
                         else:
                             print(f"  MISSING: {child}")
                             print(f"    Normalized to: '{child_norm}'")
