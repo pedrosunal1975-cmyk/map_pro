@@ -509,10 +509,16 @@ class CalculationVerifier:
                     dimensioned_count += 1
                     continue
 
-                try:
-                    value = float(fact.value)
-                except (ValueError, TypeError):
-                    continue
+                # Parse value - handle financial statement conventions
+                # Em-dash (—), en-dash (–), hyphen (-), and empty string mean zero/nil
+                raw_val = str(fact.value).strip() if fact.value else ''
+                if raw_val in ('', '—', '–', '-', 'nil', 'N/A', 'n/a'):
+                    value = 0.0
+                else:
+                    try:
+                        value = float(raw_val.replace(',', '').replace('$', ''))
+                    except (ValueError, TypeError):
+                        continue
 
                 # Normalize the concept name for lookup
                 normalized = normalizer.register(fact.concept, source='statement')

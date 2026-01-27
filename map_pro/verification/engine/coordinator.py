@@ -310,10 +310,14 @@ class VerificationCoordinator:
 
                         # Only add to calc facts if no dimensions
                         if not has_dims:
-                            try:
-                                normalized_facts[norm] = float(fact.value)
-                            except:
-                                pass
+                            raw_val = str(fact.value).strip() if fact.value else ''
+                            if raw_val in ('', '—', '–', '-', 'nil', 'N/A', 'n/a'):
+                                normalized_facts[norm] = 0.0
+                            else:
+                                try:
+                                    normalized_facts[norm] = float(raw_val.replace(',', '').replace('$', ''))
+                                except:
+                                    pass
 
                 print(f"\nTotal concepts with values: {len(all_facts_info)}")
                 print(f"Concepts usable for calc (no dims): {len(normalized_facts)}")
