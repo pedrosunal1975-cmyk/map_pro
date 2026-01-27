@@ -496,7 +496,15 @@ class CalculationVerifier:
         normalizer = ConceptNormalizer()
 
         dimensioned_count = 0
+        skipped_non_main = 0
         for statement in statements.statements:
+            # CRITICAL: Only use facts from MAIN statements for calculation verification
+            # Non-main statements (notes, schedules, details) may have different values
+            # that don't represent the primary aggregates we want to verify
+            if not statement.is_main_statement:
+                skipped_non_main += 1
+                continue
+
             for fact in statement.facts:
                 if fact.is_abstract or fact.value is None:
                     continue

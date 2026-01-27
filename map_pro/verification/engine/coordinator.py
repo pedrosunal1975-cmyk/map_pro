@@ -286,11 +286,13 @@ class VerificationCoordinator:
                 from .checks.constants import ConceptNormalizer
                 test_normalizer = ConceptNormalizer()
 
-                # Collect facts with detailed info about WHY they might be filtered
-                all_facts_info = {}  # normalized -> {value, has_dims, stmt_name}
+                # Collect facts from MAIN statements only
+                all_facts_info = {}
                 normalized_facts = {}
+                main_stmts = [s for s in statements.statements if s.is_main_statement]
+                print(f"\nUsing {len(main_stmts)} MAIN statements (of {len(statements.statements)} total)")
 
-                for stmt in statements.statements:
+                for stmt in main_stmts:
                     for fact in stmt.facts:
                         if fact.value is None or fact.is_abstract:
                             continue
@@ -298,14 +300,12 @@ class VerificationCoordinator:
                         norm = test_normalizer.normalize(fact.concept)
                         has_dims = bool(fact.dimensions and any(fact.dimensions.values()))
 
-                        # Store info about this fact
                         if norm not in all_facts_info:
                             all_facts_info[norm] = []
                         all_facts_info[norm].append({
                             'value': fact.value,
                             'has_dims': has_dims,
-                            'stmt': stmt.name,
-                            'is_main': stmt.is_main_statement
+                            'stmt': stmt.name
                         })
 
                         # Only add to calc facts if no dimensions
