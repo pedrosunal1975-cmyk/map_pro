@@ -360,6 +360,12 @@ class VerificationCoordinator:
                     if parent_val:
                         print(f"GAP: {parent_val - found_sum:,.0f}")
 
+                # Show all equity-related concepts that exist in main statements
+                print(f"\n--- All EQUITY concepts in main statements ---")
+                for norm, val in sorted(normalized_facts.items()):
+                    if 'equity' in norm or 'retained' in norm or 'capital' in norm:
+                        print(f"  {norm} = {val:,.0f}")
+
                 print("\n" + "="*60 + "\n")
 
             # Step 3: Run horizontal checks
