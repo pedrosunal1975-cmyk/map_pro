@@ -1,0 +1,5230 @@
+{
+  "report_type": "xbrl",
+  "verification_source": "company_xbrl",
+  "description": "Verification results using company XBRL calculation linkbase",
+  "filing_info": {
+    "filing_id": "sec/Albertsons_Companies_Inc/10_K/2025-10-13",
+    "market": "sec",
+    "company": "Albertsons_Companies_Inc",
+    "form": "10_K",
+    "date": "2025-10-13"
+  },
+  "verification_timestamp": "2026-01-27T21:51:12.910114",
+  "formula_source": {
+    "company_trees": 56,
+    "company_roles": []
+  },
+  "status": "active",
+  "summary": {
+    "total_checks": 228,
+    "passed": 167,
+    "failed": 61,
+    "pass_rate": 73.25
+  },
+  "calculation_results": [
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "liabilitiescurrent: expected=7,458, actual=7,458, diff=0 OK",
+      "expected_value": 7457.699999999999,
+      "actual_value": 7457.7,
+      "difference": 9.094947017729282e-13,
+      "details": {
+        "parent_concept": "us-gaap:LiabilitiesCurrent",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 7,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "liabilitiescurrent: expected=7,251, actual=7,251, diff=0 OK",
+      "expected_value": 7251.0,
+      "actual_value": 7251.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:LiabilitiesCurrent",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 7,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "liabilitiesandstockholdersequity: expected=26,221, actual=26,221, diff=0 OK",
+      "expected_value": 26221.1,
+      "actual_value": 26221.1,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:LiabilitiesAndStockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 9,
+        "missing_children": [
+          "redeemablenoncontrollinginterestequitypreferredcarryingamount"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "liabilitiesandstockholdersequity: expected=26,756, actual=26,756, diff=0 OK",
+      "expected_value": 26755.7,
+      "actual_value": 26755.7,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:LiabilitiesAndStockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 9,
+        "missing_children": [
+          "redeemablenoncontrollinginterestequitypreferredcarryingamount"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "assetscurrent: expected=6,287, actual=6,288, diff=0 OK",
+      "expected_value": 6287.499999999999,
+      "actual_value": 6287.5,
+      "difference": 9.094947017729282e-13,
+      "details": {
+        "parent_concept": "us-gaap:AssetsCurrent",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 5,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "assetscurrent: expected=6,559, actual=6,559, diff=0 OK",
+      "expected_value": 6559.0,
+      "actual_value": 6559.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:AssetsCurrent",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 5,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "stockholdersequity: expected=2,742, actual=2,748, diff=6 OK",
+      "expected_value": 2741.6,
+      "actual_value": 2747.5,
+      "difference": 5.900000000000091,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 1610.7,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 3024.6,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "stockholdersequity: expected=3,380, actual=3,386, diff=6 OK",
+      "expected_value": 3379.9,
+      "actual_value": 3385.9,
+      "difference": 6.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 5.9,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 2032.2,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 1647.4,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 69.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 2564.9,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 5.9,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 2072.7,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 352.2,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 69.3,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 185.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 5.9,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 2129.6,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 304.2,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 88.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 828.2,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 6.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 2184.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 386.7,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 94.7,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 1487.9,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 87.5,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 0.5,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 92.4,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 2.3,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 71.7,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for stockholdersequity",
+      "expected_value": 0.0,
+      "actual_value": 2.4,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:StockholdersEquity",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [
+          "preferredstockvalue",
+          "commonstockvalue",
+          "additionalpaidincapital",
+          "treasurystockcommonvalue",
+          "accumulatedothercomprehensiveincomelossnetoftax",
+          "retainedearningsaccumulateddeficit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "assets: expected=26,221, actual=26,221, diff=0 OK",
+      "expected_value": 26221.1,
+      "actual_value": 26221.1,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:Assets",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "assets: expected=26,756, actual=26,756, diff=0 OK",
+      "expected_value": 26755.7,
+      "actual_value": 26755.7,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:Assets",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedBalanceSheets",
+        "children_count": 6,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "operatingincomeloss: expected=1,738, actual=1,546, diff=192 MISMATCH",
+      "expected_value": 1737.6999999999978,
+      "actual_value": 1546.1,
+      "difference": 191.59999999999786,
+      "details": {
+        "parent_concept": "us-gaap:OperatingIncomeLoss",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "operatingincomeloss: expected=2,157, actual=2,069, diff=88 MISMATCH",
+      "expected_value": 2156.6999999999994,
+      "actual_value": 2068.9,
+      "difference": 87.79999999999927,
+      "details": {
+        "parent_concept": "us-gaap:OperatingIncomeLoss",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "operatingincomeloss: expected=2,307, actual=2,307, diff=0 OK",
+      "expected_value": 2307.0999999999985,
+      "actual_value": 2307.1,
+      "difference": 1.3642420526593924e-12,
+      "details": {
+        "parent_concept": "us-gaap:OperatingIncomeLoss",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "othercomprehensiveincomelossnetoftaxportionattributabletoparent: expected=-3, actual=7, diff=10 MISMATCH",
+      "expected_value": -3.1000000000000005,
+      "actual_value": 6.7,
+      "difference": 9.8,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "othercomprehensiveincomelossnetoftaxportionattributabletoparent: expected=-13, actual=19, diff=32 MISMATCH",
+      "expected_value": -12.9,
+      "actual_value": 18.7,
+      "difference": 31.6,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "othercomprehensiveincomelossnetoftaxportionattributabletoparent: expected=-0, actual=0, diff=1 OK",
+      "expected_value": -0.2999999999999998,
+      "actual_value": 0.3,
+      "difference": 0.5999999999999999,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for othercomprehensiveincomelossnetoftaxportionattributabletoparent",
+      "expected_value": 0.0,
+      "actual_value": 4.9,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 2,
+        "missing_children": [
+          "othercomprehensiveincomelosspensionandotherpostretirementbenefitplansadjustmentnetoftax",
+          "othercomprehensiveincomeothernetoftax"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for othercomprehensiveincomelossnetoftaxportionattributabletoparent",
+      "expected_value": 0.0,
+      "actual_value": 1.8,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 2,
+        "missing_children": [
+          "othercomprehensiveincomelosspensionandotherpostretirementbenefitplansadjustmentnetoftax",
+          "othercomprehensiveincomeothernetoftax"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for othercomprehensiveincomelossnetoftaxportionattributabletoparent",
+      "expected_value": 0.0,
+      "actual_value": 15.8,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 2,
+        "missing_children": [
+          "othercomprehensiveincomelosspensionandotherpostretirementbenefitplansadjustmentnetoftax",
+          "othercomprehensiveincomeothernetoftax"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for othercomprehensiveincomelossnetoftaxportionattributabletoparent",
+      "expected_value": 0.0,
+      "actual_value": 2.9,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 2,
+        "missing_children": [
+          "othercomprehensiveincomelosspensionandotherpostretirementbenefitplansadjustmentnetoftax",
+          "othercomprehensiveincomeothernetoftax"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "comprehensiveincomenetoftax: expected=965, actual=965, diff=0 OK",
+      "expected_value": 965.3000000000001,
+      "actual_value": 965.3,
+      "difference": 1.1368683772161603e-13,
+      "details": {
+        "parent_concept": "us-gaap:ComprehensiveIncomeNetOfTax",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "comprehensiveincomenetoftax: expected=1,315, actual=1,315, diff=0 OK",
+      "expected_value": 1314.7,
+      "actual_value": 1314.7,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:ComprehensiveIncomeNetOfTax",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "comprehensiveincomenetoftax: expected=1,514, actual=1,514, diff=0 OK",
+      "expected_value": 1513.8,
+      "actual_value": 1513.8,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:ComprehensiveIncomeNetOfTax",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "netincomeloss: expected=959, actual=959, diff=0 OK",
+      "expected_value": 958.6,
+      "actual_value": 958.6,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:NetIncomeLoss",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "netincomeloss: expected=1,296, actual=1,296, diff=0 OK",
+      "expected_value": 1296.0,
+      "actual_value": 1296.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:NetIncomeLoss",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "netincomeloss: expected=1,514, actual=1,514, diff=0 OK",
+      "expected_value": 1513.5,
+      "actual_value": 1513.5,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:NetIncomeLoss",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for netincomeloss",
+      "expected_value": 0.0,
+      "actual_value": 1513.5,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:NetIncomeLoss",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 2,
+        "missing_children": [
+          "incomelossfromcontinuingoperationsbeforeincometaxesextraordinaryitemsnoncontrollinginterest",
+          "incometaxexpensebenefit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for netincomeloss",
+      "expected_value": 0.0,
+      "actual_value": 1296.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:NetIncomeLoss",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 2,
+        "missing_children": [
+          "incomelossfromcontinuingoperationsbeforeincometaxesextraordinaryitemsnoncontrollinginterest",
+          "incometaxexpensebenefit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for netincomeloss",
+      "expected_value": 0.0,
+      "actual_value": 958.6,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:NetIncomeLoss",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 2,
+        "missing_children": [
+          "incomelossfromcontinuingoperationsbeforeincometaxesextraordinaryitemsnoncontrollinginterest",
+          "incometaxexpensebenefit"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "grossprofit: expected=22,256, actual=22,256, diff=0 OK",
+      "expected_value": 22255.59999999999,
+      "actual_value": 22255.6,
+      "difference": 7.275957614183426e-12,
+      "details": {
+        "parent_concept": "us-gaap:GrossProfit",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "grossprofit: expected=22,046, actual=22,046, diff=0 OK",
+      "expected_value": 22045.699999999997,
+      "actual_value": 22045.7,
+      "difference": 3.637978807091713e-12,
+      "details": {
+        "parent_concept": "us-gaap:GrossProfit",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "grossprofit: expected=21,756, actual=21,756, diff=0 OK",
+      "expected_value": 21755.6,
+      "actual_value": 21755.6,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:GrossProfit",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "incomelossfromcontinuingoperationsbeforeincometaxesextraordinaryitemsnoncontrollinginterest: expected=2,049, actual=1,130, diff=920 MISMATCH",
+      "expected_value": 2049.2999999999997,
+      "actual_value": 1129.7,
+      "difference": 919.5999999999997,
+      "details": {
+        "parent_concept": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "incomelossfromcontinuingoperationsbeforeincometaxesextraordinaryitemsnoncontrollinginterest: expected=2,573, actual=1,589, diff=984 MISMATCH",
+      "expected_value": 2573.2,
+      "actual_value": 1589.0,
+      "difference": 984.1999999999998,
+      "details": {
+        "parent_concept": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "incomelossfromcontinuingoperationsbeforeincometaxesextraordinaryitemsnoncontrollinginterest: expected=2,745, actual=1,936, diff=809 MISMATCH",
+      "expected_value": 2744.7,
+      "actual_value": 1935.5,
+      "difference": 809.1999999999998,
+      "details": {
+        "parent_concept": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "incomelossfromcontinuingoperationsbeforeincometaxesextraordinaryitemsnoncontrollinginterest: expected=460, actual=1,130, diff=670 MISMATCH",
+      "expected_value": 459.8,
+      "actual_value": 1129.7,
+      "difference": 669.9000000000001,
+      "details": {
+        "parent_concept": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 3,
+        "missing_children": [
+          "operatingincomeloss",
+          "othernonoperatingincomeexpense"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "incomelossfromcontinuingoperationsbeforeincometaxesextraordinaryitemsnoncontrollinginterest: expected=492, actual=1,589, diff=1,097 MISMATCH",
+      "expected_value": 492.1,
+      "actual_value": 1589.0,
+      "difference": 1096.9,
+      "details": {
+        "parent_concept": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 3,
+        "missing_children": [
+          "operatingincomeloss",
+          "othernonoperatingincomeexpense"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "incomelossfromcontinuingoperationsbeforeincometaxesextraordinaryitemsnoncontrollinginterest: expected=405, actual=1,936, diff=1,531 MISMATCH",
+      "expected_value": 404.6,
+      "actual_value": 1935.5,
+      "difference": 1530.9,
+      "details": {
+        "parent_concept": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofOperationsandComprehensiveIncome",
+        "children_count": 3,
+        "missing_children": [
+          "operatingincomeloss",
+          "othernonoperatingincomeexpense"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "netcashprovidedbyusedininvestingactivities: expected=-1,908, actual=1,892, diff=3,800 MISMATCH",
+      "expected_value": -1907.8,
+      "actual_value": 1891.8,
+      "difference": 3799.6,
+      "details": {
+        "parent_concept": "us-gaap:NetCashProvidedByUsedInInvestingActivities",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofCashFlows",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "netcashprovidedbyusedininvestingactivities: expected=-1,881, actual=1,747, diff=3,627 MISMATCH",
+      "expected_value": -1880.7,
+      "actual_value": 1746.7,
+      "difference": 3627.4,
+      "details": {
+        "parent_concept": "us-gaap:NetCashProvidedByUsedInInvestingActivities",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofCashFlows",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "netcashprovidedbyusedininvestingactivities: expected=-1,977, actual=1,977, diff=3,955 MISMATCH",
+      "expected_value": -1977.3000000000002,
+      "actual_value": 1977.3,
+      "difference": 3954.6000000000004,
+      "details": {
+        "parent_concept": "us-gaap:NetCashProvidedByUsedInInvestingActivities",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofCashFlows",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "netcashprovidedbyusedinfinancingactivities: expected=-684, actual=684, diff=1,368 MISMATCH",
+      "expected_value": -684.1,
+      "actual_value": 684.1,
+      "difference": 1368.2,
+      "details": {
+        "parent_concept": "us-gaap:NetCashProvidedByUsedInFinancingActivities",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofCashFlows",
+        "children_count": 9,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "netcashprovidedbyusedinfinancingactivities: expected=-1,183, actual=1,183, diff=2,367 MISMATCH",
+      "expected_value": -1183.4,
+      "actual_value": 1183.4,
+      "difference": 2366.8,
+      "details": {
+        "parent_concept": "us-gaap:NetCashProvidedByUsedInFinancingActivities",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofCashFlows",
+        "children_count": 9,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "netcashprovidedbyusedinfinancingactivities: expected=-3,342, actual=3,365, diff=6,707 MISMATCH",
+      "expected_value": -3342.0,
+      "actual_value": 3365.4,
+      "difference": 6707.4,
+      "details": {
+        "parent_concept": "us-gaap:NetCashProvidedByUsedInFinancingActivities",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofCashFlows",
+        "children_count": 9,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "paymentstoacquirepropertyplantandequipmentexcludingpaymentsforleasebuyouts: expected=1,935, actual=1,928, diff=7 OK",
+      "expected_value": 1934.9,
+      "actual_value": 1927.5,
+      "difference": 7.400000000000091,
+      "details": {
+        "parent_concept": "aci:PaymentsToAcquirePropertyPlantAndEquipmentExcludingPaymentsForLeaseBuyouts",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofCashFlows",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "paymentstoacquirepropertyplantandequipmentexcludingpaymentsforleasebuyouts: expected=2,037, actual=2,037, diff=0 OK",
+      "expected_value": 2036.6,
+      "actual_value": 2036.6,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "aci:PaymentsToAcquirePropertyPlantAndEquipmentExcludingPaymentsForLeaseBuyouts",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofCashFlows",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "paymentstoacquirepropertyplantandequipmentexcludingpaymentsforleasebuyouts: expected=2,157, actual=2,157, diff=0 OK",
+      "expected_value": 2156.7000000000003,
+      "actual_value": 2156.7,
+      "difference": 4.547473508864641e-13,
+      "details": {
+        "parent_concept": "aci:PaymentsToAcquirePropertyPlantAndEquipmentExcludingPaymentsForLeaseBuyouts",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofCashFlows",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "netcashprovidedbyusedinoperatingactivities: expected=4,039, actual=2,681, diff=1,359 MISMATCH",
+      "expected_value": 4039.2,
+      "actual_value": 2680.6,
+      "difference": 1358.6,
+      "details": {
+        "parent_concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofCashFlows",
+        "children_count": 18,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "netcashprovidedbyusedinoperatingactivities: expected=4,285, actual=2,660, diff=1,626 MISMATCH",
+      "expected_value": 4285.499999999999,
+      "actual_value": 2659.5,
+      "difference": 1625.999999999999,
+      "details": {
+        "parent_concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofCashFlows",
+        "children_count": 18,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "netcashprovidedbyusedinoperatingactivities: expected=4,362, actual=2,854, diff=1,508 MISMATCH",
+      "expected_value": 4362.0999999999985,
+      "actual_value": 2853.9,
+      "difference": 1508.1999999999985,
+      "details": {
+        "parent_concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofCashFlows",
+        "children_count": 18,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "cashcashequivalentsrestrictedcashandrestrictedcashequivalentsperiodincreasedecreaseincludingexchangerateeffect: expected=5,256, actual=105, diff=5,152 MISMATCH",
+      "expected_value": 5256.5,
+      "actual_value": 104.7,
+      "difference": 5151.8,
+      "details": {
+        "parent_concept": "us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsPeriodIncreaseDecreaseIncludingExchangeRateEffect",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofCashFlows",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "cashcashequivalentsrestrictedcashandrestrictedcashequivalentsperiodincreasedecreaseincludingexchangerateeffect: expected=5,590, actual=271, diff=5,319 MISMATCH",
+      "expected_value": 5589.6,
+      "actual_value": 270.6,
+      "difference": 5319.0,
+      "details": {
+        "parent_concept": "us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsPeriodIncreaseDecreaseIncludingExchangeRateEffect",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofCashFlows",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "cashcashequivalentsrestrictedcashandrestrictedcashequivalentsperiodincreasedecreaseincludingexchangerateeffect: expected=8,197, actual=2,489, diff=5,708 MISMATCH",
+      "expected_value": 8196.6,
+      "actual_value": 2488.8,
+      "difference": 5707.8,
+      "details": {
+        "parent_concept": "us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsPeriodIncreaseDecreaseIncludingExchangeRateEffect",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/ConsolidatedStatementsofCashFlows",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "selfinsurancereserve: expected=1,268, actual=1,268, diff=0 OK",
+      "expected_value": 1267.6,
+      "actual_value": 1267.6,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:SelfInsuranceReserve",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/DESCRIPTIONOFBUSINESSBASISOFPRESENTATIONANDSUMMARYOFSIGNIFICANTACCOUNTINGPOLICIESScheduleofSelfInsuranceLiabilitiesDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for selfinsurancereserve",
+      "expected_value": 0.0,
+      "actual_value": 1234.1,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:SelfInsuranceReserve",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/DESCRIPTIONOFBUSINESSBASISOFPRESENTATIONANDSUMMARYOFSIGNIFICANTACCOUNTINGPOLICIESScheduleofSelfInsuranceLiabilitiesDetails",
+        "children_count": 2,
+        "missing_children": [
+          "selfinsurancereservecurrent",
+          "selfinsurancereservenoncurrent"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "selfinsurancereserve: expected=1,296, actual=1,296, diff=0 OK",
+      "expected_value": 1296.1,
+      "actual_value": 1296.1,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:SelfInsuranceReserve",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/DESCRIPTIONOFBUSINESSBASISOFPRESENTATIONANDSUMMARYOFSIGNIFICANTACCOUNTINGPOLICIESScheduleofSelfInsuranceLiabilitiesDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "propertyplantandequipmentandfinanceleaserightofuseassetafteraccumulateddepreciationandamortization: expected=9,570, actual=9,570, diff=0 OK",
+      "expected_value": 9570.300000000001,
+      "actual_value": 9570.3,
+      "difference": 1.8189894035458565e-12,
+      "details": {
+        "parent_concept": "us-gaap:PropertyPlantAndEquipmentAndFinanceLeaseRightOfUseAssetAfterAccumulatedDepreciationAndAmortization",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/PROPERTYANDEQUIPMENTScheduleofPropertyandEquipmentDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "propertyplantandequipmentandfinanceleaserightofuseassetafteraccumulateddepreciationandamortization: expected=9,811, actual=9,811, diff=0 OK",
+      "expected_value": 9811.0,
+      "actual_value": 9811.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:PropertyPlantAndEquipmentAndFinanceLeaseRightOfUseAssetAfterAccumulatedDepreciationAndAmortization",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/PROPERTYANDEQUIPMENTScheduleofPropertyandEquipmentDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "intangibleassetsgrossexcludinggoodwill: expected=5,288, actual=5,288, diff=0 OK",
+      "expected_value": 5288.5,
+      "actual_value": 5288.5,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:IntangibleAssetsGrossExcludingGoodwill",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleofIntangibleAssetsDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "intangibleassetsgrossexcludinggoodwill: expected=5,395, actual=5,395, diff=0 OK",
+      "expected_value": 5395.0,
+      "actual_value": 5395.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:IntangibleAssetsGrossExcludingGoodwill",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleofIntangibleAssetsDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "finitelivedintangibleassetsnet: expected=2,348, actual=2,348, diff=0 OK",
+      "expected_value": 2348.3,
+      "actual_value": 2348.3,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleofIntangibleAssetsDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "finitelivedintangibleassetsnet: expected=2,234, actual=2,234, diff=0 OK",
+      "expected_value": 2233.7,
+      "actual_value": 2233.7,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleofIntangibleAssetsDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "finitelivedintangibleassetsnet: expected=1,428, actual=1,428, diff=0 OK",
+      "expected_value": 1428.1,
+      "actual_value": 1428.1,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleofIntangibleAssetsDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "finitelivedintangibleassetsnet: expected=41, actual=41, diff=0 OK",
+      "expected_value": 40.799999999999955,
+      "actual_value": 40.8,
+      "difference": 4.263256414560601e-14,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleofIntangibleAssetsDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "finitelivedintangibleassetsnet: expected=1,477, actual=1,477, diff=0 OK",
+      "expected_value": 1476.6999999999998,
+      "actual_value": 1476.7,
+      "difference": 2.2737367544323206e-13,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleofIntangibleAssetsDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "finitelivedintangibleassetsnet: expected=42, actual=42, diff=0 OK",
+      "expected_value": 41.80000000000018,
+      "actual_value": 41.8,
+      "difference": 1.8474111129762605e-13,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleofIntangibleAssetsDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "finitelivedintangibleassetsnet: expected=762, actual=762, diff=0 OK",
+      "expected_value": 761.7,
+      "actual_value": 761.7,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleofIntangibleAssetsDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "finitelivedintangibleassetsnet: expected=825, actual=825, diff=0 OK",
+      "expected_value": 825.2,
+      "actual_value": 825.2,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleofIntangibleAssetsDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "finitelivedintangibleassetsnet: expected=3, actual=3, diff=0 OK",
+      "expected_value": 3.1000000000000014,
+      "actual_value": 3.1,
+      "difference": 1.3322676295501878e-15,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleofIntangibleAssetsDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "finitelivedintangibleassetsnet: expected=5, actual=5, diff=0 OK",
+      "expected_value": 4.599999999999994,
+      "actual_value": 4.6,
+      "difference": 5.329070518200751e-15,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleofIntangibleAssetsDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "intangibleassetsnetexcludinggoodwill: expected=2,434, actual=2,434, diff=0 OK",
+      "expected_value": 2434.5,
+      "actual_value": 2434.5,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:IntangibleAssetsNetExcludingGoodwill",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleofIntangibleAssetsDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "intangibleassetsnetexcludinggoodwill: expected=2,318, actual=2,318, diff=0 OK",
+      "expected_value": 2318.0,
+      "actual_value": 2318.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:IntangibleAssetsNetExcludingGoodwill",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleofIntangibleAssetsDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "intangibleassetsnetexcludinggoodwill: expected=2,434, actual=2,434, diff=0 OK",
+      "expected_value": 2434.5,
+      "actual_value": 2434.5,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:IntangibleAssetsNetExcludingGoodwill",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleofIntangibleAssetsDetails_1",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "intangibleassetsnetexcludinggoodwill: expected=2,318, actual=2,318, diff=0 OK",
+      "expected_value": 2318.0,
+      "actual_value": 2318.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:IntangibleAssetsNetExcludingGoodwill",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleofIntangibleAssetsDetails_1",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for finitelivedintangibleassetsnet",
+      "expected_value": 0.0,
+      "actual_value": 2348.3,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleFutureAmortizationExpenseDetails",
+        "children_count": 6,
+        "missing_children": [
+          "finitelivedintangibleassetsamortizationexpensenexttwelvemonths",
+          "finitelivedintangibleassetsamortizationexpenseyeartwo",
+          "finitelivedintangibleassetsamortizationexpenseyearthree",
+          "finitelivedintangibleassetsamortizationexpenseyearfour",
+          "finitelivedintangibleassetsamortizationexpenseyearfive",
+          "finitelivedintangibleassetsamortizationexpenseafteryearfive"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "finitelivedintangibleassetsnet: expected=2,234, actual=2,234, diff=0 OK",
+      "expected_value": 2233.7,
+      "actual_value": 2233.7,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleFutureAmortizationExpenseDetails",
+        "children_count": 6,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for finitelivedintangibleassetsnet",
+      "expected_value": 0.0,
+      "actual_value": 1428.1,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleFutureAmortizationExpenseDetails",
+        "children_count": 6,
+        "missing_children": [
+          "finitelivedintangibleassetsamortizationexpensenexttwelvemonths",
+          "finitelivedintangibleassetsamortizationexpenseyeartwo",
+          "finitelivedintangibleassetsamortizationexpenseyearthree",
+          "finitelivedintangibleassetsamortizationexpenseyearfour",
+          "finitelivedintangibleassetsamortizationexpenseyearfive",
+          "finitelivedintangibleassetsamortizationexpenseafteryearfive"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for finitelivedintangibleassetsnet",
+      "expected_value": 0.0,
+      "actual_value": 40.8,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleFutureAmortizationExpenseDetails",
+        "children_count": 6,
+        "missing_children": [
+          "finitelivedintangibleassetsamortizationexpensenexttwelvemonths",
+          "finitelivedintangibleassetsamortizationexpenseyeartwo",
+          "finitelivedintangibleassetsamortizationexpenseyearthree",
+          "finitelivedintangibleassetsamortizationexpenseyearfour",
+          "finitelivedintangibleassetsamortizationexpenseyearfive",
+          "finitelivedintangibleassetsamortizationexpenseafteryearfive"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for finitelivedintangibleassetsnet",
+      "expected_value": 0.0,
+      "actual_value": 1476.7,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleFutureAmortizationExpenseDetails",
+        "children_count": 6,
+        "missing_children": [
+          "finitelivedintangibleassetsamortizationexpensenexttwelvemonths",
+          "finitelivedintangibleassetsamortizationexpenseyeartwo",
+          "finitelivedintangibleassetsamortizationexpenseyearthree",
+          "finitelivedintangibleassetsamortizationexpenseyearfour",
+          "finitelivedintangibleassetsamortizationexpenseyearfive",
+          "finitelivedintangibleassetsamortizationexpenseafteryearfive"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for finitelivedintangibleassetsnet",
+      "expected_value": 0.0,
+      "actual_value": 41.8,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleFutureAmortizationExpenseDetails",
+        "children_count": 6,
+        "missing_children": [
+          "finitelivedintangibleassetsamortizationexpensenexttwelvemonths",
+          "finitelivedintangibleassetsamortizationexpenseyeartwo",
+          "finitelivedintangibleassetsamortizationexpenseyearthree",
+          "finitelivedintangibleassetsamortizationexpenseyearfour",
+          "finitelivedintangibleassetsamortizationexpenseyearfive",
+          "finitelivedintangibleassetsamortizationexpenseafteryearfive"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for finitelivedintangibleassetsnet",
+      "expected_value": 0.0,
+      "actual_value": 761.7,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleFutureAmortizationExpenseDetails",
+        "children_count": 6,
+        "missing_children": [
+          "finitelivedintangibleassetsamortizationexpensenexttwelvemonths",
+          "finitelivedintangibleassetsamortizationexpenseyeartwo",
+          "finitelivedintangibleassetsamortizationexpenseyearthree",
+          "finitelivedintangibleassetsamortizationexpenseyearfour",
+          "finitelivedintangibleassetsamortizationexpenseyearfive",
+          "finitelivedintangibleassetsamortizationexpenseafteryearfive"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for finitelivedintangibleassetsnet",
+      "expected_value": 0.0,
+      "actual_value": 825.2,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleFutureAmortizationExpenseDetails",
+        "children_count": 6,
+        "missing_children": [
+          "finitelivedintangibleassetsamortizationexpensenexttwelvemonths",
+          "finitelivedintangibleassetsamortizationexpenseyeartwo",
+          "finitelivedintangibleassetsamortizationexpenseyearthree",
+          "finitelivedintangibleassetsamortizationexpenseyearfour",
+          "finitelivedintangibleassetsamortizationexpenseyearfive",
+          "finitelivedintangibleassetsamortizationexpenseafteryearfive"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for finitelivedintangibleassetsnet",
+      "expected_value": 0.0,
+      "actual_value": 3.1,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleFutureAmortizationExpenseDetails",
+        "children_count": 6,
+        "missing_children": [
+          "finitelivedintangibleassetsamortizationexpensenexttwelvemonths",
+          "finitelivedintangibleassetsamortizationexpenseyeartwo",
+          "finitelivedintangibleassetsamortizationexpenseyearthree",
+          "finitelivedintangibleassetsamortizationexpenseyearfour",
+          "finitelivedintangibleassetsamortizationexpenseyearfive",
+          "finitelivedintangibleassetsamortizationexpenseafteryearfive"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for finitelivedintangibleassetsnet",
+      "expected_value": 0.0,
+      "actual_value": 4.6,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:FiniteLivedIntangibleAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INTANGIBLEASSETSScheduleFutureAmortizationExpenseDetails",
+        "children_count": 6,
+        "missing_children": [
+          "finitelivedintangibleassetsamortizationexpensenexttwelvemonths",
+          "finitelivedintangibleassetsamortizationexpenseyeartwo",
+          "finitelivedintangibleassetsamortizationexpenseyearthree",
+          "finitelivedintangibleassetsamortizationexpenseyearfour",
+          "finitelivedintangibleassetsamortizationexpenseyearfive",
+          "finitelivedintangibleassetsamortizationexpenseafteryearfive"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "assetsfairvaluedisclosure: expected=160, actual=160, diff=0 OK",
+      "expected_value": 160.4,
+      "actual_value": 160.4,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:AssetsFairValueDisclosure",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/FAIRVALUEMEASUREMENTSScheduleofAssetsandLiabilitiesMeasuredatFairValueDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "assetsfairvaluedisclosure: expected=14, actual=14, diff=0 OK",
+      "expected_value": 14.0,
+      "actual_value": 14.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:AssetsFairValueDisclosure",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/FAIRVALUEMEASUREMENTSScheduleofAssetsandLiabilitiesMeasuredatFairValueDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "assetsfairvaluedisclosure: expected=146, actual=146, diff=0 OK",
+      "expected_value": 146.4,
+      "actual_value": 146.4,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:AssetsFairValueDisclosure",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/FAIRVALUEMEASUREMENTSScheduleofAssetsandLiabilitiesMeasuredatFairValueDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "assetsfairvaluedisclosure: expected=0, actual=0, diff=0 OK",
+      "expected_value": 0.0,
+      "actual_value": 0.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:AssetsFairValueDisclosure",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/FAIRVALUEMEASUREMENTSScheduleofAssetsandLiabilitiesMeasuredatFairValueDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "assetsfairvaluedisclosure: expected=132, actual=132, diff=0 OK",
+      "expected_value": 132.1,
+      "actual_value": 132.1,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:AssetsFairValueDisclosure",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/FAIRVALUEMEASUREMENTSScheduleofAssetsandLiabilitiesMeasuredatFairValueDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "assetsfairvaluedisclosure: expected=12, actual=12, diff=0 OK",
+      "expected_value": 11.7,
+      "actual_value": 11.7,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:AssetsFairValueDisclosure",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/FAIRVALUEMEASUREMENTSScheduleofAssetsandLiabilitiesMeasuredatFairValueDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "assetsfairvaluedisclosure: expected=120, actual=120, diff=0 OK",
+      "expected_value": 120.4,
+      "actual_value": 120.4,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:AssetsFairValueDisclosure",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/FAIRVALUEMEASUREMENTSScheduleofAssetsandLiabilitiesMeasuredatFairValueDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "assetsfairvaluedisclosure: expected=0, actual=0, diff=0 OK",
+      "expected_value": 0.0,
+      "actual_value": 0.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:AssetsFairValueDisclosure",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/FAIRVALUEMEASUREMENTSScheduleofAssetsandLiabilitiesMeasuredatFairValueDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "liabilitiesfairvaluedisclosure: expected=1, actual=1, diff=0 OK",
+      "expected_value": 0.6,
+      "actual_value": 0.6,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:LiabilitiesFairValueDisclosure",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/FAIRVALUEMEASUREMENTSScheduleofAssetsandLiabilitiesMeasuredatFairValueDetails",
+        "children_count": 1,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "liabilitiesfairvaluedisclosure: expected=0, actual=0, diff=0 OK",
+      "expected_value": 0.0,
+      "actual_value": 0.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:LiabilitiesFairValueDisclosure",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/FAIRVALUEMEASUREMENTSScheduleofAssetsandLiabilitiesMeasuredatFairValueDetails",
+        "children_count": 1,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "liabilitiesfairvaluedisclosure: expected=1, actual=1, diff=0 OK",
+      "expected_value": 0.6,
+      "actual_value": 0.6,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:LiabilitiesFairValueDisclosure",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/FAIRVALUEMEASUREMENTSScheduleofAssetsandLiabilitiesMeasuredatFairValueDetails",
+        "children_count": 1,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "liabilitiesfairvaluedisclosure: expected=0, actual=0, diff=0 OK",
+      "expected_value": 0.0,
+      "actual_value": 0.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:LiabilitiesFairValueDisclosure",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/FAIRVALUEMEASUREMENTSScheduleofAssetsandLiabilitiesMeasuredatFairValueDetails",
+        "children_count": 1,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "liabilitiesfairvaluedisclosure: expected=1, actual=1, diff=0 OK",
+      "expected_value": 0.8,
+      "actual_value": 0.8,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:LiabilitiesFairValueDisclosure",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/FAIRVALUEMEASUREMENTSScheduleofAssetsandLiabilitiesMeasuredatFairValueDetails",
+        "children_count": 1,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "liabilitiesfairvaluedisclosure: expected=0, actual=0, diff=0 OK",
+      "expected_value": 0.0,
+      "actual_value": 0.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:LiabilitiesFairValueDisclosure",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/FAIRVALUEMEASUREMENTSScheduleofAssetsandLiabilitiesMeasuredatFairValueDetails",
+        "children_count": 1,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "liabilitiesfairvaluedisclosure: expected=1, actual=1, diff=0 OK",
+      "expected_value": 0.8,
+      "actual_value": 0.8,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:LiabilitiesFairValueDisclosure",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/FAIRVALUEMEASUREMENTSScheduleofAssetsandLiabilitiesMeasuredatFairValueDetails",
+        "children_count": 1,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "liabilitiesfairvaluedisclosure: expected=0, actual=0, diff=0 OK",
+      "expected_value": 0.0,
+      "actual_value": 0.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:LiabilitiesFairValueDisclosure",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/FAIRVALUEMEASUREMENTSScheduleofAssetsandLiabilitiesMeasuredatFairValueDetails",
+        "children_count": 1,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "longtermdebtandcapitalleaseobligationsincludingcurrentmaturities: expected=8,069, actual=8,069, diff=0 OK",
+      "expected_value": 8068.599999999999,
+      "actual_value": 8068.6,
+      "difference": 9.094947017729282e-13,
+      "details": {
+        "parent_concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LONGTERMDEBTANDFINANCELEASEOBLIGATIONSScheduleofLongtermDebtDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "longtermdebtandcapitalleaseobligationsincludingcurrentmaturities: expected=7,820, actual=7,820, diff=0 OK",
+      "expected_value": 7820.1,
+      "actual_value": 7820.1,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LONGTERMDEBTANDFINANCELEASEOBLIGATIONSScheduleofLongtermDebtDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "debtinstrumentcarryingamount: expected=7,452, actual=7,452, diff=0 OK",
+      "expected_value": 7452.399999999999,
+      "actual_value": 7452.4,
+      "difference": 9.094947017729282e-13,
+      "details": {
+        "parent_concept": "us-gaap:DebtInstrumentCarryingAmount",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LONGTERMDEBTANDFINANCELEASEOBLIGATIONSScheduleofFutureMaturitiesofLongtermDebtDetails",
+        "children_count": 6,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for debtinstrumentcarryingamount",
+      "expected_value": 0.0,
+      "actual_value": 6517.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:DebtInstrumentCarryingAmount",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LONGTERMDEBTANDFINANCELEASEOBLIGATIONSScheduleofFutureMaturitiesofLongtermDebtDetails",
+        "children_count": 6,
+        "missing_children": [
+          "longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyeartwo",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearthree",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfour",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfive",
+          "longtermdebtmaturitiesrepaymentsofprincipalafteryearfive"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for debtinstrumentcarryingamount",
+      "expected_value": 0.0,
+      "actual_value": 6506.4,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:DebtInstrumentCarryingAmount",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LONGTERMDEBTANDFINANCELEASEOBLIGATIONSScheduleofFutureMaturitiesofLongtermDebtDetails",
+        "children_count": 6,
+        "missing_children": [
+          "longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyeartwo",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearthree",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfour",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfive",
+          "longtermdebtmaturitiesrepaymentsofprincipalafteryearfive"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for debtinstrumentcarryingamount",
+      "expected_value": 0.0,
+      "actual_value": 484.6,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:DebtInstrumentCarryingAmount",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LONGTERMDEBTANDFINANCELEASEOBLIGATIONSScheduleofFutureMaturitiesofLongtermDebtDetails",
+        "children_count": 6,
+        "missing_children": [
+          "longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyeartwo",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearthree",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfour",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfive",
+          "longtermdebtmaturitiesrepaymentsofprincipalafteryearfive"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for debtinstrumentcarryingamount",
+      "expected_value": 0.0,
+      "actual_value": 480.1,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:DebtInstrumentCarryingAmount",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LONGTERMDEBTANDFINANCELEASEOBLIGATIONSScheduleofFutureMaturitiesofLongtermDebtDetails",
+        "children_count": 6,
+        "missing_children": [
+          "longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyeartwo",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearthree",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfour",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfive",
+          "longtermdebtmaturitiesrepaymentsofprincipalafteryearfive"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for debtinstrumentcarryingamount",
+      "expected_value": 0.0,
+      "actual_value": 375.9,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:DebtInstrumentCarryingAmount",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LONGTERMDEBTANDFINANCELEASEOBLIGATIONSScheduleofFutureMaturitiesofLongtermDebtDetails",
+        "children_count": 6,
+        "missing_children": [
+          "longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyeartwo",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearthree",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfour",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfive",
+          "longtermdebtmaturitiesrepaymentsofprincipalafteryearfive"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for debtinstrumentcarryingamount",
+      "expected_value": 0.0,
+      "actual_value": 375.4,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:DebtInstrumentCarryingAmount",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LONGTERMDEBTANDFINANCELEASEOBLIGATIONSScheduleofFutureMaturitiesofLongtermDebtDetails",
+        "children_count": 6,
+        "missing_children": [
+          "longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyeartwo",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearthree",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfour",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfive",
+          "longtermdebtmaturitiesrepaymentsofprincipalafteryearfive"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for debtinstrumentcarryingamount",
+      "expected_value": 0.0,
+      "actual_value": 0.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:DebtInstrumentCarryingAmount",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LONGTERMDEBTANDFINANCELEASEOBLIGATIONSScheduleofFutureMaturitiesofLongtermDebtDetails",
+        "children_count": 6,
+        "missing_children": [
+          "longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyeartwo",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearthree",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfour",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfive",
+          "longtermdebtmaturitiesrepaymentsofprincipalafteryearfive"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for debtinstrumentcarryingamount",
+      "expected_value": 0.0,
+      "actual_value": 200.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:DebtInstrumentCarryingAmount",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LONGTERMDEBTANDFINANCELEASEOBLIGATIONSScheduleofFutureMaturitiesofLongtermDebtDetails",
+        "children_count": 6,
+        "missing_children": [
+          "longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyeartwo",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearthree",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfour",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfive",
+          "longtermdebtmaturitiesrepaymentsofprincipalafteryearfive"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for debtinstrumentcarryingamount",
+      "expected_value": 0.0,
+      "actual_value": 14.7,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:DebtInstrumentCarryingAmount",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LONGTERMDEBTANDFINANCELEASEOBLIGATIONSScheduleofFutureMaturitiesofLongtermDebtDetails",
+        "children_count": 6,
+        "missing_children": [
+          "longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyeartwo",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearthree",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfour",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfive",
+          "longtermdebtmaturitiesrepaymentsofprincipalafteryearfive"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for debtinstrumentcarryingamount",
+      "expected_value": 0.0,
+      "actual_value": 46.3,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:DebtInstrumentCarryingAmount",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LONGTERMDEBTANDFINANCELEASEOBLIGATIONSScheduleofFutureMaturitiesofLongtermDebtDetails",
+        "children_count": 6,
+        "missing_children": [
+          "longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyeartwo",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearthree",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfour",
+          "longtermdebtmaturitiesrepaymentsofprincipalinyearfive",
+          "longtermdebtmaturitiesrepaymentsofprincipalafteryearfive"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "interestincomeexpensenet: expected=-480, actual=460, diff=940 MISMATCH",
+      "expected_value": -480.0,
+      "actual_value": 459.8,
+      "difference": 939.8,
+      "details": {
+        "parent_concept": "us-gaap:InterestIncomeExpenseNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LONGTERMDEBTANDFINANCELEASEOBLIGATIONSScheduleofInterestExpenseDetails",
+        "children_count": 4,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "interestincomeexpensenet: expected=-524, actual=492, diff=1,016 MISMATCH",
+      "expected_value": -523.9,
+      "actual_value": 492.1,
+      "difference": 1016.0,
+      "details": {
+        "parent_concept": "us-gaap:InterestIncomeExpenseNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LONGTERMDEBTANDFINANCELEASEOBLIGATIONSScheduleofInterestExpenseDetails",
+        "children_count": 4,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "interestincomeexpensenet: expected=-542, actual=405, diff=946 MISMATCH",
+      "expected_value": -541.8,
+      "actual_value": 404.6,
+      "difference": 946.4,
+      "details": {
+        "parent_concept": "us-gaap:InterestIncomeExpenseNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LONGTERMDEBTANDFINANCELEASEOBLIGATIONSScheduleofInterestExpenseDetails",
+        "children_count": 4,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "leasecost: expected=1,586, actual=1,586, diff=0 OK",
+      "expected_value": 1585.8999999999999,
+      "actual_value": 1585.9,
+      "difference": 2.2737367544323206e-13,
+      "details": {
+        "parent_concept": "us-gaap:LeaseCost",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LEASESScheduleofComponentsofLeaseExpenseDetails",
+        "children_count": 5,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "leasecost: expected=1,558, actual=1,558, diff=0 OK",
+      "expected_value": 1557.7,
+      "actual_value": 1557.7,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:LeaseCost",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LEASESScheduleofComponentsofLeaseExpenseDetails",
+        "children_count": 5,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "leasecost: expected=1,528, actual=1,528, diff=0 OK",
+      "expected_value": 1528.3,
+      "actual_value": 1528.3,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:LeaseCost",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LEASESScheduleofComponentsofLeaseExpenseDetails",
+        "children_count": 5,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "operatingandfinancingleaseliability: expected=6,631, actual=6,631, diff=0 OK",
+      "expected_value": 6631.2,
+      "actual_value": 6631.2,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "aci:OperatingAndFinancingLeaseLiability",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LEASESScheduleofBalanceSheetInformationDetails",
+        "children_count": 4,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "operatingandfinancingleaseliability: expected=6,791, actual=6,791, diff=0 OK",
+      "expected_value": 6790.599999999999,
+      "actual_value": 6790.6,
+      "difference": 9.094947017729282e-13,
+      "details": {
+        "parent_concept": "aci:OperatingAndFinancingLeaseLiability",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LEASESScheduleofBalanceSheetInformationDetails",
+        "children_count": 4,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "operatingandfinanceleaserightofuseasset: expected=6,282, actual=6,282, diff=0 OK",
+      "expected_value": 6281.8,
+      "actual_value": 6281.8,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "aci:OperatingAndFinanceLeaseRightOfUseAsset",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LEASESScheduleofBalanceSheetInformationDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "operatingandfinanceleaserightofuseasset: expected=6,441, actual=6,441, diff=0 OK",
+      "expected_value": 6441.4,
+      "actual_value": 6441.4,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "aci:OperatingAndFinanceLeaseRightOfUseAsset",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LEASESScheduleofBalanceSheetInformationDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "operatingleaseliability: expected=6,363, actual=6,363, diff=0 OK",
+      "expected_value": 6362.7,
+      "actual_value": 6362.7,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:OperatingLeaseLiability",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LEASESScheduleofFutureMinimumLeasePaymentstobeMadeDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "financeleaseliability: expected=460, actual=460, diff=0 OK",
+      "expected_value": 460.40000000000003,
+      "actual_value": 460.4,
+      "difference": 5.684341886080802e-14,
+      "details": {
+        "parent_concept": "us-gaap:FinanceLeaseLiability",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LEASESScheduleofFutureMinimumLeasePaymentstobeMadeDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "financeleaseliability: expected=428, actual=428, diff=0 OK",
+      "expected_value": 427.9,
+      "actual_value": 427.9,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:FinanceLeaseLiability",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LEASESScheduleofFutureMinimumLeasePaymentstobeMadeDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "financeleaseliabilitypaymentsdue: expected=623, actual=623, diff=0 OK",
+      "expected_value": 623.0999999999999,
+      "actual_value": 623.1,
+      "difference": 1.1368683772161603e-13,
+      "details": {
+        "parent_concept": "us-gaap:FinanceLeaseLiabilityPaymentsDue",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LEASESScheduleofFutureMinimumLeasePaymentstobeMadeDetails",
+        "children_count": 6,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "lesseeoperatingleaseliabilitypaymentsdue: expected=8,878, actual=8,878, diff=0 OK",
+      "expected_value": 8878.5,
+      "actual_value": 8878.5,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:LesseeOperatingLeaseLiabilityPaymentsDue",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LEASESScheduleofFutureMinimumLeasePaymentstobeMadeDetails",
+        "children_count": 6,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "financeleaseliabilitypaymentsdue: expected=623, actual=623, diff=0 OK",
+      "expected_value": 623.0999999999999,
+      "actual_value": 623.1,
+      "difference": 1.1368683772161603e-13,
+      "details": {
+        "parent_concept": "us-gaap:FinanceLeaseLiabilityPaymentsDue",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LEASESScheduleofFutureMinimumLeasePaymentstobeMadeDetails_1",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "lesseeoperatingleaseliabilitypaymentsdue: expected=8,878, actual=8,878, diff=0 OK",
+      "expected_value": 8878.5,
+      "actual_value": 8878.5,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:LesseeOperatingLeaseLiabilityPaymentsDue",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/LEASESScheduleofFutureMinimumLeasePaymentstobeMadeDetails_1",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "incometaxexpensebenefit: expected=381, actual=171, diff=210 MISMATCH",
+      "expected_value": 381.29999999999995,
+      "actual_value": 171.1,
+      "difference": 210.19999999999996,
+      "details": {
+        "parent_concept": "us-gaap:IncomeTaxExpenseBenefit",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofComponentsofIncomeTaxExpenseDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "incometaxexpensebenefit: expected=518, actual=293, diff=225 MISMATCH",
+      "expected_value": 518.2,
+      "actual_value": 293.0,
+      "difference": 225.20000000000005,
+      "details": {
+        "parent_concept": "us-gaap:IncomeTaxExpenseBenefit",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofComponentsofIncomeTaxExpenseDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "incometaxexpensebenefit: expected=422, actual=422, diff=0 OK",
+      "expected_value": 422.0,
+      "actual_value": 422.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:IncomeTaxExpenseBenefit",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofComponentsofIncomeTaxExpenseDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "currentincometaxexpensebenefit: expected=276, actual=276, diff=0 OK",
+      "expected_value": 276.2,
+      "actual_value": 276.2,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:CurrentIncomeTaxExpenseBenefit",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofComponentsofIncomeTaxExpenseDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "currentincometaxexpensebenefit: expected=406, actual=406, diff=0 OK",
+      "expected_value": 405.59999999999997,
+      "actual_value": 405.6,
+      "difference": 5.684341886080802e-14,
+      "details": {
+        "parent_concept": "us-gaap:CurrentIncomeTaxExpenseBenefit",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofComponentsofIncomeTaxExpenseDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "currentincometaxexpensebenefit: expected=409, actual=409, diff=0 OK",
+      "expected_value": 409.1,
+      "actual_value": 409.1,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:CurrentIncomeTaxExpenseBenefit",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofComponentsofIncomeTaxExpenseDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "deferredincometaxexpensebenefit: expected=105, actual=105, diff=0 OK",
+      "expected_value": 105.10000000000001,
+      "actual_value": 105.1,
+      "difference": 1.4210854715202004e-14,
+      "details": {
+        "parent_concept": "us-gaap:DeferredIncomeTaxExpenseBenefit",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofComponentsofIncomeTaxExpenseDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "deferredincometaxexpensebenefit: expected=176, actual=113, diff=63 MISMATCH",
+      "expected_value": 176.0,
+      "actual_value": 112.6,
+      "difference": 63.400000000000006,
+      "details": {
+        "parent_concept": "us-gaap:DeferredIncomeTaxExpenseBenefit",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofComponentsofIncomeTaxExpenseDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "deferredincometaxexpensebenefit: expected=28, actual=13, diff=15 MISMATCH",
+      "expected_value": 28.1,
+      "actual_value": 12.9,
+      "difference": 15.200000000000001,
+      "details": {
+        "parent_concept": "us-gaap:DeferredIncomeTaxExpenseBenefit",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofComponentsofIncomeTaxExpenseDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "incometaxexpensebenefit: expected=365, actual=171, diff=194 MISMATCH",
+      "expected_value": 365.1,
+      "actual_value": 171.1,
+      "difference": 194.00000000000003,
+      "details": {
+        "parent_concept": "us-gaap:IncomeTaxExpenseBenefit",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofEffectiveIncomeTaxRateReconciliationDetails",
+        "children_count": 6,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "incometaxexpensebenefit: expected=428, actual=293, diff=135 MISMATCH",
+      "expected_value": 427.59999999999997,
+      "actual_value": 293.0,
+      "difference": 134.59999999999997,
+      "details": {
+        "parent_concept": "us-gaap:IncomeTaxExpenseBenefit",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofEffectiveIncomeTaxRateReconciliationDetails",
+        "children_count": 6,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "incometaxexpensebenefit: expected=510, actual=422, diff=88 MISMATCH",
+      "expected_value": 510.3999999999999,
+      "actual_value": 422.0,
+      "difference": 88.39999999999992,
+      "details": {
+        "parent_concept": "us-gaap:IncomeTaxExpenseBenefit",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofEffectiveIncomeTaxRateReconciliationDetails",
+        "children_count": 6,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "deferredtaxassetsnet: expected=2,574, actual=2,574, diff=0 OK",
+      "expected_value": 2573.6,
+      "actual_value": 2573.6,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:DeferredTaxAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofDeferredTaxAssetsandLiabilitiesDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "deferredtaxassetsnet: expected=2,552, actual=2,552, diff=0 OK",
+      "expected_value": 2551.8,
+      "actual_value": 2551.8,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:DeferredTaxAssetsNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofDeferredTaxAssetsandLiabilitiesDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "deferredincometaxliabilities: expected=3,381, actual=3,381, diff=0 OK",
+      "expected_value": 3381.2000000000003,
+      "actual_value": 3381.2,
+      "difference": 4.547473508864641e-13,
+      "details": {
+        "parent_concept": "us-gaap:DeferredIncomeTaxLiabilities",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofDeferredTaxAssetsandLiabilitiesDetails",
+        "children_count": 4,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "deferredincometaxliabilities: expected=3,376, actual=3,376, diff=0 OK",
+      "expected_value": 3375.9,
+      "actual_value": 3375.9,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:DeferredIncomeTaxLiabilities",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofDeferredTaxAssetsandLiabilitiesDetails",
+        "children_count": 4,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "deferredtaxassetsgross: expected=2,639, actual=2,639, diff=0 OK",
+      "expected_value": 2639.2000000000003,
+      "actual_value": 2639.2,
+      "difference": 4.547473508864641e-13,
+      "details": {
+        "parent_concept": "us-gaap:DeferredTaxAssetsGross",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofDeferredTaxAssetsandLiabilitiesDetails",
+        "children_count": 7,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "deferredtaxassetsgross: expected=2,616, actual=2,616, diff=0 OK",
+      "expected_value": 2615.5,
+      "actual_value": 2615.5,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:DeferredTaxAssetsGross",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofDeferredTaxAssetsandLiabilitiesDetails",
+        "children_count": 7,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "deferredincometaxliabilitiesnet: expected=0, actual=808, diff=808 MISMATCH",
+      "expected_value": 0.0,
+      "actual_value": 807.6,
+      "difference": 807.6,
+      "details": {
+        "parent_concept": "us-gaap:DeferredIncomeTaxLiabilitiesNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofDeferredTaxAssetsandLiabilitiesDetails",
+        "children_count": 2,
+        "missing_children": [
+          "deferredincometaxesandothertaxliabilitiesnoncurrent"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "deferredincometaxliabilitiesnet: expected=0, actual=824, diff=824 MISMATCH",
+      "expected_value": 0.0,
+      "actual_value": 824.1,
+      "difference": 824.1,
+      "details": {
+        "parent_concept": "us-gaap:DeferredIncomeTaxLiabilitiesNet",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofDeferredTaxAssetsandLiabilitiesDetails",
+        "children_count": 2,
+        "missing_children": [
+          "deferredincometaxesandothertaxliabilitiesnoncurrent"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "deferredtaxliabilities: expected=808, actual=808, diff=0 OK",
+      "expected_value": 807.5999999999999,
+      "actual_value": 807.6,
+      "difference": 1.1368683772161603e-13,
+      "details": {
+        "parent_concept": "us-gaap:DeferredTaxLiabilities",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofDeferredTaxAssetsandLiabilitiesDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "deferredtaxliabilities: expected=824, actual=824, diff=0 OK",
+      "expected_value": 824.0999999999999,
+      "actual_value": 824.1,
+      "difference": 1.1368683772161603e-13,
+      "details": {
+        "parent_concept": "us-gaap:DeferredTaxLiabilities",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/INCOMETAXESScheduleofDeferredTaxAssetsandLiabilitiesDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "definedbenefitplanfundedstatusofplan: expected=-248, actual=248, diff=496 MISMATCH",
+      "expected_value": -247.8,
+      "actual_value": 247.8,
+      "difference": 495.6,
+      "details": {
+        "parent_concept": "us-gaap:DefinedBenefitPlanFundedStatusOfPlan",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofChangesinRetirementPlansBenefitObligationandFairValueofPlanAssetsDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "definedbenefitplanfundedstatusofplan: expected=-12, actual=12, diff=24 MISMATCH",
+      "expected_value": -12.0,
+      "actual_value": 12.0,
+      "difference": 24.0,
+      "details": {
+        "parent_concept": "us-gaap:DefinedBenefitPlanFundedStatusOfPlan",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofChangesinRetirementPlansBenefitObligationandFairValueofPlanAssetsDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "definedbenefitplanfundedstatusofplan: expected=-158, actual=158, diff=316 MISMATCH",
+      "expected_value": -158.20000000000002,
+      "actual_value": 158.2,
+      "difference": 316.4,
+      "details": {
+        "parent_concept": "us-gaap:DefinedBenefitPlanFundedStatusOfPlan",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofChangesinRetirementPlansBenefitObligationandFairValueofPlanAssetsDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "definedbenefitplanfundedstatusofplan: expected=-12, actual=12, diff=24 MISMATCH",
+      "expected_value": -12.100000000000001,
+      "actual_value": 12.1,
+      "difference": 24.200000000000003,
+      "details": {
+        "parent_concept": "us-gaap:DefinedBenefitPlanFundedStatusOfPlan",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofChangesinRetirementPlansBenefitObligationandFairValueofPlanAssetsDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "definedbenefitplanaccumulatedothercomprehensiveincomebeforetax: expected=-107, actual=107, diff=213 MISMATCH",
+      "expected_value": -106.6,
+      "actual_value": 106.6,
+      "difference": 213.2,
+      "details": {
+        "parent_concept": "us-gaap:DefinedBenefitPlanAccumulatedOtherComprehensiveIncomeBeforeTax",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofAmountsRecognizedinAccumulatedOtherComprehensiveIncomeLossDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "definedbenefitplanaccumulatedothercomprehensiveincomebeforetax: expected=-12, actual=12, diff=23 MISMATCH",
+      "expected_value": -11.5,
+      "actual_value": 11.5,
+      "difference": 23.0,
+      "details": {
+        "parent_concept": "us-gaap:DefinedBenefitPlanAccumulatedOtherComprehensiveIncomeBeforeTax",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofAmountsRecognizedinAccumulatedOtherComprehensiveIncomeLossDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "definedbenefitplanaccumulatedothercomprehensiveincomebeforetax: expected=-115, actual=115, diff=230 MISMATCH",
+      "expected_value": -115.0,
+      "actual_value": 115.0,
+      "difference": 230.0,
+      "details": {
+        "parent_concept": "us-gaap:DefinedBenefitPlanAccumulatedOtherComprehensiveIncomeBeforeTax",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofAmountsRecognizedinAccumulatedOtherComprehensiveIncomeLossDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "definedbenefitplanaccumulatedothercomprehensiveincomebeforetax: expected=-10, actual=10, diff=19 MISMATCH",
+      "expected_value": -9.7,
+      "actual_value": 9.7,
+      "difference": 19.4,
+      "details": {
+        "parent_concept": "us-gaap:DefinedBenefitPlanAccumulatedOtherComprehensiveIncomeBeforeTax",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofAmountsRecognizedinAccumulatedOtherComprehensiveIncomeLossDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "amountrecognizedinnetperiodicbenefitcostandothercomprehensiveincomelossbeforetax: expected=17, actual=0, diff=17 MISMATCH",
+      "expected_value": 17.3,
+      "actual_value": 0.5,
+      "difference": 16.8,
+      "details": {
+        "parent_concept": "us-gaap:AmountRecognizedInNetPeriodicBenefitCostAndOtherComprehensiveIncomeLossBeforeTax",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofComponentsofNetPensionandPostretirementExpenseDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "amountrecognizedinnetperiodicbenefitcostandothercomprehensiveincomelossbeforetax: expected=26, actual=26, diff=0 OK",
+      "expected_value": 25.799999999999997,
+      "actual_value": 25.8,
+      "difference": 3.552713678800501e-15,
+      "details": {
+        "parent_concept": "us-gaap:AmountRecognizedInNetPeriodicBenefitCostAndOtherComprehensiveIncomeLossBeforeTax",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofComponentsofNetPensionandPostretirementExpenseDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "amountrecognizedinnetperiodicbenefitcostandothercomprehensiveincomelossbeforetax: expected=22, actual=22, diff=0 OK",
+      "expected_value": 22.2,
+      "actual_value": 22.2,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:AmountRecognizedInNetPeriodicBenefitCostAndOtherComprehensiveIncomeLossBeforeTax",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofComponentsofNetPensionandPostretirementExpenseDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "amountrecognizedinnetperiodicbenefitcostandothercomprehensiveincomelossbeforetax: expected=2, actual=2, diff=0 OK",
+      "expected_value": 2.0,
+      "actual_value": 1.6,
+      "difference": 0.3999999999999999,
+      "details": {
+        "parent_concept": "us-gaap:AmountRecognizedInNetPeriodicBenefitCostAndOtherComprehensiveIncomeLossBeforeTax",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofComponentsofNetPensionandPostretirementExpenseDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "amountrecognizedinnetperiodicbenefitcostandothercomprehensiveincomelossbeforetax: expected=2, actual=1, diff=1 OK",
+      "expected_value": 2.4,
+      "actual_value": 1.4,
+      "difference": 1.0,
+      "details": {
+        "parent_concept": "us-gaap:AmountRecognizedInNetPeriodicBenefitCostAndOtherComprehensiveIncomeLossBeforeTax",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofComponentsofNetPensionandPostretirementExpenseDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "amountrecognizedinnetperiodicbenefitcostandothercomprehensiveincomelossbeforetax: expected=5, actual=5, diff=0 OK",
+      "expected_value": 5.0,
+      "actual_value": 5.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:AmountRecognizedInNetPeriodicBenefitCostAndOtherComprehensiveIncomeLossBeforeTax",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofComponentsofNetPensionandPostretirementExpenseDetails",
+        "children_count": 2,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "othercomprehensiveincomelosspensionandotherpostretirementbenefitplansadjustmentbeforetax: expected=-8, actual=8, diff=17 MISMATCH",
+      "expected_value": -8.4,
+      "actual_value": 8.4,
+      "difference": 16.8,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossPensionAndOtherPostretirementBenefitPlansAdjustmentBeforeTax",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofComponentsofNetPensionandPostretirementExpenseDetails",
+        "children_count": 5,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "othercomprehensiveincomelosspensionandotherpostretirementbenefitplansadjustmentbeforetax: expected=-23, actual=23, diff=46 MISMATCH",
+      "expected_value": -23.0,
+      "actual_value": 23.4,
+      "difference": 46.4,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossPensionAndOtherPostretirementBenefitPlansAdjustmentBeforeTax",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofComponentsofNetPensionandPostretirementExpenseDetails",
+        "children_count": 5,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "othercomprehensiveincomelosspensionandotherpostretirementbenefitplansadjustmentbeforetax: expected=-1, actual=0, diff=2 MISMATCH",
+      "expected_value": -1.3000000000000003,
+      "actual_value": 0.5,
+      "difference": 1.8000000000000003,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossPensionAndOtherPostretirementBenefitPlansAdjustmentBeforeTax",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofComponentsofNetPensionandPostretirementExpenseDetails",
+        "children_count": 5,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "othercomprehensiveincomelosspensionandotherpostretirementbenefitplansadjustmentbeforetax: expected=-0, actual=2, diff=2 MISMATCH",
+      "expected_value": -0.40000000000000013,
+      "actual_value": 1.8,
+      "difference": 2.2,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossPensionAndOtherPostretirementBenefitPlansAdjustmentBeforeTax",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofComponentsofNetPensionandPostretirementExpenseDetails",
+        "children_count": 5,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "othercomprehensiveincomelosspensionandotherpostretirementbenefitplansadjustmentbeforetax: expected=0, actual=2, diff=2 MISMATCH",
+      "expected_value": 0.30000000000000004,
+      "actual_value": 1.9,
+      "difference": 1.5999999999999999,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossPensionAndOtherPostretirementBenefitPlansAdjustmentBeforeTax",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofComponentsofNetPensionandPostretirementExpenseDetails",
+        "children_count": 5,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "othercomprehensiveincomelosspensionandotherpostretirementbenefitplansadjustmentbeforetax: expected=-5, actual=5, diff=10 MISMATCH",
+      "expected_value": -5.0,
+      "actual_value": 5.0,
+      "difference": 10.0,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossPensionAndOtherPostretirementBenefitPlansAdjustmentBeforeTax",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofComponentsofNetPensionandPostretirementExpenseDetails",
+        "children_count": 5,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "definedbenefitplannetperiodicbenefitcost: expected=2, actual=9, diff=7 MISMATCH",
+      "expected_value": 1.9000000000000146,
+      "actual_value": 8.9,
+      "difference": 6.999999999999986,
+      "details": {
+        "parent_concept": "us-gaap:DefinedBenefitPlanNetPeriodicBenefitCost",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofComponentsofNetPensionandPostretirementExpenseDetails",
+        "children_count": 6,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "definedbenefitplannetperiodicbenefitcost: expected=-3, actual=2, diff=5 MISMATCH",
+      "expected_value": -3.0000000000000084,
+      "actual_value": 2.4,
+      "difference": 5.400000000000008,
+      "details": {
+        "parent_concept": "us-gaap:DefinedBenefitPlanNetPeriodicBenefitCost",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofComponentsofNetPensionandPostretirementExpenseDetails",
+        "children_count": 6,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "definedbenefitplannetperiodicbenefitcost: expected=-22, actual=22, diff=44 MISMATCH",
+      "expected_value": -22.1,
+      "actual_value": 21.7,
+      "difference": 43.8,
+      "details": {
+        "parent_concept": "us-gaap:DefinedBenefitPlanNetPeriodicBenefitCost",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofComponentsofNetPensionandPostretirementExpenseDetails",
+        "children_count": 6,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "definedbenefitplannetperiodicbenefitcost: expected=-0, actual=0, diff=0 OK",
+      "expected_value": -0.19999999999999996,
+      "actual_value": 0.2,
+      "difference": 0.39999999999999997,
+      "details": {
+        "parent_concept": "us-gaap:DefinedBenefitPlanNetPeriodicBenefitCost",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofComponentsofNetPensionandPostretirementExpenseDetails",
+        "children_count": 6,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "definedbenefitplannetperiodicbenefitcost: expected=-1, actual=0, diff=1 OK",
+      "expected_value": -0.5000000000000001,
+      "actual_value": 0.5,
+      "difference": 1.0,
+      "details": {
+        "parent_concept": "us-gaap:DefinedBenefitPlanNetPeriodicBenefitCost",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofComponentsofNetPensionandPostretirementExpenseDetails",
+        "children_count": 6,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "definedbenefitplannetperiodicbenefitcost: expected=0, actual=0, diff=0 OK",
+      "expected_value": 0.0,
+      "actual_value": 0.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:DefinedBenefitPlanNetPeriodicBenefitCost",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/EMPLOYEEBENEFITPLANSANDCOLLECTIVEBARGAININGAGREEMENTSScheduleofComponentsofNetPensionandPostretirementExpenseDetails",
+        "children_count": 6,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "othercomprehensiveincomelossnetoftaxportionattributabletoparent: expected=7, actual=7, diff=0 OK",
+      "expected_value": 6.7,
+      "actual_value": 6.7,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/OTHERCOMPREHENSIVEINCOMEORLOSSDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "othercomprehensiveincomelossnetoftaxportionattributabletoparent: expected=19, actual=19, diff=0 OK",
+      "expected_value": 18.699999999999996,
+      "actual_value": 18.7,
+      "difference": 3.552713678800501e-15,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/OTHERCOMPREHENSIVEINCOMEORLOSSDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "No children found for othercomprehensiveincomelossnetoftaxportionattributabletoparent",
+      "expected_value": 0.0,
+      "actual_value": 0.3,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/OTHERCOMPREHENSIVEINCOMEORLOSSDetails",
+        "children_count": 3,
+        "missing_children": [
+          "ocibeforereclassificationsbeforetaxattributabletoparent",
+          "reclassificationfromaocicurrentperiodbeforetaxattributabletoparent",
+          "othercomprehensiveincomelosstaxportionattributabletoparent1"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "othercomprehensiveincomelossnetoftaxportionattributabletoparent: expected=5, actual=5, diff=0 OK",
+      "expected_value": 4.9,
+      "actual_value": 4.9,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/OTHERCOMPREHENSIVEINCOMEORLOSSDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "othercomprehensiveincomelossnetoftaxportionattributabletoparent: expected=2, actual=2, diff=0 OK",
+      "expected_value": 1.7999999999999998,
+      "actual_value": 1.8,
+      "difference": 2.220446049250313e-16,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/OTHERCOMPREHENSIVEINCOMEORLOSSDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "othercomprehensiveincomelossnetoftaxportionattributabletoparent: expected=16, actual=16, diff=0 OK",
+      "expected_value": 15.799999999999999,
+      "actual_value": 15.8,
+      "difference": 1.7763568394002505e-15,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/OTHERCOMPREHENSIVEINCOMEORLOSSDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "othercomprehensiveincomelossnetoftaxportionattributabletoparent: expected=3, actual=3, diff=0 OK",
+      "expected_value": 2.9,
+      "actual_value": 2.9,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:OtherComprehensiveIncomeLossNetOfTaxPortionAttributableToParent",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/OTHERCOMPREHENSIVEINCOMEORLOSSDetails",
+        "children_count": 3,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "incomelossfromcontinuingoperationsbeforeincometaxesextraordinaryitemsnoncontrollinginterest: expected=-1,397, actual=1,130, diff=2,527 MISMATCH",
+      "expected_value": -1397.1000000000001,
+      "actual_value": 1129.7,
+      "difference": 2526.8,
+      "details": {
+        "parent_concept": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/SEGMENTINFORMATIONSegmentReportingInformationbySegmentDetails",
+        "children_count": 14,
+        "missing_children": [
+          "corporateadjustedebitda",
+          "businesstransformationcost",
+          "gainlossonnonoperatinginvestmentsandleaseadjustments",
+          "gainlossonderivativeinstrumentsnetpretax",
+          "gainlossrelatedtolitigationsettlement",
+          "retailsegmentebitda",
+          "governmentmandatedincrementalcovid19pandemicrelatedpay",
+          "definedbenefitplanexpectedfutureemployercontributions",
+          "noncashmergerrelatedcosts"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "incomelossfromcontinuingoperationsbeforeincometaxesextraordinaryitemsnoncontrollinginterest: expected=-1,400, actual=1,589, diff=2,988 MISMATCH",
+      "expected_value": -1399.5,
+      "actual_value": 1589.0,
+      "difference": 2988.5,
+      "details": {
+        "parent_concept": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/SEGMENTINFORMATIONSegmentReportingInformationbySegmentDetails",
+        "children_count": 14,
+        "missing_children": [
+          "corporateadjustedebitda",
+          "businesstransformationcost",
+          "gainlossonnonoperatinginvestmentsandleaseadjustments",
+          "gainlossonderivativeinstrumentsnetpretax",
+          "gainlossrelatedtolitigationsettlement",
+          "retailsegmentebitda",
+          "governmentmandatedincrementalcovid19pandemicrelatedpay",
+          "definedbenefitplanexpectedfutureemployercontributions",
+          "noncashmergerrelatedcosts"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "incomelossfromcontinuingoperationsbeforeincometaxesextraordinaryitemsnoncontrollinginterest: expected=-1,661, actual=1,936, diff=3,597 MISMATCH",
+      "expected_value": -1661.3,
+      "actual_value": 1935.5,
+      "difference": 3596.8,
+      "details": {
+        "parent_concept": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/SEGMENTINFORMATIONSegmentReportingInformationbySegmentDetails",
+        "children_count": 14,
+        "missing_children": [
+          "corporateadjustedebitda",
+          "businesstransformationcost",
+          "gainlossonnonoperatinginvestmentsandleaseadjustments",
+          "gainlossonderivativeinstrumentsnetpretax",
+          "gainlossrelatedtolitigationsettlement",
+          "retailsegmentebitda",
+          "governmentmandatedincrementalcovid19pandemicrelatedpay",
+          "definedbenefitplanexpectedfutureemployercontributions",
+          "noncashmergerrelatedcosts"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "incomelossfromcontinuingoperationsbeforeincometaxesextraordinaryitemsnoncontrollinginterest: expected=3,357, actual=1,130, diff=2,227 MISMATCH",
+      "expected_value": 3356.9,
+      "actual_value": 1129.7,
+      "difference": 2227.2,
+      "details": {
+        "parent_concept": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/SEGMENTINFORMATIONSegmentReportingInformationbySegmentDetails",
+        "children_count": 14,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "incomelossfromcontinuingoperationsbeforeincometaxesextraordinaryitemsnoncontrollinginterest: expected=3,694, actual=1,589, diff=2,105 MISMATCH",
+      "expected_value": 3694.199999999999,
+      "actual_value": 1589.0,
+      "difference": 2105.199999999999,
+      "details": {
+        "parent_concept": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/SEGMENTINFORMATIONSegmentReportingInformationbySegmentDetails",
+        "children_count": 14,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "incomelossfromcontinuingoperationsbeforeincometaxesextraordinaryitemsnoncontrollinginterest: expected=3,924, actual=1,936, diff=1,988 MISMATCH",
+      "expected_value": 3923.6999999999994,
+      "actual_value": 1935.5,
+      "difference": 1988.1999999999994,
+      "details": {
+        "parent_concept": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/SEGMENTINFORMATIONSegmentReportingInformationbySegmentDetails",
+        "children_count": 14,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "netincomelossavailabletocommonstockholdersbasic: expected=959, actual=959, diff=0 OK",
+      "expected_value": 958.6,
+      "actual_value": 958.6,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:NetIncomeLossAvailableToCommonStockholdersBasic",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/NETINCOMEPERCOMMONSHAREScheduleofComputationofBasicandDilutedNetIncomePerShareDetails",
+        "children_count": 4,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "netincomelossavailabletocommonstockholdersbasic: expected=1,295, actual=1,295, diff=0 OK",
+      "expected_value": 1295.0,
+      "actual_value": 1295.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:NetIncomeLossAvailableToCommonStockholdersBasic",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/NETINCOMEPERCOMMONSHAREScheduleofComputationofBasicandDilutedNetIncomePerShareDetails",
+        "children_count": 4,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "netincomelossavailabletocommonstockholdersbasic: expected=1,210, actual=1,210, diff=0 OK",
+      "expected_value": 1210.3,
+      "actual_value": 1210.3,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:NetIncomeLossAvailableToCommonStockholdersBasic",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/NETINCOMEPERCOMMONSHAREScheduleofComputationofBasicandDilutedNetIncomePerShareDetails",
+        "children_count": 4,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "weightedaveragenumberofdilutedsharesoutstanding: expected=580, actual=584, diff=4 MISMATCH",
+      "expected_value": 580.1,
+      "actual_value": 583.8,
+      "difference": 3.699999999999932,
+      "details": {
+        "parent_concept": "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/NETINCOMEPERCOMMONSHAREScheduleofComputationofBasicandDilutedNetIncomePerShareDetails",
+        "children_count": 3,
+        "missing_children": [
+          "incrementalcommonsharesattributabletosharebasedpaymentarrangements"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "weightedaveragenumberofdilutedsharesoutstanding: expected=575, actual=581, diff=6 MISMATCH",
+      "expected_value": 575.4,
+      "actual_value": 581.1,
+      "difference": 5.7000000000000455,
+      "details": {
+        "parent_concept": "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/NETINCOMEPERCOMMONSHAREScheduleofComputationofBasicandDilutedNetIncomePerShareDetails",
+        "children_count": 3,
+        "missing_children": [
+          "incrementalcommonsharesattributabletosharebasedpaymentarrangements"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": false,
+      "severity": "warning",
+      "message": "weightedaveragenumberofdilutedsharesoutstanding: expected=529, actual=534, diff=5 MISMATCH",
+      "expected_value": 529.0,
+      "actual_value": 534.0,
+      "difference": 5.0,
+      "details": {
+        "parent_concept": "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/NETINCOMEPERCOMMONSHAREScheduleofComputationofBasicandDilutedNetIncomePerShareDetails",
+        "children_count": 3,
+        "missing_children": [
+          "incrementalcommonsharesattributabletosharebasedpaymentarrangements"
+        ],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 0
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "netincomelossavailabletocommonstockholdersdiluted: expected=959, actual=959, diff=0 OK",
+      "expected_value": 958.6,
+      "actual_value": 958.6,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:NetIncomeLossAvailableToCommonStockholdersDiluted",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/NETINCOMEPERCOMMONSHAREScheduleofComputationofBasicandDilutedNetIncomePerShareDetails",
+        "children_count": 1,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "netincomelossavailabletocommonstockholdersdiluted: expected=1,295, actual=1,295, diff=0 OK",
+      "expected_value": 1295.0,
+      "actual_value": 1295.0,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:NetIncomeLossAvailableToCommonStockholdersDiluted",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/NETINCOMEPERCOMMONSHAREScheduleofComputationofBasicandDilutedNetIncomePerShareDetails",
+        "children_count": 1,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    },
+    {
+      "check_name": "xbrl_calculation_company",
+      "check_type": "vertical",
+      "passed": true,
+      "severity": "info",
+      "message": "netincomelossavailabletocommonstockholdersdiluted: expected=1,210, actual=1,210, diff=0 OK",
+      "expected_value": 1210.3,
+      "actual_value": 1210.3,
+      "difference": 0.0,
+      "details": {
+        "parent_concept": "us-gaap:NetIncomeLossAvailableToCommonStockholdersDiluted",
+        "source": "company",
+        "verification_source": "company",
+        "role": "http://www.albertsons.com/role/NETINCOMEPERCOMMONSHAREScheduleofComputationofBasicandDilutedNetIncomePerShareDetails",
+        "children_count": 1,
+        "missing_children": [],
+        "tolerance": 0.01,
+        "contexts_verified": 1,
+        "contexts_passed": 1
+      }
+    }
+  ]
+}
