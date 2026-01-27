@@ -278,29 +278,54 @@ class VerificationCoordinator:
                     f"{result.formula_registry_summary.get('taxonomy_trees', 0)} taxonomy trees"
                 )
 
-                # === DIAGNOSTIC: Show concept formats ===
+                # === DIAGNOSTIC: Test actual concept matching ===
                 print("\n" + "="*60)
-                print("DIAGNOSTIC: CONCEPT FORMAT COMPARISON")
+                print("DIAGNOSTIC: CONCEPT MATCHING TEST")
                 print("="*60)
 
-                # Sample statement concepts
-                sample_stmt_concepts = []
-                for stmt in statements.statements[:2]:
-                    for fact in stmt.facts[:5]:
-                        if fact.concept and fact.value is not None:
-                            sample_stmt_concepts.append(fact.concept)
-                print(f"\nStatement concepts (sample): {sample_stmt_concepts[:10]}")
+                from .checks.constants import ConceptNormalizer
+                test_normalizer = ConceptNormalizer()
 
-                # Sample calculation tree concepts
+                # Build normalized facts dict (same as _extract_facts does)
+                normalized_facts = {}
+                for stmt in statements.statements:
+                    for fact in stmt.facts:
+                        if fact.value is not None and not fact.is_abstract:
+                            try:
+                                val = float(fact.value)
+                                norm = test_normalizer.register(fact.concept)
+                                normalized_facts[norm] = val
+                            except:
+                                pass
+
+                print(f"\nTotal normalized facts: {len(normalized_facts)}")
+                print(f"Sample normalized keys: {list(normalized_facts.keys())[:10]}")
+
+                # Test matching with calc trees
                 trees = self.formula_registry.get_all_calculations('company')
                 if trees:
-                    sample_tree = trees[0]
-                    print(f"\nCalc tree parent: {sample_tree.parent}")
-                    print(f"Calc tree children: {[c[0] for c in sample_tree.children[:5]]}")
+                    print(f"\nTotal calc trees: {len(trees)}")
+
+                    # Check first 3 trees
+                    for tree in trees[:3]:
+                        parent_norm = test_normalizer.normalize(tree.parent)
+                        parent_found = parent_norm in normalized_facts
+
+                        children_found = 0
+                        children_total = len(tree.children)
+                        for child, weight in tree.children:
+                            child_norm = test_normalizer.normalize(child)
+                            if child_norm in normalized_facts:
+                                children_found += 1
+
+                        print(f"\n  Tree: {tree.parent}")
+                        print(f"    Normalized: '{parent_norm}'")
+                        print(f"    Parent found: {parent_found}")
+                        print(f"    Children found: {children_found}/{children_total}")
                 else:
                     print("\nNO CALCULATION TREES LOADED!")
 
-                print("="*60 + "\n")
+                print("\n" + "="*60 + "\n")
 
             # Step 3: Run horizontal checks
             self.logger.info(f"{LOG_PROCESS} Running horizontal checks")
