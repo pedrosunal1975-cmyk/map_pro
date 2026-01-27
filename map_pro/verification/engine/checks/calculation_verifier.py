@@ -35,6 +35,7 @@ from .constants import (
 )
 from ...constants import SEVERITY_CRITICAL, SEVERITY_WARNING, SEVERITY_INFO
 from .horizontal_checker import CheckResult
+from .calculation_resolver import CalculationResolver
 
 
 @dataclass
@@ -258,10 +259,21 @@ class CalculationVerifier:
 
         self.logger.info(f"Verifying {len(trees)} calculation trees")
 
-        # Verify each tree using normalized lookup
+        # RESOLVE: Apply parent vs children resolution
+        # When a parent is 0/empty but children have values, use children sum
+        # When children are incomplete but parent has value, use parent
+        resolver = CalculationResolver(self.registry)
+        resolved_facts = resolver.get_resolved_facts(facts, normalizer, source)
+
+        if len(resolved_facts) != len(facts):
+            self.logger.info(
+                f"Resolution updated {len(resolved_facts) - len(facts)} concepts"
+            )
+
+        # Verify each tree using RESOLVED facts
         results = []
         for tree in trees:
-            result = self.verify_calculation(tree, facts, normalizer)
+            result = self.verify_calculation(tree, resolved_facts, normalizer)
             results.append(result)
 
         passed = sum(1 for r in results if r.passed)

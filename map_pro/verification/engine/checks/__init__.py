@@ -17,6 +17,7 @@ from .calculation_verifier import (
     DualVerificationResult,
     ChildContribution,
 )
+from .calculation_resolver import CalculationResolver, ResolvedCalculation
 
 __all__ = [
     'HorizontalChecker',
@@ -27,4 +28,6 @@ __all__ = [
     'CalculationVerificationResult',
     'DualVerificationResult',
     'ChildContribution',
+    'CalculationResolver',
+    'ResolvedCalculation',
 ]
