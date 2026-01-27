@@ -246,16 +246,23 @@ class CalculationVerifier:
         """
         self.logger.info(f"Verifying calculations against {source} formulas")
 
-        # Build NORMALIZED facts dictionary from all statements, GROUPED BY PERIOD
-        facts_by_period, normalizer = self._extract_facts_by_period(statements)
+        # Build NORMALIZED facts dictionary from all statements, GROUPED BY CONTEXT
+        # Per XBRL c-equal rule: facts must share same context (period + dimensions) to be compared
+        # For aggregate-level calculations, use base contexts (no dimensions)
+        facts_by_context, normalizer = self._extract_facts_by_context(statements)
 
-        if not facts_by_period:
+        if not facts_by_context:
             self.logger.warning("No facts extracted from statements")
             return []
 
-        total_facts = sum(len(pf) for pf in facts_by_period.values())
+        # Separate base contexts (no dimensions) from dimensional contexts
+        base_contexts = {k: v for k, v in facts_by_context.items() if '|' not in k}
+        dim_contexts = {k: v for k, v in facts_by_context.items() if '|' in k}
+
+        total_facts = sum(len(cf) for cf in facts_by_context.values())
         self.logger.info(
-            f"Extracted {total_facts} facts across {len(facts_by_period)} periods"
+            f"Extracted {total_facts} facts across {len(base_contexts)} base contexts "
+            f"and {len(dim_contexts)} dimensional contexts"
         )
 
         # Get calculation trees from registry
@@ -265,63 +272,62 @@ class CalculationVerifier:
             self.logger.warning(f"No calculation trees found for source={source}")
             return []
 
-        self.logger.info(f"Verifying {len(trees)} calculation trees across {len(facts_by_period)} periods")
+        self.logger.info(f"Verifying {len(trees)} calculation trees")
 
         # Create resolver for parent vs children resolution
         resolver = CalculationResolver(self.registry)
 
-        # Verify each tree across ALL periods
-        # A tree passes if it passes for all periods where the parent exists
+        # Verify each tree across contexts
+        # PRIMARY: Verify in base contexts (aggregate-level calculations)
+        # A tree passes if it passes for all base contexts where the parent exists
         results = []
         for tree in trees:
-            # Track results across periods for this tree
-            period_results = []
-            periods_with_parent = 0
+            # Track results across base contexts for this tree
+            context_results = []
 
             parent_normalized = normalizer.normalize(tree.parent)
 
-            for period, period_facts in facts_by_period.items():
-                # Only verify if parent exists in this period
-                if parent_normalized not in period_facts:
+            # Verify in BASE contexts (no dimensions) - these are the aggregate values
+            for context_key, context_facts in base_contexts.items():
+                # Only verify if parent exists in this context
+                if parent_normalized not in context_facts:
                     continue
 
-                periods_with_parent += 1
+                # Resolve facts for this context
+                resolved_facts = resolver.get_resolved_facts(context_facts, normalizer, source)
 
-                # Resolve facts for this period
-                resolved_facts = resolver.get_resolved_facts(period_facts, normalizer, source)
+                # Verify calculation for this context
+                context_result = self.verify_calculation(tree, resolved_facts, normalizer)
+                context_results.append((context_key, context_result))
 
-                # Verify calculation for this period
-                period_result = self.verify_calculation(tree, resolved_facts, normalizer)
-                period_results.append((period, period_result))
-
-            # Aggregate results across periods
-            if not period_results:
-                # Parent not found in any period - skip
+            # Aggregate results across contexts
+            if not context_results:
+                # Parent not found in any base context - skip
                 result = CalculationVerificationResult(
                     parent_concept=tree.parent,
                     source=tree.source,
                     role=tree.role,
                     passed=True,  # Can't verify without parent
-                    message=f"Parent concept {tree.parent} not found in any period"
+                    message=f"Parent concept {tree.parent} not found in any base context"
                 )
             else:
-                # Use result from most recent period for details,
-                # but pass only if ALL periods passed
-                all_passed = all(pr[1].passed for pr in period_results)
-                periods_passed = sum(1 for pr in period_results if pr[1].passed)
+                # Use result from most recent context for details,
+                # but pass only if ALL contexts passed
+                all_passed = all(cr[1].passed for cr in context_results)
+                contexts_passed = sum(1 for cr in context_results if cr[1].passed)
 
-                # Get most recent period's result for details
-                most_recent = sorted(period_results, key=lambda x: x[0], reverse=True)[0]
+                # Get most recent context's result for details
+                most_recent = sorted(context_results, key=lambda x: x[0], reverse=True)[0]
                 result = most_recent[1]
 
-                # Override passed status based on all periods
+                # Override passed status based on all contexts
                 result.passed = all_passed
 
-                # Update message with period info
-                if len(period_results) > 1:
+                # Update message with context info
+                if len(context_results) > 1:
                     result.message = (
-                        f"Verified across {len(period_results)} periods: "
-                        f"{periods_passed}/{len(period_results)} passed"
+                        f"Verified across {len(context_results)} periods: "
+                        f"{contexts_passed}/{len(context_results)} passed"
                     )
 
             results.append(result)
@@ -360,12 +366,16 @@ class CalculationVerifier:
         """
         self.logger.info("Running dual verification (company + taxonomy)")
 
-        # Extract facts by period
-        facts_by_period, normalizer = self._extract_facts_by_period(statements)
+        # Extract facts by context (period + dimensions)
+        # Use base contexts for aggregate-level calculations
+        facts_by_context, normalizer = self._extract_facts_by_context(statements)
 
-        if not facts_by_period:
+        if not facts_by_context:
             self.logger.warning("No facts extracted for dual verification")
             return []
+
+        # Filter to base contexts (no dimensions)
+        base_contexts = {k: v for k, v in facts_by_context.items() if '|' not in k}
 
         # Get all parent concepts from both sources
         company_trees = {
@@ -380,7 +390,7 @@ class CalculationVerifier:
         self.logger.info(
             f"Dual verification: {len(company_trees)} company, "
             f"{len(taxonomy_trees)} taxonomy, {len(all_parents)} total concepts, "
-            f"{len(facts_by_period)} periods"
+            f"{len(base_contexts)} base contexts"
         )
 
         # Create resolver for parent vs children resolution
@@ -390,33 +400,33 @@ class CalculationVerifier:
         for parent in sorted(all_parents):
             parent_normalized = normalizer.normalize(parent)
 
-            # Verify across all periods where parent exists
-            company_results_by_period = []
-            taxonomy_results_by_period = []
+            # Verify across all base contexts where parent exists
+            company_results_by_context = []
+            taxonomy_results_by_context = []
 
-            for period, period_facts in facts_by_period.items():
-                if parent_normalized not in period_facts:
+            for context_key, context_facts in base_contexts.items():
+                if parent_normalized not in context_facts:
                     continue
 
-                # Resolve facts for this period
-                resolved_company = resolver.get_resolved_facts(period_facts, normalizer, 'company')
-                resolved_taxonomy = resolver.get_resolved_facts(period_facts, normalizer, 'taxonomy')
+                # Resolve facts for this context
+                resolved_company = resolver.get_resolved_facts(context_facts, normalizer, 'company')
+                resolved_taxonomy = resolver.get_resolved_facts(context_facts, normalizer, 'taxonomy')
 
                 # Verify against company if available
                 if parent in company_trees:
                     result = self.verify_calculation(
                         company_trees[parent], resolved_company, normalizer
                     )
-                    company_results_by_period.append((period, result))
+                    company_results_by_context.append((context_key, result))
 
                 # Verify against taxonomy if available
                 if parent in taxonomy_trees:
                     result = self.verify_calculation(
                         taxonomy_trees[parent], resolved_taxonomy, normalizer
                     )
-                    taxonomy_results_by_period.append((period, result))
+                    taxonomy_results_by_context.append((context_key, result))
 
-            # Aggregate results across periods
+            # Aggregate results across contexts
             dual_result = DualVerificationResult(
                 concept=parent,
                 company_result=None,
@@ -425,16 +435,16 @@ class CalculationVerifier:
             )
 
             # Aggregate company results
-            if company_results_by_period:
-                all_passed = all(pr[1].passed for pr in company_results_by_period)
-                most_recent = sorted(company_results_by_period, key=lambda x: x[0], reverse=True)[0]
+            if company_results_by_context:
+                all_passed = all(cr[1].passed for cr in company_results_by_context)
+                most_recent = sorted(company_results_by_context, key=lambda x: x[0], reverse=True)[0]
                 dual_result.company_result = most_recent[1]
                 dual_result.company_result.passed = all_passed
 
             # Aggregate taxonomy results
-            if taxonomy_results_by_period:
-                all_passed = all(pr[1].passed for pr in taxonomy_results_by_period)
-                most_recent = sorted(taxonomy_results_by_period, key=lambda x: x[0], reverse=True)[0]
+            if taxonomy_results_by_context:
+                all_passed = all(cr[1].passed for cr in taxonomy_results_by_context)
+                most_recent = sorted(taxonomy_results_by_context, key=lambda x: x[0], reverse=True)[0]
                 dual_result.taxonomy_result = most_recent[1]
                 dual_result.taxonomy_result.passed = all_passed
 
@@ -571,70 +581,78 @@ class CalculationVerifier:
 
         return check_results
 
-    def _get_calc_tree_concepts(self) -> set[str]:
+    def _make_context_key(
+        self,
+        period: str,
+        dimensions: dict
+    ) -> str:
         """
-        Get all concepts referenced in calculation trees.
+        Create a context key from period and dimensions.
 
-        Collects both parent and child concepts from company AND taxonomy
-        calculation trees. These are concepts the company (or taxonomy)
-        has explicitly declared as part of calculations.
+        Per XBRL 2.1 c-equal rule, facts must share the same context
+        (period + dimensions) to be compared in a calculation.
+
+        Args:
+            period: Period end date
+            dimensions: Dictionary of dimensional qualifiers
 
         Returns:
-            Set of NORMALIZED concept names from calc trees
+            Context key string (e.g., "2024-12-31" or "2024-12-31|axis1=member1|axis2=member2")
         """
-        normalizer = ConceptNormalizer()
-        concepts = set()
+        if not dimensions or not any(dimensions.values()):
+            return period
 
-        # Get from both sources
-        for source in ('company', 'taxonomy'):
-            trees = self.registry.get_all_calculations(source)
-            for tree in trees:
-                # Add parent
-                concepts.add(normalizer.normalize(tree.parent))
-                # Add all children
-                for child_concept, _ in tree.children:
-                    concepts.add(normalizer.normalize(child_concept))
+        # Sort dimensions for consistent key generation
+        dim_parts = []
+        for axis, member in sorted(dimensions.items()):
+            if member:  # Skip empty/None values
+                dim_parts.append(f"{axis}={member}")
 
-        return concepts
+        if not dim_parts:
+            return period
 
-    def _extract_facts_by_period(
+        return f"{period}|{'|'.join(dim_parts)}"
+
+    def _extract_facts_by_context(
         self,
         statements: MappedStatements
     ) -> tuple[dict[str, dict[str, float]], ConceptNormalizer]:
         """
-        Extract all fact values from statements, organized by period.
+        Extract all fact values from statements, organized by FULL CONTEXT.
 
         Uses NORMALIZED concept names for matching across different sources.
-        Returns facts grouped by period to enable per-period verification.
+        Returns facts grouped by context (period + dimensions) per XBRL c-equal rule.
+
+        XBRL C-EQUAL RULE:
+        Per XBRL 2.1 specification section 5.2.5.2, calculation relationships
+        only apply between facts that are "c-equal" - sharing the same context.
+        Context = period + ALL dimensional qualifiers.
 
         NORMALIZATION:
         Different sources use different separators (: vs _ vs -).
         This method normalizes all concept names so they can be matched
         regardless of the separator used.
 
-        PERIOD HANDLING:
-        SEC filings have multiple periods (current year, prior year, quarters).
-        We return facts GROUPED BY PERIOD - never mixing periods.
-        Each calculation must be verified within a single period context.
+        CONTEXT HANDLING:
+        Facts are grouped by their FULL context (period + dimensions).
+        Each calculation is verified within a single context only.
+        This ensures we never mix dimensional data incorrectly.
 
         Args:
             statements: MappedStatements object
 
         Returns:
             Tuple of:
-            - Dictionary mapping period -> {NORMALIZED concept: value}
+            - Dictionary mapping context_key -> {NORMALIZED concept: value}
             - ConceptNormalizer with original name mappings
         """
-        # First pass: collect all facts with their periods
-        facts_by_period: dict[str, dict[str, float]] = {}  # period -> {concept: value}
+        # First pass: collect all facts with their FULL CONTEXT (period + dimensions)
+        facts_by_context: dict[str, dict[str, float]] = {}  # context_key -> {concept: value}
         normalizer = ConceptNormalizer()
 
-        # Get concepts declared in calculation trees
-        # These override our default "skip dimensioned facts" rule
-        calc_tree_concepts = self._get_calc_tree_concepts()
+        # Track contexts for logging
+        context_periods = set()  # Just periods for logging
 
-        dimensioned_count = 0
-        dimensioned_allowed = 0  # Dimensioned facts allowed because calc tree references them
         skipped_non_main = 0
         for statement in statements.statements:
             # CRITICAL: Only use facts from MAIN statements for calculation verification
@@ -648,21 +666,8 @@ class CalculationVerifier:
                 if fact.is_abstract or fact.value is None:
                     continue
 
-                # Normalize concept name early - needed for calc tree check
+                # Normalize concept name
                 concept_normalized = normalizer.normalize(fact.concept)
-
-                # DIMENSIONAL HANDLING:
-                # Default rule (ours): Skip dimensioned facts - they shouldn't mix with aggregates
-                # Override rule (company's): If calc tree explicitly references this concept,
-                # the company has declared its use - allow it through
-                if fact.dimensions and any(fact.dimensions.values()):
-                    if concept_normalized in calc_tree_concepts:
-                        # Company declared this concept in calc tree - their rule overrides ours
-                        dimensioned_allowed += 1
-                    else:
-                        # Not in calc tree - our default rule applies: skip it
-                        dimensioned_count += 1
-                        continue
 
                 # Parse value - handle financial statement conventions
                 # Em-dash (—), en-dash (–), hyphen (-), and empty string mean zero/nil
@@ -676,36 +681,72 @@ class CalculationVerifier:
                         continue
 
                 # Register the concept (stores original->normalized mapping)
-                # We already have concept_normalized from earlier
                 normalizer.register(fact.concept, source='statement')
 
-                # Use period_end as the key (or 'unknown' if not available)
+                # Get period and create FULL context key (period + dimensions)
+                # Per XBRL c-equal rule: facts must share same context to be compared
                 period = fact.period_end or 'unknown'
+                context_key = self._make_context_key(period, fact.dimensions or {})
 
-                if period not in facts_by_period:
-                    facts_by_period[period] = {}
+                context_periods.add(period)
 
-                # Within same period, prefer main statements
-                if concept_normalized not in facts_by_period[period] or statement.is_main_statement:
-                    facts_by_period[period][concept_normalized] = value
+                if context_key not in facts_by_context:
+                    facts_by_context[context_key] = {}
+
+                # Within same context, prefer main statements
+                if concept_normalized not in facts_by_context[context_key] or statement.is_main_statement:
+                    facts_by_context[context_key][concept_normalized] = value
 
         # Log extraction summary
-        if not facts_by_period:
+        if not facts_by_context:
             self.logger.debug("No facts found in statements")
             return {}, normalizer
 
-        total_facts = sum(len(pf) for pf in facts_by_period.values())
-        periods_found = sorted(facts_by_period.keys(), reverse=True)
+        total_facts = sum(len(cf) for cf in facts_by_context.values())
+        periods_found = sorted(context_periods, reverse=True)
+
+        # Count contexts with vs without dimensions
+        base_contexts = sum(1 for k in facts_by_context.keys() if '|' not in k)
+        dim_contexts = len(facts_by_context) - base_contexts
 
         self.logger.debug(
-            f"Extracted {total_facts} facts across {len(facts_by_period)} periods: "
-            f"{', '.join(periods_found[:3])}{'...' if len(periods_found) > 3 else ''}"
+            f"Extracted {total_facts} facts across {len(facts_by_context)} contexts "
+            f"({base_contexts} base, {dim_contexts} dimensional) "
+            f"in {len(periods_found)} periods"
         )
 
-        self.logger.debug(
-            f"Skipped {dimensioned_count} dimensioned facts, "
-            f"allowed {dimensioned_allowed} calc-tree-declared dimensioned facts"
-        )
+        return facts_by_context, normalizer
+
+    def _extract_facts_by_period(
+        self,
+        statements: MappedStatements
+    ) -> tuple[dict[str, dict[str, float]], ConceptNormalizer]:
+        """
+        Extract facts grouped by period (excluding dimensional contexts).
+
+        This method returns only BASE CONTEXT facts (no dimensions) grouped by period.
+        For full c-equal compliance, use _extract_facts_by_context() instead.
+
+        This is kept for backward compatibility and for calculations that are
+        known to apply only to base (non-dimensional) facts.
+
+        Args:
+            statements: MappedStatements object
+
+        Returns:
+            Tuple of:
+            - Dictionary mapping period -> {NORMALIZED concept: value}
+            - ConceptNormalizer with original name mappings
+        """
+        # Get full context extraction
+        facts_by_context, normalizer = self._extract_facts_by_context(statements)
+
+        # Filter to only base contexts (no dimensions - no '|' in key)
+        facts_by_period = {}
+        for context_key, facts in facts_by_context.items():
+            if '|' not in context_key:
+                # This is a base context (just period, no dimensions)
+                facts_by_period[context_key] = facts
 
         return facts_by_period, normalizer
 
@@ -714,10 +755,11 @@ class CalculationVerifier:
         statements: MappedStatements
     ) -> tuple[dict[str, float], ConceptNormalizer, str]:
         """
-        Extract facts from the most recent period only.
+        Extract facts from the most recent base context only.
 
         Convenience method for single-calculation verification where
-        per-period aggregation is not needed.
+        per-context aggregation is not needed. Returns base context facts
+        (no dimensions) for aggregate-level calculations.
 
         Args:
             statements: MappedStatements object
@@ -726,8 +768,9 @@ class CalculationVerifier:
             Tuple of:
             - Dictionary mapping NORMALIZED concept names to values
             - ConceptNormalizer with original name mappings
-            - Period string (e.g., '2024-09-28')
+            - Period/context string (e.g., '2024-09-28')
         """
+        # Use base contexts (no dimensions)
         facts_by_period, normalizer = self._extract_facts_by_period(statements)
 
         if not facts_by_period:
