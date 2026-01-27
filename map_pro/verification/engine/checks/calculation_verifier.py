@@ -232,8 +232,9 @@ class CalculationVerifier:
         Uses NORMALIZED concept names for matching, allowing different
         separator formats (colon vs underscore) to match correctly.
 
-        PERIOD HANDLING: Facts are extracted from the most recent period
-        to ensure calculations compare values from the same reporting period.
+        PERIOD HANDLING: Calculations are verified SEPARATELY for each period.
+        A calculation passes only if it passes for ALL periods where the
+        parent concept exists. Periods are never mixed.
 
         Args:
             statements: MappedStatements with fact values
@@ -245,10 +246,17 @@ class CalculationVerifier:
         """
         self.logger.info(f"Verifying calculations against {source} formulas")
 
-        # Build NORMALIZED facts dictionary from all statements (period-aware)
-        facts, normalizer = self._extract_facts(statements)
+        # Build NORMALIZED facts dictionary from all statements, GROUPED BY PERIOD
+        facts_by_period, normalizer = self._extract_facts_by_period(statements)
 
-        self.logger.info(f"Extracted {len(facts)} normalized fact values from primary period")
+        if not facts_by_period:
+            self.logger.warning("No facts extracted from statements")
+            return []
+
+        total_facts = sum(len(pf) for pf in facts_by_period.values())
+        self.logger.info(
+            f"Extracted {total_facts} facts across {len(facts_by_period)} periods"
+        )
 
         # Get calculation trees from registry
         trees = self.registry.get_all_calculations(source, role)
@@ -257,23 +265,65 @@ class CalculationVerifier:
             self.logger.warning(f"No calculation trees found for source={source}")
             return []
 
-        self.logger.info(f"Verifying {len(trees)} calculation trees")
+        self.logger.info(f"Verifying {len(trees)} calculation trees across {len(facts_by_period)} periods")
 
-        # RESOLVE: Apply parent vs children resolution
-        # When a parent is 0/empty but children have values, use children sum
-        # When children are incomplete but parent has value, use parent
+        # Create resolver for parent vs children resolution
         resolver = CalculationResolver(self.registry)
-        resolved_facts = resolver.get_resolved_facts(facts, normalizer, source)
 
-        if len(resolved_facts) != len(facts):
-            self.logger.info(
-                f"Resolution updated {len(resolved_facts) - len(facts)} concepts"
-            )
-
-        # Verify each tree using RESOLVED facts
+        # Verify each tree across ALL periods
+        # A tree passes if it passes for all periods where the parent exists
         results = []
         for tree in trees:
-            result = self.verify_calculation(tree, resolved_facts, normalizer)
+            # Track results across periods for this tree
+            period_results = []
+            periods_with_parent = 0
+
+            parent_normalized = normalizer.normalize(tree.parent)
+
+            for period, period_facts in facts_by_period.items():
+                # Only verify if parent exists in this period
+                if parent_normalized not in period_facts:
+                    continue
+
+                periods_with_parent += 1
+
+                # Resolve facts for this period
+                resolved_facts = resolver.get_resolved_facts(period_facts, normalizer, source)
+
+                # Verify calculation for this period
+                period_result = self.verify_calculation(tree, resolved_facts, normalizer)
+                period_results.append((period, period_result))
+
+            # Aggregate results across periods
+            if not period_results:
+                # Parent not found in any period - skip
+                result = CalculationVerificationResult(
+                    parent_concept=tree.parent,
+                    source=tree.source,
+                    role=tree.role,
+                    passed=True,  # Can't verify without parent
+                    message=f"Parent concept {tree.parent} not found in any period"
+                )
+            else:
+                # Use result from most recent period for details,
+                # but pass only if ALL periods passed
+                all_passed = all(pr[1].passed for pr in period_results)
+                periods_passed = sum(1 for pr in period_results if pr[1].passed)
+
+                # Get most recent period's result for details
+                most_recent = sorted(period_results, key=lambda x: x[0], reverse=True)[0]
+                result = most_recent[1]
+
+                # Override passed status based on all periods
+                result.passed = all_passed
+
+                # Update message with period info
+                if len(period_results) > 1:
+                    result.message = (
+                        f"Verified across {len(period_results)} periods: "
+                        f"{periods_passed}/{len(period_results)} passed"
+                    )
+
             results.append(result)
 
         passed = sum(1 for r in results if r.passed)
@@ -298,6 +348,9 @@ class CalculationVerifier:
         Compares results to identify discrepancies.
         Uses NORMALIZED concept names for matching.
 
+        PERIOD HANDLING: Uses per-period verification - verifies each period
+        separately and aggregates results.
+
         Args:
             statements: MappedStatements with fact values
             role: Optional role filter
@@ -307,8 +360,12 @@ class CalculationVerifier:
         """
         self.logger.info("Running dual verification (company + taxonomy)")
 
-        # Extract NORMALIZED facts once
-        facts, normalizer = self._extract_facts(statements)
+        # Extract facts by period
+        facts_by_period, normalizer = self._extract_facts_by_period(statements)
+
+        if not facts_by_period:
+            self.logger.warning("No facts extracted for dual verification")
+            return []
 
         # Get all parent concepts from both sources
         company_trees = {
@@ -322,11 +379,44 @@ class CalculationVerifier:
 
         self.logger.info(
             f"Dual verification: {len(company_trees)} company, "
-            f"{len(taxonomy_trees)} taxonomy, {len(all_parents)} total concepts"
+            f"{len(taxonomy_trees)} taxonomy, {len(all_parents)} total concepts, "
+            f"{len(facts_by_period)} periods"
         )
+
+        # Create resolver for parent vs children resolution
+        resolver = CalculationResolver(self.registry)
 
         results = []
         for parent in sorted(all_parents):
+            parent_normalized = normalizer.normalize(parent)
+
+            # Verify across all periods where parent exists
+            company_results_by_period = []
+            taxonomy_results_by_period = []
+
+            for period, period_facts in facts_by_period.items():
+                if parent_normalized not in period_facts:
+                    continue
+
+                # Resolve facts for this period
+                resolved_company = resolver.get_resolved_facts(period_facts, normalizer, 'company')
+                resolved_taxonomy = resolver.get_resolved_facts(period_facts, normalizer, 'taxonomy')
+
+                # Verify against company if available
+                if parent in company_trees:
+                    result = self.verify_calculation(
+                        company_trees[parent], resolved_company, normalizer
+                    )
+                    company_results_by_period.append((period, result))
+
+                # Verify against taxonomy if available
+                if parent in taxonomy_trees:
+                    result = self.verify_calculation(
+                        taxonomy_trees[parent], resolved_taxonomy, normalizer
+                    )
+                    taxonomy_results_by_period.append((period, result))
+
+            # Aggregate results across periods
             dual_result = DualVerificationResult(
                 concept=parent,
                 company_result=None,
@@ -334,17 +424,19 @@ class CalculationVerifier:
                 sources_agree=True
             )
 
-            # Verify against company if available (with normalized lookup)
-            if parent in company_trees:
-                dual_result.company_result = self.verify_calculation(
-                    company_trees[parent], facts, normalizer
-                )
+            # Aggregate company results
+            if company_results_by_period:
+                all_passed = all(pr[1].passed for pr in company_results_by_period)
+                most_recent = sorted(company_results_by_period, key=lambda x: x[0], reverse=True)[0]
+                dual_result.company_result = most_recent[1]
+                dual_result.company_result.passed = all_passed
 
-            # Verify against taxonomy if available (with normalized lookup)
-            if parent in taxonomy_trees:
-                dual_result.taxonomy_result = self.verify_calculation(
-                    taxonomy_trees[parent], facts, normalizer
-                )
+            # Aggregate taxonomy results
+            if taxonomy_results_by_period:
+                all_passed = all(pr[1].passed for pr in taxonomy_results_by_period)
+                most_recent = sorted(taxonomy_results_by_period, key=lambda x: x[0], reverse=True)[0]
+                dual_result.taxonomy_result = most_recent[1]
+                dual_result.taxonomy_result.passed = all_passed
 
             # Check for discrepancies
             if dual_result.company_result and dual_result.taxonomy_result:
@@ -407,8 +499,13 @@ class CalculationVerifier:
         if not tree:
             return None
 
-        facts, normalizer = self._extract_facts(statements)
-        return self.verify_calculation(tree, facts, normalizer)
+        facts, normalizer, period = self._get_most_recent_period_facts(statements)
+
+        # Resolve facts (parent vs children)
+        resolver = CalculationResolver(self.registry)
+        resolved_facts = resolver.get_resolved_facts(facts, normalizer, source)
+
+        return self.verify_calculation(tree, resolved_facts, normalizer)
 
     def get_failed_calculations(
         self,
@@ -500,16 +597,15 @@ class CalculationVerifier:
 
         return concepts
 
-    def _extract_facts(
+    def _extract_facts_by_period(
         self,
         statements: MappedStatements
-    ) -> tuple[dict[str, float], ConceptNormalizer]:
+    ) -> tuple[dict[str, dict[str, float]], ConceptNormalizer]:
         """
-        Extract all fact values from statements into a flat dictionary.
+        Extract all fact values from statements, organized by period.
 
         Uses NORMALIZED concept names for matching across different sources.
-        Returns both the facts dictionary (with normalized keys) and the
-        normalizer (for looking up original names).
+        Returns facts grouped by period to enable per-period verification.
 
         NORMALIZATION:
         Different sources use different separators (: vs _ vs -).
@@ -518,15 +614,15 @@ class CalculationVerifier:
 
         PERIOD HANDLING:
         SEC filings have multiple periods (current year, prior year, quarters).
-        We extract facts from the MOST RECENT period to ensure consistency.
-        Facts are keyed by (normalized_concept, period_end) to avoid mixing periods.
+        We return facts GROUPED BY PERIOD - never mixing periods.
+        Each calculation must be verified within a single period context.
 
         Args:
             statements: MappedStatements object
 
         Returns:
             Tuple of:
-            - Dictionary mapping NORMALIZED concept names to values
+            - Dictionary mapping period -> {NORMALIZED concept: value}
             - ConceptNormalizer with original name mappings
         """
         # First pass: collect all facts with their periods
@@ -593,55 +689,61 @@ class CalculationVerifier:
                 if concept_normalized not in facts_by_period[period] or statement.is_main_statement:
                     facts_by_period[period][concept_normalized] = value
 
-        # Find the most recent period (latest date string)
+        # Log extraction summary
         if not facts_by_period:
             self.logger.debug("No facts found in statements")
             return {}, normalizer
 
-        # Sort periods to find most recent (exclude 'unknown')
+        total_facts = sum(len(pf) for pf in facts_by_period.values())
+        periods_found = sorted(facts_by_period.keys(), reverse=True)
+
+        self.logger.debug(
+            f"Extracted {total_facts} facts across {len(facts_by_period)} periods: "
+            f"{', '.join(periods_found[:3])}{'...' if len(periods_found) > 3 else ''}"
+        )
+
+        self.logger.debug(
+            f"Skipped {dimensioned_count} dimensioned facts, "
+            f"allowed {dimensioned_allowed} calc-tree-declared dimensioned facts"
+        )
+
+        return facts_by_period, normalizer
+
+    def _get_most_recent_period_facts(
+        self,
+        statements: MappedStatements
+    ) -> tuple[dict[str, float], ConceptNormalizer, str]:
+        """
+        Extract facts from the most recent period only.
+
+        Convenience method for single-calculation verification where
+        per-period aggregation is not needed.
+
+        Args:
+            statements: MappedStatements object
+
+        Returns:
+            Tuple of:
+            - Dictionary mapping NORMALIZED concept names to values
+            - ConceptNormalizer with original name mappings
+            - Period string (e.g., '2024-09-28')
+        """
+        facts_by_period, normalizer = self._extract_facts_by_period(statements)
+
+        if not facts_by_period:
+            return {}, normalizer, 'unknown'
+
+        # Get most recent period (excluding 'unknown')
         valid_periods = [p for p in facts_by_period.keys() if p != 'unknown']
         if valid_periods:
-            # Dates are typically in YYYY-MM-DD format, so string sort works
             valid_periods.sort(reverse=True)
-            primary_period = valid_periods[0]
+            most_recent = valid_periods[0]
         elif 'unknown' in facts_by_period:
-            primary_period = 'unknown'
+            most_recent = 'unknown'
         else:
-            primary_period = list(facts_by_period.keys())[0]
+            most_recent = list(facts_by_period.keys())[0]
 
-        # Use facts from primary period, but supplement with other periods
-        # if a concept is missing (some facts may only appear in certain periods)
-        facts: dict[str, float] = dict(facts_by_period.get(primary_period, {}))
-
-        # Supplement with facts from other periods for concepts not in primary
-        # This handles cases where child concepts only appear in different periods
-        supplemented_count = 0
-        for period in valid_periods[1:] if valid_periods else []:
-            period_facts = facts_by_period.get(period, {})
-            for concept, value in period_facts.items():
-                if concept not in facts:
-                    facts[concept] = value
-                    supplemented_count += 1
-
-        # Also check 'unknown' period for supplementation
-        if 'unknown' in facts_by_period and primary_period != 'unknown':
-            for concept, value in facts_by_period['unknown'].items():
-                if concept not in facts:
-                    facts[concept] = value
-                    supplemented_count += 1
-
-        # Log period information
-        self.logger.debug(
-            f"Extracted facts from {len(facts_by_period)} periods, "
-            f"using primary period: {primary_period}, supplemented {supplemented_count} concepts"
-        )
-
-        self.logger.debug(
-            f"Extracted {len(facts)} normalized fact values from statements "
-            f"(skipped {dimensioned_count} dimensioned, allowed {dimensioned_allowed} calc-tree-declared)"
-        )
-
-        return facts, normalizer
+        return facts_by_period[most_recent], normalizer, most_recent
 
     def _within_tolerance(
         self,
