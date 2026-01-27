@@ -610,7 +610,7 @@ class MappedReader:
                 decimals=data.get('decimals'),
                 period_start=data.get('period_start', data.get('startDate')),
                 period_end=data.get('period_end', data.get('endDate', data.get('instant'))),
-                context_id=data.get('context_id', data.get('contextRef')),
+                context_id=data.get('context_id', data.get('context_ref', data.get('contextRef'))),
                 dimensions=data.get('dimensions', {}),
                 label=data.get('label', data.get('preferredLabel')),
                 order=data.get('order'),
