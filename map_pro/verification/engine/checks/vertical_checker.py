@@ -148,6 +148,10 @@ class VerticalChecker:
         """
         Check that common values appear consistently across MAIN statements.
 
+        RULES (consistent with calculation_verifier.py):
+        - Only check MAIN statements
+        - Skip dimensioned facts (different dimensions are not the same fact)
+
         IMPORTANT: A fact appearing in multiple statements with the SAME value
         is NOT a problem - that's expected cross-referencing.
         Only flag when the SAME concept has DIFFERENT values in the same period.
@@ -178,10 +182,19 @@ class VerticalChecker:
                 if fact.is_abstract or fact.value is None:
                     continue
 
-                try:
-                    value = float(fact.value)
-                except (ValueError, TypeError):
+                # RULE: Skip dimensioned facts - different dimensions are not duplicates
+                if fact.dimensions and any(fact.dimensions.values()):
                     continue
+
+                # Handle em-dash and empty values
+                raw_val = str(fact.value).strip()
+                if raw_val in ('', '—', '–', '-', 'nil', 'N/A', 'n/a'):
+                    value = 0.0
+                else:
+                    try:
+                        value = float(raw_val.replace(',', '').replace('$', ''))
+                    except (ValueError, TypeError):
+                        continue
 
                 concept = fact.concept
                 period = fact.period_end or 'unknown'

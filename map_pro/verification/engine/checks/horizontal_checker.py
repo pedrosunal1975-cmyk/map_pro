@@ -134,6 +134,10 @@ class HorizontalChecker:
         """
         Check if facts match company-declared calculation relationships.
 
+        PERIOD HANDLING: Verifies each calculation per-period separately.
+        A calculation passes only if it passes for all periods where
+        the parent concept exists.
+
         For each calculation relationship company declared:
         - Find parent fact value
         - Find all child fact values
@@ -153,28 +157,67 @@ class HorizontalChecker:
             self.logger.info("No calculation networks provided - skipping calculation check")
             return results
 
-        # Build fact lookup by concept
-        fact_lookup = self._build_fact_lookup(statements)
+        # Build fact lookup by period and concept
+        fact_lookup_by_period = self._build_fact_lookup(statements)
+
+        if not fact_lookup_by_period:
+            self.logger.info("No facts found for calculation check")
+            return results
 
         for network in calc_networks:
             # Group arcs by parent
             parent_children = self._group_arcs_by_parent(network.arcs)
 
             for parent_concept, children in parent_children.items():
-                result = self._verify_calculation(
-                    parent_concept,
-                    children,
-                    fact_lookup,
-                    network.role
-                )
-                if result:
-                    results.append(result)
+                # Verify across all periods where parent exists
+                period_results = []
+
+                for period, period_facts in fact_lookup_by_period.items():
+                    # Check if parent exists in this period
+                    parent_facts = period_facts.get(parent_concept, [])
+                    if not parent_facts and ':' in parent_concept:
+                        local_name = parent_concept.split(':')[-1]
+                        parent_facts = period_facts.get(local_name, [])
+
+                    if not parent_facts:
+                        continue  # Parent not in this period
+
+                    result = self._verify_calculation(
+                        parent_concept,
+                        children,
+                        period_facts,  # Pass single period's facts
+                        network.role,
+                        period
+                    )
+                    if result:
+                        period_results.append((period, result))
+
+                # Aggregate results across periods
+                if period_results:
+                    all_passed = all(pr[1].passed for pr in period_results)
+                    # Use most recent period's result for details
+                    most_recent = sorted(period_results, key=lambda x: x[0], reverse=True)[0]
+                    final_result = most_recent[1]
+                    final_result.passed = all_passed
+
+                    if len(period_results) > 1:
+                        periods_passed = sum(1 for pr in period_results if pr[1].passed)
+                        final_result.message = (
+                            f"{final_result.message} "
+                            f"[{periods_passed}/{len(period_results)} periods passed]"
+                        )
+
+                    results.append(final_result)
 
         return results
 
     def check_duplicate_facts(self, statements: MappedStatements) -> list[CheckResult]:
         """
         Check for duplicate facts with smart classification.
+
+        RULES (consistent with calculation_verifier.py):
+        - Only check MAIN statements
+        - Skip dimensioned facts (different dimensions are not duplicates)
 
         Distinguishes between:
         1. CRITICAL: Same fact, same statement, different values (genuine issue)
@@ -199,6 +242,10 @@ class HorizontalChecker:
         cross_statement_facts: dict[str, list[tuple[str, any, StatementFact]]] = {}
 
         for statement in statements.statements:
+            # RULE: Only use main statements
+            if not statement.is_main_statement:
+                continue
+
             statement_name = statement.name or 'Unknown'
 
             # Group facts by concept and period WITHIN this statement
@@ -206,6 +253,10 @@ class HorizontalChecker:
 
             for fact in statement.facts:
                 if fact.is_abstract:
+                    continue
+
+                # RULE: Skip dimensioned facts (different dimensions are not duplicates)
+                if fact.dimensions and any(fact.dimensions.values()):
                     continue
 
                 key = f"{fact.concept}|{fact.period_end}|{fact.context_id or ''}"
@@ -327,6 +378,11 @@ class HorizontalChecker:
         """
         Check that items marked as totals equal sum of components.
 
+        RULES (consistent with calculation_verifier.py):
+        - Only check MAIN statements
+        - Skip dimensioned facts
+        - Compare within same period only
+
         Uses fact hierarchy (depth/order) to identify parent-child relationships.
 
         Args:
@@ -338,26 +394,51 @@ class HorizontalChecker:
         results = []
 
         for statement in statements.statements:
+            # RULE: Only use main statements
+            if not statement.is_main_statement:
+                continue
+
+            # Filter to non-dimensioned facts only
+            valid_facts = [
+                f for f in statement.facts
+                if not f.is_abstract and not (f.dimensions and any(f.dimensions.values()))
+            ]
+
             # Find facts marked as totals
-            total_facts = [f for f in statement.facts if f.is_total and not f.is_abstract]
+            total_facts = [f for f in valid_facts if f.is_total]
 
             for total_fact in total_facts:
                 if total_fact.value is None:
                     continue
 
-                try:
-                    total_value = float(total_fact.value)
-                except (ValueError, TypeError):
-                    continue
+                # Handle em-dash and empty values
+                raw_val = str(total_fact.value).strip()
+                if raw_val in ('', '—', '–', '-', 'nil', 'N/A', 'n/a'):
+                    total_value = 0.0
+                else:
+                    try:
+                        total_value = float(raw_val.replace(',', '').replace('$', ''))
+                    except (ValueError, TypeError):
+                        continue
 
-                # Find child facts (facts with depth > total's depth that come before it)
-                children = self._find_child_facts(statement.facts, total_fact)
+                # Find child facts (same period, depth > total's depth, come before it)
+                children = self._find_child_facts(valid_facts, total_fact)
+
+                # Filter children to same period
+                total_period = total_fact.period_end or 'unknown'
+                children = [c for c in children if (c.period_end or 'unknown') == total_period]
 
                 if children:
-                    child_sum = sum(
-                        float(f.value) for f in children
-                        if f.value is not None and not f.is_abstract
-                    )
+                    child_sum = 0.0
+                    for f in children:
+                        if f.value is not None:
+                            raw = str(f.value).strip()
+                            if raw in ('', '—', '–', '-', 'nil', 'N/A', 'n/a'):
+                                continue
+                            try:
+                                child_sum += float(raw.replace(',', '').replace('$', ''))
+                            except (ValueError, TypeError):
+                                continue
 
                     diff = abs(total_value - child_sum)
                     passed = self._within_tolerance(total_value, child_sum)
@@ -374,6 +455,7 @@ class HorizontalChecker:
                         details={
                             'concept': total_fact.concept,
                             'statement': statement.name,
+                            'period': total_period,
                             'child_count': len(children),
                         }
                     ))
@@ -392,26 +474,50 @@ class HorizontalChecker:
     def _build_fact_lookup(
         self,
         statements: MappedStatements
-    ) -> dict[str, list[StatementFact]]:
-        """Build lookup dictionary from concept to facts."""
-        lookup: dict[str, list[StatementFact]] = {}
+    ) -> dict[str, dict[str, list[StatementFact]]]:
+        """
+        Build lookup dictionary from concept to facts, organized by period.
+
+        RULES (consistent with calculation_verifier.py):
+        - Only use MAIN statements
+        - Skip dimensioned facts (aggregate values only)
+        - Group by period to avoid mixing periods
+
+        Returns:
+            dict[period][concept] -> list of facts
+        """
+        # period -> concept -> facts
+        lookup: dict[str, dict[str, list[StatementFact]]] = {}
 
         for statement in statements.statements:
+            # RULE: Only use main statements
+            if not statement.is_main_statement:
+                continue
+
             for fact in statement.facts:
                 if fact.is_abstract:
                     continue
 
-                concept = fact.concept
-                if concept not in lookup:
-                    lookup[concept] = []
-                lookup[concept].append(fact)
+                # RULE: Skip dimensioned facts
+                if fact.dimensions and any(fact.dimensions.values()):
+                    continue
 
-                # Also index without namespace prefix
+                concept = fact.concept
+                period = fact.period_end or 'unknown'
+
+                if period not in lookup:
+                    lookup[period] = {}
+
+                if concept not in lookup[period]:
+                    lookup[period][concept] = []
+                lookup[period][concept].append(fact)
+
+                # Also index without namespace prefix (for matching)
                 if ':' in concept:
                     local_name = concept.split(':')[-1]
-                    if local_name not in lookup:
-                        lookup[local_name] = []
-                    lookup[local_name].append(fact)
+                    if local_name not in lookup[period]:
+                        lookup[period][local_name] = []
+                    lookup[period][local_name].append(fact)
 
         return lookup
 
@@ -435,9 +541,22 @@ class HorizontalChecker:
         parent_concept: str,
         children: list[CalculationArc],
         fact_lookup: dict[str, list[StatementFact]],
-        role: str
+        role: str,
+        period: str = 'unknown'
     ) -> Optional[CheckResult]:
-        """Verify a single calculation relationship."""
+        """
+        Verify a single calculation relationship for a specific period.
+
+        Args:
+            parent_concept: Parent concept name
+            children: List of child calculation arcs
+            fact_lookup: Single period's fact lookup (concept -> facts)
+            role: Statement role
+            period: Period being verified
+
+        Returns:
+            CheckResult or None if no data available
+        """
         # Find parent fact value
         parent_facts = fact_lookup.get(parent_concept, [])
         if not parent_facts:
@@ -450,11 +569,16 @@ class HorizontalChecker:
             return None  # No fact for this calculation
 
         # Get parent value (use first non-None value)
+        # Handle em-dash and empty values as zero (consistent with calculation_verifier)
         parent_value = None
         for pf in parent_facts:
             if pf.value is not None:
+                raw_val = str(pf.value).strip()
+                if raw_val in ('', '—', '–', '-', 'nil', 'N/A', 'n/a'):
+                    parent_value = 0.0
+                    break
                 try:
-                    parent_value = float(pf.value)
+                    parent_value = float(raw_val.replace(',', '').replace('$', ''))
                     break
                 except (ValueError, TypeError):
                     continue
@@ -476,19 +600,24 @@ class HorizontalChecker:
 
             for cf in child_facts:
                 if cf.value is not None:
-                    try:
-                        child_value = float(cf.value)
-                        weighted_value = child_value * arc.weight
-                        calculated_sum += weighted_value
-                        child_details.append({
-                            'concept': child_concept,
-                            'value': child_value,
-                            'weight': arc.weight,
-                            'weighted': weighted_value,
-                        })
-                        break  # Use first value found
-                    except (ValueError, TypeError):
-                        continue
+                    raw_val = str(cf.value).strip()
+                    if raw_val in ('', '—', '–', '-', 'nil', 'N/A', 'n/a'):
+                        child_value = 0.0
+                    else:
+                        try:
+                            child_value = float(raw_val.replace(',', '').replace('$', ''))
+                        except (ValueError, TypeError):
+                            continue
+
+                    weighted_value = child_value * arc.weight
+                    calculated_sum += weighted_value
+                    child_details.append({
+                        'concept': child_concept,
+                        'value': child_value,
+                        'weight': arc.weight,
+                        'weighted': weighted_value,
+                    })
+                    break  # Use first value found
 
         if not child_details:
             return None  # No child values found
@@ -511,6 +640,7 @@ class HorizontalChecker:
             details={
                 'parent_concept': parent_concept,
                 'role': role,
+                'period': period,
                 'children': child_details,
             }
         )
