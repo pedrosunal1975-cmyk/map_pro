@@ -495,9 +495,18 @@ class CalculationVerifier:
         facts_by_period: dict[str, dict[str, float]] = {}  # period -> {concept: value}
         normalizer = ConceptNormalizer()
 
+        dimensioned_count = 0
         for statement in statements.statements:
             for fact in statement.facts:
                 if fact.is_abstract or fact.value is None:
+                    continue
+
+                # CRITICAL: Skip dimensioned facts for calculation verification
+                # XBRL calculation linkbases define calculations using AGGREGATE facts only
+                # Dimensioned facts (broken down by segment/entity) should not be mixed
+                # with aggregate totals - this causes calculation mismatches
+                if fact.dimensions and any(fact.dimensions.values()):
+                    dimensioned_count += 1
                     continue
 
                 try:
@@ -562,7 +571,8 @@ class CalculationVerifier:
         )
 
         self.logger.debug(
-            f"Extracted {len(facts)} normalized fact values from statements"
+            f"Extracted {len(facts)} normalized fact values from statements "
+            f"(skipped {dimensioned_count} dimensioned facts)"
         )
 
         return facts, normalizer
