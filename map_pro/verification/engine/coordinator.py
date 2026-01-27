@@ -278,68 +278,70 @@ class VerificationCoordinator:
                     f"{result.formula_registry_summary.get('taxonomy_trees', 0)} taxonomy trees"
                 )
 
-                # === DIAGNOSTIC: Count pass/fail and show failures ===
+                # === DIAGNOSTIC: Find WHY children are missing ===
                 print("\n" + "="*60)
-                print("DIAGNOSTIC: CALCULATION PASS/FAIL ANALYSIS")
+                print("DIAGNOSTIC: WHY ARE CHILDREN MISSING?")
                 print("="*60)
 
                 from .checks.constants import ConceptNormalizer
                 test_normalizer = ConceptNormalizer()
 
-                # Build normalized facts
+                # Collect ALL raw concept names from statements (before normalization)
+                raw_concepts = set()
                 normalized_facts = {}
                 for stmt in statements.statements:
                     for fact in stmt.facts:
                         if fact.value is not None and not fact.is_abstract:
+                            raw_concepts.add(fact.concept)
                             if fact.dimensions and any(fact.dimensions.values()):
                                 continue
                             try:
-                                normalized_facts[test_normalizer.register(fact.concept)] = float(fact.value)
+                                normalized_facts[test_normalizer.normalize(fact.concept)] = float(fact.value)
                             except:
                                 pass
 
+                print(f"\nTotal raw concepts in statements: {len(raw_concepts)}")
+                print(f"Normalized facts (for calc): {len(normalized_facts)}")
+
+                # Find LiabilitiesAndStockholdersEquity tree
                 trees = self.formula_registry.get_all_calculations('company')
-                passed, failed, skipped = 0, 0, 0
-                first_fail = None
-
+                target_tree = None
                 for tree in trees:
-                    parent_norm = test_normalizer.normalize(tree.parent)
+                    if 'LiabilitiesAndStockholdersEquity' in tree.parent:
+                        target_tree = tree
+                        break
+
+                if target_tree:
+                    print(f"\n=== {target_tree.parent} ===")
+                    parent_norm = test_normalizer.normalize(target_tree.parent)
                     parent_val = normalized_facts.get(parent_norm)
+                    print(f"Parent value: {parent_val:,.0f}" if parent_val else "Parent: NOT FOUND")
 
-                    if parent_val is None:
-                        skipped += 1
-                        continue
+                    print(f"\nChildren from calc linkbase:")
+                    found_sum = 0.0
+                    for child, weight in target_tree.children:
+                        child_norm = test_normalizer.normalize(child)
+                        child_val = normalized_facts.get(child_norm)
 
-                    expected = 0.0
-                    missing = 0
-                    for child, weight in tree.children:
-                        child_val = normalized_facts.get(test_normalizer.normalize(child))
+                        # Search for similar concepts in raw data
+                        similar = [c for c in raw_concepts if child_norm in c.lower().replace('-', '').replace('_', '').replace(':', '')]
+
                         if child_val is not None:
-                            expected += child_val * weight
+                            found_sum += child_val * weight
+                            print(f"  FOUND: {child} = {child_val:,.0f}")
                         else:
-                            missing += 1
+                            print(f"  MISSING: {child}")
+                            print(f"    Normalized to: '{child_norm}'")
+                            if similar:
+                                print(f"    Similar in statements: {similar[:3]}")
+                            else:
+                                print(f"    NO similar concepts found in statements!")
 
-                    if missing == len(tree.children):
-                        skipped += 1
-                        continue
-
-                    diff_pct = abs(expected - parent_val) / abs(parent_val) * 100 if parent_val else 0
-                    if diff_pct < 1.0:
-                        passed += 1
-                    else:
-                        failed += 1
-                        if first_fail is None:
-                            first_fail = (tree, parent_val, expected, diff_pct, missing)
-
-                total = passed + failed
-                print(f"\nResults: {passed} passed, {failed} failed, {skipped} skipped")
-                print(f"Pass rate: {passed}/{total} = {passed/total*100:.1f}%" if total else "N/A")
-
-                if first_fail:
-                    tree, pval, exp, pct, miss = first_fail
-                    print(f"\n=== FIRST FAILURE: {tree.parent} ===")
-                    print(f"Expected: {exp:,.0f}, Actual: {pval:,.0f}, Diff: {pct:.1f}%")
-                    print(f"Missing children: {miss}/{len(tree.children)}")
+                    print(f"\nSum of found children: {found_sum:,.0f}")
+                    print(f"Parent value: {parent_val:,.0f}" if parent_val else "")
+                    if parent_val:
+                        gap = parent_val - found_sum
+                        print(f"GAP (missing children value): {gap:,.0f}")
 
                 print("\n" + "="*60 + "\n")
 
