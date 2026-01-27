@@ -120,8 +120,8 @@ class CalculationVerifier:
         """
         self.logger.info(f"Verifying calculations against {source} formulas")
 
-        # Group facts by context_id using C-Equal
-        fact_groups = self.c_equal.group_facts(statements, main_only=True)
+        # Group facts by context_id (c-equal rule)
+        fact_groups = self.c_equal.group_facts(statements, main_only=True, group_by='context_id')
 
         if fact_groups.context_count == 0:
             self.logger.warning("No facts extracted from statements")
@@ -129,7 +129,7 @@ class CalculationVerifier:
 
         self.logger.info(
             f"Extracted {fact_groups.total_facts} facts across "
-            f"{fact_groups.context_count} contexts (context_ids)"
+            f"{fact_groups.context_count} contexts"
         )
 
         # Get calculation trees from registry
@@ -141,11 +141,11 @@ class CalculationVerifier:
 
         self.logger.info(f"Verifying {len(trees)} calculation trees")
 
-        # Verify each tree
+        # Verify each tree - returns list of results per context
         results = []
         for tree in trees:
-            result = self._verify_tree(tree, fact_groups)
-            results.append(result)
+            context_results = self._verify_tree(tree, fact_groups)
+            results.extend(context_results)
 
         # Log summary
         passed = sum(1 for r in results if r.passed)
@@ -163,17 +163,21 @@ class CalculationVerifier:
         self,
         tree: CalculationTree,
         fact_groups: FactGroups
-    ) -> CalculationVerificationResult:
+    ) -> list[CalculationVerificationResult]:
         """
         Verify a single calculation tree across all contexts.
+
+        Returns one result per context for granular c-equal verification.
 
         Args:
             tree: CalculationTree to verify
             fact_groups: FactGroups from C-Equal module
 
         Returns:
-            CalculationVerificationResult
+            List of CalculationVerificationResult (one per context)
         """
+        results = []
+
         # Normalize parent concept
         parent_norm = self.c_equal.normalize_concept(tree.parent)
 
@@ -187,74 +191,54 @@ class CalculationVerifier:
         contexts_with_parent = fact_groups.get_contexts_with_concept(parent_norm)
 
         if not contexts_with_parent:
-            return CalculationVerificationResult(
+            # Return empty list - no contexts to verify
+            return results
+
+        # Verify in each context - return individual result per context
+        for context_id in contexts_with_parent:
+            context_group = fact_groups.get_context(context_id)
+            if not context_group:
+                continue
+
+            result = self.c_equal.verify_calculation(
+                context_group,
+                parent_norm,
+                children_norm,
+                self.calculation_tolerance,
+                self.rounding_tolerance
+            )
+
+            # Build children list for this context
+            children = []
+            for child_concept, weight in tree.children:
+                child_norm = self.c_equal.normalize_concept(child_concept)
+                child_value = context_group.get(child_norm)
+
+                children.append(ChildContribution(
+                    concept=child_concept,
+                    value=child_value,
+                    weight=weight,
+                    contribution=child_value * weight if child_value is not None else None,
+                    found=child_value is not None
+                ))
+
+            results.append(CalculationVerificationResult(
                 parent_concept=tree.parent,
                 source=tree.source,
                 role=tree.role,
-                passed=True,
-                message=f"Parent {tree.parent} not found in any context"
-            )
-
-        # Verify in each context
-        context_results = []
-        for context_id in contexts_with_parent:
-            context_group = fact_groups.get_context(context_id)
-            if context_group:
-                result = self.c_equal.verify_calculation(
-                    context_group,
-                    parent_norm,
-                    children_norm,
-                    self.calculation_tolerance,
-                    self.rounding_tolerance
-                )
-                context_results.append((context_id, result))
-
-        # Aggregate results
-        all_passed = all(r['passed'] for _, r in context_results)
-        contexts_passed = sum(1 for _, r in context_results if r['passed'])
-
-        # Use first result for details
-        first_result = context_results[0][1] if context_results else {}
-
-        # Build children list for the result
-        children = []
-        for child_concept, weight in tree.children:
-            child_norm = self.c_equal.normalize_concept(child_concept)
-            first_group = fact_groups.get_context(contexts_with_parent[0]) if contexts_with_parent else None
-            child_value = first_group.get(child_norm) if first_group else None
-
-            children.append(ChildContribution(
-                concept=child_concept,
-                value=child_value,
-                weight=weight,
-                contribution=child_value * weight if child_value is not None else None,
-                found=child_value is not None
+                expected_value=result.get('expected_value'),
+                actual_value=result.get('parent_value'),
+                passed=result.get('passed', False),
+                children=children,
+                difference=result.get('difference'),
+                tolerance_used=self.calculation_tolerance,
+                message=result.get('message', ''),
+                missing_children=result.get('missing_children', []),
+                contexts_verified=1,
+                contexts_passed=1 if result.get('passed') else 0
             ))
 
-        # Build message
-        if len(context_results) > 1:
-            message = (
-                f"Verified across {len(context_results)} contexts: "
-                f"{contexts_passed}/{len(context_results)} passed"
-            )
-        else:
-            message = first_result.get('message', '')
-
-        return CalculationVerificationResult(
-            parent_concept=tree.parent,
-            source=tree.source,
-            role=tree.role,
-            expected_value=first_result.get('expected_value'),
-            actual_value=first_result.get('parent_value'),
-            passed=all_passed,
-            children=children,
-            difference=first_result.get('difference'),
-            tolerance_used=self.calculation_tolerance,
-            message=message,
-            missing_children=first_result.get('missing_children', []),
-            contexts_verified=len(context_results),
-            contexts_passed=contexts_passed
-        )
+        return results
 
     def dual_verify(
         self,
@@ -273,8 +257,8 @@ class CalculationVerifier:
         """
         self.logger.info("Running dual verification (company + taxonomy)")
 
-        # Group facts by context_id
-        fact_groups = self.c_equal.group_facts(statements, main_only=True)
+        # Group facts by period (lenient grouping)
+        fact_groups = self.c_equal.group_facts(statements, main_only=True, group_by='period')
 
         if fact_groups.context_count == 0:
             self.logger.warning("No facts extracted for dual verification")

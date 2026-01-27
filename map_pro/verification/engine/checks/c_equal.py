@@ -226,20 +226,21 @@ class CEqual:
     def group_facts(
         self,
         statements: MappedStatements,
-        main_only: bool = True
+        main_only: bool = True,
+        group_by: str = 'period'
     ) -> FactGroups:
         """
-        Group all facts by their context_id.
-
-        Per XBRL c-equal rule, facts with the same context_id
-        can be compared in calculations.
+        Group all facts by their context or period.
 
         Args:
             statements: MappedStatements object
             main_only: If True, only use facts from main statements
+            group_by: How to group facts:
+                - 'context_id': Strict c-equal grouping by XBRL context_id
+                - 'period': Group by period_end (more lenient, old behavior)
 
         Returns:
-            FactGroups containing facts organized by context_id
+            FactGroups containing facts organized by group key
         """
         groups = FactGroups()
         skipped_statements = 0
@@ -267,18 +268,23 @@ class CEqual:
                     skipped_facts += 1
                     continue
 
-                # Get context_id - this IS the c-equal identifier
-                context_id = fact.context_id or fact.period_end or 'unknown'
+                # Determine group key based on group_by parameter
+                if group_by == 'context_id':
+                    # Strict c-equal: use context_id (includes period + dimensions)
+                    group_key = fact.context_id or fact.period_end or 'unknown'
+                else:
+                    # Period-based: use period_end (old behavior, more lenient)
+                    group_key = fact.period_end or 'unknown'
 
                 # Normalize concept name
                 concept = self.normalize_concept(fact.concept)
 
                 # Add to group
-                groups.add_fact(context_id, concept, value, fact.concept)
+                groups.add_fact(group_key, concept, value, fact.concept)
                 added_facts += 1
 
         self.logger.info(
-            f"C-Equal grouping: {added_facts} facts in {groups.context_count} contexts"
+            f"C-Equal grouping (by {group_by}): {added_facts} facts in {groups.context_count} groups"
         )
 
         if skipped_statements > 0:

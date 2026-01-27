@@ -142,8 +142,9 @@ class HorizontalChecker:
             self.logger.info("No calculation networks provided - skipping calculation check")
             return results
 
-        # Group facts by context_id using C-Equal
-        fact_groups = self.c_equal.group_facts(statements, main_only=True)
+        # Group facts by period (old behavior that works)
+        # Use group_by='period' for lenient grouping by period_end
+        fact_groups = self.c_equal.group_facts(statements, main_only=True, group_by='period')
 
         if fact_groups.context_count == 0:
             self.logger.info("No facts found for calculation check")
@@ -159,11 +160,10 @@ class HorizontalChecker:
             parent_children = self._group_arcs_by_parent(network.arcs)
 
             for parent_concept, children in parent_children.items():
-                result = self._verify_calculation_across_contexts(
+                context_results = self._verify_calculation_across_contexts(
                     parent_concept, children, fact_groups, network.role
                 )
-                if result:
-                    results.append(result)
+                results.extend(context_results)
 
         return results
 
@@ -173,9 +173,12 @@ class HorizontalChecker:
         children: list[CalculationArc],
         fact_groups: FactGroups,
         role: str
-    ) -> Optional[CheckResult]:
+    ) -> list[CheckResult]:
         """
         Verify a calculation across all contexts where parent exists.
+
+        Returns one CheckResult per context for granular reporting.
+        This follows c-equal: each context is verified independently.
 
         Args:
             parent_concept: Parent concept name
@@ -184,8 +187,10 @@ class HorizontalChecker:
             role: Statement role
 
         Returns:
-            CheckResult or None if no data
+            List of CheckResult objects (one per context)
         """
+        results = []
+
         # Normalize parent concept
         parent_norm = self.c_equal.normalize_concept(parent_concept)
 
@@ -199,10 +204,9 @@ class HorizontalChecker:
         contexts_with_parent = fact_groups.get_contexts_with_concept(parent_norm)
 
         if not contexts_with_parent:
-            return None
+            return results
 
-        # Verify in each context
-        context_results = []
+        # Verify in each context - return individual result per context
         for context_id in contexts_with_parent:
             context_group = fact_groups.get_context(context_id)
             if not context_group:
@@ -235,51 +239,32 @@ class HorizontalChecker:
             diff = abs(parent_value - calculated_sum)
             passed = self._within_tolerance(parent_value, calculated_sum)
 
-            context_results.append({
-                'context_id': context_id,
-                'passed': passed,
-                'parent_value': parent_value,
-                'calculated_sum': calculated_sum,
-                'difference': diff,
-                'child_details': child_details,
-            })
+            severity = SEVERITY_INFO if passed else SEVERITY_CRITICAL
 
-        if not context_results:
-            return None
+            message = (
+                f"Calculation {parent_concept}: "
+                f"expected {calculated_sum:.2f}, "
+                f"found {parent_value:.2f}"
+            )
 
-        # Aggregate results
-        all_passed = all(r['passed'] for r in context_results)
-        contexts_passed = sum(1 for r in context_results if r['passed'])
-        first_result = context_results[0]
+            results.append(CheckResult(
+                check_name=CHECK_CALCULATION_CONSISTENCY,
+                check_type='horizontal',
+                passed=passed,
+                severity=severity,
+                message=message,
+                expected_value=calculated_sum,
+                actual_value=parent_value,
+                difference=diff,
+                details={
+                    'parent_concept': parent_concept,
+                    'role': role,
+                    'context_id': context_id,
+                    'children': child_details,
+                }
+            ))
 
-        severity = SEVERITY_INFO if all_passed else SEVERITY_CRITICAL
-
-        message = (
-            f"Calculation {parent_concept}: "
-            f"expected {first_result['calculated_sum']:.2f}, "
-            f"found {first_result['parent_value']:.2f}"
-        )
-
-        if len(context_results) > 1:
-            message += f" [{contexts_passed}/{len(context_results)} contexts passed]"
-
-        return CheckResult(
-            check_name=CHECK_CALCULATION_CONSISTENCY,
-            check_type='horizontal',
-            passed=all_passed,
-            severity=severity,
-            message=message,
-            expected_value=first_result['calculated_sum'],
-            actual_value=first_result['parent_value'],
-            difference=first_result['difference'],
-            details={
-                'parent_concept': parent_concept,
-                'role': role,
-                'contexts_verified': len(context_results),
-                'contexts_passed': contexts_passed,
-                'children': first_result['child_details'],
-            }
-        )
+        return results
 
     def check_duplicate_facts(self, statements: MappedStatements) -> list[CheckResult]:
         """
