@@ -474,6 +474,32 @@ class CalculationVerifier:
 
         return check_results
 
+    def _get_calc_tree_concepts(self) -> set[str]:
+        """
+        Get all concepts referenced in calculation trees.
+
+        Collects both parent and child concepts from company AND taxonomy
+        calculation trees. These are concepts the company (or taxonomy)
+        has explicitly declared as part of calculations.
+
+        Returns:
+            Set of NORMALIZED concept names from calc trees
+        """
+        normalizer = ConceptNormalizer()
+        concepts = set()
+
+        # Get from both sources
+        for source in ('company', 'taxonomy'):
+            trees = self.registry.get_all_calculations(source)
+            for tree in trees:
+                # Add parent
+                concepts.add(normalizer.normalize(tree.parent))
+                # Add all children
+                for child_concept, _ in tree.children:
+                    concepts.add(normalizer.normalize(child_concept))
+
+        return concepts
+
     def _extract_facts(
         self,
         statements: MappedStatements
@@ -507,7 +533,12 @@ class CalculationVerifier:
         facts_by_period: dict[str, dict[str, float]] = {}  # period -> {concept: value}
         normalizer = ConceptNormalizer()
 
+        # Get concepts declared in calculation trees
+        # These override our default "skip dimensioned facts" rule
+        calc_tree_concepts = self._get_calc_tree_concepts()
+
         dimensioned_count = 0
+        dimensioned_allowed = 0  # Dimensioned facts allowed because calc tree references them
         skipped_non_main = 0
         for statement in statements.statements:
             # CRITICAL: Only use facts from MAIN statements for calculation verification
@@ -521,13 +552,21 @@ class CalculationVerifier:
                 if fact.is_abstract or fact.value is None:
                     continue
 
-                # CRITICAL: Skip dimensioned facts for calculation verification
-                # XBRL calculation linkbases define calculations using AGGREGATE facts only
-                # Dimensioned facts (broken down by segment/entity) should not be mixed
-                # with aggregate totals - this causes calculation mismatches
+                # Normalize concept name early - needed for calc tree check
+                concept_normalized = normalizer.normalize(fact.concept)
+
+                # DIMENSIONAL HANDLING:
+                # Default rule (ours): Skip dimensioned facts - they shouldn't mix with aggregates
+                # Override rule (company's): If calc tree explicitly references this concept,
+                # the company has declared its use - allow it through
                 if fact.dimensions and any(fact.dimensions.values()):
-                    dimensioned_count += 1
-                    continue
+                    if concept_normalized in calc_tree_concepts:
+                        # Company declared this concept in calc tree - their rule overrides ours
+                        dimensioned_allowed += 1
+                    else:
+                        # Not in calc tree - our default rule applies: skip it
+                        dimensioned_count += 1
+                        continue
 
                 # Parse value - handle financial statement conventions
                 # Em-dash (—), en-dash (–), hyphen (-), and empty string mean zero/nil
@@ -540,8 +579,9 @@ class CalculationVerifier:
                     except (ValueError, TypeError):
                         continue
 
-                # Normalize the concept name for lookup
-                normalized = normalizer.register(fact.concept, source='statement')
+                # Register the concept (stores original->normalized mapping)
+                # We already have concept_normalized from earlier
+                normalizer.register(fact.concept, source='statement')
 
                 # Use period_end as the key (or 'unknown' if not available)
                 period = fact.period_end or 'unknown'
@@ -550,8 +590,8 @@ class CalculationVerifier:
                     facts_by_period[period] = {}
 
                 # Within same period, prefer main statements
-                if normalized not in facts_by_period[period] or statement.is_main_statement:
-                    facts_by_period[period][normalized] = value
+                if concept_normalized not in facts_by_period[period] or statement.is_main_statement:
+                    facts_by_period[period][concept_normalized] = value
 
         # Find the most recent period (latest date string)
         if not facts_by_period:
@@ -598,7 +638,7 @@ class CalculationVerifier:
 
         self.logger.debug(
             f"Extracted {len(facts)} normalized fact values from statements "
-            f"(skipped {dimensioned_count} dimensioned facts)"
+            f"(skipped {dimensioned_count} dimensioned, allowed {dimensioned_allowed} calc-tree-declared)"
         )
 
         return facts, normalizer
