@@ -278,6 +278,30 @@ class VerificationCoordinator:
                     f"{result.formula_registry_summary.get('taxonomy_trees', 0)} taxonomy trees"
                 )
 
+                # === DIAGNOSTIC: Show concept formats ===
+                print("\n" + "="*60)
+                print("DIAGNOSTIC: CONCEPT FORMAT COMPARISON")
+                print("="*60)
+
+                # Sample statement concepts
+                sample_stmt_concepts = []
+                for stmt in statements.statements[:2]:
+                    for fact in stmt.facts[:5]:
+                        if fact.concept and fact.value is not None:
+                            sample_stmt_concepts.append(fact.concept)
+                print(f"\nStatement concepts (sample): {sample_stmt_concepts[:10]}")
+
+                # Sample calculation tree concepts
+                trees = self.formula_registry.get_all_calculations('company')
+                if trees:
+                    sample_tree = trees[0]
+                    print(f"\nCalc tree parent: {sample_tree.parent}")
+                    print(f"Calc tree children: {[c[0] for c in sample_tree.children[:5]]}")
+                else:
+                    print("\nNO CALCULATION TREES LOADED!")
+
+                print("="*60 + "\n")
+
             # Step 3: Run horizontal checks
             self.logger.info(f"{LOG_PROCESS} Running horizontal checks")
             result.horizontal_results = self.horizontal_checker.check_all(
