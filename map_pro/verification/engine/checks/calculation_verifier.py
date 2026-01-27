@@ -538,10 +538,27 @@ class CalculationVerifier:
         # if a concept is missing (some facts may only appear in certain periods)
         facts: dict[str, float] = dict(facts_by_period.get(primary_period, {}))
 
+        # Supplement with facts from other periods for concepts not in primary
+        # This handles cases where child concepts only appear in different periods
+        supplemented_count = 0
+        for period in valid_periods[1:] if valid_periods else []:
+            period_facts = facts_by_period.get(period, {})
+            for concept, value in period_facts.items():
+                if concept not in facts:
+                    facts[concept] = value
+                    supplemented_count += 1
+
+        # Also check 'unknown' period for supplementation
+        if 'unknown' in facts_by_period and primary_period != 'unknown':
+            for concept, value in facts_by_period['unknown'].items():
+                if concept not in facts:
+                    facts[concept] = value
+                    supplemented_count += 1
+
         # Log period information
         self.logger.debug(
             f"Extracted facts from {len(facts_by_period)} periods, "
-            f"using primary period: {primary_period}"
+            f"using primary period: {primary_period}, supplemented {supplemented_count} concepts"
         )
 
         self.logger.debug(
