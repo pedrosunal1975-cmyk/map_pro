@@ -357,21 +357,6 @@ class VerificationCoordinator:
                         print(f"GAP: {parent_val - found_sum:,.0f}")
 
                 print("\n" + "="*60 + "\n")
-                        else:
-                            print(f"  MISSING: {child}")
-                            print(f"    Normalized to: '{child_norm}'")
-                            if similar:
-                                print(f"    Similar in statements: {similar[:3]}")
-                            else:
-                                print(f"    NO similar concepts found in statements!")
-
-                    print(f"\nSum of found children: {found_sum:,.0f}")
-                    print(f"Parent value: {parent_val:,.0f}" if parent_val else "")
-                    if parent_val:
-                        gap = parent_val - found_sum
-                        print(f"GAP (missing children value): {gap:,.0f}")
-
-                print("\n" + "="*60 + "\n")
 
             # Step 3: Run horizontal checks
             self.logger.info(f"{LOG_PROCESS} Running horizontal checks")
