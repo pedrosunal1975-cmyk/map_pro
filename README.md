@@ -1,2 +1,2 @@
 # map_pro
-xbrl parsing, mapping and verifying program
+xbrl parsing and mapping program
