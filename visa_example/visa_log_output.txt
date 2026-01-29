@@ -1,0 +1,1116 @@
+[a@a-2024 map_pro]$ python -m verification.verify
+[INFO] process.coordinator - [OUTPUT] Directories ready: 3 created
+[INFO] input.mapped_data - MappedDataLoader initialized: /mnt/map_pro/mapper/mapped_statements
+[INFO] input.xbrl_filings - XBRLFilingsLoader initialized: /mnt/map_pro/downloader/entities
+[INFO] input.xbrl_filings - XBRLFilingsLoader initialized: /mnt/map_pro/downloader/entities
+[INFO] input.taxonomy - TaxonomyLoader initialized: /mnt/map_pro/taxonomies/libraries
+[INFO] process.taxonomy_manager - [PROCESS] Taxonomy manager initialized
+[INFO] input.xbrl_filings - XBRLFilingsLoader initialized: /mnt/map_pro/downloader/entities
+[INFO] input.taxonomy - TaxonomyLoader initialized: /mnt/map_pro/taxonomies/libraries
+[INFO] process.coordinator - [OUTPUT] Verification coordinator initialized
+============================================================
+VERIFICATION MODULE
+Financial Statement Quality Assessment
+============================================================
+[INFO] input.mapped_data - Discovering mapped filings in: /mnt/map_pro/mapper/mapped_statements
+[INFO] input.mapped_data - Discovered 5 mapped filing entries
+
+Available Companies with Mapped Statements:
+--------------------------------------------------
+   1. sec | Albertsons_Companies_Inc | 10_K | 2025-10-13
+   2. sec | Apple_Inc | 10_K | 2025-09-27
+   3. sec | PLUG_POWER_INC | 10_K | 2025-02-28
+   4. esef | TESCO_PLC | ALL | 2025-02-22
+   5. sec | VISA_INC | 10_K | 2025-09-30
+--------------------------------------------------
+  -1. Verify ALL filings
+   0. Exit
+
+Enter selection: 5
+
+============================================================
+VERIFYING: VISA_INC | 10_K | 2025-09-30
+============================================================
+[INFO] process.coordinator - [INPUT] Verifying filing: sec/VISA_INC/10_K/2025-09-30
+[INFO] process.coordinator - [INPUT] Loading mapped statements
+[INFO] input.mapped_reader - Reading statements for VISA_INC/10_K/2025-09-30
+[INFO] input.mapped_reader - Found 28 files in json/core_statements/
+[INFO] input.mapped_reader - Found 52 files in json/details/
+[INFO] input.mapped_reader - Found 27 files in json/other/
+[INFO] input.mapped_reader - Total statement files found: 107
+[INFO] input.mapped_reader - Found 107 total statement files (core_statements + details + other)
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedstatementsofchangesinequity': 223 facts from consolidatedstatementsofchangesinequity.json
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedstatementsofoperations': 197 facts from consolidatedstatementsofoperations.json
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedbalancesheets': 166 facts from consolidatedbalancesheets.json
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedstatementsofcashflows': 143 facts from consolidatedstatementsofcashflows.json
+[INFO] input.mapped_reader - Loaded statement 'Usandeuroperetrospectiveresponsibilityplansscheduleofchangesinpreferredstockandrighttorecovercoveredlossesdetails': 153 facts from usandeuroperetrospectiveresponsibilityplansscheduleofchangesinpreferredstockandrighttorecovercoveredlossesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Earningspersharescheduleofearningspersharebasicanddiluteddetails': 123 facts from earningspersharescheduleofearningspersharebasicanddiluteddetails.json
+[INFO] input.mapped_reader - Loaded statement 'Debtscheduleofoutstandingdebtdetails': 95 facts from debtscheduleofoutstandingdebtdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedstatementsofcomprehensiveincome': 66 facts from consolidatedstatementsofcomprehensiveincome.json
+[INFO] input.mapped_reader - Loaded statement 'Coverpage': 66 facts from coverpage.json
+[INFO] input.mapped_reader - Loaded statement 'Stockholdersequityscheduleofcommonstockasconverteddetails': 73 facts from stockholdersequityscheduleofcommonstockasconverteddetails.json
+[INFO] input.mapped_reader - Loaded statement 'Legalmattersadditionalinformationdetails': 60 facts from legalmattersadditionalinformationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Sharebasedcompensationscheduleofperformancebasedsharesactivitydisclosuredetails': 36 facts from sharebasedcompensationscheduleofperformancebasedsharesactivitydisclosuredetails.json
+[INFO] input.mapped_reader - Loaded statement 'Fairvaluemeasurementsandinvestmentsscheduleofassetsandliabilitiesmeasureddetails': 51 facts from fairvaluemeasurementsandinvestmentsscheduleofassetsandliabilitiesmeasureddetails.json
+[INFO] input.mapped_reader - Loaded statement 'Summaryofsignificantaccountingpoliciespolicies': 23 facts from summaryofsignificantaccountingpoliciespolicies.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxesscheduleofreconciliationoftheusstatutoryfederaltaxratedetails': 58 facts from incometaxesscheduleofreconciliationoftheusstatutoryfederaltaxratedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxesadditionalinformationdetails': 56 facts from incometaxesadditionalinformationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Sharebasedcompensationscheduleofrestrictedstockunitactivitydisclosuredetails': 34 facts from sharebasedcompensationscheduleofrestrictedstockunitactivitydisclosuredetails.json
+[INFO] input.mapped_reader - Loaded statement 'Sharebasedcompensationadditionalinformationdetails': 37 facts from sharebasedcompensationadditionalinformationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Sharebasedcompensationscheduleofoptionsactivitydisclosuredetails': 25 facts from sharebasedcompensationscheduleofoptionsactivitydisclosuredetails.json
+[INFO] input.mapped_reader - Loaded statement 'Stockholdersequityadditionalinformationdetails': 44 facts from stockholdersequityadditionalinformationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedbalancesheetsparenthetical': 50 facts from consolidatedbalancesheetsparenthetical.json
+[INFO] input.mapped_reader - Loaded statement 'Revenueadditionalinformationdetails': 41 facts from revenueadditionalinformationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Intangibleassetsandgoodwillscheduleofindefinitelivedandfinitelivedintangibleassetsdetails': 38 facts from intangibleassetsandgoodwillscheduleofindefinitelivedandfinitelivedintangibleassetsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Debtscheduleoffutureprincipalpaymentsonoutstandingdebtdetails': 45 facts from debtscheduleoffutureprincipalpaymentsonoutstandingdebtdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Debtadditionalinformationdetails': 36 facts from debtadditionalinformationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Stockholdersequityscheduleofeffectofveterritorycoveredlossesrecoveryonthecompanyrepurchasingitscommonstockdetails': 39 facts from stockholdersequityscheduleofeffectofveterritorycoveredlossesrecoveryonthecompanyrepurchasingitscommonstockdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Sharebasedcompensationscheduleofassumptionsusedtoestimatethefairvalueofeachstockoptiononthedateofgrantusingablackscholesoptionpricingmodeldetails': 30 facts from sharebasedcompensationscheduleofassumptionsusedtoestimatethefairvalueofeachstockoptiononthedateofgrantusingablackscholesoptionpricingmodeldetails.json
+[INFO] input.mapped_reader - Loaded statement 'Sharebasedcompensationscheduleofassumptionsusedtoestimatefairvalueusingmontecarlomodeldetails': 30 facts from sharebasedcompensationscheduleofassumptionsusedtoestimatefairvalueusingmontecarlomodeldetails.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxesscheduleofincometaxexpensebyfiscalyeardetails': 36 facts from incometaxesscheduleofincometaxexpensebyfiscalyeardetails.json
+[INFO] input.mapped_reader - Loaded statement 'Fairvaluemeasurementsandinvestmentsscheduleofamortizedcostunrealizedgainsandlossesandfairvalueofavailableforsalesecuritiesdetails': 33 facts from fairvaluemeasurementsandinvestmentsscheduleofamortizedcostunrealizedgainsandlossesandfairvalueofavailableforsalesecuritiesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxesscheduleofcomponentsofdeferredtaxassetsandliabilitiesdetails': 32 facts from incometaxesscheduleofcomponentsofdeferredtaxassetsandliabilitiesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Revenuescheduleofdisaggregationofrevenuedetails': 33 facts from revenuescheduleofdisaggregationofrevenuedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Usandeuroperetrospectiveresponsibilityplansadditionalinformationdetails': 32 facts from usandeuroperetrospectiveresponsibilityplansadditionalinformationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Leasesadditionalinformationdetails': 31 facts from leasesadditionalinformationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxesscheduleofreconciliationofbeginningandendingunrecognizedtaxbenefitsbyfiscalyeardetails': 27 facts from incometaxesscheduleofreconciliationofbeginningandendingunrecognizedtaxbenefitsbyfiscalyeardetails.json
+[INFO] input.mapped_reader - Loaded statement 'Legalmatterslegalmattersscheduleofaccruedlitigationforbothcoveredandnoncoveredlitigationdetails': 31 facts from legalmatterslegalmattersscheduleofaccruedlitigationforbothcoveredandnoncoveredlitigationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Derivativeandhedginginstrumentsscheduleofderivativeinstrumentsatgrossvaluedetails': 24 facts from derivativeandhedginginstrumentsscheduleofderivativeinstrumentsatgrossvaluedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Pensionandotherpostretirementbenefitsdetails': 19 facts from pensionandotherpostretirementbenefitsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Stockholdersequitysharerepurchasesintheopenmarketdetails': 25 facts from stockholdersequitysharerepurchasesintheopenmarketdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Derivativeandhedginginstrumentsadditionalinformationdetails': 19 facts from derivativeandhedginginstrumentsadditionalinformationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Cashcashequivalentsrestrictedcashandrestrictedcashequivalentsdetails': 18 facts from cashcashequivalentsrestrictedcashandrestrictedcashequivalentsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Propertyequipmentandtechnologynetscheduleofpropertyequipmentandtechnologynetdetails': 18 facts from propertyequipmentandtechnologynetscheduleofpropertyequipmentandtechnologynetdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Intangibleassetsandgoodwillscheduleofestimatedfutureamortizationexpenseonfinitelivedintangibleassetsdetails': 14 facts from intangibleassetsandgoodwillscheduleofestimatedfutureamortizationexpenseonfinitelivedintangibleassetsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Propertyequipmentandtechnologynetscheduleofestimatedfutureamortizationexpenseontechnologydetails': 14 facts from propertyequipmentandtechnologynetscheduleofestimatedfutureamortizationexpenseontechnologydetails.json
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedstatementsofchangesinequityparenthetical': 18 facts from consolidatedstatementsofchangesinequityparenthetical.json
+[INFO] input.mapped_reader - Loaded statement 'Pvpdisclosure': 0 facts from pvpdisclosure.json
+[INFO] input.mapped_reader - Loaded statement 'Fairvaluemeasurementsandinvestmentsscheduleofnonmarketableequitysecuritiesdetails': 14 facts from fairvaluemeasurementsandinvestmentsscheduleofnonmarketableequitysecuritiesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Fairvaluemeasurementsandinvestmentsscheduleofcontractualmaturityofdebtsecuritiesdetails': 17 facts from fairvaluemeasurementsandinvestmentsscheduleofcontractualmaturityofdebtsecuritiesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxesscheduleofincomebeforetaxesbyfiscalyeardetails': 15 facts from incometaxesscheduleofincomebeforetaxesbyfiscalyeardetails.json
+[INFO] input.mapped_reader - Loaded statement 'Usandeuroperetrospectiveresponsibilityplansscheduleofchangesintheuslitigationescrowaccountdetails': 12 facts from usandeuroperetrospectiveresponsibilityplansscheduleofchangesintheuslitigationescrowaccountdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Earningspersharescheduleofweightedaveragenumberofsharesasconverteddetails': 12 facts from earningspersharescheduleofweightedaveragenumberofsharesasconverteddetails.json
+[INFO] input.mapped_reader - Loaded statement 'Acquisitionsdetails': 12 facts from acquisitionsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Summaryofsignificantaccountingpoliciesdetails': 10 facts from summaryofsignificantaccountingpoliciesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Propertyequipmentandtechnologynetadditionalinformationdetails': 11 facts from propertyequipmentandtechnologynetadditionalinformationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Fairvaluemeasurementsandinvestmentsadditionalinformationdetails': 7 facts from fairvaluemeasurementsandinvestmentsadditionalinformationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Segmentinformationadditionalinformationdetails': 7 facts from segmentinformationadditionalinformationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Intangibleassetsandgoodwillscheduleofchangesingoodwilldetails': 12 facts from intangibleassetsandgoodwillscheduleofchangesingoodwilldetails.json
+[INFO] input.mapped_reader - Loaded statement 'Leasesscheduleofpresentvalueoffutureminimumleasepaymentsdetails': 9 facts from leasesscheduleofpresentvalueoffutureminimumleasepaymentsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Stockholdersequityscheduleofeffectofusretrospectiveresponsibilityplanonthecompanyclasscommonbasconvertedsharesdetails': 12 facts from stockholdersequityscheduleofeffectofusretrospectiveresponsibilityplanonthecompanyclasscommonbasconvertedsharesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Commitmentsdetails': 7 facts from commitmentsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Segmentinformationscheduleoflonglivednetpropertyequipmentandtechnologyassetsbymajorgeographicareadetails': 6 facts from segmentinformationscheduleoflonglivednetpropertyequipmentandtechnologyassetsbymajorgeographicareadetails.json
+[INFO] input.mapped_reader - Loaded statement 'Fairvaluemeasurementsandinvestmentsscheduleofinvestmentincomeexpensedetails': 9 facts from fairvaluemeasurementsandinvestmentsscheduleofinvestmentincomeexpensedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Insidertradingarrangements': 4 facts from insidertradingarrangements.json
+[INFO] input.mapped_reader - Loaded statement 'Derivativeandhedginginstrumentsscheduleofaggregatenotionalamountofthederivativeinstrumentsdetails': 6 facts from derivativeandhedginginstrumentsscheduleofaggregatenotionalamountofthederivativeinstrumentsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Sharebasedcompensationtables': 5 facts from sharebasedcompensationtables.json
+[INFO] input.mapped_reader - Loaded statement 'Fairvaluemeasurementsandinvestmentstables': 5 facts from fairvaluemeasurementsandinvestmentstables.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxestables': 5 facts from incometaxestables.json
+[INFO] input.mapped_reader - Loaded statement 'Errcompdisclosure': 0 facts from errcompdisclosure.json
+[INFO] input.mapped_reader - Loaded statement 'Awardtimingdisclosure': 0 facts from awardtimingdisclosure.json
+[INFO] input.mapped_reader - Loaded statement 'Intangibleassetsandgoodwilltables': 4 facts from intangibleassetsandgoodwilltables.json
+[INFO] input.mapped_reader - Loaded statement 'Stockholdersequitytables': 4 facts from stockholdersequitytables.json
+[INFO] input.mapped_reader - Loaded statement 'Settlementguaranteemanagementadditionalinformationdetails': 4 facts from settlementguaranteemanagementadditionalinformationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Usandeuroperetrospectiveresponsibilityplanstables': 3 facts from usandeuroperetrospectiveresponsibilityplanstables.json
+[INFO] input.mapped_reader - Loaded statement 'Auditinformation': 3 facts from auditinformation.json
+[INFO] input.mapped_reader - Loaded statement 'Intangibleassetsandgoodwilladditionalinformationdetails': 3 facts from intangibleassetsandgoodwilladditionalinformationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Derivativeandhedginginstrumentstables': 2 facts from derivativeandhedginginstrumentstables.json
+[INFO] input.mapped_reader - Loaded statement 'Earningspersharetables': 2 facts from earningspersharetables.json
+[INFO] input.mapped_reader - Loaded statement 'Propertyequipmentandtechnologynettables': 2 facts from propertyequipmentandtechnologynettables.json
+[INFO] input.mapped_reader - Loaded statement 'Debttables': 2 facts from debttables.json
+[INFO] input.mapped_reader - Loaded statement 'Derivativeandhedginginstruments': 1 facts from derivativeandhedginginstruments.json
+[INFO] input.mapped_reader - Loaded statement 'Cashcashequivalentsrestrictedcashandrestrictedcashequivalents': 1 facts from cashcashequivalentsrestrictedcashandrestrictedcashequivalents.json
+[INFO] input.mapped_reader - Loaded statement 'Pensionandotherpostretirementbenefits': 1 facts from pensionandotherpostretirementbenefits.json
+[INFO] input.mapped_reader - Loaded statement 'Sharebasedcompensation': 1 facts from sharebasedcompensation.json
+[INFO] input.mapped_reader - Loaded statement 'Intangibleassetsandgoodwill': 1 facts from intangibleassetsandgoodwill.json
+[INFO] input.mapped_reader - Loaded statement 'Propertyequipmentandtechnologynet': 1 facts from propertyequipmentandtechnologynet.json
+[INFO] input.mapped_reader - Loaded statement 'Commitments': 1 facts from commitments.json
+[INFO] input.mapped_reader - Loaded statement 'Segmentinformationtables': 1 facts from segmentinformationtables.json
+[INFO] input.mapped_reader - Loaded statement 'Revenue': 1 facts from revenue.json
+[INFO] input.mapped_reader - Loaded statement 'Usandeuroperetrospectiveresponsibilityplans': 1 facts from usandeuroperetrospectiveresponsibilityplans.json
+[INFO] input.mapped_reader - Loaded statement 'Acquisitions': 1 facts from acquisitions.json
+[INFO] input.mapped_reader - Loaded statement 'Cashcashequivalentsrestrictedcashandrestrictedcashequivalentstables': 1 facts from cashcashequivalentsrestrictedcashandrestrictedcashequivalentstables.json
+[INFO] input.mapped_reader - Loaded statement 'Legalmatters': 1 facts from legalmatters.json
+[INFO] input.mapped_reader - Loaded statement 'Insidertradingpoliciesproc': 1 facts from insidertradingpoliciesproc.json
+[INFO] input.mapped_reader - Loaded statement 'Fairvaluemeasurementsandinvestments': 1 facts from fairvaluemeasurementsandinvestments.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxes': 1 facts from incometaxes.json
+[INFO] input.mapped_reader - Loaded statement 'Stockholdersequity': 1 facts from stockholdersequity.json
+[INFO] input.mapped_reader - Loaded statement 'Commitmentstables': 1 facts from commitmentstables.json
+[INFO] input.mapped_reader - Loaded statement 'Earningspershare': 1 facts from earningspershare.json
+[INFO] input.mapped_reader - Loaded statement 'Segmentinformation': 1 facts from segmentinformation.json
+[INFO] input.mapped_reader - Loaded statement 'Settlementguaranteemanagement': 1 facts from settlementguaranteemanagement.json
+[INFO] input.mapped_reader - Loaded statement 'Debt': 1 facts from debt.json
+[INFO] input.mapped_reader - Loaded statement 'Legalmatterstables': 1 facts from legalmatterstables.json
+[INFO] input.mapped_reader - Loaded statement 'Leases': 1 facts from leases.json
+[INFO] input.mapped_reader - Loaded statement 'Revenuetables': 1 facts from revenuetables.json
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedstatementsofcashflowsparenthetical': 1 facts from consolidatedstatementsofcashflowsparenthetical.json
+[INFO] input.mapped_reader - Loaded statement 'Summaryofsignificantaccountingpolicies': 1 facts from summaryofsignificantaccountingpolicies.json
+[INFO] input.mapped_reader - Loaded statement 'Leasestables': 1 facts from leasestables.json
+[INFO] input.mapped_reader - Loaded 107 statements from all folders, 18 main statements
+[INFO] process.coordinator - [OUTPUT] Loaded 107 statements
+[INFO] process.coordinator - [PROCESS] Identifying main statements for sec
+[INFO] process.coordinator - [OUTPUT] Identified 5 main statements: Consolidatedstatementsofoperations, Consolidatedbalancesheets, Consolidatedstatementsofchangesinequity, Consolidatedstatementsofcomprehensiveincome, Consolidatedstatementsofcashflows
+[INFO] process.coordinator - [INPUT] Loading XBRL linkbases
+[INFO] input.xbrl_filings - Searching for filing: market=sec, company=VISA_INC, form=10_K, date=2025-09-30
+[INFO] input.xbrl_filings - Found filing directory: /mnt/map_pro/downloader/entities/sec/VISA_INC/filings/10-K/0001403161-25-000089
+[INFO] input.xbrl_reader - Reading calculation linkbase from /mnt/map_pro/downloader/entities/sec/VISA_INC/filings/10-K/0001403161-25-000089
+[INFO] input.xbrl_reader - Parsed 25 calculation networks from /mnt/map_pro/downloader/entities/sec/VISA_INC/filings/10-K/0001403161-25-000089/v-20250930_cal.xml
+[INFO] process.coordinator - [OUTPUT] Loaded 25 calculation networks
+[INFO] process.coordinator - [INPUT] Found iXBRL HTML instance document: v-20250930.htm
+[INFO] verification.engine.checks.sign_weight_handler - Parsed v-20250930.htm: found 125 sign corrections
+[INFO] process.coordinator - [OUTPUT] Parsed 125 sign corrections
+[INFO] process.coordinator - [PROCESS] Loading formulas into registry
+[INFO] process.formula_registry - Formula registry cleared
+[INFO] input.xbrl_filings - Searching for filing: market=sec, company=VISA_INC, form=10_K, date=2025-09-30
+[INFO] input.xbrl_filings - Found filing directory: /mnt/map_pro/downloader/entities/sec/VISA_INC/filings/10-K/0001403161-25-000089
+[INFO] process.coordinator - [INPUT] XBRL path for formula loading: /mnt/map_pro/downloader/entities/sec/VISA_INC/filings/10-K/0001403161-25-000089
+[INFO] process.formula_registry - Loading company formulas from /mnt/map_pro/downloader/entities/sec/VISA_INC/filings/10-K/0001403161-25-000089
+[INFO] input.xbrl_reader - Reading calculation linkbase from /mnt/map_pro/downloader/entities/sec/VISA_INC/filings/10-K/0001403161-25-000089
+[INFO] input.xbrl_reader - Parsed 25 calculation networks from /mnt/map_pro/downloader/entities/sec/VISA_INC/filings/10-K/0001403161-25-000089/v-20250930_cal.xml
+[INFO] process.formula_registry - Loaded 48 company calculation trees (43 parent concepts)
+[INFO] process.coordinator - [OUTPUT] Loaded 48 company calculation trees
+[INFO] process.coordinator - [OUTPUT] Formula registry: 48 company calculation trees
+[INFO] process.coordinator - [PROCESS] Running horizontal checks
+[INFO] process.horizontal_checker - Running horizontal checks
+[INFO] process.horizontal_checker - Found iXBRL HTML instance document: v-20250930.htm
+[INFO] verification.engine.checks.sign_weight_handler - Parsed v-20250930.htm: found 125 sign corrections
+[INFO] process.horizontal_checker - Parsed 125 sign corrections from instance document
+[INFO] process.c_equal - C-Equal grouping: 2352 facts in 341 contexts
+[INFO] process.c_equal - C-Equal filtering: 0 abstract, 364 nil, 0 no context_id
+[WARNING] process.c_equal - Found 5 concepts with inconsistent duplicates
+[INFO] process.horizontal_checker - Grouped 1297 facts into 341 contexts
+[INFO] process.horizontal_checker - Role-scoped grouping: 48 unique (role, parent) combinations
+[INFO] process.horizontal_checker - Found 5 parents in multiple roles (role scoping prevents mixing)
+[INFO] process.c_equal - C-Equal grouping: 2352 facts in 341 contexts
+[INFO] process.c_equal - C-Equal filtering: 0 abstract, 364 nil, 0 no context_id
+[WARNING] process.c_equal - Found 5 concepts with inconsistent duplicates
+[INFO] process.horizontal_checker - Horizontal checks complete: 192 passed, 5 failed, 0 skipped
+[INFO] process.horizontal_checker - Sign corrections applied from XBRL instance: 125
+[INFO] process.coordinator - [PROCESS] Running vertical checks
+[INFO] process.vertical_checker - Running vertical checks on 5 main statements (out of 107 total)
+[INFO] process.vertical_checker - Running XBRL-sourced verification (company formulas)
+[INFO] process.calculation_verifier - Verifying calculations against company formulas
+[INFO] process.c_equal - C-Equal grouping: 2352 facts in 341 contexts
+[INFO] process.c_equal - C-Equal filtering: 0 abstract, 364 nil, 0 no context_id
+[WARNING] process.c_equal - Found 5 concepts with inconsistent duplicates
+[INFO] process.calculation_verifier - Extracted 1297 facts across 341 contexts
+[INFO] process.calculation_verifier - Built cross-context lookup with 398 concepts
+[INFO] process.calculation_verifier - Fact groups diagnostic: 341 contexts, 398 unique concepts
+[INFO] process.calculation_verifier - Verifying 48 calculation trees
+[INFO] process.calculation_verifier - Calculation verification (company): 192 passed, 3 failed, 0 skipped
+[INFO] process.vertical_checker - XBRL calculation verification (company): 192/195 passed
+[INFO] process.vertical_checker - Vertical checks complete: 192/203 passed
+[INFO] process.coordinator - [PROCESS] Checking taxonomy availability
+[INFO] process.taxonomy_manager - [INPUT] Instructing library module for sec/VISA_INC/10_K/2025-09-30
+2026-01-29 21:40:48 - database.models.database.models.base - INFO - Database engine initialized (pool_size=5)
+[INFO] database.models.database.models.base - Database engine initialized (pool_size=5)
+[INFO] process.taxonomy_manager - [OUTPUT] Database initialized
+2026-01-29 21:40:48 - database.models.database.models.base - WARNING - Database engine already initialized
+[WARNING] database.models.database.models.base - Database engine already initialized
+[INFO] process.taxonomy_manager - [PROCESS] Instructing library: --scan
+2026-01-29 21:40:48 - library.cli.library.library - INFO - [INPUT] Running one-time scan
+[INFO] library.cli.library.library - [INPUT] Running one-time scan
+
+================================================================================
+LIBRARY SCAN - ONE-TIME
+================================================================================
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [PROCESS] Initializing library coordinator
+[INFO] library.engine.library.engine.coordinator - [PROCESS] Initializing library coordinator
+2026-01-29 21:40:49 - library.loaders.library.loaders.parsed_loader - INFO - [INPUT] ParsedLoader initialized: /mnt/map_pro/parser/parsed_reports
+[INFO] library.loaders.library.loaders.parsed_loader - [INPUT] ParsedLoader initialized: /mnt/map_pro/parser/parsed_reports
+2026-01-29 21:40:49 - library.engine.library.engine.metadata_extractor - INFO - [INPUT] MetadataExtractor initialized
+[INFO] library.engine.library.engine.metadata_extractor - [INPUT] MetadataExtractor initialized
+2026-01-29 21:40:49 - library.loaders.library.loaders.parsed_loader - INFO - [INPUT] ParsedLoader initialized: /mnt/map_pro/parser/parsed_reports
+[INFO] library.loaders.library.loaders.parsed_loader - [INPUT] ParsedLoader initialized: /mnt/map_pro/parser/parsed_reports
+2026-01-29 21:40:49 - library.loaders.library.loaders.parsed_reader - INFO - [INPUT] ParsedReader initialized
+[INFO] library.loaders.library.loaders.parsed_reader - [INPUT] ParsedReader initialized
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_loader - INFO - [INPUT] TaxonomyLoader initialized
+[INFO] library.loaders.library.loaders.taxonomy_loader - [INPUT] TaxonomyLoader initialized
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_reader - INFO - [INPUT] TaxonomyReader initialized (threshold=10 files)
+[INFO] library.loaders.library.loaders.taxonomy_reader - [INPUT] TaxonomyReader initialized (threshold=10 files)
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] URL resolver initialized (fallback mode available)
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] URL resolver initialized (fallback mode available)
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Database connector initialized
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Database connector initialized
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Library coordinator initialized
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Library coordinator initialized
+
+Scanning for new parsed filings...
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [INPUT] Processing new filings
+[INFO] library.engine.library.engine.coordinator - [INPUT] Processing new filings
+2026-01-29 21:40:49 - library.engine.library.engine.metadata_extractor - INFO - [PROCESS] Extracting metadata from all filings
+[INFO] library.engine.library.engine.metadata_extractor - [PROCESS] Extracting metadata from all filings
+2026-01-29 21:40:49 - library.loaders.library.loaders.parsed_loader - INFO - [PROCESS] Discovering parsed.json files in: /mnt/map_pro/parser/parsed_reports
+[INFO] library.loaders.library.loaders.parsed_loader - [PROCESS] Discovering parsed.json files in: /mnt/map_pro/parser/parsed_reports
+2026-01-29 21:40:49 - library.loaders.library.loaders.parsed_loader - INFO - [OUTPUT] Discovered 5 parsed.json files
+[INFO] library.loaders.library.loaders.parsed_loader - [OUTPUT] Discovered 5 parsed.json files
+2026-01-29 21:40:49 - library.engine.library.engine.metadata_extractor - INFO - [OUTPUT] Extracted metadata from 5 filings
+[INFO] library.engine.library.engine.metadata_extractor - [OUTPUT] Extracted metadata from 5 filings
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Found 5 new filings to process
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Found 5 new filings to process
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [INPUT] Processing filing: esef/ALL/2025-02-22/parsed.json
+[INFO] library.engine.library.engine.coordinator - [INPUT] Processing filing: esef/ALL/2025-02-22/parsed.json
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Detected 6 namespaces
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Detected 6 namespaces
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [INPUT] Getting required libraries from 6 namespaces
+[INFO] library.engine.library.engine.url_resolver - [INPUT] Getting required libraries from 6 namespaces
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [INPUT] Batch resolving 6 namespaces
+[INFO] library.engine.library.engine.url_resolver - [INPUT] Batch resolving 6 namespaces
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Skipping company extension: http://tescoplc.com/xbrl/2024
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Skipping company extension: http://tescoplc.com/xbrl/2024
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+INFO: SEC searcher registered (market: sec)
+INFO: UK Companies House searcher registered (market: uk_frc)
+INFO: ESEF searcher registered (market: esef)
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - INFO - [INPUT] TaxonomyRecognizer initialized with 4 patterns
+[INFO] searcher.engine.searcher.engine.taxonomy_recognizer - [INPUT] TaxonomyRecognizer initialized with 4 patterns
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Loaded TaxonomyRecognizer for fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Loaded TaxonomyRecognizer for fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - WARNING - [OUTPUT] No pattern matched for namespace: http://xbrl.org/2006/xbrldi
+[WARNING] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] No pattern matched for namespace: http://xbrl.org/2006/xbrldi
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - WARNING - [OUTPUT] Could not resolve namespace: http://xbrl.org/2006/xbrldi
+[WARNING] library.engine.library.engine.url_resolver - [OUTPUT] Could not resolve namespace: http://xbrl.org/2006/xbrldi
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - WARNING - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2013/inlineXBRL
+[WARNING] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2013/inlineXBRL
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - WARNING - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2013/inlineXBRL
+[WARNING] library.engine.library.engine.url_resolver - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2013/inlineXBRL
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - WARNING - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2003/iso4217
+[WARNING] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2003/iso4217
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - WARNING - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2003/iso4217
+[WARNING] library.engine.library.engine.url_resolver - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2003/iso4217
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - INFO - [OUTPUT] Matched: http://www.xbrl.org/inlineXBRL/transformation/2020-02-12 -> transformation v2020 (xbrl)
+[INFO] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] Matched: http://www.xbrl.org/inlineXBRL/transformation/2020-02-12 -> transformation v2020 (xbrl)
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved via fallback: http://www.xbrl.org/inlineXBRL/transformation/2020-02-12 → transformation v2020
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved via fallback: http://www.xbrl.org/inlineXBRL/transformation/2020-02-12 → transformation v2020
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - INFO - [OUTPUT] Matched: https://xbrl.ifrs.org/taxonomy/2022-03-24/ifrs-full -> taxonomy v2022 (ifrs)
+[INFO] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] Matched: https://xbrl.ifrs.org/taxonomy/2022-03-24/ifrs-full -> taxonomy v2022 (ifrs)
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved via fallback: https://xbrl.ifrs.org/taxonomy/2022-03-24/ifrs-full → taxonomy v2022
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved via fallback: https://xbrl.ifrs.org/taxonomy/2022-03-24/ifrs-full → taxonomy v2022
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Batch resolved: 2/6 recognized
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Batch resolved: 2/6 recognized
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Required libraries: 2
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Required libraries: 2
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Requires 2 libraries
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Requires 2 libraries
+2026-01-29 21:40:49 - library.engine.library.engine.availability_checker - INFO - [INPUT] Checking availability of 2 libraries
+[INFO] library.engine.library.engine.availability_checker - [INPUT] Checking availability of 2 libraries
+2026-01-29 21:40:49 - library.engine.library.engine.availability_checker - INFO - [OUTPUT] Availability check: 0 available, 2 missing
+[INFO] library.engine.library.engine.availability_checker - [OUTPUT] Availability check: 0 available, 2 missing
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_reader - INFO - [PROCESS] Verifying libraries/ directory
+[INFO] library.loaders.library.loaders.taxonomy_reader - [PROCESS] Verifying libraries/ directory
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_loader - INFO - [PROCESS] Discovering libraries/ directory
+[INFO] library.loaders.library.loaders.taxonomy_loader - [PROCESS] Discovering libraries/ directory
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_loader - INFO - [OUTPUT] Found 5 libraries
+[INFO] library.loaders.library.loaders.taxonomy_loader - [OUTPUT] Found 5 libraries
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_reader - INFO - [OUTPUT] Verified 5 libraries
+[INFO] library.loaders.library.loaders.taxonomy_reader - [OUTPUT] Verified 5 libraries
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Dual verification complete: 0 truly available, 2 missing, 0 reconciled
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Dual verification complete: 0 truly available, 2 missing, 0 reconciled
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Dual verification: 0 available, 2 missing
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Dual verification: 0 available, 2 missing
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: transformation v2020
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: transformation v2020
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library needs download (no physical files): transformation v2020
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library needs download (no physical files): transformation v2020
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: taxonomy v2022
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: taxonomy v2022
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library needs download (no physical files): taxonomy v2022
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library needs download (no physical files): taxonomy v2022
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Saved 2 missing libraries
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Saved 2 missing libraries
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Successfully processed esef/ALL/2025-02-22/parsed.json
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Successfully processed esef/ALL/2025-02-22/parsed.json
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [INPUT] Processing filing: sec/10-K/2025-03-03/parsed.json
+[INFO] library.engine.library.engine.coordinator - [INPUT] Processing filing: sec/10-K/2025-03-03/parsed.json
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Detected 15 namespaces
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Detected 15 namespaces
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [INPUT] Getting required libraries from 15 namespaces
+[INFO] library.engine.library.engine.url_resolver - [INPUT] Getting required libraries from 15 namespaces
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [INPUT] Batch resolving 15 namespaces
+[INFO] library.engine.library.engine.url_resolver - [INPUT] Batch resolving 15 namespaces
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Taxonomy 'country' is included in parent taxonomies (us-gaap/dei) - marking as included
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Taxonomy 'country' is included in parent taxonomies (us-gaap/dei) - marking as included
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - INFO - [OUTPUT] Matched: http://www.sec.gov/inlineXBRL/transformation/2015-08-31 -> transformation v2015 (sec)
+[INFO] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] Matched: http://www.sec.gov/inlineXBRL/transformation/2015-08-31 -> transformation v2015 (sec)
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved via fallback: http://www.sec.gov/inlineXBRL/transformation/2015-08-31 → transformation v2015
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved via fallback: http://www.sec.gov/inlineXBRL/transformation/2015-08-31 → transformation v2015
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - WARNING - [OUTPUT] No pattern matched for namespace: http://xbrl.org/2006/xbrldi
+[WARNING] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] No pattern matched for namespace: http://xbrl.org/2006/xbrldi
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - WARNING - [OUTPUT] Could not resolve namespace: http://xbrl.org/2006/xbrldi
+[WARNING] library.engine.library.engine.url_resolver - [OUTPUT] Could not resolve namespace: http://xbrl.org/2006/xbrldi
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - WARNING - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2009/utr
+[WARNING] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2009/utr
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - WARNING - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2009/utr
+[WARNING] library.engine.library.engine.url_resolver - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2009/utr
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - WARNING - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2006/ref
+[WARNING] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2006/ref
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - WARNING - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2006/ref
+[WARNING] library.engine.library.engine.url_resolver - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2006/ref
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://fasb.org/srt/2024 → srt v2024
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://fasb.org/srt/2024 → srt v2024
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://xbrl.sec.gov/cyd/2024 → cyd v2024
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://xbrl.sec.gov/cyd/2024 → cyd v2024
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - WARNING - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2003/iso4217
+[WARNING] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2003/iso4217
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - WARNING - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2003/iso4217
+[WARNING] library.engine.library.engine.url_resolver - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2003/iso4217
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - WARNING - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2013/inlineXBRL
+[WARNING] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2013/inlineXBRL
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - WARNING - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2013/inlineXBRL
+[WARNING] library.engine.library.engine.url_resolver - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2013/inlineXBRL
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - INFO - [OUTPUT] Matched: http://www.xbrl.org/inlineXBRL/transformation/2022-02-16 -> transformation v2022 (xbrl)
+[INFO] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] Matched: http://www.xbrl.org/inlineXBRL/transformation/2022-02-16 -> transformation v2022 (xbrl)
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved via fallback: http://www.xbrl.org/inlineXBRL/transformation/2022-02-16 → transformation v2022
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved via fallback: http://www.xbrl.org/inlineXBRL/transformation/2022-02-16 → transformation v2022
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://fasb.org/us-gaap/2024 → us-gaap v2024
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://fasb.org/us-gaap/2024 → us-gaap v2024
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - WARNING - [OUTPUT] No pattern matched for namespace: http://xbrl.org/2005/xbrldt
+[WARNING] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] No pattern matched for namespace: http://xbrl.org/2005/xbrldt
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - WARNING - [OUTPUT] Could not resolve namespace: http://xbrl.org/2005/xbrldt
+[WARNING] library.engine.library.engine.url_resolver - [OUTPUT] Could not resolve namespace: http://xbrl.org/2005/xbrldt
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://xbrl.sec.gov/dei/2024 → dei v2024
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://xbrl.sec.gov/dei/2024 → dei v2024
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Skipping company extension: http://www.plugpoweinc.com/20241231
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Skipping company extension: http://www.plugpoweinc.com/20241231
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://xbrl.sec.gov/ecd/2024 → ecd v2024
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://xbrl.sec.gov/ecd/2024 → ecd v2024
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Batch resolved: 8/15 recognized
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Batch resolved: 8/15 recognized
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Required libraries: 7
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Required libraries: 7
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Requires 7 libraries
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Requires 7 libraries
+2026-01-29 21:40:49 - library.engine.library.engine.availability_checker - INFO - [INPUT] Checking availability of 7 libraries
+[INFO] library.engine.library.engine.availability_checker - [INPUT] Checking availability of 7 libraries
+2026-01-29 21:40:49 - library.engine.library.engine.availability_checker - INFO - [OUTPUT] Availability check: 0 available, 7 missing
+[INFO] library.engine.library.engine.availability_checker - [OUTPUT] Availability check: 0 available, 7 missing
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_reader - INFO - [PROCESS] Verifying libraries/ directory
+[INFO] library.loaders.library.loaders.taxonomy_reader - [PROCESS] Verifying libraries/ directory
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_loader - INFO - [PROCESS] Discovering libraries/ directory
+[INFO] library.loaders.library.loaders.taxonomy_loader - [PROCESS] Discovering libraries/ directory
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_loader - INFO - [OUTPUT] Found 5 libraries
+[INFO] library.loaders.library.loaders.taxonomy_loader - [OUTPUT] Found 5 libraries
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_reader - INFO - [OUTPUT] Verified 5 libraries
+[INFO] library.loaders.library.loaders.taxonomy_reader - [OUTPUT] Verified 5 libraries
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found srt-2024 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found srt-2024 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found cyd-2024 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found cyd-2024 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found us-gaap-2024 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found us-gaap-2024 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found dei-2024 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found dei-2024 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found ecd-2024 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found ecd-2024 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: srt v2024
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: srt v2024
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): srt v2024
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): srt v2024
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered srt v2024 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered srt v2024 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: cyd v2024
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: cyd v2024
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): cyd v2024
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): cyd v2024
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered cyd v2024 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered cyd v2024 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: us-gaap v2024
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: us-gaap v2024
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): us-gaap v2024
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): us-gaap v2024
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered us-gaap v2024 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered us-gaap v2024 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: dei v2024
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: dei v2024
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): dei v2024
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): dei v2024
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered dei v2024 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered dei v2024 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: ecd v2024
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: ecd v2024
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): ecd v2024
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): ecd v2024
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered ecd v2024 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered ecd v2024 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Dual verification complete: 5 truly available, 2 missing, 5 reconciled
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Dual verification complete: 5 truly available, 2 missing, 5 reconciled
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Dual verification: 5 available, 2 missing
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Dual verification: 5 available, 2 missing
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Reconciled 5 database/physical mismatches
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Reconciled 5 database/physical mismatches
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: transformation v2015
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: transformation v2015
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library needs download (no physical files): transformation v2015
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library needs download (no physical files): transformation v2015
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: transformation v2022
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: transformation v2022
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library needs download (no physical files): transformation v2022
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library needs download (no physical files): transformation v2022
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Saved 2 missing libraries
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Saved 2 missing libraries
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Successfully processed sec/10-K/2025-03-03/parsed.json
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Successfully processed sec/10-K/2025-03-03/parsed.json
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [INPUT] Processing filing: sec/10-K/2025-04-21/parsed.json
+[INFO] library.engine.library.engine.coordinator - [INPUT] Processing filing: sec/10-K/2025-04-21/parsed.json
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Detected 11 namespaces
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Detected 11 namespaces
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [INPUT] Getting required libraries from 11 namespaces
+[INFO] library.engine.library.engine.url_resolver - [INPUT] Getting required libraries from 11 namespaces
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [INPUT] Batch resolving 11 namespaces
+[INFO] library.engine.library.engine.url_resolver - [INPUT] Batch resolving 11 namespaces
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - INFO - [OUTPUT] Matched: http://www.sec.gov/inlineXBRL/transformation/2015-08-31 -> transformation v2015 (sec)
+[INFO] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] Matched: http://www.sec.gov/inlineXBRL/transformation/2015-08-31 -> transformation v2015 (sec)
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved via fallback: http://www.sec.gov/inlineXBRL/transformation/2015-08-31 → transformation v2015
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved via fallback: http://www.sec.gov/inlineXBRL/transformation/2015-08-31 → transformation v2015
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - WARNING - [OUTPUT] No pattern matched for namespace: http://xbrl.org/2006/xbrldi
+[WARNING] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] No pattern matched for namespace: http://xbrl.org/2006/xbrldi
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - WARNING - [OUTPUT] Could not resolve namespace: http://xbrl.org/2006/xbrldi
+[WARNING] library.engine.library.engine.url_resolver - [OUTPUT] Could not resolve namespace: http://xbrl.org/2006/xbrldi
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Skipping company extension: http://www.albertsons.com/20250222
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Skipping company extension: http://www.albertsons.com/20250222
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://fasb.org/srt/2024 → srt v2024
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://fasb.org/srt/2024 → srt v2024
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://xbrl.sec.gov/cyd/2024 → cyd v2024
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://xbrl.sec.gov/cyd/2024 → cyd v2024
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - WARNING - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2003/iso4217
+[WARNING] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2003/iso4217
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - WARNING - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2003/iso4217
+[WARNING] library.engine.library.engine.url_resolver - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2003/iso4217
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - WARNING - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2013/inlineXBRL
+[WARNING] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2013/inlineXBRL
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - WARNING - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2013/inlineXBRL
+[WARNING] library.engine.library.engine.url_resolver - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2013/inlineXBRL
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://fasb.org/us-gaap/2024 → us-gaap v2024
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://fasb.org/us-gaap/2024 → us-gaap v2024
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://xbrl.sec.gov/dei/2024 → dei v2024
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://xbrl.sec.gov/dei/2024 → dei v2024
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - INFO - [OUTPUT] Matched: http://www.xbrl.org/inlineXBRL/transformation/2020-02-12 -> transformation v2020 (xbrl)
+[INFO] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] Matched: http://www.xbrl.org/inlineXBRL/transformation/2020-02-12 -> transformation v2020 (xbrl)
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved via fallback: http://www.xbrl.org/inlineXBRL/transformation/2020-02-12 → transformation v2020
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved via fallback: http://www.xbrl.org/inlineXBRL/transformation/2020-02-12 → transformation v2020
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://xbrl.sec.gov/ecd/2024 → ecd v2024
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://xbrl.sec.gov/ecd/2024 → ecd v2024
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Batch resolved: 7/11 recognized
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Batch resolved: 7/11 recognized
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Required libraries: 7
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Required libraries: 7
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Requires 7 libraries
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Requires 7 libraries
+2026-01-29 21:40:49 - library.engine.library.engine.availability_checker - INFO - [INPUT] Checking availability of 7 libraries
+[INFO] library.engine.library.engine.availability_checker - [INPUT] Checking availability of 7 libraries
+2026-01-29 21:40:49 - library.engine.library.engine.availability_checker - INFO - [OUTPUT] Availability check: 0 available, 7 missing
+[INFO] library.engine.library.engine.availability_checker - [OUTPUT] Availability check: 0 available, 7 missing
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_reader - INFO - [PROCESS] Verifying libraries/ directory
+[INFO] library.loaders.library.loaders.taxonomy_reader - [PROCESS] Verifying libraries/ directory
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_loader - INFO - [PROCESS] Discovering libraries/ directory
+[INFO] library.loaders.library.loaders.taxonomy_loader - [PROCESS] Discovering libraries/ directory
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_loader - INFO - [OUTPUT] Found 5 libraries
+[INFO] library.loaders.library.loaders.taxonomy_loader - [OUTPUT] Found 5 libraries
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_reader - INFO - [OUTPUT] Verified 5 libraries
+[INFO] library.loaders.library.loaders.taxonomy_reader - [OUTPUT] Verified 5 libraries
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found srt-2024 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found srt-2024 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found cyd-2024 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found cyd-2024 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found us-gaap-2024 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found us-gaap-2024 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found dei-2024 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found dei-2024 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found ecd-2024 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found ecd-2024 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: srt v2024
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: srt v2024
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): srt v2024
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): srt v2024
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered srt v2024 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered srt v2024 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: cyd v2024
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: cyd v2024
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): cyd v2024
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): cyd v2024
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered cyd v2024 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered cyd v2024 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: us-gaap v2024
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: us-gaap v2024
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): us-gaap v2024
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): us-gaap v2024
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered us-gaap v2024 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered us-gaap v2024 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: dei v2024
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: dei v2024
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): dei v2024
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): dei v2024
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered dei v2024 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered dei v2024 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: ecd v2024
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: ecd v2024
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): ecd v2024
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): ecd v2024
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered ecd v2024 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered ecd v2024 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Dual verification complete: 5 truly available, 2 missing, 5 reconciled
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Dual verification complete: 5 truly available, 2 missing, 5 reconciled
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Dual verification: 5 available, 2 missing
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Dual verification: 5 available, 2 missing
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Reconciled 5 database/physical mismatches
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Reconciled 5 database/physical mismatches
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: transformation v2015
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: transformation v2015
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library needs download (no physical files): transformation v2015
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library needs download (no physical files): transformation v2015
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: transformation v2020
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: transformation v2020
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library needs download (no physical files): transformation v2020
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library needs download (no physical files): transformation v2020
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Saved 2 missing libraries
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Saved 2 missing libraries
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Successfully processed sec/10-K/2025-04-21/parsed.json
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Successfully processed sec/10-K/2025-04-21/parsed.json
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [INPUT] Processing filing: sec/10-K/2025-10-31/parsed.json
+[INFO] library.engine.library.engine.coordinator - [INPUT] Processing filing: sec/10-K/2025-10-31/parsed.json
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Detected 12 namespaces
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Detected 12 namespaces
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [INPUT] Getting required libraries from 12 namespaces
+[INFO] library.engine.library.engine.url_resolver - [INPUT] Getting required libraries from 12 namespaces
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [INPUT] Batch resolving 12 namespaces
+[INFO] library.engine.library.engine.url_resolver - [INPUT] Batch resolving 12 namespaces
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - INFO - [OUTPUT] Matched: http://www.sec.gov/inlineXBRL/transformation/2015-08-31 -> transformation v2015 (sec)
+[INFO] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] Matched: http://www.sec.gov/inlineXBRL/transformation/2015-08-31 -> transformation v2015 (sec)
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved via fallback: http://www.sec.gov/inlineXBRL/transformation/2015-08-31 → transformation v2015
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved via fallback: http://www.sec.gov/inlineXBRL/transformation/2015-08-31 → transformation v2015
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - WARNING - [OUTPUT] No pattern matched for namespace: http://xbrl.org/2006/xbrldi
+[WARNING] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] No pattern matched for namespace: http://xbrl.org/2006/xbrldi
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - WARNING - [OUTPUT] Could not resolve namespace: http://xbrl.org/2006/xbrldi
+[WARNING] library.engine.library.engine.url_resolver - [OUTPUT] Could not resolve namespace: http://xbrl.org/2006/xbrldi
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Skipping company extension: http://www.apple.com/20250927
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Skipping company extension: http://www.apple.com/20250927
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://xbrl.sec.gov/ecd/2025 → ecd v2025
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://xbrl.sec.gov/ecd/2025 → ecd v2025
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://xbrl.sec.gov/dei/2025 → dei v2025
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://xbrl.sec.gov/dei/2025 → dei v2025
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://xbrl.sec.gov/cyd/2025 → cyd v2025
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://xbrl.sec.gov/cyd/2025 → cyd v2025
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://fasb.org/us-gaap/2025 → us-gaap v2025
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://fasb.org/us-gaap/2025 → us-gaap v2025
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Taxonomy 'country' is included in parent taxonomies (us-gaap/dei) - marking as included
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Taxonomy 'country' is included in parent taxonomies (us-gaap/dei) - marking as included
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - WARNING - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2013/inlineXBRL
+[WARNING] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2013/inlineXBRL
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - WARNING - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2013/inlineXBRL
+[WARNING] library.engine.library.engine.url_resolver - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2013/inlineXBRL
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - WARNING - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2003/iso4217
+[WARNING] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2003/iso4217
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - WARNING - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2003/iso4217
+[WARNING] library.engine.library.engine.url_resolver - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2003/iso4217
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - INFO - [OUTPUT] Matched: http://www.xbrl.org/inlineXBRL/transformation/2020-02-12 -> transformation v2020 (xbrl)
+[INFO] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] Matched: http://www.xbrl.org/inlineXBRL/transformation/2020-02-12 -> transformation v2020 (xbrl)
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved via fallback: http://www.xbrl.org/inlineXBRL/transformation/2020-02-12 → transformation v2020
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved via fallback: http://www.xbrl.org/inlineXBRL/transformation/2020-02-12 → transformation v2020
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://fasb.org/srt/2025 → srt v2025
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://fasb.org/srt/2025 → srt v2025
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Batch resolved: 8/12 recognized
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Batch resolved: 8/12 recognized
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Required libraries: 7
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Required libraries: 7
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Requires 7 libraries
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Requires 7 libraries
+2026-01-29 21:40:49 - library.engine.library.engine.availability_checker - INFO - [INPUT] Checking availability of 7 libraries
+[INFO] library.engine.library.engine.availability_checker - [INPUT] Checking availability of 7 libraries
+2026-01-29 21:40:49 - library.engine.library.engine.availability_checker - INFO - [OUTPUT] Availability check: 0 available, 7 missing
+[INFO] library.engine.library.engine.availability_checker - [OUTPUT] Availability check: 0 available, 7 missing
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_reader - INFO - [PROCESS] Verifying libraries/ directory
+[INFO] library.loaders.library.loaders.taxonomy_reader - [PROCESS] Verifying libraries/ directory
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_loader - INFO - [PROCESS] Discovering libraries/ directory
+[INFO] library.loaders.library.loaders.taxonomy_loader - [PROCESS] Discovering libraries/ directory
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_loader - INFO - [OUTPUT] Found 5 libraries
+[INFO] library.loaders.library.loaders.taxonomy_loader - [OUTPUT] Found 5 libraries
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_reader - INFO - [OUTPUT] Verified 5 libraries
+[INFO] library.loaders.library.loaders.taxonomy_reader - [OUTPUT] Verified 5 libraries
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found ecd-2025 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found ecd-2025 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found dei-2025 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found dei-2025 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found cyd-2025 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found cyd-2025 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found us-gaap-2025 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found us-gaap-2025 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found srt-2025 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found srt-2025 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: ecd v2025
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: ecd v2025
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): ecd v2025
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): ecd v2025
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered ecd v2025 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered ecd v2025 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: dei v2025
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: dei v2025
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): dei v2025
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): dei v2025
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered dei v2025 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered dei v2025 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: cyd v2025
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: cyd v2025
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): cyd v2025
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): cyd v2025
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered cyd v2025 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered cyd v2025 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: us-gaap v2025
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: us-gaap v2025
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): us-gaap v2025
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): us-gaap v2025
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered us-gaap v2025 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered us-gaap v2025 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: srt v2025
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: srt v2025
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): srt v2025
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): srt v2025
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered srt v2025 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered srt v2025 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Dual verification complete: 5 truly available, 2 missing, 5 reconciled
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Dual verification complete: 5 truly available, 2 missing, 5 reconciled
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Dual verification: 5 available, 2 missing
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Dual verification: 5 available, 2 missing
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Reconciled 5 database/physical mismatches
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Reconciled 5 database/physical mismatches
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: transformation v2015
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: transformation v2015
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library needs download (no physical files): transformation v2015
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library needs download (no physical files): transformation v2015
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: transformation v2020
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: transformation v2020
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library needs download (no physical files): transformation v2020
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library needs download (no physical files): transformation v2020
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Saved 2 missing libraries
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Saved 2 missing libraries
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Successfully processed sec/10-K/2025-10-31/parsed.json
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Successfully processed sec/10-K/2025-10-31/parsed.json
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [INPUT] Processing filing: sec/10-K/2025-11-06/parsed.json
+[INFO] library.engine.library.engine.coordinator - [INPUT] Processing filing: sec/10-K/2025-11-06/parsed.json
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Detected 12 namespaces
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Detected 12 namespaces
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [INPUT] Getting required libraries from 12 namespaces
+[INFO] library.engine.library.engine.url_resolver - [INPUT] Getting required libraries from 12 namespaces
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [INPUT] Batch resolving 12 namespaces
+[INFO] library.engine.library.engine.url_resolver - [INPUT] Batch resolving 12 namespaces
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - INFO - [OUTPUT] Matched: http://www.sec.gov/inlineXBRL/transformation/2015-08-31 -> transformation v2015 (sec)
+[INFO] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] Matched: http://www.sec.gov/inlineXBRL/transformation/2015-08-31 -> transformation v2015 (sec)
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved via fallback: http://www.sec.gov/inlineXBRL/transformation/2015-08-31 → transformation v2015
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved via fallback: http://www.sec.gov/inlineXBRL/transformation/2015-08-31 → transformation v2015
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - WARNING - [OUTPUT] No pattern matched for namespace: http://xbrl.org/2006/xbrldi
+[WARNING] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] No pattern matched for namespace: http://xbrl.org/2006/xbrldi
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - WARNING - [OUTPUT] Could not resolve namespace: http://xbrl.org/2006/xbrldi
+[WARNING] library.engine.library.engine.url_resolver - [OUTPUT] Could not resolve namespace: http://xbrl.org/2006/xbrldi
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://xbrl.sec.gov/ecd/2025 → ecd v2025
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://xbrl.sec.gov/ecd/2025 → ecd v2025
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://xbrl.sec.gov/cyd/2025 → cyd v2025
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://xbrl.sec.gov/cyd/2025 → cyd v2025
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://xbrl.sec.gov/dei/2025 → dei v2025
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://xbrl.sec.gov/dei/2025 → dei v2025
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://fasb.org/us-gaap/2025 → us-gaap v2025
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://fasb.org/us-gaap/2025 → us-gaap v2025
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - WARNING - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2013/inlineXBRL
+[WARNING] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2013/inlineXBRL
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - WARNING - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2013/inlineXBRL
+[WARNING] library.engine.library.engine.url_resolver - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2013/inlineXBRL
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Taxonomy 'country' is included in parent taxonomies (us-gaap/dei) - marking as included
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Taxonomy 'country' is included in parent taxonomies (us-gaap/dei) - marking as included
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - WARNING - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2003/iso4217
+[WARNING] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] No pattern matched for namespace: http://www.xbrl.org/2003/iso4217
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - WARNING - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2003/iso4217
+[WARNING] library.engine.library.engine.url_resolver - [OUTPUT] Could not resolve namespace: http://www.xbrl.org/2003/iso4217
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [PROCESS] Direct construction failed, using fallback
+[INFO] library.engine.library.engine.url_resolver - [PROCESS] Direct construction failed, using fallback
+2026-01-29 21:40:49 - searcher.engine.searcher.engine.taxonomy_recognizer - INFO - [OUTPUT] Matched: http://www.xbrl.org/inlineXBRL/transformation/2020-02-12 -> transformation v2020 (xbrl)
+[INFO] searcher.engine.searcher.engine.taxonomy_recognizer - [OUTPUT] Matched: http://www.xbrl.org/inlineXBRL/transformation/2020-02-12 -> transformation v2020 (xbrl)
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved via fallback: http://www.xbrl.org/inlineXBRL/transformation/2020-02-12 → transformation v2020
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved via fallback: http://www.xbrl.org/inlineXBRL/transformation/2020-02-12 → transformation v2020
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Skipping company extension: http://wwww.visa.com/20250930
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Skipping company extension: http://wwww.visa.com/20250930
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Resolved directly: http://fasb.org/srt/2025 → srt v2025
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Resolved directly: http://fasb.org/srt/2025 → srt v2025
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Batch resolved: 8/12 recognized
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Batch resolved: 8/12 recognized
+2026-01-29 21:40:49 - library.engine.library.engine.url_resolver - INFO - [OUTPUT] Required libraries: 7
+[INFO] library.engine.library.engine.url_resolver - [OUTPUT] Required libraries: 7
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Requires 7 libraries
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Requires 7 libraries
+2026-01-29 21:40:49 - library.engine.library.engine.availability_checker - INFO - [INPUT] Checking availability of 7 libraries
+[INFO] library.engine.library.engine.availability_checker - [INPUT] Checking availability of 7 libraries
+2026-01-29 21:40:49 - library.engine.library.engine.availability_checker - INFO - [OUTPUT] Availability check: 0 available, 7 missing
+[INFO] library.engine.library.engine.availability_checker - [OUTPUT] Availability check: 0 available, 7 missing
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_reader - INFO - [PROCESS] Verifying libraries/ directory
+[INFO] library.loaders.library.loaders.taxonomy_reader - [PROCESS] Verifying libraries/ directory
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_loader - INFO - [PROCESS] Discovering libraries/ directory
+[INFO] library.loaders.library.loaders.taxonomy_loader - [PROCESS] Discovering libraries/ directory
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_loader - INFO - [OUTPUT] Found 5 libraries
+[INFO] library.loaders.library.loaders.taxonomy_loader - [OUTPUT] Found 5 libraries
+2026-01-29 21:40:49 - library.loaders.library.loaders.taxonomy_reader - INFO - [OUTPUT] Verified 5 libraries
+[INFO] library.loaders.library.loaders.taxonomy_reader - [OUTPUT] Verified 5 libraries
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found ecd-2025 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found ecd-2025 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found cyd-2025 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found cyd-2025 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found dei-2025 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found dei-2025 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found us-gaap-2025 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found us-gaap-2025 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - Found srt-2025 on disk but not in database - will register
+[INFO] library.engine.library.engine.coordinator - Found srt-2025 on disk but not in database - will register
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: ecd v2025
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: ecd v2025
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): ecd v2025
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): ecd v2025
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered ecd v2025 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered ecd v2025 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: cyd v2025
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: cyd v2025
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): cyd v2025
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): cyd v2025
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered cyd v2025 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered cyd v2025 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: dei v2025
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: dei v2025
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): dei v2025
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): dei v2025
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered dei v2025 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered dei v2025 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: us-gaap v2025
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: us-gaap v2025
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): us-gaap v2025
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): us-gaap v2025
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered us-gaap v2025 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered us-gaap v2025 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: srt v2025
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: srt v2025
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library already exists (physical + DB): srt v2025
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library already exists (physical + DB): srt v2025
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Registered srt v2025 (found on disk)
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Registered srt v2025 (found on disk)
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Dual verification complete: 5 truly available, 2 missing, 5 reconciled
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Dual verification complete: 5 truly available, 2 missing, 5 reconciled
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Dual verification: 5 available, 2 missing
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Dual verification: 5 available, 2 missing
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Reconciled 5 database/physical mismatches
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Reconciled 5 database/physical mismatches
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: transformation v2015
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: transformation v2015
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library needs download (no physical files): transformation v2015
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library needs download (no physical files): transformation v2015
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [INPUT] Saving taxonomy: transformation v2020
+[INFO] library.engine.library.engine.db_connector - [INPUT] Saving taxonomy: transformation v2020
+2026-01-29 21:40:49 - library.engine.library.engine.db_connector - INFO - [OUTPUT] Library needs download (no physical files): transformation v2020
+[INFO] library.engine.library.engine.db_connector - [OUTPUT] Library needs download (no physical files): transformation v2020
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Saved 2 missing libraries
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Saved 2 missing libraries
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Successfully processed sec/10-K/2025-11-06/parsed.json
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Successfully processed sec/10-K/2025-11-06/parsed.json
+2026-01-29 21:40:49 - library.engine.library.engine.coordinator - INFO - [OUTPUT] Processed 5 new filings
+[INFO] library.engine.library.engine.coordinator - [OUTPUT] Processed 5 new filings
+
+Processed 5 filings:
+
+  âš  Missing libraries | esef/ALL/2025-02-22/parsed.json
+    Namespaces: 6
+    Libraries: transformation v2020, taxonomy v2022
+    Missing: 2 libraries
+
+  âš  Missing libraries | sec/10-K/2025-03-03/parsed.json
+    Namespaces: 15
+    Libraries: transformation v2015, srt v2024, cyd v2024, transformation v2022, us-gaap v2024, dei v2024, ecd v2024
+    Missing: 2 libraries
+
+  âš  Missing libraries | sec/10-K/2025-04-21/parsed.json
+    Namespaces: 11
+    Libraries: transformation v2015, srt v2024, cyd v2024, us-gaap v2024, dei v2024, transformation v2020, ecd v2024
+    Missing: 2 libraries
+
+  âš  Missing libraries | sec/10-K/2025-10-31/parsed.json
+    Namespaces: 12
+    Libraries: transformation v2015, ecd v2025, dei v2025, cyd v2025, us-gaap v2025, transformation v2020, srt v2025
+    Missing: 2 libraries
+
+  âš  Missing libraries | sec/10-K/2025-11-06/parsed.json
+    Namespaces: 12
+    Libraries: transformation v2015, ecd v2025, cyd v2025, dei v2025, us-gaap v2025, transformation v2020, srt v2025
+    Missing: 2 libraries
+
+================================================================================
+Summary: 5/5 filings processed successfully
+================================================================================
+2026-01-29 21:40:49 - library.cli.library.library - INFO - [OUTPUT] Scan complete: 5/5 successful
+[INFO] library.cli.library.library - [OUTPUT] Scan complete: 5/5 successful
+[INFO] process.taxonomy_manager - [PROCESS] Instructing library: --download
+2026-01-29 21:40:49 - library.cli.library.library - INFO - [INPUT] Starting download of pending taxonomies
+[INFO] library.cli.library.library - [INPUT] Starting download of pending taxonomies
+
+================================================================================
+LIBRARY DOWNLOAD - PENDING TAXONOMIES
+================================================================================
+
+Initializing download coordinator...
+2026-01-29 21:40:49 - downloader.engine.downloader.engine.db_operations - INFO - [PROCESS] Initializing database engine...
+[INFO] downloader.engine.downloader.engine.db_operations - [PROCESS] Initializing database engine...
+2026-01-29 21:40:49 - database.models.database.models.base - WARNING - Database engine already initialized
+[WARNING] database.models.database.models.base - Database engine already initialized
+2026-01-29 21:40:49 - downloader.engine.downloader.engine.db_operations - INFO - [OUTPUT] Database engine initialized successfully
+[INFO] downloader.engine.downloader.engine.db_operations - [OUTPUT] Database engine initialized successfully
+Querying pending taxonomy downloads...
+2026-01-29 21:40:49 - downloader.engine.downloader.engine.coordinator - INFO - [INPUT] Processing pending downloads (limit=100)
+[INFO] downloader.engine.downloader.engine.coordinator - [INPUT] Processing pending downloads (limit=100)
+2026-01-29 21:40:49 - downloader.engine.downloader.engine.db_operations - INFO - [INPUT] Querying downloadable filings (limit=100)
+[INFO] downloader.engine.downloader.engine.db_operations - [INPUT] Querying downloadable filings (limit=100)
+2026-01-29 21:40:49 - downloader.engine.downloader.engine.db_operations - INFO - [OUTPUT] Found 0 downloadable filings (0 failed, 0 pending)
+[INFO] downloader.engine.downloader.engine.db_operations - [OUTPUT] Found 0 downloadable filings (0 failed, 0 pending)
+2026-01-29 21:40:49 - downloader.engine.downloader.engine.db_operations - INFO - [INPUT] Querying downloadable taxonomies (limit=100)
+[INFO] downloader.engine.downloader.engine.db_operations - [INPUT] Querying downloadable taxonomies (limit=100)
+2026-01-29 21:40:49 - downloader.engine.downloader.engine.db_operations - INFO - [OUTPUT] Found 4 downloadable taxonomies (0 failed, 4 pending)
+[INFO] downloader.engine.downloader.engine.db_operations - [OUTPUT] Found 4 downloadable taxonomies (0 failed, 4 pending)
+2026-01-29 21:40:49 - downloader.engine.downloader.engine.coordinator - INFO - [PROCESS] Found 0 pending filings, 4 pending taxonomies
+[INFO] downloader.engine.downloader.engine.coordinator - [PROCESS] Found 0 pending filings, 4 pending taxonomies
+2026-01-29 21:40:49 - downloader.engine.downloader.engine.coordinator - INFO - [INPUT] Processing taxonomy: transformation / 2022
+[INFO] downloader.engine.downloader.engine.coordinator - [INPUT] Processing taxonomy: transformation / 2022
+2026-01-29 21:40:49 - downloader.engine.downloader.engine.db_operations - INFO - [PROCESS] Updating taxonomy status: a4b42f72-3b47-465d-bf4c-f47e240d53c8 -> downloading
+[INFO] downloader.engine.downloader.engine.db_operations - [PROCESS] Updating taxonomy status: a4b42f72-3b47-465d-bf4c-f47e240d53c8 -> downloading
+2026-01-29 21:40:49 - downloader.engine.downloader.engine.db_operations - INFO - [OUTPUT] Taxonomy status updated successfully
+[INFO] downloader.engine.downloader.engine.db_operations - [OUTPUT] Taxonomy status updated successfully
+2026-01-29 21:40:49 - downloader.engine.downloader.engine.path_resolver - INFO - [PROCESS] Building taxonomy path: taxonomies_dir=/mnt/map_pro/taxonomies/libraries, name=transformation, version=2022
+[INFO] downloader.engine.downloader.engine.path_resolver - [PROCESS] Building taxonomy path: taxonomies_dir=/mnt/map_pro/taxonomies/libraries, name=transformation, version=2022
+2026-01-29 21:40:49 - downloader.engine.downloader.engine.path_resolver - INFO - [OUTPUT] Built taxonomy directory path: /mnt/map_pro/taxonomies/libraries/transformation/2022
+[INFO] downloader.engine.downloader.engine.path_resolver - [OUTPUT] Built taxonomy directory path: /mnt/map_pro/taxonomies/libraries/transformation/2022
+2026-01-29 21:40:49 - downloader.engine.downloader.engine.coordinator - INFO - [PROCESS] Target directory: /mnt/map_pro/taxonomies/libraries/transformation/2022
+[INFO] downloader.engine.downloader.engine.coordinator - [PROCESS] Target directory: /mnt/map_pro/taxonomies/libraries/transformation/2022
+2026-01-29 21:40:49 - downloader.engine.downloader.engine.coordinator - INFO - [PROCESS] Target directory (absolute): /mnt/map_pro/taxonomies/libraries/transformation/2022
+[INFO] downloader.engine.downloader.engine.coordinator - [PROCESS] Target directory (absolute): /mnt/map_pro/taxonomies/libraries/transformation/2022
+2026-01-29 21:40:49 - downloader.engine.downloader.engine.distribution_processor - INFO - [PROCESS] Starting distribution-agnostic download
+[INFO] downloader.engine.downloader.engine.distribution_processor - [PROCESS] Starting distribution-agnostic download
+2026-01-29 21:40:49 - downloader.engine.downloader.engine.distribution_processor - INFO - [PROCESS] Detecting distribution type
+[INFO] downloader.engine.downloader.engine.distribution_processor - [PROCESS] Detecting distribution type
+2026-01-29 21:40:49 - downloader.engine.downloader.engine.distribution_detector - INFO - [INPUT] Detecting distribution type: https://xbrl.org/taxonomies/transformation-2022.zip
+[INFO] downloader.engine.downloader.engine.distribution_detector - [INPUT] Detecting distribution type: https://xbrl.org/taxonomies/transformation-2022.zip
+2026-01-29 21:40:56 - downloader.engine.downloader.engine.distribution_detector - WARNING - [OUTPUT] Could not detect distribution type for https://xbrl.org/taxonomies/transformation-2022.zip
+[WARNING] downloader.engine.downloader.engine.distribution_detector - [OUTPUT] Could not detect distribution type for https://xbrl.org/taxonomies/transformation-2022.zip
+2026-01-29 21:40:56 - downloader.engine.downloader.engine.distribution_processor - ERROR - [OUTPUT] URL not accessible: HTTP 404
+[ERROR] downloader.engine.downloader.engine.distribution_processor - [OUTPUT] URL not accessible: HTTP 404
+2026-01-29 21:40:56 - downloader.engine.downloader.engine.failure_handler - ERROR - [OUTPUT] Download FAILED: Failed at detection: Distribution detection failed
+[ERROR] downloader.engine.downloader.engine.failure_handler - [OUTPUT] Download FAILED: Failed at detection: Distribution detection failed
+2026-01-29 21:40:56 - downloader.engine.downloader.engine.failure_handler - ERROR - [OUTPUT] Failed at detection
+[ERROR] downloader.engine.downloader.engine.failure_handler - [OUTPUT] Failed at detection
+2026-01-29 21:40:56 - downloader.engine.downloader.engine.db_operations - INFO - [PROCESS] Updating taxonomy status: a4b42f72-3b47-465d-bf4c-f47e240d53c8 -> failed
+[INFO] downloader.engine.downloader.engine.db_operations - [PROCESS] Updating taxonomy status: a4b42f72-3b47-465d-bf4c-f47e240d53c8 -> failed
+2026-01-29 21:40:56 - downloader.engine.downloader.engine.db_operations - INFO - [OUTPUT] Taxonomy status updated successfully
+[INFO] downloader.engine.downloader.engine.db_operations - [OUTPUT] Taxonomy status updated successfully
+2026-01-29 21:40:56 - downloader.engine.downloader.engine.coordinator - INFO - [INPUT] Processing taxonomy: transformation / 2015
+[INFO] downloader.engine.downloader.engine.coordinator - [INPUT] Processing taxonomy: transformation / 2015
+2026-01-29 21:40:56 - downloader.engine.downloader.engine.db_operations - INFO - [PROCESS] Updating taxonomy status: 61632d34-3253-497b-b14a-227aa11e084b -> downloading
+[INFO] downloader.engine.downloader.engine.db_operations - [PROCESS] Updating taxonomy status: 61632d34-3253-497b-b14a-227aa11e084b -> downloading
+2026-01-29 21:40:56 - downloader.engine.downloader.engine.db_operations - INFO - [OUTPUT] Taxonomy status updated successfully
+[INFO] downloader.engine.downloader.engine.db_operations - [OUTPUT] Taxonomy status updated successfully
+2026-01-29 21:40:56 - downloader.engine.downloader.engine.path_resolver - INFO - [PROCESS] Building taxonomy path: taxonomies_dir=/mnt/map_pro/taxonomies/libraries, name=transformation, version=2015
+[INFO] downloader.engine.downloader.engine.path_resolver - [PROCESS] Building taxonomy path: taxonomies_dir=/mnt/map_pro/taxonomies/libraries, name=transformation, version=2015
+2026-01-29 21:40:56 - downloader.engine.downloader.engine.path_resolver - INFO - [OUTPUT] Built taxonomy directory path: /mnt/map_pro/taxonomies/libraries/transformation/2015
+[INFO] downloader.engine.downloader.engine.path_resolver - [OUTPUT] Built taxonomy directory path: /mnt/map_pro/taxonomies/libraries/transformation/2015
+2026-01-29 21:40:56 - downloader.engine.downloader.engine.coordinator - INFO - [PROCESS] Target directory: /mnt/map_pro/taxonomies/libraries/transformation/2015
+[INFO] downloader.engine.downloader.engine.coordinator - [PROCESS] Target directory: /mnt/map_pro/taxonomies/libraries/transformation/2015
+2026-01-29 21:40:56 - downloader.engine.downloader.engine.coordinator - INFO - [PROCESS] Target directory (absolute): /mnt/map_pro/taxonomies/libraries/transformation/2015
+[INFO] downloader.engine.downloader.engine.coordinator - [PROCESS] Target directory (absolute): /mnt/map_pro/taxonomies/libraries/transformation/2015
+2026-01-29 21:40:56 - downloader.engine.downloader.engine.distribution_processor - INFO - [PROCESS] Starting distribution-agnostic download
+[INFO] downloader.engine.downloader.engine.distribution_processor - [PROCESS] Starting distribution-agnostic download
+2026-01-29 21:40:56 - downloader.engine.downloader.engine.distribution_processor - INFO - [PROCESS] Detecting distribution type
+[INFO] downloader.engine.downloader.engine.distribution_processor - [PROCESS] Detecting distribution type
+2026-01-29 21:40:56 - downloader.engine.downloader.engine.distribution_detector - INFO - [INPUT] Detecting distribution type: https://sec.gov/taxonomies/transformation-2015.zip
+[INFO] downloader.engine.downloader.engine.distribution_detector - [INPUT] Detecting distribution type: https://sec.gov/taxonomies/transformation-2015.zip
+2026-01-29 21:40:59 - downloader.engine.downloader.engine.distribution_detector - WARNING - [OUTPUT] Could not detect distribution type for https://sec.gov/taxonomies/transformation-2015.zip
+[WARNING] downloader.engine.downloader.engine.distribution_detector - [OUTPUT] Could not detect distribution type for https://sec.gov/taxonomies/transformation-2015.zip
+2026-01-29 21:40:59 - downloader.engine.downloader.engine.distribution_processor - ERROR - [OUTPUT] URL not accessible: HTTP 404
+[ERROR] downloader.engine.downloader.engine.distribution_processor - [OUTPUT] URL not accessible: HTTP 404
+2026-01-29 21:40:59 - downloader.engine.downloader.engine.failure_handler - ERROR - [OUTPUT] Download FAILED: Failed at detection: Distribution detection failed
+[ERROR] downloader.engine.downloader.engine.failure_handler - [OUTPUT] Download FAILED: Failed at detection: Distribution detection failed
+2026-01-29 21:40:59 - downloader.engine.downloader.engine.failure_handler - ERROR - [OUTPUT] Failed at detection
+[ERROR] downloader.engine.downloader.engine.failure_handler - [OUTPUT] Failed at detection
+2026-01-29 21:40:59 - downloader.engine.downloader.engine.db_operations - INFO - [PROCESS] Updating taxonomy status: 61632d34-3253-497b-b14a-227aa11e084b -> failed
+[INFO] downloader.engine.downloader.engine.db_operations - [PROCESS] Updating taxonomy status: 61632d34-3253-497b-b14a-227aa11e084b -> failed
+2026-01-29 21:40:59 - downloader.engine.downloader.engine.db_operations - INFO - [OUTPUT] Taxonomy status updated successfully
+[INFO] downloader.engine.downloader.engine.db_operations - [OUTPUT] Taxonomy status updated successfully
+2026-01-29 21:40:59 - downloader.engine.downloader.engine.coordinator - INFO - [INPUT] Processing taxonomy: transformation / 2020
+[INFO] downloader.engine.downloader.engine.coordinator - [INPUT] Processing taxonomy: transformation / 2020
+2026-01-29 21:40:59 - downloader.engine.downloader.engine.db_operations - INFO - [PROCESS] Updating taxonomy status: 69d0065a-6d23-41dd-ab06-5ab2ce50b461 -> downloading
+[INFO] downloader.engine.downloader.engine.db_operations - [PROCESS] Updating taxonomy status: 69d0065a-6d23-41dd-ab06-5ab2ce50b461 -> downloading
+2026-01-29 21:40:59 - downloader.engine.downloader.engine.db_operations - INFO - [OUTPUT] Taxonomy status updated successfully
+[INFO] downloader.engine.downloader.engine.db_operations - [OUTPUT] Taxonomy status updated successfully
+2026-01-29 21:40:59 - downloader.engine.downloader.engine.path_resolver - INFO - [PROCESS] Building taxonomy path: taxonomies_dir=/mnt/map_pro/taxonomies/libraries, name=transformation, version=2020
+[INFO] downloader.engine.downloader.engine.path_resolver - [PROCESS] Building taxonomy path: taxonomies_dir=/mnt/map_pro/taxonomies/libraries, name=transformation, version=2020
+2026-01-29 21:40:59 - downloader.engine.downloader.engine.path_resolver - INFO - [OUTPUT] Built taxonomy directory path: /mnt/map_pro/taxonomies/libraries/transformation/2020
+[INFO] downloader.engine.downloader.engine.path_resolver - [OUTPUT] Built taxonomy directory path: /mnt/map_pro/taxonomies/libraries/transformation/2020
+2026-01-29 21:40:59 - downloader.engine.downloader.engine.coordinator - INFO - [PROCESS] Target directory: /mnt/map_pro/taxonomies/libraries/transformation/2020
+[INFO] downloader.engine.downloader.engine.coordinator - [PROCESS] Target directory: /mnt/map_pro/taxonomies/libraries/transformation/2020
+2026-01-29 21:40:59 - downloader.engine.downloader.engine.coordinator - INFO - [PROCESS] Target directory (absolute): /mnt/map_pro/taxonomies/libraries/transformation/2020
+[INFO] downloader.engine.downloader.engine.coordinator - [PROCESS] Target directory (absolute): /mnt/map_pro/taxonomies/libraries/transformation/2020
+2026-01-29 21:40:59 - downloader.engine.downloader.engine.distribution_processor - INFO - [PROCESS] Starting distribution-agnostic download
+[INFO] downloader.engine.downloader.engine.distribution_processor - [PROCESS] Starting distribution-agnostic download
+2026-01-29 21:40:59 - downloader.engine.downloader.engine.distribution_processor - INFO - [PROCESS] Detecting distribution type
+[INFO] downloader.engine.downloader.engine.distribution_processor - [PROCESS] Detecting distribution type
+2026-01-29 21:40:59 - downloader.engine.downloader.engine.distribution_detector - INFO - [INPUT] Detecting distribution type: https://xbrl.org/taxonomies/transformation-2020.zip
+[INFO] downloader.engine.downloader.engine.distribution_detector - [INPUT] Detecting distribution type: https://xbrl.org/taxonomies/transformation-2020.zip
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.distribution_detector - WARNING - [OUTPUT] Could not detect distribution type for https://xbrl.org/taxonomies/transformation-2020.zip
+[WARNING] downloader.engine.downloader.engine.distribution_detector - [OUTPUT] Could not detect distribution type for https://xbrl.org/taxonomies/transformation-2020.zip
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.distribution_processor - ERROR - [OUTPUT] URL not accessible: HTTP 404
+[ERROR] downloader.engine.downloader.engine.distribution_processor - [OUTPUT] URL not accessible: HTTP 404
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.failure_handler - ERROR - [OUTPUT] Download FAILED: Failed at detection: Distribution detection failed
+[ERROR] downloader.engine.downloader.engine.failure_handler - [OUTPUT] Download FAILED: Failed at detection: Distribution detection failed
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.failure_handler - ERROR - [OUTPUT] Failed at detection
+[ERROR] downloader.engine.downloader.engine.failure_handler - [OUTPUT] Failed at detection
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.db_operations - INFO - [PROCESS] Updating taxonomy status: 69d0065a-6d23-41dd-ab06-5ab2ce50b461 -> failed
+[INFO] downloader.engine.downloader.engine.db_operations - [PROCESS] Updating taxonomy status: 69d0065a-6d23-41dd-ab06-5ab2ce50b461 -> failed
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.db_operations - INFO - [OUTPUT] Taxonomy status updated successfully
+[INFO] downloader.engine.downloader.engine.db_operations - [OUTPUT] Taxonomy status updated successfully
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.coordinator - INFO - [INPUT] Processing taxonomy: taxonomy / 2022
+[INFO] downloader.engine.downloader.engine.coordinator - [INPUT] Processing taxonomy: taxonomy / 2022
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.db_operations - INFO - [PROCESS] Updating taxonomy status: a30e67d2-3ba1-4ae6-b6fb-2d0a1c955501 -> downloading
+[INFO] downloader.engine.downloader.engine.db_operations - [PROCESS] Updating taxonomy status: a30e67d2-3ba1-4ae6-b6fb-2d0a1c955501 -> downloading
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.db_operations - INFO - [OUTPUT] Taxonomy status updated successfully
+[INFO] downloader.engine.downloader.engine.db_operations - [OUTPUT] Taxonomy status updated successfully
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.path_resolver - INFO - [PROCESS] Building taxonomy path: taxonomies_dir=/mnt/map_pro/taxonomies/libraries, name=taxonomy, version=2022
+[INFO] downloader.engine.downloader.engine.path_resolver - [PROCESS] Building taxonomy path: taxonomies_dir=/mnt/map_pro/taxonomies/libraries, name=taxonomy, version=2022
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.path_resolver - INFO - [OUTPUT] Built taxonomy directory path: /mnt/map_pro/taxonomies/libraries/taxonomy/2022
+[INFO] downloader.engine.downloader.engine.path_resolver - [OUTPUT] Built taxonomy directory path: /mnt/map_pro/taxonomies/libraries/taxonomy/2022
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.coordinator - INFO - [PROCESS] Target directory: /mnt/map_pro/taxonomies/libraries/taxonomy/2022
+[INFO] downloader.engine.downloader.engine.coordinator - [PROCESS] Target directory: /mnt/map_pro/taxonomies/libraries/taxonomy/2022
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.coordinator - INFO - [PROCESS] Target directory (absolute): /mnt/map_pro/taxonomies/libraries/taxonomy/2022
+[INFO] downloader.engine.downloader.engine.coordinator - [PROCESS] Target directory (absolute): /mnt/map_pro/taxonomies/libraries/taxonomy/2022
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.distribution_processor - INFO - [PROCESS] Starting distribution-agnostic download
+[INFO] downloader.engine.downloader.engine.distribution_processor - [PROCESS] Starting distribution-agnostic download
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.distribution_processor - INFO - [PROCESS] Detecting distribution type
+[INFO] downloader.engine.downloader.engine.distribution_processor - [PROCESS] Detecting distribution type
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.distribution_detector - INFO - [INPUT] Detecting distribution type: https://xbrl.ifrs.org/taxonomy/2022/taxonomy-2022.zip
+[INFO] downloader.engine.downloader.engine.distribution_detector - [INPUT] Detecting distribution type: https://xbrl.ifrs.org/taxonomy/2022/taxonomy-2022.zip
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.distribution_detector - WARNING - [OUTPUT] Could not detect distribution type for https://xbrl.ifrs.org/taxonomy/2022/taxonomy-2022.zip
+[WARNING] downloader.engine.downloader.engine.distribution_detector - [OUTPUT] Could not detect distribution type for https://xbrl.ifrs.org/taxonomy/2022/taxonomy-2022.zip
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.distribution_processor - ERROR - [OUTPUT] URL not accessible: HTTP 404
+[ERROR] downloader.engine.downloader.engine.distribution_processor - [OUTPUT] URL not accessible: HTTP 404
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.failure_handler - ERROR - [OUTPUT] Download FAILED: Failed at detection: Distribution detection failed
+[ERROR] downloader.engine.downloader.engine.failure_handler - [OUTPUT] Download FAILED: Failed at detection: Distribution detection failed
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.failure_handler - ERROR - [OUTPUT] Failed at detection
+[ERROR] downloader.engine.downloader.engine.failure_handler - [OUTPUT] Failed at detection
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.db_operations - INFO - [PROCESS] Updating taxonomy status: a30e67d2-3ba1-4ae6-b6fb-2d0a1c955501 -> failed
+[INFO] downloader.engine.downloader.engine.db_operations - [PROCESS] Updating taxonomy status: a30e67d2-3ba1-4ae6-b6fb-2d0a1c955501 -> failed
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.db_operations - INFO - [OUTPUT] Taxonomy status updated successfully
+[INFO] downloader.engine.downloader.engine.db_operations - [OUTPUT] Taxonomy status updated successfully
+2026-01-29 21:41:09 - downloader.engine.downloader.engine.coordinator - INFO - [OUTPUT] Processing complete: 0/4 succeeded in 20.3s
+[INFO] downloader.engine.downloader.engine.coordinator - [OUTPUT] Processing complete: 0/4 succeeded in 20.3s
+
+================================================================================
+DOWNLOAD RESULTS
+================================================================================
+Total processed: 4
+Succeeded: 0
+Failed: 4
+Duration: 20.3s
+================================================================================
+2026-01-29 21:41:09 - library.cli.library.library - INFO - [OUTPUT] Download complete: 0/4 successful
+[INFO] library.cli.library.library - [OUTPUT] Download complete: 0/4 successful
+[INFO] process.taxonomy_manager - [OUTPUT] Library module completed for sec/VISA_INC/10_K/2025-09-30
+[INFO] process.coordinator - [OUTPUT] Taxonomies ready for library checks
+[INFO] process.coordinator - [PROCESS] Running library checks
+[INFO] process.coordinator - Available taxonomies: ['cyd', 'dei', 'ecd', 'srt', 'us-gaap']
+[INFO] process.library_checker - Running library checks against taxonomy: us-gaap
+[INFO] input.taxonomy_reader - Reading taxonomy: us-gaap
+[INFO] input.taxonomy_reader - Found 465 schema files
+[INFO] input.taxonomy_reader - Parsed 18357 concepts from us-gaap
+[INFO] process.library_checker - Library checks complete: 2/3 passed
+[INFO] process.coordinator - [PROCESS] Calculating scores
+[INFO] process.score_calculator - Calculating scores from 403 check results
+[INFO] process.score_calculator - Scores calculated: H=27.3, V=94.2, L=99.8, Overall=68.5
+[INFO] process.coordinator - [PROCESS] Classifying quality
+[INFO] process.quality_classifier - Classifying quality for score: 68.5
+[INFO] process.quality_classifier - Quality classification: FAIR (confidence: 0.80)
+[INFO] process.coordinator - [OUTPUT] Verification complete: FAIR (score: 68.5) in 22.11s
+
+============================================================
+VERIFICATION RESULTS
+============================================================
+Horizontal Score:   27.3/100
+Vertical Score:     94.2/100
+Library Score:      99.8/100
+Overall Score:      68.5/100
+
+Quality Level: FAIR
+               Notable issues, limited analysis value
+
+Issues Found:
+  - CRITICAL: 8
+  - Warnings: 8
+  - Info:     1
+
+Failed Checks:
+  - [CRITICAL] 5 concepts have inconsistent duplicate values
+  - [CRITICAL] Calculation us-gaap:EffectiveIncomeTaxRateContinuingOperations: sum 19 exceeds reported 17 by 2 (11.8% overshoot)
+  - [CRITICAL] Calculation us-gaap:EffectiveIncomeTaxRateContinuingOperations: sum 18 exceeds reported 17 by 1 (5.9% overshoot)
+  - [CRITICAL] Calculation us-gaap:EffectiveIncomeTaxRateContinuingOperations: sum 21 exceeds reported 18 by 3 (16.7% overshoot)
+  - [CRITICAL] 5 facts with inconsistent duplicate values
+  ... and 12 more
+
+Recommendation: Use with caution. Manual verification of key figures recommended.
+============================================================
+[INFO] output.report_generator - [OUTPUT] Generating verification report for sec/VISA_INC/10_K/2025-09-30
+[INFO] output.report_generator - [OUTPUT] Report saved to: /mnt/map_pro/verification/reports/sec/VISA_INC/10_K/2025-09-30/report.json
+
+[OUTPUT] Report saved: /mnt/map_pro/verification/reports/sec/VISA_INC/10_K/2025-09-30/report.json
+[INFO] output.summary_exporter - [OUTPUT] Exporting summary for sec/VISA_INC/10_K/2025-09-30
+[INFO] output.summary_exporter - [OUTPUT] Summary saved to: /mnt/map_pro/verification/reports/sec/VISA_INC/10_K/2025-09-30/summary.txt
+[OUTPUT] Summary saved: /mnt/map_pro/verification/reports/sec/VISA_INC/10_K/2025-09-30/summary.txt
+
+Generate simplified statements? [y/n]: 
+
