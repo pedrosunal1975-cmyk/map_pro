@@ -261,6 +261,67 @@ class SignWeightHandler:
                 return parts[1]
         return concept
 
+    def _extract_period_from_context(self, context_id: str) -> Optional[str]:
+        """
+        Extract the period portion from a context ID, stripping the dimensional hash.
+
+        XBRL context IDs often have format:
+        - Duration_1_1_2022_To_12_31_2022_<dimensional_hash>
+        - Instant_12_31_2022_<dimensional_hash>
+
+        The hash suffix varies based on dimensional context (segment, axis).
+        Multiple contexts can exist for the same period with different hashes.
+
+        Args:
+            context_id: Full XBRL context reference
+
+        Returns:
+            Period portion without hash, or None if format not recognized
+        """
+        if not context_id:
+            return None
+
+        # Pattern for duration: Duration_M_D_YYYY_To_M_D_YYYY_<hash>
+        # The hash is typically alphanumeric, 20+ characters
+        duration_match = re.match(
+            r'^(Duration_\d+_\d+_\d{4}_To_\d+_\d+_\d{4})_[A-Za-z0-9]+$',
+            context_id
+        )
+        if duration_match:
+            return duration_match.group(1)
+
+        # Pattern for instant: Instant_M_D_YYYY_<hash>
+        instant_match = re.match(
+            r'^(Instant_\d+_\d+_\d{4})_[A-Za-z0-9]+$',
+            context_id
+        )
+        if instant_match:
+            return instant_match.group(1)
+
+        # Alternative patterns (some filers use different formats)
+        # e.g., From2022-01-01To2022-12-31_<hash>
+        alt_duration_match = re.match(
+            r'^(From\d{4}-\d{2}-\d{2}To\d{4}-\d{2}-\d{2})_[A-Za-z0-9]+$',
+            context_id
+        )
+        if alt_duration_match:
+            return alt_duration_match.group(1)
+
+        # AsOf date format: AsOf2022-12-31_<hash>
+        asof_match = re.match(
+            r'^(AsOf\d{4}-\d{2}-\d{2})_[A-Za-z0-9]+$',
+            context_id
+        )
+        if asof_match:
+            return asof_match.group(1)
+
+        # Simple context IDs (no hash suffix) - return as-is
+        if re.match(r'^[a-z]-\d+$', context_id):
+            # Format like c-1, c-2, etc.
+            return context_id
+
+        return None
+
     def get_sign_correction(
         self,
         concept: str,
@@ -269,6 +330,15 @@ class SignWeightHandler:
     ) -> int:
         """
         Get sign correction multiplier for a fact.
+
+        Lookup strategy:
+        1. Exact match: (concept, context_id)
+        2. Normalized concept match: (normalized_concept, context_id)
+        3. Period-based fallback: Match concept + period portion (ignoring dimensional hash)
+
+        The period-based fallback handles cases where the same concept in the same
+        period has sign="-" in one dimensional context but the fact being verified
+        is in a different dimensional context (different hash suffix).
 
         Args:
             concept: XBRL concept name (e.g., "us-gaap:NetCashProvidedByUsedInFinancingActivities")
@@ -308,8 +378,38 @@ class SignWeightHandler:
                     logger.debug(f"Sign correction FOUND (normalized): {concept} in {context_id} -> {info.sign_multiplier}")
                     return info.sign_multiplier
 
-        # Check if this concept has ANY sign correction (any context)
-        # This helps diagnose context ID format mismatches
+        # PERIOD-BASED FALLBACK:
+        # When exact context match fails, try matching by period (ignoring dimensional hash).
+        # This handles cases where sign="-" exists for the same concept/period but in a
+        # different dimensional context (e.g., default vs segment-qualified).
+        lookup_period = self._extract_period_from_context(context_id)
+        if lookup_period and self.sign_corrections:
+            local_name = self._extract_local_name(concept)
+            normalized_lookup = normalize_name(local_name)
+
+            # Find sign corrections for same concept and same period (any dimensional hash)
+            period_matches = []
+            for (stored_concept, stored_ctx), info in self.sign_corrections.items():
+                stored_local = self._extract_local_name(stored_concept)
+                if normalize_name(stored_local) != normalized_lookup:
+                    continue
+
+                stored_period = self._extract_period_from_context(stored_ctx)
+                if stored_period == lookup_period:
+                    period_matches.append((stored_ctx, info))
+
+            if period_matches:
+                # Found match(es) for same concept + period with different dimensional context
+                # Use the first match (they should all have the same sign for same concept/period)
+                matched_ctx, matched_info = period_matches[0]
+                logger.info(
+                    f"Sign correction FOUND (period fallback): '{concept}' in period '{lookup_period}'. "
+                    f"Lookup context: '{context_id}', matched context: '{matched_ctx}' -> {matched_info.sign_multiplier}"
+                )
+                return matched_info.sign_multiplier
+
+        # Check if this concept has ANY sign correction (any context/period)
+        # This helps diagnose when sign exists but for different period (year)
         if self.sign_corrections:
             local_name = self._extract_local_name(concept)
             normalized_lookup = normalize_name(local_name)
@@ -322,11 +422,12 @@ class SignWeightHandler:
                     matching_concepts.append((stored_ctx, info.sign_multiplier))
 
             if matching_concepts:
-                # Found sign corrections for this concept but in different context(s)
-                logger.warning(
-                    f"Sign correction EXISTS for '{concept}' but in different context(s). "
-                    f"Looking for context: '{context_id}'. "
-                    f"Available: {[ctx for ctx, _ in matching_concepts[:3]]}{'...' if len(matching_concepts) > 3 else ''}"
+                # Found sign corrections for this concept but in different context(s)/period(s)
+                # This is expected when sign changes year-to-year (e.g., cash flow direction changes)
+                logger.debug(
+                    f"Sign correction exists for '{concept}' but in different period(s). "
+                    f"Looking for context: '{context_id}' (period: {lookup_period}). "
+                    f"Available contexts: {[ctx for ctx, _ in matching_concepts[:3]]}{'...' if len(matching_concepts) > 3 else ''}"
                 )
             else:
                 # Log when concept has no sign correction at all (common for concepts that
