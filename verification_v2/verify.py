@@ -200,13 +200,18 @@ class VerificationCLI:
 
         Uses the proven ParsedDataLoader to find parsed.json by matching
         company and form from the mapped filing entry.
+
+        Note: Date is NOT used for matching because mapped and parsed
+        directories may use different date conventions (fiscal year end
+        vs filing date vs processing date).
         """
         # Use ParsedDataLoader's find_parsed_filing method
+        # Do NOT pass date - dates differ between mapped and parsed directories
         parsed_filing = self.parsed_loader.find_parsed_filing(
             market=filing.market,
             company=filing.company,
             form=filing.form,
-            date=filing.date,
+            date=None,  # Dates don't match between mapped and parsed
         )
 
         if parsed_filing:
