@@ -1,4 +1,4 @@
-# Path: verification/engine/checks_v2/processors/orchestrator.py
+# Path: verification_v2/engine/processors/orchestrator.py
 """
 Pipeline Orchestrator for Verification Processing
 
@@ -12,11 +12,18 @@ DESIGN PRINCIPLES:
 2. Tools are picked up and dropped as needed by each stage
 3. Data flows forward only - no backward dependencies
 4. Errors are collected, not thrown (graceful degradation)
+
+DATA SOURCES:
+- Accepts MappedFilingEntry for production use (reads from XBRL via existing loaders)
+- Accepts Path for testing use (reads from parsed.json fixtures)
 """
 
 import logging
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Union
+
+# Import MappedFilingEntry for type checking
+from verification.loaders.mapped_data import MappedFilingEntry
 
 from .pipeline_data import (
     DiscoveryResult,
@@ -61,11 +68,18 @@ class PipelineOrchestrator:
         result = orchestrator.run(filing_path)
     """
 
-    def __init__(self):
+    def __init__(self, config=None):
+        """
+        Initialize the pipeline orchestrator.
+
+        Args:
+            config: Optional ConfigLoader instance for loaders
+        """
         self.logger = logging.getLogger('processors.orchestrator')
+        self.config = config
 
         # Initialize processors
-        self._discovery = DiscoveryProcessor()
+        self._discovery = DiscoveryProcessor(config)
         self._preparation = PreparationProcessor()
         self._verification = VerificationProcessor()
 
@@ -112,21 +126,24 @@ class PipelineOrchestrator:
 
         return self
 
-    def run(self, filing_path: Path | str) -> VerificationResult:
+    def run(self, source: Union[Path, str, MappedFilingEntry]) -> VerificationResult:
         """
         Run the complete verification pipeline.
 
         Args:
-            filing_path: Path to filing directory or parsed.json
+            source: Path to filing/parsed.json, or MappedFilingEntry
 
         Returns:
             VerificationResult with all checks and summary
         """
-        filing_path = Path(filing_path)
-        self.logger.info(f"Starting verification pipeline for {filing_path}")
+        if isinstance(source, MappedFilingEntry):
+            filing_id = f"{source.market}/{source.company}/{source.form}/{source.date}"
+            self.logger.info(f"Starting verification pipeline for {filing_id}")
+        else:
+            self.logger.info(f"Starting verification pipeline for {source}")
 
         # Stage 1: Discovery
-        self._last_discovery = self.run_discovery(filing_path)
+        self._last_discovery = self.run_discovery(source)
 
         # Check for fatal discovery errors
         if not self._last_discovery.facts:
@@ -146,17 +163,17 @@ class PipelineOrchestrator:
 
         return self._last_verification
 
-    def run_discovery(self, filing_path: Path | str) -> DiscoveryResult:
+    def run_discovery(self, source: Union[Path, str, MappedFilingEntry]) -> DiscoveryResult:
         """
         Run Stage 1: Discovery.
 
         Args:
-            filing_path: Path to filing directory or parsed.json
+            source: Path to filing/parsed.json, or MappedFilingEntry
 
         Returns:
             DiscoveryResult with raw discovered data
         """
-        return self._discovery.discover(filing_path)
+        return self._discovery.discover(source)
 
     def run_preparation(self, discovery: DiscoveryResult) -> PreparationResult:
         """

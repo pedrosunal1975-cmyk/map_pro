@@ -26,9 +26,9 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from verification_v2.core.config_loader import ConfigLoader
 from verification_v2.core.data_paths import ensure_data_paths
 from verification_v2.engine import PipelineOrchestrator, VerificationResult
-from verification_v2.loaders.mapped_data import MappedDataLoader, MappedFilingEntry
-from verification_v2.loaders.parsed_data import ParsedDataLoader, ParsedFilingEntry
-from verification_v2.loaders.constants import normalize_name, normalize_form_name, get_form_variations
+
+# Use existing loaders from verification module
+from verification.loaders.mapped_data import MappedDataLoader, MappedFilingEntry
 
 
 class VerificationCLI:
@@ -42,9 +42,9 @@ class VerificationCLI:
     def __init__(self):
         """Initialize CLI components."""
         self.config = ConfigLoader()
-        self.orchestrator = PipelineOrchestrator()
+        # Pass config to orchestrator so DiscoveryProcessor can use existing loaders
+        self.orchestrator = PipelineOrchestrator(self.config)
         self.mapped_loader = MappedDataLoader(self.config)
-        self.parsed_loader = ParsedDataLoader(self.config)
 
     def run(self) -> None:
         """Run the verification CLI."""
@@ -140,13 +140,7 @@ class VerificationCLI:
         print(f'VERIFYING: {filing.company} | {filing.form} | {filing.date}')
         print(sep)
 
-        # Find parsed.json for this filing
-        parsed_json = self._find_parsed_json(filing)
-        if not parsed_json:
-            print(f'[ERROR] No parsed.json found for {filing.company}')
-            return
-
-        print(f'[INPUT] Using: {parsed_json}')
+        print(f'[INPUT] Using mapped statements: {filing.filing_folder}')
 
         # Configure orchestrator
         self.orchestrator.configure(
@@ -154,8 +148,9 @@ class VerificationCLI:
             binding_strategy='fallback',
         )
 
-        # Run verification
-        result = self.orchestrator.run(parsed_json)
+        # Run verification - pass MappedFilingEntry directly
+        # DiscoveryProcessor will use existing loaders (MappedReader, XBRLReader)
+        result = self.orchestrator.run(filing)
 
         # Display results
         self._display_results(result, filing)
@@ -176,12 +171,8 @@ class VerificationCLI:
         for i, filing in enumerate(filings, 1):
             print(f'[{i}/{len(filings)}] {filing.company} | {filing.form}...')
 
-            parsed_json = self._find_parsed_json(filing)
-            if not parsed_json:
-                print(f'        [SKIP] No parsed.json found')
-                continue
-
-            result = self.orchestrator.run(parsed_json)
+            # Run verification - pass MappedFilingEntry directly
+            result = self.orchestrator.run(filing)
             results.append((filing, result))
 
             # Save outputs
@@ -193,47 +184,6 @@ class VerificationCLI:
 
         # Show summary
         self._display_batch_summary(results)
-
-    def _find_parsed_json(self, filing: MappedFilingEntry) -> Path:
-        """
-        Find parsed.json for a filing using ParsedDataLoader.
-
-        Uses the proven ParsedDataLoader to find parsed.json by matching
-        company and form from the mapped filing entry.
-
-        Date matching is configurable via DEFAULT_DATE_MATCH_LEVEL in
-        loaders/constants.py. Default is 'any' which ignores dates
-        because mapped and parsed directories often use different date
-        conventions (fiscal year end vs filing date vs processing date).
-
-        To change the matching level, modify DEFAULT_DATE_MATCH_LEVEL:
-        - 'any': Ignore dates (default - most permissive)
-        - 'year': Only years need to match
-        - 'contains': Substring matching
-        - 'exact': Full date must match
-        """
-        # Use ParsedDataLoader's find_parsed_filing method
-        # Date matching level is controlled by DEFAULT_DATE_MATCH_LEVEL in constants.py
-        parsed_filing = self.parsed_loader.find_parsed_filing(
-            market=filing.market,
-            company=filing.company,
-            form=filing.form,
-            date=filing.date,  # Pass date for logging; matching level controls behavior
-        )
-
-        if parsed_filing:
-            # Get the parsed.json file path
-            json_path = parsed_filing.available_files.get('json')
-            if json_path and json_path.exists():
-                return json_path
-
-        # Fallback: check in mapped folder parent
-        if filing.json_folder:
-            parsed_path = Path(filing.json_folder).parent / 'parsed.json'
-            if parsed_path.exists():
-                return parsed_path
-
-        return None
 
     def _display_results(self, result: VerificationResult, filing: MappedFilingEntry) -> None:
         """Display verification results."""
