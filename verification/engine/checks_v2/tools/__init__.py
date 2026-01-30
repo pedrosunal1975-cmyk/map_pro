@@ -12,10 +12,10 @@ Categories:
 - naming: Concept name normalization and extraction
 - period: Period extraction and comparison
 - sign: Sign correction parsing and lookup
-- hierarchy: Parent/child relationship handling
-- context: Context classification and matching
-- fact: Fact finding and parsing
-- dimension: Dimensional structure handling
+- context: Context classification, matching, and grouping
+- fact: Fact finding, parsing, and duplicate handling
+- dimension: Dimensional structure parsing
+- hierarchy: Binding checking for calculation hierarchies
 - calculation: Calculation weights and sum verification
 - tolerance: Decimal tolerance and value comparison
 """
@@ -43,27 +43,30 @@ from .sign import (
 
 from .context import (
     ContextClassifier,
+    ContextMatcher,
     ContextGrouper,
     ContextGroup,
 )
 
 from .fact import (
-    FactFinder,
-    FactMatch,
     ValueParser,
+    FactEntry,
+    FactMatch,
+    ChildContribution,
     DuplicateHandler,
     DuplicateInfo,
-    FactEntry,
+    FactFinder,
 )
 
 from .dimension import (
     DimensionParser,
-    DimensionInfo,
+    Dimension,
+    DimensionMember,
+    RoleDimensions,
+    ContextDimensions,
 )
 
 from .hierarchy import (
-    TreeBuilder,
-    ChildFinder,
     BindingChecker,
     BindingResult,
 )
@@ -71,7 +74,7 @@ from .hierarchy import (
 from .calculation import (
     WeightHandler,
     SumCalculator,
-    CalculationResult,
+    SumResult,
 )
 
 from .tolerance import (
@@ -98,27 +101,30 @@ __all__ = [
     'SemanticSignInferrer',
     # Context
     'ContextClassifier',
+    'ContextMatcher',
     'ContextGrouper',
     'ContextGroup',
     # Fact
-    'FactFinder',
-    'FactMatch',
     'ValueParser',
+    'FactEntry',
+    'FactMatch',
+    'ChildContribution',
     'DuplicateHandler',
     'DuplicateInfo',
-    'FactEntry',
+    'FactFinder',
     # Dimension
     'DimensionParser',
-    'DimensionInfo',
+    'Dimension',
+    'DimensionMember',
+    'RoleDimensions',
+    'ContextDimensions',
     # Hierarchy
-    'TreeBuilder',
-    'ChildFinder',
     'BindingChecker',
     'BindingResult',
     # Calculation
     'WeightHandler',
     'SumCalculator',
-    'CalculationResult',
+    'SumResult',
     # Tolerance
     'DecimalTolerance',
     'ToleranceResult',
