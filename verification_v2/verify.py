@@ -27,6 +27,8 @@ from verification_v2.core.config_loader import ConfigLoader
 from verification_v2.core.data_paths import ensure_data_paths
 from verification_v2.engine import PipelineOrchestrator, VerificationResult
 from verification_v2.loaders.mapped_data import MappedDataLoader, MappedFilingEntry
+from verification_v2.loaders.parsed_data import ParsedDataLoader, ParsedFilingEntry
+from verification_v2.loaders.constants import normalize_name, normalize_form_name, get_form_variations
 
 
 class VerificationCLI:
@@ -42,6 +44,7 @@ class VerificationCLI:
         self.config = ConfigLoader()
         self.orchestrator = PipelineOrchestrator()
         self.mapped_loader = MappedDataLoader(self.config)
+        self.parsed_loader = ParsedDataLoader(self.config)
 
     def run(self) -> None:
         """Run the verification CLI."""
@@ -192,22 +195,27 @@ class VerificationCLI:
         self._display_batch_summary(results)
 
     def _find_parsed_json(self, filing: MappedFilingEntry) -> Path:
-        """Find parsed.json for a filing."""
-        # Check in parser output directory
-        parser_output = self.config.get('parser_output_dir')
-        if parser_output:
-            parsed_path = (
-                Path(parser_output) /
-                filing.market /
-                filing.company /
-                filing.form /
-                filing.date /
-                'parsed.json'
-            )
-            if parsed_path.exists():
-                return parsed_path
+        """
+        Find parsed.json for a filing using ParsedDataLoader.
 
-        # Check in mapped folder
+        Uses the proven ParsedDataLoader to find parsed.json by matching
+        company and form from the mapped filing entry.
+        """
+        # Use ParsedDataLoader's find_parsed_filing method
+        parsed_filing = self.parsed_loader.find_parsed_filing(
+            market=filing.market,
+            company=filing.company,
+            form=filing.form,
+            date=filing.date,
+        )
+
+        if parsed_filing:
+            # Get the parsed.json file path
+            json_path = parsed_filing.available_files.get('json')
+            if json_path and json_path.exists():
+                return json_path
+
+        # Fallback: check in mapped folder parent
         if filing.json_folder:
             parsed_path = Path(filing.json_folder).parent / 'parsed.json'
             if parsed_path.exists():
