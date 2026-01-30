@@ -1,0 +1,25 @@
+{
+  "filing_info": {
+    "company": "PLUG_POWER_INC",
+    "form": "10-K",
+    "date": "2024-12-31",
+    "market": "sec"
+  },
+  "statements": [
+    {
+      "role": "http://www.plugpoweinc.com/role/StatementConsolidatedBalanceSheets",
+      "label": "CONSOLIDATED BALANCE SHEETS",
+      "type": "balance_sheet"
+    },
+    {
+      "role": "http://www.plugpoweinc.com/role/StatementConsolidatedStatementsOfOperations",
+      "label": "CONSOLIDATED STATEMENTS OF OPERATIONS",
+      "type": "income_statement"
+    },
+    {
+      "role": "http://www.plugpoweinc.com/role/StatementConsolidatedStatementsOfCashFlows",
+      "label": "CONSOLIDATED STATEMENTS OF CASH FLOWS",
+      "type": "cash_flow"
+    }
+  ]
+}
