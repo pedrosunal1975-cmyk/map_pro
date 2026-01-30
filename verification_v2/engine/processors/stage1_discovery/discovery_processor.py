@@ -119,7 +119,9 @@ class DiscoveryProcessor:
         Discover data from a MappedFilingEntry using existing loaders.
 
         This is the primary method for production use.
-        Reads facts from parsed.json (parser output) and calculations from XBRL linkbase.
+        Uses EXACTLY the same approach as verification/ module:
+        - MappedReader.read_statements(filing) for facts
+        - XBRLReader for calculation relationships from linkbase
 
         Args:
             filing: MappedFilingEntry from MappedDataLoader
@@ -133,17 +135,18 @@ class DiscoveryProcessor:
         result = DiscoveryResult(filing_path=filing.filing_folder)
 
         try:
-            # Step 1: Read facts from parsed.json (parser output)
-            # parsed.json is the source of truth for facts extracted from XBRL instance
-            parsed_json = self._find_parsed_json_for_filing(filing)
+            # Step 1: Read facts from mapped statements (SAME as verification/ module)
+            # This is EXACTLY what verification/engine/coordinator.py does
+            self.logger.info(f"Reading mapped statements")
+            statements = self._mapped_reader.read_statements(filing)
 
-            if parsed_json and parsed_json.exists():
-                self.logger.info(f"Reading facts from parsed.json: {parsed_json}")
-                self._discover_from_parsed_json(parsed_json, result)
-                self.logger.info(f"Found {len(result.facts)} facts from parsed.json")
+            if statements and statements.statements:
+                self._extract_facts_from_statements(statements, result)
+                self._extract_contexts_from_statements(statements, result)
+                self.logger.info(f"Found {len(result.facts)} facts from mapped statements")
             else:
-                self.logger.warning(f"No parsed.json found for {filing_id}")
-                result.warnings.append(f"No parsed.json found for {filing_id}")
+                self.logger.warning(f"No statements found for {filing_id}")
+                result.warnings.append(f"No statements found for {filing_id}")
 
             # Step 2: Read calculations from XBRL linkbase
             if self._xbrl_loader:
@@ -177,70 +180,6 @@ class DiscoveryProcessor:
         )
 
         return result
-
-    def _find_parsed_json_for_filing(self, filing: MappedFilingEntry) -> Optional[Path]:
-        """
-        Find parsed.json for a given filing.
-
-        Searches parser output directory with matching market/company/form/date.
-
-        Args:
-            filing: MappedFilingEntry
-
-        Returns:
-            Path to parsed.json or None
-        """
-        if not self.config:
-            return None
-
-        # Get parser output directory from config
-        parser_output_dir = self.config.get('parser_output_dir')
-        if not parser_output_dir:
-            return None
-
-        parser_output_dir = Path(parser_output_dir)
-
-        # Build expected path: parser_output/market/company/form/date/parsed.json
-        expected_path = (
-            parser_output_dir /
-            filing.market /
-            filing.company /
-            filing.form /
-            filing.date /
-            'parsed.json'
-        )
-
-        if expected_path.exists():
-            return expected_path
-
-        # Try case-insensitive search
-        for market_dir in parser_output_dir.iterdir():
-            if not market_dir.is_dir():
-                continue
-            if market_dir.name.lower() != filing.market.lower():
-                continue
-
-            for company_dir in market_dir.iterdir():
-                if not company_dir.is_dir():
-                    continue
-                if company_dir.name.lower() != filing.company.lower():
-                    continue
-
-                for form_dir in company_dir.iterdir():
-                    if not form_dir.is_dir():
-                        continue
-                    if form_dir.name.lower() != filing.form.lower():
-                        continue
-
-                    for date_dir in form_dir.iterdir():
-                        if not date_dir.is_dir():
-                            continue
-                        if filing.date in date_dir.name or date_dir.name in filing.date:
-                            parsed_json = date_dir / 'parsed.json'
-                            if parsed_json.exists():
-                                return parsed_json
-
-        return None
 
     def _extract_facts_from_statements(
         self,

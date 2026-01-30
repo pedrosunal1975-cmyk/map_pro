@@ -145,18 +145,16 @@ class PipelineOrchestrator:
         # Stage 1: Discovery
         self._last_discovery = self.run_discovery(source)
 
-        # Check for fatal discovery errors
+        # Log if no facts found but continue (same behavior as verification/ module)
         if not self._last_discovery.facts:
-            self.logger.error("Discovery found no facts - cannot continue")
-            return self._create_empty_result(self._last_discovery)
+            self.logger.warning("Discovery found no facts - continuing with verification")
 
         # Stage 2: Preparation
         self._last_preparation = self.run_preparation(self._last_discovery)
 
-        # Check for fatal preparation errors
+        # Log if no facts after preparation but continue (same behavior as verification/ module)
         if not self._last_preparation.facts:
-            self.logger.error("Preparation produced no facts - cannot continue")
-            return self._create_empty_result(self._last_discovery, self._last_preparation)
+            self.logger.warning("Preparation produced no facts - continuing with verification")
 
         # Stage 3: Verification
         self._last_verification = self.run_verification(self._last_preparation)
