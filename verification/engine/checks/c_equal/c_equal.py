@@ -176,6 +176,13 @@ class CEqual:
             f"{skipped_no_context} no context_id"
         )
 
+        # Log sample of normalized concepts for troubleshooting binding issues
+        diagnostic = groups.get_diagnostic_summary()
+        sample = diagnostic.get('sample_concepts', [])[:15]
+        self.logger.info(
+            f"Sample normalized concepts: {sample}"
+        )
+
         if skipped_abstract > 0:
             self.logger.debug(f"Skipped {skipped_abstract} abstract facts")
         if skipped_nil > 0:

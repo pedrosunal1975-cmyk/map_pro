@@ -262,6 +262,14 @@ class HorizontalChecker:
 
         parent_norm = self.c_equal.normalize_concept(parent_concept)
 
+        # Log normalization for troubleshooting binding failures
+        self.logger.debug(
+            f"Calculation '{parent_concept}' -> '{parent_norm}' with {len(children)} children"
+        )
+        for arc in arcs[:3]:  # Log first 3 arcs at debug level
+            child_norm = self.c_equal.normalize_concept(arc.child_concept)
+            self.logger.debug(f"  Child: '{arc.child_concept}' -> '{child_norm}'")
+
         # Verify across all contexts where parent exists
         return self._verify_calculation_in_contexts(
             parent_norm, parent_concept, children, arcs, fact_groups, role

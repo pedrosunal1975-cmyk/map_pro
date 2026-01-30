@@ -54,8 +54,10 @@ class ConceptNormalizer:
         Extracts the local name after namespace prefix, then applies
         standard normalization (removes separators, lowercases).
 
-        Handles both colon separators (us-gaap:Assets) and
-        underscore separators (us-gaap_Assets or v_CustomConcept).
+        Handles:
+        - Clark notation: {http://fasb.org/us-gaap/2024}Assets
+        - Colon separators: us-gaap:Assets
+        - Underscore separators: us-gaap_Assets or v_CustomConcept
 
         Args:
             concept: Original concept name (e.g., "us-gaap:Assets" or "v_CustomConcept")
@@ -66,8 +68,15 @@ class ConceptNormalizer:
         if not concept:
             return ''
 
+        # Handle Clark notation first: {namespace}LocalName
+        # This format is used in some XBRL parsers and APIs
+        if concept.startswith('{') and '}' in concept:
+            local_name = concept.split('}')[-1]
+            return normalize_name(local_name)
+
         # Handle colon separator (us-gaap:Assets)
-        if ':' in concept:
+        # But NOT if it looks like a URL (contains ://)
+        if ':' in concept and '://' not in concept:
             local_name = concept.split(':')[-1]
         # Handle underscore separator (us-gaap_Assets or v_CustomConcept)
         # Check if first part looks like a namespace prefix

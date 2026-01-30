@@ -154,13 +154,12 @@ class BindingChecker:
         children_found = []
         children_missing = []
 
-        # DEBUG: Log available concepts in this context for troubleshooting
-        if self.logger.isEnabledFor(logging.DEBUG):
-            available_concepts = list(context_group.facts.keys())
-            self.logger.debug(
-                f"Binding check for '{parent_concept}' in context {context_group.context_id}: "
-                f"{len(available_concepts)} concepts available"
-            )
+        # Log available concepts in this context for troubleshooting binding failures
+        available_concepts = list(context_group.facts.keys())
+        self.logger.debug(
+            f"Binding check for '{parent_concept}' in context {context_group.context_id}: "
+            f"{len(available_concepts)} concepts available"
+        )
 
         for child_concept, weight in children:
             child_info = context_group.get_duplicate_info(child_concept)
@@ -214,6 +213,18 @@ class BindingChecker:
 
         # Rule 2: At least one child must exist
         if not children_found:
+            # Log diagnostic info when no children found - helps debug normalization issues
+            self.logger.info(
+                f"[BINDING DIAGNOSTIC] No children found for '{parent_concept}' in context {context_group.context_id}"
+            )
+            self.logger.info(
+                f"  Looking for {len(children)} children: {[c[0] for c in children[:5]]}{'...' if len(children) > 5 else ''}"
+            )
+            # Show sample of available concepts to help identify normalization mismatch
+            sample_available = sorted(available_concepts)[:10]
+            self.logger.info(
+                f"  Available concepts ({len(available_concepts)} total): {sample_available}{'...' if len(available_concepts) > 10 else ''}"
+            )
             return BindingResult(
                 binds=False,
                 status=BindingStatus.SKIP_NO_CHILDREN,
