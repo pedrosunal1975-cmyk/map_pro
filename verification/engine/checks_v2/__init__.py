@@ -38,4 +38,33 @@ Design Principles:
 __version__ = '2.0.0'
 __author__ = 'MAP PRO Team'
 
-# Version 2 is under development - imports will be added as modules are completed
+# Main entry points
+from .processors import (
+    PipelineOrchestrator,
+    verify_filing,
+    VerificationResult,
+    VerificationCheck,
+    VerificationSummary,
+)
+
+# Adapter for integration with existing coordinator
+from .adapter import (
+    HorizontalCheckerV2,
+    VerticalCheckerV2,
+    LibraryCheckerV2,
+    get_checkers_v2,
+)
+
+__all__ = [
+    # Pipeline
+    'PipelineOrchestrator',
+    'verify_filing',
+    'VerificationResult',
+    'VerificationCheck',
+    'VerificationSummary',
+    # Adapters for backward compatibility
+    'HorizontalCheckerV2',
+    'VerticalCheckerV2',
+    'LibraryCheckerV2',
+    'get_checkers_v2',
+]
