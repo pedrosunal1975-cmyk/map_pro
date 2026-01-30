@@ -254,12 +254,12 @@ class PreparationProcessor:
                 context_id=fact.context_id,
                 unit=fact.unit,
                 decimals=fact.decimals,
-                original_name=fact.original_concept,
+                original_concept=fact.original_concept,
             )
 
         # Convert grouper output to FactGroup structures
-        for context_id in grouper.get_context_ids():
-            ctx_group = grouper.get_group(context_id)
+        for context_id in grouper.get_contexts():
+            ctx_group = grouper.get_context(context_id)
             if ctx_group:
                 ctx_info = result.contexts.get(context_id)
 
@@ -270,15 +270,13 @@ class PreparationProcessor:
                     facts={},
                 )
 
-                # Copy facts from grouper
-                for concept in ctx_group.concepts():
-                    fact_data = ctx_group.get(concept)
-                    if fact_data:
-                        # Find matching prepared fact
-                        for pf in result.facts:
-                            if pf.concept == concept and pf.context_id == context_id:
-                                fact_group.facts[concept] = pf
-                                break
+                # Copy facts from grouper to fact_group
+                for concept in ctx_group.facts.keys():
+                    # Find matching prepared fact
+                    for pf in result.facts:
+                        if pf.concept == concept and pf.context_id == context_id:
+                            fact_group.facts[concept] = pf
+                            break
 
                 result.fact_groups[context_id] = fact_group
 

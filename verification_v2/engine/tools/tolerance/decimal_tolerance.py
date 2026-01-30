@@ -257,5 +257,33 @@ class DecimalTolerance:
             strategy_used='decimal',
         )
 
+    def is_within_tolerance(
+        self,
+        expected: float,
+        actual: float,
+        expected_decimals: Optional[int] = None,
+        actual_decimals: Optional[int] = None
+    ) -> ToleranceResult:
+        """
+        Check if actual value is within tolerance of expected value.
+
+        Convenience wrapper around compare() with clearer semantics.
+
+        Args:
+            expected: The expected/target value
+            actual: The actual/computed value
+            expected_decimals: Decimals precision for expected value
+            actual_decimals: Decimals precision for actual value
+
+        Returns:
+            ToleranceResult with comparison details
+        """
+        return self.compare(
+            value1=expected,
+            value2=actual,
+            decimals1=expected_decimals,
+            decimals2=actual_decimals,
+        )
+
 
 __all__ = ['DecimalTolerance', 'ToleranceResult']

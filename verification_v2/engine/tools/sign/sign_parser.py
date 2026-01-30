@@ -212,5 +212,19 @@ class SignParser:
         self.parsed_files.clear()
         self.diagnostics.clear()
 
+    def parse_sign_attribute(self, sign_value: str) -> int:
+        """
+        Parse a sign attribute value to get the multiplier.
+
+        Args:
+            sign_value: Sign attribute value ('+', '-', or None)
+
+        Returns:
+            Sign multiplier: 1 for positive/None, -1 for negative
+        """
+        if sign_value == '-':
+            return -1
+        return 1
+
 
 __all__ = ['SignParser']

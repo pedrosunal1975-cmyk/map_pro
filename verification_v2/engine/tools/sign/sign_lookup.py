@@ -70,6 +70,33 @@ class SignLookup:
         """
         self.corrections = corrections
 
+    def add_correction(
+        self,
+        concept: str,
+        context_id: str,
+        multiplier: int,
+        source: SignSource = None,
+        notes: str = ""
+    ):
+        """
+        Add a single sign correction.
+
+        Args:
+            concept: XBRL concept name
+            context_id: XBRL context reference
+            multiplier: Sign multiplier (1 or -1)
+            source: Source of correction (optional)
+            notes: Additional notes
+        """
+        key = (concept, context_id)
+        self.corrections[key] = SignInfo(
+            concept=concept,
+            context_id=context_id,
+            sign_multiplier=multiplier,
+            source=source or SignSource.XBRL_ATTRIBUTE,
+            notes=notes,
+        )
+
     def get_correction(
         self,
         concept: str,

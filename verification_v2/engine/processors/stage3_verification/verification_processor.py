@@ -348,10 +348,10 @@ class VerificationProcessor:
                     context_id=fact.context_id,
                     unit=fact.unit,
                     decimals=fact.decimals,
-                    original_name=fact.original_concept,
+                    original_concept=fact.original_concept,
                 )
 
-            ctx_group = grouper.get_group(context_id)
+            ctx_group = grouper.get_context(context_id)
             if ctx_group:
                 groups[context_id] = ctx_group
 
