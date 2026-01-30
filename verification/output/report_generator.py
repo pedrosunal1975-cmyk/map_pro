@@ -14,7 +14,7 @@ from typing import Optional
 
 from ..core.config_loader import ConfigLoader
 from ..engine.coordinator import VerificationResult
-from ..engine.checks.horizontal_checker import CheckResult
+from ..engine.checks import CheckResult
 from ..constants import LOG_OUTPUT, REPORT_FILE
 
 
