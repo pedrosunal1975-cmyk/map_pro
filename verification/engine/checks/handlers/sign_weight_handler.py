@@ -149,6 +149,12 @@ class SignWeightHandler:
 
             self.parsed_files.add(str(instance_path))
             logger.info(f"Parsed {instance_path.name}: found {count} sign corrections")
+
+            # Log sample of corrections for debugging context ID format
+            if count > 0 and logger.isEnabledFor(logging.DEBUG):
+                sample_keys = list(self.sign_corrections.keys())[:5]
+                logger.debug(f"Sample sign corrections (concept, context_id): {sample_keys}")
+
             return count
 
         except Exception as e:
@@ -163,44 +169,56 @@ class SignWeightHandler:
         displayed as positive text in the document.
 
         XBRL attribute order varies, so we use a flexible approach:
-        1. Find all ix:nonFraction elements
+        1. Find all ix:nonFraction elements (with various namespace prefixes)
         2. Extract attributes from each element regardless of order
         """
         count = 0
 
-        # Find all ix:nonFraction elements with sign attribute
-        # The attributes can be in any order, so we capture the whole tag
-        pattern = re.compile(
-            r'<ix:nonFraction\s+([^>]*sign="[+-]"[^>]*)>',
-            re.IGNORECASE
-        )
+        # Find all nonFraction elements with sign attribute
+        # Handle various namespace prefixes: ix:, ixbrl:, iXBRL:, etc.
+        # Also handle both double and single quotes for attribute values
+        # The (?:...) is non-capturing group, allows attributes in any order
+        patterns = [
+            # Standard ix: prefix
+            re.compile(
+                r'<ix:nonFraction\s+([^>]*sign\s*=\s*["\'][+-]["\'][^>]*)>',
+                re.IGNORECASE
+            ),
+            # Alternative prefixes (iXBRL, ixbrl, etc.)
+            re.compile(
+                r'<(?:ixbrl|iXBRL):nonFraction\s+([^>]*sign\s*=\s*["\'][+-]["\'][^>]*)>',
+                re.IGNORECASE
+            ),
+        ]
 
-        for match in pattern.finditer(content):
-            attrs = match.group(1)
+        for pattern in patterns:
+            for match in pattern.finditer(content):
+                attrs = match.group(1)
 
-            # Extract individual attributes using separate patterns
-            sign_match = re.search(r'sign="([+-])"', attrs)
-            name_match = re.search(r'name="([^"]+)"', attrs)
-            context_match = re.search(r'contextRef="([^"]+)"', attrs)
+                # Extract individual attributes using flexible patterns
+                # Handle both single and double quotes, optional whitespace around =
+                sign_match = re.search(r'sign\s*=\s*["\']([+-])["\']', attrs)
+                name_match = re.search(r'name\s*=\s*["\']([^"\']+)["\']', attrs)
+                context_match = re.search(r'contextRef\s*=\s*["\']([^"\']+)["\']', attrs)
 
-            if sign_match and name_match and context_match:
-                sign_attr = sign_match.group(1)
-                concept = name_match.group(1)
-                context_id = context_match.group(1)
+                if sign_match and name_match and context_match:
+                    sign_attr = sign_match.group(1)
+                    concept = name_match.group(1)
+                    context_id = context_match.group(1)
 
-                # sign="-" means the value should be negated
-                sign_multiplier = -1 if sign_attr == '-' else 1
+                    # sign="-" means the value should be negated
+                    sign_multiplier = -1 if sign_attr == '-' else 1
 
-                key = (concept, context_id)
-                if key not in self.sign_corrections:
-                    self.sign_corrections[key] = SignInfo(
-                        concept=concept,
-                        context_id=context_id,
-                        sign_multiplier=sign_multiplier,
-                        source=SignSource.XBRL_ATTRIBUTE,
-                        notes=f"sign='{sign_attr}' in {source_file.name}"
-                    )
-                    count += 1
+                    key = (concept, context_id)
+                    if key not in self.sign_corrections:
+                        self.sign_corrections[key] = SignInfo(
+                            concept=concept,
+                            context_id=context_id,
+                            sign_multiplier=sign_multiplier,
+                            source=SignSource.XBRL_ATTRIBUTE,
+                            notes=f"sign='{sign_attr}' in {source_file.name}"
+                        )
+                        count += 1
 
         return count
 
@@ -260,6 +278,7 @@ class SignWeightHandler:
         # Try exact match first
         key = (concept, context_id)
         if key in self.sign_corrections:
+            logger.debug(f"Sign correction FOUND (exact): {concept} in {context_id} -> -1")
             return self.sign_corrections[key].sign_multiplier
 
         # Try with normalized concept name
@@ -283,7 +302,31 @@ class SignWeightHandler:
                 normalized_stored = normalize_name(stored_local)
 
                 if normalized_stored == normalized_lookup:
+                    logger.debug(f"Sign correction FOUND (normalized): {concept} in {context_id} -> {info.sign_multiplier}")
                     return info.sign_multiplier
+
+        # Check if this concept has ANY sign correction (any context)
+        # This helps diagnose context ID format mismatches
+        if self.sign_corrections:
+            local_name = self._extract_local_name(concept)
+            normalized_lookup = normalize_name(local_name)
+
+            # Look for any matching concept regardless of context
+            matching_concepts = []
+            for (stored_concept, stored_ctx), info in self.sign_corrections.items():
+                stored_local = self._extract_local_name(stored_concept)
+                if normalize_name(stored_local) == normalized_lookup:
+                    matching_concepts.append((stored_ctx, info.sign_multiplier))
+
+            if matching_concepts:
+                # Found sign corrections for this concept but in different context(s)
+                logger.warning(
+                    f"Sign correction EXISTS for '{concept}' but in different context(s). "
+                    f"Looking for context: '{context_id}'. "
+                    f"Available: {[ctx for ctx, _ in matching_concepts[:3]]}{'...' if len(matching_concepts) > 3 else ''}"
+                )
+            elif logger.isEnabledFor(logging.DEBUG):
+                logger.debug(f"Sign correction NOT FOUND: {concept} (local: {local_name}) in {context_id}")
 
         return 1  # No correction needed
 

@@ -82,6 +82,11 @@ class CalculationVerifierHorizontal:
         min_decimals = None
         sign_corrections_applied = []
 
+        # Log detailed calculation trace for debugging sign issues
+        self.logger.debug(
+            f"CALC TRACE: {parent_original} in {context_id}"
+        )
+
         for child_info in binding.children_found:
             child_concept = child_info['original_concept']
             child_ctx = child_info.get('context_id', context_id)
@@ -92,6 +97,14 @@ class CalculationVerifierHorizontal:
             corrected_value, was_corrected = self.sign_handler.apply_sign_correction(
                 child_concept, child_ctx, child_value
             )
+
+            # Log each child's contribution for debugging
+            self.logger.debug(
+                f"  CHILD: {child_concept}, raw={child_value}, "
+                f"sign_corrected={was_corrected}, corrected={corrected_value}, "
+                f"weight={child_weight}, weighted={corrected_value * child_weight}"
+            )
+
             if was_corrected:
                 sign_corrections_applied.append({
                     'concept': child_concept,
@@ -157,12 +170,37 @@ class CalculationVerifierHorizontal:
             )
 
             # Log diagnostic info for critical failures
-            if severity == SEVERITY_CRITICAL and binding.children_missing:
-                self.logger.info(
-                    f"DIAGNOSTIC: {parent_original} in {context_id}: "
-                    f"found {len(binding.children_found)}, missing {len(binding.children_missing)} children. "
-                    f"Missing: {binding.children_missing[:MAX_MISSING_CHILDREN_DISPLAY]}"
+            if severity == SEVERITY_CRITICAL:
+                # Check if this is a sign mismatch
+                is_sign_mismatch = (
+                    expected_sum != 0 and parent_value != 0 and
+                    (expected_sum > 0) != (parent_value > 0)
                 )
+
+                if is_sign_mismatch:
+                    # Log full calculation breakdown for sign mismatch debugging
+                    self.logger.info(
+                        f"[SIGN MISMATCH DETAILS] {parent_original} in {context_id}:"
+                    )
+                    self.logger.info(
+                        f"  Parent: reported={binding.parent_value}, after_sign_correction={parent_value}, "
+                        f"sign_corrected={parent_was_corrected}"
+                    )
+                    self.logger.info(f"  Children ({len(child_details)}):")
+                    for child in child_details:
+                        self.logger.info(
+                            f"    - {child['concept']}: value={child['value']}, "
+                            f"corrected={child['corrected_value']}, weight={child['weight']}, "
+                            f"weighted={child['weighted']}, sign_corrected={child['sign_corrected']}"
+                        )
+                    self.logger.info(f"  Sum of weighted children: {expected_sum}")
+
+                if binding.children_missing:
+                    self.logger.info(
+                        f"DIAGNOSTIC: {parent_original} in {context_id}: "
+                        f"found {len(binding.children_found)}, missing {len(binding.children_missing)} children. "
+                        f"Missing: {binding.children_missing[:MAX_MISSING_CHILDREN_DISPLAY]}"
+                    )
 
         return CheckResult(
             check_name=CHECK_CALCULATION_CONSISTENCY,
@@ -286,6 +324,13 @@ class CalculationVerifierHorizontal:
         difference: float
     ) -> tuple[str, str]:
         """Handle sign mismatch (fundamental error)."""
+        # Log diagnostic info for sign mismatch - often indicates weight or sign correction issue
+        self.logger.info(
+            f"[SIGN MISMATCH DIAGNOSTIC] {parent_original}: "
+            f"calculated={expected_sum:,.0f}, reported={parent_value:,.0f}. "
+            f"Check: (1) iXBRL sign corrections, (2) calculation linkbase weights, "
+            f"(3) whether expense values should be negative"
+        )
         return SEVERITY_CRITICAL, (
             f"Calculation {parent_original}: "
             f"SIGN MISMATCH - sum {expected_sum:,.0f} vs reported {parent_value:,.0f}, "
