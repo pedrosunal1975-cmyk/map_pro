@@ -31,6 +31,8 @@ from .constants import (
     normalize_form_name,
     get_form_variations,
     normalize_name,
+    dates_match_flexible,
+    DEFAULT_DATE_MATCH_LEVEL,
 )
 
 
@@ -270,26 +272,39 @@ class ParsedDataLoader:
         market: str,
         company: str,
         form: str,
-        date: str = None
+        date: str = None,
+        date_match_level: str = None
     ) -> Optional[ParsedFilingEntry]:
         """
         Find specific parsed filing using flexible search.
 
         BLIND SEARCH: Does not assume directory structure.
-        Searches for company and form, optionally filtered by date.
+        Searches for company and form with configurable date matching.
+
+        Date matching levels (from constants.DEFAULT_DATE_MATCH_LEVEL):
+        - 'any': Ignore dates entirely (default - most permissive)
+        - 'year': Only years need to match
+        - 'contains': One date contains the other (substring)
+        - 'exact': Normalized dates must match exactly
 
         Args:
             market: Market identifier
             company: Company name
             form: Form type
-            date: Filing date (optional)
+            date: Filing date (optional - used based on date_match_level)
+            date_match_level: How strict date matching should be
+                              (default: DEFAULT_DATE_MATCH_LEVEL from constants)
 
         Returns:
             ParsedFilingEntry or None if not found
         """
+        # Use default date match level if not specified
+        if date_match_level is None:
+            date_match_level = DEFAULT_DATE_MATCH_LEVEL
+
         self.logger.info(
             f"Searching for parsed filing: market={market}, company={company}, "
-            f"form={form}, date={date}"
+            f"form={form}, date={date or 'any'}, match_level={date_match_level}"
         )
 
         # Get all filings
@@ -302,20 +317,20 @@ class ParsedDataLoader:
         # Search for matching filing
         candidates = []
         for filing in all_filings:
-            # Check company match
+            # Check company match (fuzzy - substring in either direction)
             filing_company_normalized = normalize_name(filing.company)
             if company_normalized not in filing_company_normalized and \
                filing_company_normalized not in company_normalized:
                 continue
 
-            # Check form match
+            # Check form match (using form variations)
             filing_form_normalized = normalize_form_name(filing.form)
             if filing_form_normalized not in form_variations and \
                filing.form.lower() not in form_variations:
                 continue
 
-            # Check date if provided
-            if date and date not in filing.date and filing.date not in date:
+            # Check date using flexible matching
+            if not dates_match_flexible(date, filing.date, date_match_level):
                 continue
 
             candidates.append(filing)

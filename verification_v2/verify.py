@@ -201,17 +201,24 @@ class VerificationCLI:
         Uses the proven ParsedDataLoader to find parsed.json by matching
         company and form from the mapped filing entry.
 
-        Note: Date is NOT used for matching because mapped and parsed
-        directories may use different date conventions (fiscal year end
-        vs filing date vs processing date).
+        Date matching is configurable via DEFAULT_DATE_MATCH_LEVEL in
+        loaders/constants.py. Default is 'any' which ignores dates
+        because mapped and parsed directories often use different date
+        conventions (fiscal year end vs filing date vs processing date).
+
+        To change the matching level, modify DEFAULT_DATE_MATCH_LEVEL:
+        - 'any': Ignore dates (default - most permissive)
+        - 'year': Only years need to match
+        - 'contains': Substring matching
+        - 'exact': Full date must match
         """
         # Use ParsedDataLoader's find_parsed_filing method
-        # Do NOT pass date - dates differ between mapped and parsed directories
+        # Date matching level is controlled by DEFAULT_DATE_MATCH_LEVEL in constants.py
         parsed_filing = self.parsed_loader.find_parsed_filing(
             market=filing.market,
             company=filing.company,
             form=filing.form,
-            date=None,  # Dates don't match between mapped and parsed
+            date=filing.date,  # Pass date for logging; matching level controls behavior
         )
 
         if parsed_filing:

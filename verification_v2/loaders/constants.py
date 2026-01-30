@@ -241,6 +241,126 @@ def normalize_name(name: str) -> str:
     return name.lower().replace('_', '').replace('-', '').replace(' ', '')
 
 # ==============================================================================
+# DATE MATCHING UTILITIES
+# ==============================================================================
+
+# Date format patterns commonly found in filing directories
+# These are detection patterns, not strict formats
+DATE_FORMAT_PATTERNS = [
+    '%Y-%m-%d',      # 2025-04-21
+    '%Y_%m_%d',      # 2025_04_21
+    '%Y%m%d',        # 20250421
+    '%m-%d-%Y',      # 04-21-2025
+    '%m_%d_%Y',      # 04_21_2025
+    '%d-%m-%Y',      # 21-04-2025
+    '%Y',            # 2025 (year only)
+]
+
+# Characters that are interchangeable in date strings
+DATE_SEPARATOR_CHARS = ['-', '_', '/']
+
+
+def normalize_date_string(date_str: str) -> str:
+    """
+    Normalize date string for comparison.
+
+    Removes separators and converts to digits-only format.
+    This allows matching dates regardless of separator used.
+
+    Args:
+        date_str: Date string in any format
+
+    Returns:
+        Normalized date string (digits only)
+    """
+    if not date_str:
+        return ''
+
+    # Remove all common separators
+    normalized = date_str
+    for sep in DATE_SEPARATOR_CHARS:
+        normalized = normalized.replace(sep, '')
+
+    # Keep only digits
+    return ''.join(c for c in normalized if c.isdigit())
+
+
+def extract_year_from_date(date_str: str) -> str:
+    """
+    Extract year from date string.
+
+    Works with various date formats.
+
+    Args:
+        date_str: Date string
+
+    Returns:
+        4-digit year or empty string if not found
+    """
+    if not date_str:
+        return ''
+
+    # Try to find a 4-digit year pattern
+    import re
+    year_match = re.search(r'(19|20)\d{2}', date_str)
+    if year_match:
+        return year_match.group(0)
+
+    return ''
+
+
+def dates_match_flexible(date1: str, date2: str, match_level: str = 'year') -> bool:
+    """
+    Check if two dates match with flexible matching levels.
+
+    Matching levels:
+    - 'exact': Normalized dates must match exactly
+    - 'year': Only years need to match
+    - 'contains': One date contains the other (substring)
+    - 'any': Always returns True (no date matching)
+
+    Args:
+        date1: First date string
+        date2: Second date string
+        match_level: How strict the matching should be
+
+    Returns:
+        True if dates match at the specified level
+    """
+    if match_level == 'any':
+        return True
+
+    if not date1 or not date2:
+        return True  # If either date is missing, consider it a match
+
+    if match_level == 'contains':
+        # Substring matching
+        norm1 = normalize_date_string(date1)
+        norm2 = normalize_date_string(date2)
+        return norm1 in norm2 or norm2 in norm1
+
+    if match_level == 'year':
+        # Only match year
+        year1 = extract_year_from_date(date1)
+        year2 = extract_year_from_date(date2)
+        if year1 and year2:
+            return year1 == year2
+        return True  # If can't extract year, consider it a match
+
+    if match_level == 'exact':
+        # Normalized exact match
+        return normalize_date_string(date1) == normalize_date_string(date2)
+
+    # Default: be permissive
+    return True
+
+
+# Default date match level for filing lookups
+# Options: 'any', 'year', 'contains', 'exact'
+DEFAULT_DATE_MATCH_LEVEL = 'any'
+
+
+# ==============================================================================
 # OPERATIONAL CONFIGURATION
 # ==============================================================================
 
@@ -301,6 +421,14 @@ __all__ = [
     'normalize_form_name',
     'get_form_variations',
     'normalize_name',
+
+    # Date matching utilities
+    'DATE_FORMAT_PATTERNS',
+    'DATE_SEPARATOR_CHARS',
+    'DEFAULT_DATE_MATCH_LEVEL',
+    'normalize_date_string',
+    'extract_year_from_date',
+    'dates_match_flexible',
 
     # Configuration
     'MAX_DIRECTORY_DEPTH',
