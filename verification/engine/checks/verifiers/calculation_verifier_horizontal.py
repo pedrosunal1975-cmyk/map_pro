@@ -136,6 +136,9 @@ class CalculationVerifierHorizontal:
 
         # Apply sign correction to parent value
         parent_value = binding.parent_value
+        self.logger.debug(
+            f"Looking up sign correction for parent: concept='{parent_original}', context='{context_id}'"
+        )
         parent_corrected, parent_was_corrected = self.sign_handler.apply_sign_correction(
             parent_original, context_id, parent_value
         )

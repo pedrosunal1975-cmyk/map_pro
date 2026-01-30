@@ -150,10 +150,13 @@ class SignWeightHandler:
             self.parsed_files.add(str(instance_path))
             logger.info(f"Parsed {instance_path.name}: found {count} sign corrections")
 
-            # Log sample of corrections for debugging context ID format
-            if count > 0 and logger.isEnabledFor(logging.DEBUG):
+            # Log sample of corrections for debugging - show at INFO level for troubleshooting
+            if count > 0:
                 sample_keys = list(self.sign_corrections.keys())[:5]
-                logger.debug(f"Sample sign corrections (concept, context_id): {sample_keys}")
+                logger.info(f"Sample sign correction keys (concept, context_id): {sample_keys}")
+                # Also log a few full entries to see the format
+                for i, (key, info) in enumerate(list(self.sign_corrections.items())[:3]):
+                    logger.info(f"  Sign correction {i+1}: concept='{key[0]}', context='{key[1]}', multiplier={info.sign_multiplier}")
 
             return count
 
@@ -325,8 +328,13 @@ class SignWeightHandler:
                     f"Looking for context: '{context_id}'. "
                     f"Available: {[ctx for ctx, _ in matching_concepts[:3]]}{'...' if len(matching_concepts) > 3 else ''}"
                 )
-            elif logger.isEnabledFor(logging.DEBUG):
-                logger.debug(f"Sign correction NOT FOUND: {concept} (local: {local_name}) in {context_id}")
+            else:
+                # Log when concept has no sign correction at all (common for concepts that
+                # don't have sign="-" in iXBRL - they may genuinely be positive values)
+                logger.debug(
+                    f"No sign correction for '{concept}' (normalized: '{normalized_lookup}') - "
+                    f"concept may not have sign='-' in iXBRL"
+                )
 
         return 1  # No correction needed
 
