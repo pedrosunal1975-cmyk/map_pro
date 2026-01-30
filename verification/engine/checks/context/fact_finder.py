@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/fact_finder.py
+# Path: verification/engine/checks/context/fact_finder.py
 """
 Fact Finding for XBRL Verification
 

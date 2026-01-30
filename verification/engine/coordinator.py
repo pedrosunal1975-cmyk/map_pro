@@ -22,10 +22,13 @@ from ..loaders.mapped_reader import MappedReader, MappedStatements
 from ..loaders.xbrl_filings import XBRLFilingsLoader
 from ..loaders.xbrl_reader import XBRLReader, CalculationNetwork
 from ..loaders.taxonomy_reader import TaxonomyReader
-from .checks.horizontal_checker import HorizontalChecker, CheckResult
-from .checks.vertical_checker import VerticalChecker
-from .checks.library_checker import LibraryChecker
-from .checks.sign_weight_handler import SignWeightHandler
+from .checks import (
+    HorizontalChecker,
+    CheckResult,
+    VerticalChecker,
+    LibraryChecker,
+    SignWeightHandler,
+)
 from .scoring.score_calculator import ScoreCalculator, VerificationScores
 from .scoring.quality_classifier import QualityClassifier, QualityClassification
 from .taxonomy_manager import TaxonomyManager

@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/dimension_handler.py
+# Path: verification/engine/checks/handlers/dimension_handler.py
 """
 XBRL Dimension Handler for Verification
 
@@ -36,7 +36,7 @@ from dataclasses import dataclass, field
 from typing import Optional
 from pathlib import Path
 
-from ...loaders.constants import normalize_name
+from ....loaders.constants import normalize_name
 
 
 @dataclass

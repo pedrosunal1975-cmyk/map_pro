@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/context_matching.py
+# Path: verification/engine/checks/context/context_matching.py
 """
 Context Matching for XBRL Verification
 

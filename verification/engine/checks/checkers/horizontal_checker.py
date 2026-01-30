@@ -25,19 +25,19 @@ import logging
 from pathlib import Path
 from typing import Optional
 
-from ...loaders.mapped_reader import MappedStatements
-from ...loaders.xbrl_reader import CalculationNetwork, CalculationArc
-from .c_equal import CEqual, FactGroups
-from .binding_checker import BindingChecker
-from .decimal_tolerance import DecimalTolerance
-from .sign_weight_handler import SignWeightHandler
-from .check_result import CheckResult
-from .instance_document_finder import InstanceDocumentFinder
-from .calculation_verifier_horizontal import CalculationVerifierHorizontal
-from .duplicate_fact_checker import DuplicateFactChecker
-from .constants import CHECK_CALCULATION_CONSISTENCY, CHECK_DUPLICATE_FACTS
-from .role_scoping import group_arcs_by_role_and_parent
-from ...constants import SEVERITY_CRITICAL, SEVERITY_INFO
+from ....loaders.mapped_reader import MappedStatements
+from ....loaders.xbrl_reader import CalculationNetwork, CalculationArc
+from ..c_equal.c_equal import CEqual, FactGroups
+from ..binding.binding_checker import BindingChecker
+from ..core.decimal_tolerance import DecimalTolerance
+from ..handlers.sign_weight_handler import SignWeightHandler
+from ..core.check_result import CheckResult
+from ..handlers.instance_document_finder import InstanceDocumentFinder
+from ..verifiers.calculation_verifier_horizontal import CalculationVerifierHorizontal
+from ..verifiers.duplicate_fact_checker import DuplicateFactChecker
+from ..core.constants import CHECK_CALCULATION_CONSISTENCY, CHECK_DUPLICATE_FACTS
+from ..binding.role_scoping import group_arcs_by_role_and_parent
+from ....constants import SEVERITY_CRITICAL, SEVERITY_INFO
 
 
 # Configuration constants

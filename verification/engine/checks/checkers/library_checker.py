@@ -19,16 +19,16 @@ import logging
 from dataclasses import dataclass, field
 from typing import Optional
 
-from ...loaders.mapped_reader import Statement, StatementFact, MappedStatements
-from ...loaders.taxonomy_reader import TaxonomyReader, TaxonomyDefinition, ConceptDefinition
-from ..checks.constants import (
+from ....loaders.mapped_reader import Statement, StatementFact, MappedStatements
+from ....loaders.taxonomy_reader import TaxonomyReader, TaxonomyDefinition, ConceptDefinition
+from ..core.constants import (
     CHECK_CONCEPT_VALIDITY,
     CHECK_PERIOD_TYPE_MATCH,
     CHECK_BALANCE_TYPE_MATCH,
     CHECK_DATA_TYPE_MATCH,
 )
-from ...constants import SEVERITY_CRITICAL, SEVERITY_WARNING, SEVERITY_INFO
-from .horizontal_checker import CheckResult
+from ....constants import SEVERITY_CRITICAL, SEVERITY_WARNING, SEVERITY_INFO
+from ..core.check_result import CheckResult
 
 
 class LibraryChecker:

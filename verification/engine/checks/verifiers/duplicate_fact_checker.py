@@ -11,13 +11,13 @@ Checks for duplicate facts and classifies them per XBRL Duplicates Guidance:
 import logging
 from typing import TYPE_CHECKING
 
-from .check_result import CheckResult
-from .constants import CHECK_DUPLICATE_FACTS
-from ...constants import SEVERITY_CRITICAL, SEVERITY_INFO
+from ..core.check_result import CheckResult
+from ..core.constants import CHECK_DUPLICATE_FACTS
+from ....constants import SEVERITY_CRITICAL, SEVERITY_INFO
 
 if TYPE_CHECKING:
-    from ...loaders.mapped_reader import MappedStatements
-    from .c_equal import CEqual
+    from ....loaders.mapped_reader import MappedStatements
+    from ..c_equal.c_equal import CEqual
 
 
 # Configuration constants

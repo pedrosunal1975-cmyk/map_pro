@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/c_equal.py
+# Path: verification/engine/checks/c_equal/c_equal.py
 """
 C-Equal (Context-Equal) Module for XBRL Verification
 
@@ -38,11 +38,11 @@ USAGE:
 
 import logging
 
-from ...loaders.mapped_reader import MappedStatements, StatementFact
-from .duplicate_detection import FactEntry, DuplicateInfo, DuplicateType
-from .context_grouping import ContextGroup, FactGroups
-from .value_parsing import ValueParser
-from .concept_normalization import ConceptNormalizer
+from ....loaders.mapped_reader import MappedStatements, StatementFact
+from ..context.duplicate_detection import FactEntry, DuplicateInfo, DuplicateType
+from ..context.context_grouping import ContextGroup, FactGroups
+from ..core.value_parsing import ValueParser
+from ..core.concept_normalization import ConceptNormalizer
 
 
 class CEqual:

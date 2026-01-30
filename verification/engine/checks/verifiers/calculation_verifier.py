@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/calculation_verifier.py
+# Path: verification/engine/checks/verifiers/calculation_verifier.py
 """
 Calculation Verifier for Verification Module
 
@@ -28,15 +28,15 @@ import logging
 from dataclasses import dataclass, field
 from typing import Optional
 
-from ..formula_registry import FormulaRegistry, CalculationTree
-from ...loaders.mapped_reader import MappedStatements
-from .c_equal import CEqual, FactGroups, ContextGroup
-from .binding_checker import BindingChecker, BindingResult, BindingStatus
-from .decimal_tolerance import DecimalTolerance
-from .sign_weight_handler import SignWeightHandler
-from .constants import OVERSHOOT_ROUNDING_THRESHOLD
-from ...constants import SEVERITY_CRITICAL, SEVERITY_WARNING, SEVERITY_INFO
-from .horizontal_checker import CheckResult
+from ...formula_registry import FormulaRegistry, CalculationTree
+from ....loaders.mapped_reader import MappedStatements
+from ..c_equal.c_equal import CEqual, FactGroups, ContextGroup
+from ..binding.binding_checker import BindingChecker, BindingResult, BindingStatus
+from ..core.decimal_tolerance import DecimalTolerance
+from ..handlers.sign_weight_handler import SignWeightHandler
+from ..core.constants import OVERSHOOT_ROUNDING_THRESHOLD
+from ....constants import SEVERITY_CRITICAL, SEVERITY_WARNING, SEVERITY_INFO
+from ..core.check_result import CheckResult
 
 
 @dataclass

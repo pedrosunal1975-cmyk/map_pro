@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/sign_weight_handler.py
+# Path: verification/engine/checks/handlers/sign_weight_handler.py
 """
 Sign and Weight Handler for XBRL Verification.
 
@@ -32,7 +32,7 @@ from enum import Enum
 import re
 import logging
 
-from ...loaders.constants import normalize_name
+from ....loaders.constants import normalize_name
 
 logger = logging.getLogger(__name__)
 

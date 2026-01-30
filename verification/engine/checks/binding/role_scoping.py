@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/role_scoping.py
+# Path: verification/engine/checks/binding/role_scoping.py
 """
 Role Scoping Module for XBRL Calculations 1.1 Compliance
 
@@ -37,8 +37,8 @@ import logging
 from dataclasses import dataclass, field
 from typing import Optional, Iterator
 
-from ...loaders.xbrl_reader import CalculationNetwork, CalculationArc
-from ...loaders.constants import normalize_name
+from ....loaders.xbrl_reader import CalculationNetwork, CalculationArc
+from ....loaders.constants import normalize_name
 
 
 @dataclass

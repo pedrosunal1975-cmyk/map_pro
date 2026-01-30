@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/instance_document_finder.py
+# Path: verification/engine/checks/handlers/instance_document_finder.py
 """
 Instance Document Finder for XBRL Verification
 

@@ -11,13 +11,13 @@ Uses C-Equal, binding rules, decimal tolerance, and sign corrections.
 import logging
 from typing import Optional
 
-from .c_equal import FactGroups, ContextGroup
-from .binding_checker import BindingResult
-from .decimal_tolerance import DecimalTolerance
-from .sign_weight_handler import SignWeightHandler
-from .check_result import CheckResult
-from .constants import CHECK_CALCULATION_CONSISTENCY, OVERSHOOT_ROUNDING_THRESHOLD
-from ...constants import SEVERITY_CRITICAL, SEVERITY_WARNING, SEVERITY_INFO
+from ..c_equal.c_equal import FactGroups, ContextGroup
+from ..binding.binding_checker import BindingResult
+from ..core.decimal_tolerance import DecimalTolerance
+from ..handlers.sign_weight_handler import SignWeightHandler
+from ..core.check_result import CheckResult
+from ..core.constants import CHECK_CALCULATION_CONSISTENCY, OVERSHOOT_ROUNDING_THRESHOLD
+from ....constants import SEVERITY_CRITICAL, SEVERITY_WARNING, SEVERITY_INFO
 
 
 # Configuration constants

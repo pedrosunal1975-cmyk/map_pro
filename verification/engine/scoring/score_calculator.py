@@ -10,7 +10,7 @@ import logging
 from dataclasses import dataclass, field
 from typing import Optional
 
-from ..checks.horizontal_checker import CheckResult
+from ..checks import CheckResult
 from .constants import (
     DEFAULT_HORIZONTAL_WEIGHT,
     DEFAULT_VERTICAL_WEIGHT,

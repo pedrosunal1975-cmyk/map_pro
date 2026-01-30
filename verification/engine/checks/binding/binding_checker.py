@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/binding_checker.py
+# Path: verification/engine/checks/binding/binding_checker.py
 """
 Calculation Binding Checker for XBRL Verification
 
@@ -35,9 +35,9 @@ from dataclasses import dataclass, field
 from typing import Optional
 from enum import Enum
 
-from .c_equal import ContextGroup, DuplicateType
-from .constants import CALCULATION_COMPLETENESS_THRESHOLD
-from .fact_rules import ContextClassifier, ContextMatcher, FactFinder, FactMatch
+from ..c_equal.c_equal import ContextGroup, DuplicateType
+from ..core.constants import CALCULATION_COMPLETENESS_THRESHOLD
+from ..context.fact_rules import ContextClassifier, ContextMatcher, FactFinder, FactMatch
 
 
 class BindingStatus(Enum):

@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/fact_rules.py
+# Path: verification/engine/checks/context/fact_rules.py
 """
 Centralized Fact Finding Rules for XBRL Verification
 

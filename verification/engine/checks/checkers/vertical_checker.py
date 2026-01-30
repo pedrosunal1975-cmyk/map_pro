@@ -16,20 +16,20 @@ Uses SignWeightHandler for iXBRL sign attribute handling.
 import logging
 from typing import Optional, TYPE_CHECKING
 
-from ...loaders.mapped_reader import MappedStatements
-from ..checks.constants import (
+from ....loaders.mapped_reader import MappedStatements
+from ..core.constants import (
     CHECK_COMMON_VALUES_CONSISTENCY,
     DEFAULT_CALCULATION_TOLERANCE,
     DEFAULT_ROUNDING_TOLERANCE,
     LARGE_VALUE_THRESHOLD,
 )
-from ...constants import SEVERITY_CRITICAL, SEVERITY_WARNING, SEVERITY_INFO
-from .horizontal_checker import CheckResult
-from .sign_weight_handler import SignWeightHandler
-from .fact_rules import PeriodExtractor, ContextClassifier
+from ....constants import SEVERITY_CRITICAL, SEVERITY_WARNING, SEVERITY_INFO
+from ..core.check_result import CheckResult
+from ..handlers.sign_weight_handler import SignWeightHandler
+from ..context.fact_rules import PeriodExtractor, ContextClassifier
 
 if TYPE_CHECKING:
-    from ..formula_registry import FormulaRegistry
+    from ...formula_registry import FormulaRegistry
 
 
 # Check names for XBRL-sourced calculations (company XBRL only)
@@ -313,7 +313,7 @@ class VerticalChecker:
             check_name = CHECK_XBRL_CALCULATION_COMPANY
 
         # Import here to avoid circular imports
-        from .calculation_verifier import CalculationVerifier
+        from ..verifiers.calculation_verifier import CalculationVerifier
 
         verifier = CalculationVerifier(
             self.formula_registry,
@@ -362,7 +362,7 @@ class VerticalChecker:
             return []
 
         # Import here to avoid circular imports
-        from .calculation_verifier import CalculationVerifier
+        from ..verifiers.calculation_verifier import CalculationVerifier
 
         verifier = CalculationVerifier(
             self.formula_registry,
