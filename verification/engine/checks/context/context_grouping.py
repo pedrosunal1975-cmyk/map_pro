@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/context_grouping.py
+# Path: verification/engine/checks/context/context_grouping.py
 """
 Context-Based Fact Grouping for XBRL Verification
 

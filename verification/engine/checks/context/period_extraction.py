@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/period_extraction.py
+# Path: verification/engine/checks/context/period_extraction.py
 """
 Period Extraction from XBRL Context IDs
 
@@ -11,7 +11,7 @@ import re
 from dataclasses import dataclass
 from typing import Optional
 
-from .constants import (
+from ..core.constants import (
     DIMENSIONAL_CONTEXT_INDICATORS,
     PERIOD_TYPE_INDICATORS,
     DATE_COMPONENT_PATTERNS,

@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/check_result.py
+# Path: verification/engine/checks/core/check_result.py
 """
 Check Result Data Structure
 
@@ -9,7 +9,7 @@ to report their findings in a standardized format.
 from dataclasses import dataclass, field
 from typing import Optional
 
-from ...constants import SEVERITY_INFO
+from ....constants import SEVERITY_INFO
 
 
 @dataclass
@@ -53,7 +53,7 @@ class CheckResult:
 
     def get_severity_label(self) -> str:
         """Get human-readable severity label."""
-        from ...constants import SEVERITY_CRITICAL, SEVERITY_WARNING
+        from ....constants import SEVERITY_CRITICAL, SEVERITY_WARNING
         
         if self.severity == SEVERITY_CRITICAL:
             return "CRITICAL"

@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/context_classification.py
+# Path: verification/engine/checks/context/context_classification.py
 """
 Context Classification for XBRL Verification
 
@@ -8,7 +8,7 @@ Classifies XBRL contexts as dimensional or default based on their structure.
 import logging
 from typing import Optional
 
-from .constants import DIMENSIONAL_CONTEXT_INDICATORS
+from ..core.constants import DIMENSIONAL_CONTEXT_INDICATORS
 
 
 class ContextClassifier:

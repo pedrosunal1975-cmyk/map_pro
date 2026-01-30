@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/value_parsing.py
+# Path: verification/engine/checks/core/value_parsing.py
 """
 Value Parsing and Normalization for XBRL Verification
 

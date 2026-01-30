@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/check_constants.py
+# Path: verification/engine/checks/core/check_constants.py
 """
 Additional Constants for Verification Checks
 

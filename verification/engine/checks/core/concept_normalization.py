@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/concept_normalization.py
+# Path: verification/engine/checks/core/concept_normalization.py
 """
 Concept Name Normalization for XBRL Verification
 
@@ -15,7 +15,7 @@ This module extracts the local name and applies standard normalization.
 import logging
 from typing import Set
 
-from ...loaders.constants import normalize_name
+from ....loaders.constants import normalize_name
 
 
 # Configuration constants

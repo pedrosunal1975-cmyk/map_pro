@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/constants.py
+# Path: verification/engine/checks/core/constants.py
 """
 Verification Checks Constants
 
@@ -92,7 +92,7 @@ OVERSHOOT_ROUNDING_THRESHOLD = 0.05  # 5%
 # CONCEPT NAME NORMALIZATION (for calculation verification only)
 # ==============================================================================
 
-from ...loaders.constants import normalize_name as loader_normalize_name
+from ....loaders.constants import normalize_name as loader_normalize_name
 
 # Separators used in different XBRL sources
 # These can be interchanged when matching concept names

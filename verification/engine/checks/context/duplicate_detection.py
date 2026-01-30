@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/duplicate_detection.py
+# Path: verification/engine/checks/context/duplicate_detection.py
 """
 Duplicate Fact Detection for XBRL Verification
 
@@ -17,7 +17,7 @@ from dataclasses import dataclass, field
 from typing import Optional
 from enum import Enum
 
-from .decimal_tolerance import DecimalTolerance
+from ..core.decimal_tolerance import DecimalTolerance
 
 
 # Configuration constants

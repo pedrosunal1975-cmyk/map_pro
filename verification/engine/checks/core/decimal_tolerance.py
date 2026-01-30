@@ -1,4 +1,4 @@
-# Path: verification/engine/checks/decimal_tolerance.py
+# Path: verification/engine/checks/core/decimal_tolerance.py
 """
 Decimal Tolerance Module for XBRL Verification
 
