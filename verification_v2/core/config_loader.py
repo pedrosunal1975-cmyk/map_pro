@@ -1,4 +1,4 @@
-# Path: verification/core/config_loader.py
+# Path: verification_v2/core/config_loader.py
 """
 Configuration Loader for Verification Module
 
@@ -123,7 +123,7 @@ class ConfigLoader:
             # OUTPUT PATHS (WRITE)
             # ================================================================
             'output_dir': self._get_path('VERIFICATION_OUTPUT_DIR', required=True),
-            'simplified_dir': self._get_path('VERIFICATION_SIMPLIFIED_DIR', required=True),
+            # Note: simplified_dir removed - StatementSimplifier not integrated into 3-stage pipeline
 
             # ================================================================
             # LOGGING CONFIGURATION

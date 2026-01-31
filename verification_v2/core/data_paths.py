@@ -1,15 +1,17 @@
-# Path: verification/core/data_paths.py
+# Path: verification_v2/core/data_paths.py
 """
-Data Paths Manager for Verification Module
+Data Paths Manager for Verification Module v2
 
 Automatic directory creation and path validation for the verification system.
 Ensures all required directories exist and are writable.
 
 Creates directories in data partition only:
 - reports/ (verification reports)
-- simplified/ (simplified statements)
 - logs/ (IPO logging)
-- cache/ (temporary cache)
+
+Note: The 3-stage pipeline architecture does not require:
+- simplified/ (StatementSimplifier is not integrated into pipeline)
+- cache/ (loaders use in-memory caching, not filesystem cache)
 """
 
 from pathlib import Path
@@ -70,14 +72,8 @@ class DataPathsManager:
             # Output directory for verification reports
             self.config.get('output_dir'),
 
-            # Simplified statements directory
-            self.config.get('simplified_dir'),
-
             # Logging directory
             self.config.get('log_dir'),
-
-            # Cache directory (data_root/cache)
-            self.config.get('data_root') / 'cache' if self.config.get('data_root') else None,
         ]
 
         # Filter out None values (optional paths)
@@ -217,7 +213,6 @@ class DataPathsManager:
 
         output_dirs = {
             'reports': self.config.get('output_dir'),
-            'simplified': self.config.get('simplified_dir'),
             'logs': self.config.get('log_dir'),
         }
 
@@ -312,7 +307,6 @@ class DataPathsManager:
 
         dirs_to_check = {
             'reports': self.config.get('output_dir'),
-            'simplified': self.config.get('simplified_dir'),
             'logs': self.config.get('log_dir'),
         }
 
