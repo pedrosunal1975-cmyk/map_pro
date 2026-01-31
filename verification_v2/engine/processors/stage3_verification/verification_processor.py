@@ -385,25 +385,37 @@ class VerificationProcessor:
 
             if check.passed:
                 summary.passed += 1
+                # Passed checks don't count as issues
             elif check.severity == 'info' and 'skipped' in check.message.lower():
                 summary.skipped += 1
             else:
+                # Only count issues for FAILED checks
                 summary.failed += 1
 
-            if check.severity == 'critical':
-                summary.critical_issues += 1
-            elif check.severity == 'warning':
-                summary.warning_issues += 1
-                summary.warnings += 1
-            elif check.severity == 'info':
-                summary.info_issues += 1
+                if check.severity == 'critical':
+                    summary.critical_issues += 1
+                elif check.severity == 'warning':
+                    summary.warning_issues += 1
+                    summary.warnings += 1
+                elif check.severity == 'info':
+                    summary.info_issues += 1
 
-        # Calculate score
+        # Calculate score using pass rate approach (like verification/ module)
         if summary.total_checks > 0:
-            # Penalize critical issues heavily, warnings less so
-            penalty = (summary.critical_issues * 10) + (summary.warning_issues * 2)
-            raw_score = ((summary.passed + summary.skipped) / summary.total_checks) * 100
-            summary.score = max(0, min(100, raw_score - penalty))
+            # Base score on pass rate
+            pass_rate = (summary.passed + summary.skipped) / summary.total_checks
+            raw_score = pass_rate * 100
+
+            # Apply penalty only for failed checks
+            # Critical failures have heavy impact, warnings less so
+            if summary.failed > 0:
+                # Penalty as percentage of total checks (proportional)
+                critical_penalty = (summary.critical_issues / summary.total_checks) * 50
+                warning_penalty = (summary.warning_issues / summary.total_checks) * 20
+                penalty = critical_penalty + warning_penalty
+                summary.score = max(0, min(100, raw_score - penalty))
+            else:
+                summary.score = raw_score
         else:
             summary.score = 100.0
 
