@@ -85,7 +85,7 @@ class DiscoveryProcessor:
         Returns:
             DiscoveryResult with all discovered elements
         """
-        # Handle MappedFilingEntry
+        # Handle MappedFilingEntry - route to production method
         if isinstance(source, MappedFilingEntry):
             return self.discover_from_filing(source)
 
