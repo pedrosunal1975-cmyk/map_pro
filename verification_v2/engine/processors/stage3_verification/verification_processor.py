@@ -49,6 +49,7 @@ from ...constants.check_names import (
     CHECK_DUPLICATE_FACTS,
     CHECK_SIGN_CONVENTION,
 )
+from ...constants.enums import DuplicateType
 
 
 class VerificationProcessor:
@@ -301,20 +302,25 @@ class VerificationProcessor:
         for key, dup_info in preparation.duplicates.items():
             concept, context_id = key.split(':', 1)
 
-            severity = 'critical' if dup_info.is_inconsistent else 'warning'
+            # Check if duplicates are inconsistent (different values)
+            is_inconsistent = dup_info.duplicate_type == DuplicateType.INCONSISTENT
+            severity = 'critical' if is_inconsistent else 'warning'
+
+            # Extract values from entries
+            values = [entry.value for entry in dup_info.entries]
 
             check = VerificationCheck(
                 check_name=CHECK_DUPLICATE_FACTS,
                 check_type='horizontal',
-                passed=not dup_info.is_inconsistent,
+                passed=not is_inconsistent,
                 severity=severity,
-                message=f"Duplicate facts for {concept}: {dup_info.duplicate_type.value}",
+                message=f"Duplicate facts for {concept}: {dup_info.duplicate_type.value if dup_info.duplicate_type else 'unknown'}",
                 concept=concept,
                 context_id=context_id,
                 details={
-                    'duplicate_type': dup_info.duplicate_type.value,
-                    'count': dup_info.count,
-                    'values': dup_info.values,
+                    'duplicate_type': dup_info.duplicate_type.value if dup_info.duplicate_type else 'unknown',
+                    'count': len(dup_info.entries),
+                    'values': values,
                 },
             )
 
