@@ -17,6 +17,7 @@ The CLI will:
 """
 
 import sys
+import logging
 from pathlib import Path
 from datetime import datetime
 
@@ -30,6 +31,11 @@ from verification_v2.engine import PipelineOrchestrator, VerificationResult
 
 # Use existing loaders from verification module
 from verification.loaders.mapped_data import MappedDataLoader, MappedFilingEntry
+
+
+# IPO Loggers for CLI
+logger_input = logging.getLogger('input.cli')
+logger_output = logging.getLogger('output.cli')
 
 
 class VerificationCLI:
@@ -152,6 +158,7 @@ class VerificationCLI:
         Args:
             filing: Filing to verify
         """
+        filing_id = f"{filing.market}/{filing.company}/{filing.form}/{filing.date}"
         sep = '=' * 60
 
         print(f'\n{sep}')
@@ -159,6 +166,8 @@ class VerificationCLI:
         print(sep)
 
         print(f'[INPUT] Using mapped statements: {filing.filing_folder}')
+        logger_input.info(f"Starting verification for {filing_id}")
+        logger_input.info(f"Mapped statements path: {filing.filing_folder}")
 
         # Configure orchestrator
         self.orchestrator.configure(
@@ -315,9 +324,12 @@ class VerificationCLI:
         """
         import json
 
+        filing_id = f"{filing.market}/{filing.company}/{filing.form}/{filing.date}"
+
         # Get output directory
         output_dir = self.config.get('output_dir')
         if not output_dir:
+            logger_output.warning(f"No output directory configured for {filing_id}")
             if not quiet:
                 print('[WARN] No output directory configured')
             return
@@ -331,11 +343,12 @@ class VerificationCLI:
             filing.date
         )
         report_dir.mkdir(parents=True, exist_ok=True)
+        logger_output.info(f"Created report directory: {report_dir}")
 
         # Save verification report
         report_path = report_dir / 'verification_report.json'
         report_data = {
-            'filing_id': f"{filing.market}/{filing.company}/{filing.form}/{filing.date}",
+            'filing_id': filing_id,
             'market': filing.market,
             'company': filing.company,
             'form': filing.form,
@@ -372,6 +385,14 @@ class VerificationCLI:
 
         with open(report_path, 'w', encoding='utf-8') as f:
             json.dump(report_data, f, indent=2, default=str)
+
+        # Log output activity
+        logger_output.info(f"Verification complete for {filing_id}")
+        logger_output.info(f"Score: {result.summary.score:.1f}/100, "
+                          f"Checks: {result.summary.total_checks} total, "
+                          f"{result.summary.passed} passed, "
+                          f"{result.summary.failed} failed")
+        logger_output.info(f"Report saved: {report_path}")
 
         if not quiet:
             print(f'\n[OUTPUT] Report saved: {report_path}')
