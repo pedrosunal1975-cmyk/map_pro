@@ -1,0 +1,295 @@
+[INFO] input.xbrl_filings - XBRLFilingsLoader initialized: /mnt/map_pro/downloader/entities
+[INFO] input.xbrl_filings - XBRLFilingsLoader initialized: /mnt/map_pro/downloader/entities
+[INFO] input.mapped_data - MappedDataLoader initialized: /mnt/map_pro/mapper/mapped_statements
+[INFO] input.mapped_data - Discovering mapped filings in: /mnt/map_pro/mapper/mapped_statements
+[INFO] input.mapped_data - Discovered 6 mapped filing entries
+[INFO] processors.stage2.preparation - Naming strategy set to: canonical
+[INFO] processors.orchestrator - Starting verification pipeline for sec/Albertsons_Companies_Inc/10_K/2025-10-13
+[INFO] processors.stage1.discovery - Stage 1: Discovering data for sec/Albertsons_Companies_Inc/10_K/2025-10-13
+[INFO] processors.stage1.discovery - Reading mapped statements
+[INFO] input.mapped_reader - Reading statements for Albertsons_Companies_Inc/10_K/2025-10-13
+[INFO] input.mapped_reader - Found 24 files in json/core_statements/
+[INFO] input.mapped_reader - Found 57 files in json/details/
+[INFO] input.mapped_reader - Found 18 files in json/other/
+[INFO] input.mapped_reader - Total statement files found: 99
+[INFO] input.mapped_reader - Found 99 total statement files (core_statements + details + other)
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedstatementsofcashflows': 168 facts from consolidatedstatementsofcashflows.json
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedbalancesheets': 134 facts from consolidatedbalancesheets.json
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedstatementsofoperationsandcomprehensiveincome': 135 facts from consolidatedstatementsofoperationsandcomprehensiveincome.json
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedstatementsofstockholdersequity': 128 facts from consolidatedstatementsofstockholdersequity.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplansandcollectivebargainingagreementsnarrativedetails': 112 facts from employeebenefitplansandcollectivebargainingagreementsnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Segmentinformationsegmentreportinginformationbysegmentdetails': 108 facts from segmentinformationsegmentreportinginformationbysegmentdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplansandcollectivebargainingagreementsscheduleoffairvalueofplanassetsdetails': 105 facts from employeebenefitplansandcollectivebargainingagreementsscheduleoffairvalueofplanassetsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplansandcollectivebargainingagreementsscheduleofcomponentsofnetpensionandpostretirementexpensedetails': 92 facts from employeebenefitplansandcollectivebargainingagreementsscheduleofcomponentsofnetpensionandpostretirementexpensedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Stockholdersequityandconvertiblepreferredstockdetails': 99 facts from stockholdersequityandconvertiblepreferredstockdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplansandcollectivebargainingagreementsscheduleofchangesinretirementplansbenefitobligationandfairvalueofplanassetsdetails': 80 facts from employeebenefitplansandcollectivebargainingagreementsscheduleofchangesinretirementplansbenefitobligationandfairvalueofplanassetsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Netincomepercommonsharescheduleofcomputationofbasicanddilutednetincomepersharedetails': 77 facts from netincomepercommonsharescheduleofcomputationofbasicanddilutednetincomepersharedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplansandcollectivebargainingagreementsscheduleofmultiemployerplandetails': 79 facts from employeebenefitplansandcollectivebargainingagreementsscheduleofmultiemployerplandetails.json
+[INFO] input.mapped_reader - Loaded statement 'Othercomprehensiveincomeorlossdetails': 65 facts from othercomprehensiveincomeorlossdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciespolicies': 28 facts from descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciespolicies.json
+[INFO] input.mapped_reader - Loaded statement 'Fairvaluemeasurementsscheduleofassetsandliabilitiesmeasuredatfairvaluedetails': 54 facts from fairvaluemeasurementsscheduleofassetsandliabilitiesmeasuredatfairvaluedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedbalancesheetsparenthetical': 57 facts from consolidatedbalancesheetsparenthetical.json
+[INFO] input.mapped_reader - Loaded statement 'Intangibleassetsscheduleofintangibleassetsdetails': 52 facts from intangibleassetsscheduleofintangibleassetsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxesscheduleofdeferredtaxassetsandliabilitiesdetails': 47 facts from incometaxesscheduleofdeferredtaxassetsandliabilitiesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Equitybasedcompensationscheduleofrsuandrsaactivitydetails': 30 facts from equitybasedcompensationscheduleofrsuandrsaactivitydetails.json
+[INFO] input.mapped_reader - Loaded statement 'Equitybasedcompensationnarrativedetails': 32 facts from equitybasedcompensationnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciesscheduleofsalesrevenuebyproducttypedetails': 48 facts from descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciesscheduleofsalesrevenuebyproducttypedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Leasesscheduleofbalancesheetinformationdetails': 38 facts from leasesscheduleofbalancesheetinformationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxesscheduleofcomponentsofincometaxexpensedetails': 42 facts from incometaxesscheduleofcomponentsofincometaxexpensedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Longtermdebtandfinanceleaseobligationsscheduleoflongtermdebtdetails': 40 facts from longtermdebtandfinanceleaseobligationsscheduleoflongtermdebtdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Leasesscheduleoffutureminimumleasepaymentstobemadedetails': 36 facts from leasesscheduleoffutureminimumleasepaymentstobemadedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Coverpage': 39 facts from coverpage.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplansandcollectivebargainingagreementsscheduleofplanassetsallocationdetails': 33 facts from employeebenefitplansandcollectivebargainingagreementsscheduleofplanassetsallocationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Longtermdebtandfinanceleaseobligationsassetbasedloanfacilitiesdetails': 31 facts from longtermdebtandfinanceleaseobligationsassetbasedloanfacilitiesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Pvpdisclosure': 15 facts from pvpdisclosure.json
+[INFO] input.mapped_reader - Loaded statement 'Descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciespropertyandequipmentintangibleassetsandcloudcomputingarrangementsdeta': 26 facts from descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciespropertyandequipmentintangibleassetsandcloudcomputingarrangementsdeta.json
+[INFO] input.mapped_reader - Loaded statement 'Leasessupplementalcashflowinformationdetails': 29 facts from leasessupplementalcashflowinformationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxesscheduleofeffectiveincometaxratereconciliationdetails': 27 facts from incometaxesscheduleofeffectiveincometaxratereconciliationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxesscheduleofunrecognizedtaxbenefitsdetails': 21 facts from incometaxesscheduleofunrecognizedtaxbenefitsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Propertyandequipmentscheduleofpropertyandequipmentdetails': 20 facts from propertyandequipmentscheduleofpropertyandequipmentdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxesnarrativedetails': 21 facts from incometaxesnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Propertyandequipmentnarrativedetails': 20 facts from propertyandequipmentnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplansandcollectivebargainingagreementsscheduleofassumptionsuseddetails': 15 facts from employeebenefitplansandcollectivebargainingagreementsscheduleofassumptionsuseddetails.json
+[INFO] input.mapped_reader - Loaded statement 'Leasesscheduleofcomponentsofleaseexpensedetails': 24 facts from leasesscheduleofcomponentsofleaseexpensedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciesinvestmentsdetails': 14 facts from descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciesinvestmentsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Longtermdebtandfinanceleaseobligationsseniorunsecurednotesdetails': 16 facts from longtermdebtandfinanceleaseobligationsseniorunsecurednotesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Intangibleassetsschedulefutureamortizationexpensedetails': 17 facts from intangibleassetsschedulefutureamortizationexpensedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Commitmentsandcontingenciesandoffbalancesheetarrangementslegalcontingenciesdetails': 13 facts from commitmentsandcontingenciesandoffbalancesheetarrangementslegalcontingenciesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Equitybasedcompensationscheduleofequitybasedcompensationexpensedetails': 15 facts from equitybasedcompensationscheduleofequitybasedcompensationexpensedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxessummaryofvaluationallowanceactivitydetails': 18 facts from incometaxessummaryofvaluationallowanceactivitydetails.json
+[INFO] input.mapped_reader - Loaded statement 'Longtermdebtandfinanceleaseobligationsscheduleoffuturematuritiesoflongtermdebtdetails': 19 facts from longtermdebtandfinanceleaseobligationsscheduleoffuturematuritiesoflongtermdebtdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplansandcollectivebargainingagreementsscheduleofexpectedfuturebenefitpaymentsdetails': 12 facts from employeebenefitplansandcollectivebargainingagreementsscheduleofexpectedfuturebenefitpaymentsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplansandcollectivebargainingagreementsscheduleofamountsrecognizedinaccumulatedothercomprehensiveincomelossdetails': 12 facts from employeebenefitplansandcollectivebargainingagreementsscheduleofamountsrecognizedinaccumulatedothercomprehensiveincomelossdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciesscheduleofselfinsuranceliabilitiesdetails': 16 facts from descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciesscheduleofselfinsuranceliabilitiesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Longtermdebtandfinanceleaseobligationsscheduleofinterestexpensedetails': 18 facts from longtermdebtandfinanceleaseobligationsscheduleofinterestexpensedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciesrevenuerecognitionandcostsofsalesandvendorallowancesdetails': 14 facts from descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciesrevenuerecognitionandcostsofsalesandvendorallowancesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciescompanyownedlifeinsuranceandselfinsuranceliabilitiesdetails': 10 facts from descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciescompanyownedlifeinsuranceandselfinsuranceliabilitiesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Netincomepercommonsharenarrativedetails': 10 facts from netincomepercommonsharenarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Fairvaluemeasurementsnarrativedetails': 10 facts from fairvaluemeasurementsnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Terminationofthemergeragreementnarrativedetails': 9 facts from terminationofthemergeragreementnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplansandcollectivebargainingagreementstables': 8 facts from employeebenefitplansandcollectivebargainingagreementstables.json
+[INFO] input.mapped_reader - Loaded statement 'Relatedpartiesdetails': 6 facts from relatedpartiesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplansandcollectivebargainingagreementsscheduleofaccumulatedbenefitobligationinexcessofplanassetsdetails': 6 facts from employeebenefitplansandcollectivebargainingagreementsscheduleofaccumulatedbenefitobligationinexcessofplanassetsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciesinventoriesdetails': 7 facts from descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciesinventoriesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Insidertradingarrangements': 4 facts from insidertradingarrangements.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxestables': 5 facts from incometaxestables.json
+[INFO] input.mapped_reader - Loaded statement 'Descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciesdescriptionofbusinessdetails': 4 facts from descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciesdescriptionofbusinessdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciesequitybasedcompensationdetails': 3 facts from descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciesequitybasedcompensationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Errcompdisclosure': 0 facts from errcompdisclosure.json
+[INFO] input.mapped_reader - Loaded statement 'Intangibleassetsnarrativedetails': 6 facts from intangibleassetsnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Awardtimingdisclosure': 0 facts from awardtimingdisclosure.json
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedstatementsofstockholdersequityparenthetical': 4 facts from consolidatedstatementsofstockholdersequityparenthetical.json
+[INFO] input.mapped_reader - Loaded statement 'Intangibleassetstables': 3 facts from intangibleassetstables.json
+[INFO] input.mapped_reader - Loaded statement 'Longtermdebtandfinanceleaseobligationsdeferredfinancingcostsandinterestexpensenetdetails': 2 facts from longtermdebtandfinanceleaseobligationsdeferredfinancingcostsandinterestexpensenetdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciescashandcashequivalentsdetails': 4 facts from descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciescashandcashequivalentsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Leasestables': 4 facts from leasestables.json
+[INFO] input.mapped_reader - Loaded statement 'Descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciesleasesdetails': 2 facts from descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciesleasesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Longtermdebtandfinanceleaseobligationstables': 3 facts from longtermdebtandfinanceleaseobligationstables.json
+[INFO] input.mapped_reader - Loaded statement 'Leases': 3 facts from leases.json
+[INFO] input.mapped_reader - Loaded statement 'Equitybasedcompensationtables': 2 facts from equitybasedcompensationtables.json
+[INFO] input.mapped_reader - Loaded statement 'Descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciestables': 2 facts from descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpoliciestables.json
+[INFO] input.mapped_reader - Loaded statement 'Auditinformation': 3 facts from auditinformation.json
+[INFO] input.mapped_reader - Loaded statement 'Descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpolicies': 1 facts from descriptionofbusinessbasisofpresentationandsummaryofsignificantaccountingpolicies.json
+[INFO] input.mapped_reader - Loaded statement 'Segmentinformationnarrativedetails': 2 facts from segmentinformationnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Commitmentsandcontingenciesandoffbalancesheetarrangements': 1 facts from commitmentsandcontingenciesandoffbalancesheetarrangements.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplansandcollectivebargainingagreements': 1 facts from employeebenefitplansandcollectivebargainingagreements.json
+[INFO] input.mapped_reader - Loaded statement 'Equitybasedcompensation': 1 facts from equitybasedcompensation.json
+[INFO] input.mapped_reader - Loaded statement 'Othercomprehensiveincomeorlosstables': 1 facts from othercomprehensiveincomeorlosstables.json
+[INFO] input.mapped_reader - Loaded statement 'Terminationofthemergeragreement': 1 facts from terminationofthemergeragreement.json
+[INFO] input.mapped_reader - Loaded statement 'Intangibleassets': 1 facts from intangibleassets.json
+[INFO] input.mapped_reader - Loaded statement 'Stockholdersequityandconvertiblepreferredstock': 1 facts from stockholdersequityandconvertiblepreferredstock.json
+[INFO] input.mapped_reader - Loaded statement 'Propertyandequipment': 1 facts from propertyandequipment.json
+[INFO] input.mapped_reader - Loaded statement 'Othercomprehensiveincomeorloss': 1 facts from othercomprehensiveincomeorloss.json
+[INFO] input.mapped_reader - Loaded statement 'Insidertradingpoliciesproc': 1 facts from insidertradingpoliciesproc.json
+[INFO] input.mapped_reader - Loaded statement 'Longtermdebtandfinanceleaseobligations': 1 facts from longtermdebtandfinanceleaseobligations.json
+[INFO] input.mapped_reader - Loaded statement 'Relatedparties': 1 facts from relatedparties.json
+[INFO] input.mapped_reader - Loaded statement 'Fairvaluemeasurements': 1 facts from fairvaluemeasurements.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxes': 1 facts from incometaxes.json
+[INFO] input.mapped_reader - Loaded statement 'Fairvaluemeasurementstables': 1 facts from fairvaluemeasurementstables.json
+[INFO] input.mapped_reader - Loaded statement 'Netincomepercommonshare': 1 facts from netincomepercommonshare.json
+[INFO] input.mapped_reader - Loaded statement 'Segmentinformation': 1 facts from segmentinformation.json
+[INFO] input.mapped_reader - Loaded statement 'Netincomepercommonsharetables': 1 facts from netincomepercommonsharetables.json
+[INFO] input.mapped_reader - Loaded statement 'Segmentinformationtables': 1 facts from segmentinformationtables.json
+[INFO] input.mapped_reader - Loaded statement 'Propertyandequipmenttables': 1 facts from propertyandequipmenttables.json
+[INFO] input.mapped_reader - Loaded statement 'Leasesnarrativedetails': 1 facts from leasesnarrativedetails.json
+[INFO] input.mapped_reader - Loaded 99 statements from all folders, 21 main statements
+[INFO] processors.stage1.discovery - Found 2535 facts from mapped statements
+[INFO] processors.stage1.discovery - Reading XBRL calculation linkbase
+[INFO] input.xbrl_filings - Searching for filing: market=sec, company=Albertsons_Companies_Inc, form=10_K, date=2025-10-13
+[INFO] input.xbrl_filings - Found filing directory: /mnt/map_pro/downloader/entities/sec/Albertsons_Companies_Inc/filings/10-K/0001646972-25-000052
+[INFO] input.xbrl_reader - Reading calculation linkbase from /mnt/map_pro/downloader/entities/sec/Albertsons_Companies_Inc/filings/10-K/0001646972-25-000052
+[INFO] input.xbrl_reader - Parsed 25 calculation networks from /mnt/map_pro/downloader/entities/sec/Albertsons_Companies_Inc/filings/10-K/0001646972-25-000052/aci-20250222_cal.xml
+[INFO] processors.stage1.discovery - Found 220 calculations
+[INFO] processors.stage1.discovery - Stage 1 complete: 2535 facts, 220 calculations
+[INFO] processors.stage2.preparation - Stage 2: Preparing 2535 facts
+[INFO] processors.stage2.preparation - Stage 2 complete: 2393 facts in 452 groups, 56 calculations
+[INFO] processors.stage3.verification - Stage 3: Verifying 2393 facts, 56 calculations
+[INFO] processors.stage3.verification - Running horizontal checks on 56 calculations
+[INFO] processors.stage3.verification - Running vertical checks
+[INFO] processors.stage3.verification - Running library checks
+[INFO] processors.stage3.verification - Stage 3 complete: 639 checks, score 100.0/100
+[INFO] input.mapped_data - Discovering mapped filings in: /mnt/map_pro/mapper/mapped_statements
+[INFO] input.mapped_data - Discovered 6 mapped filing entries
+[INFO] processors.stage2.preparation - Naming strategy set to: canonical
+[INFO] processors.orchestrator - Starting verification pipeline for sec/REGIONS_FINANCIAL_CORPORATION/10_K/2029-08-15
+[INFO] processors.stage1.discovery - Stage 1: Discovering data for sec/REGIONS_FINANCIAL_CORPORATION/10_K/2029-08-15
+[INFO] processors.stage1.discovery - Reading mapped statements
+[INFO] input.mapped_reader - Reading statements for REGIONS_FINANCIAL_CORPORATION/10_K/2029-08-15
+[INFO] input.mapped_reader - Found 34 files in json/core_statements/
+[INFO] input.mapped_reader - Found 75 files in json/details/
+[INFO] input.mapped_reader - Found 31 files in json/other/
+[INFO] input.mapped_reader - Total statement files found: 140
+[INFO] input.mapped_reader - Found 140 total statement files (core_statements + details + other)
+[INFO] input.mapped_reader - Loaded statement 'Loansandtheallowanceforcreditlossesfinancingreceivablescreditqualityindicatorsdetails': 1496 facts from loansandtheallowanceforcreditlossesfinancingreceivablescreditqualityindicatorsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedbalancesheets': 455 facts from consolidatedbalancesheets.json
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedstatementsofincome': 466 facts from consolidatedstatementsofincome.json
+[INFO] input.mapped_reader - Loaded statement 'Businesssegmentinformationscheduleoffinancialinformationbyreportablesegmentdetails': 426 facts from businesssegmentinformationscheduleoffinancialinformationbyreportablesegmentdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Fairvaluemeasurementsscheduleofcarryingamountsandestimatedfairvaluesoffinancialinstrumentsdetails': 372 facts from fairvaluemeasurementsscheduleofcarryingamountsandestimatedfairvaluesoffinancialinstrumentsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Fairvaluemeasurementsscheduleofassetsandliabilitiesatfairvaluemeasuredonarecurringbasisdetails': 317 facts from fairvaluemeasurementsscheduleofassetsandliabilitiesatfairvaluemeasuredonarecurringbasisdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Stockholdersequityandaccumulatedothercomprehensiveincomelossscheduleofaccumulatedothercomprehensiveincomedetails': 259 facts from stockholdersequityandaccumulatedothercomprehensiveincomelossscheduleofaccumulatedothercomprehensiveincomedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Loansandtheallowanceforcreditlossespastduefinancingreceivablesdetails': 248 facts from loansandtheallowanceforcreditlossespastduefinancingreceivablesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Condensedfinancialinformationparentcompanybalancesheetsdetails': 270 facts from condensedfinancialinformationparentcompanybalancesheetsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedstatementsofcashflows': 218 facts from consolidatedstatementsofcashflows.json
+[INFO] input.mapped_reader - Loaded statement 'Loansandtheallowanceforcreditlossesmodificationsbyclassandsegmentdetails': 230 facts from loansandtheallowanceforcreditlossesmodificationsbyclassandsegmentdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Debtsecuritiesscheduleofamortizedcostgrossunrealizedgainsandlossesandestimatedfairvalueofsecuritiesavailableforsaleandsecuritiesheldtomaturitydetails': 232 facts from debtsecuritiesscheduleofamortizedcostgrossunrealizedgainsandlossesandestimatedfairvalueofsecuritiesavailableforsaleandsecuritiesheldtomaturitydetails.json
+[INFO] input.mapped_reader - Loaded statement 'Othernoninterestincomeandexpenseothernoninterestincomedetails': 230 facts from othernoninterestincomeandexpenseothernoninterestincomedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Loansandtheallowanceforcreditlossesnarrativedetails': 179 facts from loansandtheallowanceforcreditlossesnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Derivativefinancialinstrumentsandhedgingactivitiesscheduleofderivativeinstrumentsnotionalandfairvaluesdetails': 188 facts from derivativefinancialinstrumentsandhedgingactivitiesscheduleofderivativeinstrumentsnotionalandfairvaluesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Loansandtheallowanceforcreditlossesanalysisoftheallowanceforcreditlossesbyportfoliosegmentdetails': 155 facts from loansandtheallowanceforcreditlossesanalysisoftheallowanceforcreditlossesbyportfoliosegmentdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Condensedfinancialinformationparentcompanystatementsofcashflowdetails': 150 facts from condensedfinancialinformationparentcompanystatementsofcashflowdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Condensedfinancialinformationparentcompanystatementofoperationsdetails': 173 facts from condensedfinancialinformationparentcompanystatementofoperationsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Debtsecuritiesscheduleofcostandestimatedfairvalueofsecuritiesavailableforsaleandsecuritiesheldtomaturitybycontractualmaturitydetails': 160 facts from debtsecuritiesscheduleofcostandestimatedfairvalueofsecuritiesavailableforsaleandsecuritiesheldtomaturitybycontractualmaturitydetails.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplansscheduleofdefinedbenefitplansdisclosuresdetails': 140 facts from employeebenefitplansscheduleofdefinedbenefitplansdisclosuresdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedstatementsofchangesinstockholdersequity': 144 facts from consolidatedstatementsofchangesinstockholdersequity.json
+[INFO] input.mapped_reader - Loaded statement 'Debtsecuritiesscheduleofgrossunrealizedlossesandestimatedfairvalueofsecuritiesavailableforsaledetails': 120 facts from debtsecuritiesscheduleofgrossunrealizedlossesandestimatedfairvalueofsecuritiesavailableforsaledetails.json
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedstatementsofcomprehensiveincome': 108 facts from consolidatedstatementsofcomprehensiveincome.json
+[INFO] input.mapped_reader - Loaded statement 'Loansandtheallowanceforcreditlossesagingandnonaccrualperformanceformodificationstotroubledborrowersdetails': 107 facts from loansandtheallowanceforcreditlossesagingandnonaccrualperformanceformodificationstotroubledborrowersdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Debtsecuritiesnarrativedetails': 110 facts from debtsecuritiesnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplanspresentationofthefairvalueofregionsqualifieddefinedbenefitpensionplansfinancialassetsdetails': 90 facts from employeebenefitplanspresentationofthefairvalueofregionsqualifieddefinedbenefitpensionplansfinancialassetsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Regulatorycapitalrequirementsandrestrictionsscheduleofcompliancewithregulatorycapitalrequirementsunderbankingregulationsdetails': 76 facts from regulatorycapitalrequirementsandrestrictionsscheduleofcompliancewithregulatorycapitalrequirementsunderbankingregulationsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Loansscheduleofloanportfolionetofunearnedincomedetails': 70 facts from loansscheduleofloanportfolionetofunearnedincomedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedbalancesheetsparenthetical': 83 facts from consolidatedbalancesheetsparenthetical.json
+[INFO] input.mapped_reader - Loaded statement 'Derivativefinancialinstrumentsandhedgingactivitiesscheduleoftheeffectofderivativeinstrumentsonthestatementsofoperationsdetails': 72 facts from derivativefinancialinstrumentsandhedgingactivitiesscheduleoftheeffectofderivativeinstrumentsonthestatementsofoperationsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Earningspercommonsharecomputationofbasicanddilutedearningslosspercommonsharedetails': 72 facts from earningspercommonsharecomputationofbasicanddilutedearningslosspercommonsharedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Derivativefinancialinstrumentsandhedgingactivitiesnarrativedetails': 67 facts from derivativefinancialinstrumentsandhedgingactivitiesnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplanscomponentsofnetperiodicpensioncostsdetails': 66 facts from employeebenefitplanscomponentsofnetperiodicpensioncostsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Stockholdersequityandaccumulatedothercomprehensiveincomelosspreferredstockissuancesdetails': 58 facts from stockholdersequityandaccumulatedothercomprehensiveincomelosspreferredstockissuancesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Borrowedfundsscheduleofmaturitiesoflongtermborrowingsdetails': 59 facts from borrowedfundsscheduleofmaturitiesoflongtermborrowingsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxessummaryofsignificantcomponentsofdeferredtaxassetsandliabilitiesdetails': 50 facts from incometaxessummaryofsignificantcomponentsofdeferredtaxassetsandliabilitiesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxesincometaxratereconciliationdetails': 57 facts from incometaxesincometaxratereconciliationdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Servicingoffinancialassetsanalysisofresidentialandcommericalmsrsunderthefairvaluemeasurementmethoddetails': 54 facts from servicingoffinancialassetsanalysisofresidentialandcommericalmsrsunderthefairvaluemeasurementmethoddetails.json
+[INFO] input.mapped_reader - Loaded statement 'Servicingoffinancialassetsdataandassumptionsusedinthefairvaluecalculationaswellasthevaluationssensitivitytoratefluctuationsrelatedtoresidentialandcomm': 40 facts from servicingoffinancialassetsdataandassumptionsusedinthefairvaluecalculationaswellasthevaluationssensitivitytoratefluctuationsrelatedtoresidentialandcomm.json
+[INFO] input.mapped_reader - Loaded statement 'Borrowedfundsscheduleoflongtermborrowingsdetails': 49 facts from borrowedfundsscheduleoflongtermborrowingsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Documentandentityinformation': 48 facts from documentandentityinformation.json
+[INFO] input.mapped_reader - Loaded statement 'Leaseslessorsummaryofsalestypedirectfinancingoperatingandleveragedleasesdetails': 39 facts from leaseslessorsummaryofsalestypedirectfinancingoperatingandleveragedleasesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Othernoninterestincomeandexpenseothernoninterestexpensedetails': 51 facts from othernoninterestincomeandexpenseothernoninterestexpensedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Consolidatedstatementsofcomprehensiveincomeparenthetical': 41 facts from consolidatedstatementsofcomprehensiveincomeparenthetical.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxescomponentsofincometaxbenefitexpensedetails': 45 facts from incometaxescomponentsofincometaxbenefitexpensedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Summaryofsignificantaccountingpoliciespolicies': 25 facts from summaryofsignificantaccountingpoliciespolicies.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplansnarrativedetails': 33 facts from employeebenefitplansnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Intangibleassetsscheduleofotherintangibleassetsdetails': 42 facts from intangibleassetsscheduleofotherintangibleassetsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Servicingoffinancialassetsnarrativedetails': 42 facts from servicingoffinancialassetsnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Loansandtheallowanceforcreditlossesfinancialimpactofmodificationstotroubledborrowersdetails': 34 facts from loansandtheallowanceforcreditlossesfinancialimpactofmodificationstotroubledborrowersdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Sharebasedpaymentssummaryofrestrictedstockawardsandperformancestockawardsactivitydetails': 26 facts from sharebasedpaymentssummaryofrestrictedstockawardsandperformancestockawardsactivitydetails.json
+[INFO] input.mapped_reader - Loaded statement 'Fairvaluemeasurementssummaryofquantitativeinformationaboutlevel3Fairvaluemeasurementsdetails': 28 facts from fairvaluemeasurementssummaryofquantitativeinformationaboutlevel3fairvaluemeasurementsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Pvpdisclosure': 24 facts from pvpdisclosure.json
+[INFO] input.mapped_reader - Loaded statement 'Stockholdersequityandaccumulatedothercomprehensiveincomelossnarrativedetails': 30 facts from stockholdersequityandaccumulatedothercomprehensiveincomelossnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Commitmentscontingenciesandguaranteescreditriskoffinancialinstrumentsbycontractualamountsdetails': 36 facts from commitmentscontingenciesandguaranteescreditriskoffinancialinstrumentsbycontractualamountsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxessummaryofdetailoftaxcarryforwardsdetails': 29 facts from incometaxessummaryofdetailoftaxcarryforwardsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Derivativefinancialinstrumentsandhedgingactivitiesscheduleofgainslossesrecognizedrelatedtoderivativesnotdesignatedashedginginstrumentsdetails': 30 facts from derivativefinancialinstrumentsandhedgingactivitiesscheduleofgainslossesrecognizedrelatedtoderivativesnotdesignatedashedginginstrumentsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Borrowedfundsnarrativedetails': 26 facts from borrowedfundsnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Variableinterestentitiesaffordablehousingtaxcreditinvestmentsdetails': 23 facts from variableinterestentitiesaffordablehousingtaxcreditinvestmentsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplansscheduleofassumptionsuseddetails': 23 facts from employeebenefitplansscheduleofassumptionsuseddetails.json
+[INFO] input.mapped_reader - Loaded statement 'Summaryofsignificantaccountingpoliciesnarrativedetails': 22 facts from summaryofsignificantaccountingpoliciesnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Premisesandequipmentscheduleofpremisesandequipmentdetails': 22 facts from premisesandequipmentscheduleofpremisesandequipmentdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplansinformationabouttheexpectedcashflowsforthequalifiedandnonqualifiedpensionplansdetails': 14 facts from employeebenefitplansinformationabouttheexpectedcashflowsforthequalifiedandnonqualifiedpensionplansdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Derivativefinancialinstrumentsandhedgingactivitiesderivativefinancialinstrumentsandhedgingactivitiesscheduleoffairvaluehedgingbasisadjustmentsdetails': 14 facts from derivativefinancialinstrumentsandhedgingactivitiesderivativefinancialinstrumentsandhedgingactivitiesscheduleoffairvaluehedgingbasisadjustmentsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Sharebasedpaymentsnarrativedetails': 11 facts from sharebasedpaymentsnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Summaryofsignificantaccountingpoliciessupplementalcashflowsdetails': 21 facts from summaryofsignificantaccountingpoliciessupplementalcashflowsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxesnarrativedetails': 19 facts from incometaxesnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxesreconciliationofbeginningandendingamountofunrecognizedtaxbenefitsdetails': 15 facts from incometaxesreconciliationofbeginningandendingamountofunrecognizedtaxbenefitsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Leasesnarrativedetails': 16 facts from leasesnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Servicingoffinancialassetsanalysisofcommercialdusmortgagebankingservicingrightsunderamortizedcostdetails': 12 facts from servicingoffinancialassetsanalysisofcommercialdusmortgagebankingservicingrightsunderamortizedcostdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Sharebasedpaymentssummaryofcompensationcostsrecognizedintheconsolidatedstatementsofoperationsdetails': 9 facts from sharebasedpaymentssummaryofcompensationcostsrecognizedintheconsolidatedstatementsofoperationsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Leaseslesseescheduleoffutureundiscountedminimumleasepaymentsonoperatingleasesdetails': 11 facts from leaseslesseescheduleoffutureundiscountedminimumleasepaymentsonoperatingleasesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Depositsscheduleofinterestbearingdepositsdetails': 12 facts from depositsscheduleofinterestbearingdepositsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Leaseslessorscheduleofminimumfuturepaymentsduefromcustomersforsalestypedirectfinancingandoperatingleasesdetails': 7 facts from leaseslessorscheduleofminimumfuturepaymentsduefromcustomersforsalestypedirectfinancingandoperatingleasesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Intangibleassetsscheduleofgoodwillbysegmentdetails': 10 facts from intangibleassetsscheduleofgoodwillbysegmentdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Commitmentscontingenciesandguaranteesnarrativedetails': 6 facts from commitmentscontingenciesandguaranteesnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Loansandtheallowanceforcreditlossestables': 7 facts from loansandtheallowanceforcreditlossestables.json
+[INFO] input.mapped_reader - Loaded statement 'Regulatorycapitalrequirementsandrestrictionsnarrativedetails': 4 facts from regulatorycapitalrequirementsandrestrictionsnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Intangibleassetsaggregateamountofamortizationexpensedetails': 5 facts from intangibleassetsaggregateamountofamortizationexpensedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Depositsscheduleofaggregateamountofmaturitiesofalltimedepositsdetails': 7 facts from depositsscheduleofaggregateamountofmaturitiesofalltimedepositsdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Insidertradingarrangements': 4 facts from insidertradingarrangements.json
+[INFO] input.mapped_reader - Loaded statement 'Otherearningassetsnarrativedetails': 7 facts from otherearningassetsnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplanstables': 5 facts from employeebenefitplanstables.json
+[INFO] input.mapped_reader - Loaded statement 'Fairvaluemeasurementsfairvalueoptionfairvalueandunpaidprincipalbalancedetails': 4 facts from fairvaluemeasurementsfairvalueoptionfairvalueandunpaidprincipalbalancedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Derivativefinancialinstrumentsandhedgingactivitiestables': 4 facts from derivativefinancialinstrumentsandhedgingactivitiestables.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxestables': 5 facts from incometaxestables.json
+[INFO] input.mapped_reader - Loaded statement 'Servicingoffinancialassetstables': 3 facts from servicingoffinancialassetstables.json
+[INFO] input.mapped_reader - Loaded statement 'Errcompdisclosure': 0 facts from errcompdisclosure.json
+[INFO] input.mapped_reader - Loaded statement 'Awardtimingdisclosure': 0 facts from awardtimingdisclosure.json
+[INFO] input.mapped_reader - Loaded statement 'Parentcompanyonlyfinancialstatementstables': 3 facts from parentcompanyonlyfinancialstatementstables.json
+[INFO] input.mapped_reader - Loaded statement 'Intangibleassetsnarrativedetails': 4 facts from intangibleassetsnarrativedetails.json
+[INFO] input.mapped_reader - Loaded statement 'Leasestables': 4 facts from leasestables.json
+[INFO] input.mapped_reader - Loaded statement 'Debtsecuritiestables': 3 facts from debtsecuritiestables.json
+[INFO] input.mapped_reader - Loaded statement 'Otherearningassetsscheduleofinvestmentsinfederalreservebankstockandfederalhomeloanbankstockdetails': 4 facts from otherearningassetsscheduleofinvestmentsinfederalreservebankstockandfederalhomeloanbankstockdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Leaseslesseeinformationrelatedtooperatingleasesdetails': 4 facts from leaseslesseeinformationrelatedtooperatingleasesdetails.json
+[INFO] input.mapped_reader - Loaded statement 'Fairvaluemeasurementstables': 3 facts from fairvaluemeasurementstables.json
+[INFO] input.mapped_reader - Loaded statement 'Intangibleassetstables': 3 facts from intangibleassetstables.json
+[INFO] input.mapped_reader - Loaded statement 'Sharebasedpaymentstables': 2 facts from sharebasedpaymentstables.json
+[INFO] input.mapped_reader - Loaded statement 'Auditinformation': 3 facts from auditinformation.json
+[INFO] input.mapped_reader - Loaded statement 'Stockholdersequityandaccumulatedothercomprehensiveincomelosstables': 2 facts from stockholdersequityandaccumulatedothercomprehensiveincomelosstables.json
+[INFO] input.mapped_reader - Loaded statement 'Borrowedfundstables': 2 facts from borrowedfundstables.json
+[INFO] input.mapped_reader - Loaded statement 'Otherearningassets': 1 facts from otherearningassets.json
+[INFO] input.mapped_reader - Loaded statement 'Depositstables': 2 facts from depositstables.json
+[INFO] input.mapped_reader - Loaded statement 'Debtsecurities': 1 facts from debtsecurities.json
+[INFO] input.mapped_reader - Loaded statement 'Premisesandequipment': 1 facts from premisesandequipment.json
+[INFO] input.mapped_reader - Loaded statement 'Earningspercommonshare': 1 facts from earningspercommonshare.json
+[INFO] input.mapped_reader - Loaded statement 'Basisofpresentation': 1 facts from basisofpresentation.json
+[INFO] input.mapped_reader - Loaded statement 'Parentcompanyonlyfinancialstatements': 1 facts from parentcompanyonlyfinancialstatements.json
+[INFO] input.mapped_reader - Loaded statement 'Employeebenefitplans': 1 facts from employeebenefitplans.json
+[INFO] input.mapped_reader - Loaded statement 'Derivativefinancialinstrumentsandhedgingactivities': 1 facts from derivativefinancialinstrumentsandhedgingactivities.json
+[INFO] input.mapped_reader - Loaded statement 'Sharebasedpayments': 1 facts from sharebasedpayments.json
+[INFO] input.mapped_reader - Loaded statement 'Variableinterestentities': 1 facts from variableinterestentities.json
+[INFO] input.mapped_reader - Loaded statement 'Regulatorycapitalrequirementsandrestrictions': 1 facts from regulatorycapitalrequirementsandrestrictions.json
+[INFO] input.mapped_reader - Loaded statement 'Servicingoffinancialassets': 1 facts from servicingoffinancialassets.json
+[INFO] input.mapped_reader - Loaded statement 'Summaryofsignificantaccountingpolicies': 1 facts from summaryofsignificantaccountingpolicies.json
+[INFO] input.mapped_reader - Loaded statement 'Intangibleassets': 1 facts from intangibleassets.json
+[INFO] input.mapped_reader - Loaded statement 'Commitmentscontingenciesandguarantees': 1 facts from commitmentscontingenciesandguarantees.json
+[INFO] input.mapped_reader - Loaded statement 'Othernoninterestincomeandexpense': 1 facts from othernoninterestincomeandexpense.json
+[INFO] input.mapped_reader - Loaded statement 'Regulatorycapitalrequirementsandregulationstables': 1 facts from regulatorycapitalrequirementsandregulationstables.json
+[INFO] input.mapped_reader - Loaded statement 'Otherearningassetstables': 1 facts from otherearningassetstables.json
+[INFO] input.mapped_reader - Loaded statement 'Stockholdersequityandaccumulatedothercomprehensiveincomeloss': 1 facts from stockholdersequityandaccumulatedothercomprehensiveincomeloss.json
+[INFO] input.mapped_reader - Loaded statement 'Insidertradingpoliciesproc': 1 facts from insidertradingpoliciesproc.json
+[INFO] input.mapped_reader - Loaded statement 'Commitmentscontingenciesandguaranteestables': 1 facts from commitmentscontingenciesandguaranteestables.json
+[INFO] input.mapped_reader - Loaded statement 'Deposits': 1 facts from deposits.json
+[INFO] input.mapped_reader - Loaded statement 'Businesssegmentinformation': 1 facts from businesssegmentinformation.json
+[INFO] input.mapped_reader - Loaded statement 'Variableinterestentitiestables': 1 facts from variableinterestentitiestables.json
+[INFO] input.mapped_reader - Loaded statement 'Fairvaluemeasurements': 1 facts from fairvaluemeasurements.json
+[INFO] input.mapped_reader - Loaded statement 'Loansandtheallowanceforcreditlosses': 1 facts from loansandtheallowanceforcreditlosses.json
+[INFO] input.mapped_reader - Loaded statement 'Leasesnotes': 1 facts from leasesnotes.json
+[INFO] input.mapped_reader - Loaded statement 'Basisofpresentationpolicies': 1 facts from basisofpresentationpolicies.json
+[INFO] input.mapped_reader - Loaded statement 'Incometaxes': 1 facts from incometaxes.json
+[INFO] input.mapped_reader - Loaded statement 'Othernoninterestincomeandexpensetables': 1 facts from othernoninterestincomeandexpensetables.json
+[INFO] input.mapped_reader - Loaded statement 'Earningspercommonsharetables': 1 facts from earningspercommonsharetables.json
+[INFO] input.mapped_reader - Loaded statement 'Loans': 1 facts from loans.json
+[INFO] input.mapped_reader - Loaded statement 'Borrowedfunds': 1 facts from borrowedfunds.json
+[INFO] input.mapped_reader - Loaded statement 'Summaryofsignificantaccountingpoliciestables': 1 facts from summaryofsignificantaccountingpoliciestables.json
+[INFO] input.mapped_reader - Loaded statement 'Businesssegmentinformationtables': 1 facts from businesssegmentinformationtables.json
+[INFO] input.mapped_reader - Loaded statement 'Premisesandequipmenttables': 1 facts from premisesandequipmenttables.json
+[INFO] input.mapped_reader - Loaded statement 'Loanstables': 1 facts from loanstables.json
+[INFO] input.mapped_reader - Loaded statement 'Depositsnarrativedetails': 0 facts from depositsnarrativedetails.json
+[INFO] input.mapped_reader - Loaded 140 statements from all folders, 38 main statements
+[INFO] processors.stage1.discovery - Found 8943 facts from mapped statements
+[INFO] processors.stage1.discovery - Reading XBRL calculation linkbase
+[INFO] input.xbrl_filings - Searching for filing: market=sec, company=REGIONS_FINANCIAL_CORPORATION, form=10_K, date=2029-08-15
+[WARNING] input.xbrl_filings - Company directory not found for: REGIONS_FINANCIAL_CORPORATION
+[INFO] processors.stage1.discovery - Stage 1 complete: 8943 facts, 0 calculations
+[INFO] processors.stage2.preparation - Stage 2: Preparing 8943 facts
+[INFO] processors.stage2.preparation - Stage 2 complete: 8823 facts in 1247 groups, 0 calculations
+[INFO] processors.stage3.verification - Stage 3: Verifying 8823 facts, 0 calculations
+[INFO] processors.stage3.verification - Running horizontal checks on 0 calculations
+[INFO] processors.stage3.verification - Running vertical checks
+[INFO] processors.stage3.verification - Running library checks
+[INFO] processors.stage3.verification - Stage 3 complete: 1356 checks, score 99.8/100

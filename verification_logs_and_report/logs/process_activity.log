@@ -1,0 +1,29 @@
+[INFO] processors.stage2.preparation - Naming strategy set to: canonical
+[INFO] processors.orchestrator - Starting verification pipeline for sec/Albertsons_Companies_Inc/10_K/2025-10-13
+[INFO] processors.stage1.discovery - Stage 1: Discovering data for sec/Albertsons_Companies_Inc/10_K/2025-10-13
+[INFO] processors.stage1.discovery - Reading mapped statements
+[INFO] processors.stage1.discovery - Found 2535 facts from mapped statements
+[INFO] processors.stage1.discovery - Reading XBRL calculation linkbase
+[INFO] processors.stage1.discovery - Found 220 calculations
+[INFO] processors.stage1.discovery - Stage 1 complete: 2535 facts, 220 calculations
+[INFO] processors.stage2.preparation - Stage 2: Preparing 2535 facts
+[INFO] processors.stage2.preparation - Stage 2 complete: 2393 facts in 452 groups, 56 calculations
+[INFO] processors.stage3.verification - Stage 3: Verifying 2393 facts, 56 calculations
+[INFO] processors.stage3.verification - Running horizontal checks on 56 calculations
+[INFO] processors.stage3.verification - Running vertical checks
+[INFO] processors.stage3.verification - Running library checks
+[INFO] processors.stage3.verification - Stage 3 complete: 639 checks, score 100.0/100
+[INFO] processors.stage2.preparation - Naming strategy set to: canonical
+[INFO] processors.orchestrator - Starting verification pipeline for sec/REGIONS_FINANCIAL_CORPORATION/10_K/2029-08-15
+[INFO] processors.stage1.discovery - Stage 1: Discovering data for sec/REGIONS_FINANCIAL_CORPORATION/10_K/2029-08-15
+[INFO] processors.stage1.discovery - Reading mapped statements
+[INFO] processors.stage1.discovery - Found 8943 facts from mapped statements
+[INFO] processors.stage1.discovery - Reading XBRL calculation linkbase
+[INFO] processors.stage1.discovery - Stage 1 complete: 8943 facts, 0 calculations
+[INFO] processors.stage2.preparation - Stage 2: Preparing 8943 facts
+[INFO] processors.stage2.preparation - Stage 2 complete: 8823 facts in 1247 groups, 0 calculations
+[INFO] processors.stage3.verification - Stage 3: Verifying 8823 facts, 0 calculations
+[INFO] processors.stage3.verification - Running horizontal checks on 0 calculations
+[INFO] processors.stage3.verification - Running vertical checks
+[INFO] processors.stage3.verification - Running library checks
+[INFO] processors.stage3.verification - Stage 3 complete: 1356 checks, score 99.8/100
