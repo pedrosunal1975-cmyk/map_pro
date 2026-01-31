@@ -25,6 +25,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from verification_v2.core.config_loader import ConfigLoader
 from verification_v2.core.data_paths import ensure_data_paths
+from verification_v2.core.logger.ipo_logging import setup_ipo_logging
 from verification_v2.engine import PipelineOrchestrator, VerificationResult
 
 # Use existing loaders from verification module
@@ -42,9 +43,26 @@ class VerificationCLI:
     def __init__(self):
         """Initialize CLI components."""
         self.config = ConfigLoader()
+
+        # Setup IPO logging
+        self._setup_logging()
+
         # Pass config to orchestrator so DiscoveryProcessor can use existing loaders
         self.orchestrator = PipelineOrchestrator(self.config)
         self.mapped_loader = MappedDataLoader(self.config)
+
+    def _setup_logging(self) -> None:
+        """Setup IPO-aware logging to log directory."""
+        log_dir = self.config.get('log_dir')
+        if log_dir:
+            log_dir = Path(log_dir)
+            log_dir.mkdir(parents=True, exist_ok=True)
+
+            setup_ipo_logging(
+                log_dir=log_dir,
+                log_level=self.config.get('log_level', 'INFO'),
+                console_output=False  # Don't clutter CLI with log output
+            )
 
     def run(self) -> None:
         """Run the verification CLI."""
